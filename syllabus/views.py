@@ -1,11 +1,11 @@
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .models import Exam
 from .serializers import ExamSerializer
 
 class SyllabusTreeView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
         exams = Exam.objects.prefetch_related("subjects__topics__subtopics__concepts").all()

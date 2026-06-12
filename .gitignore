@@ -1,1 +1,29 @@
+# Python bytecode and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.env
+venv/
+env/
+ENV/
+
+# Databases
 db.sqlite3
+*.db
+
+# Django media and uploads
+media/
+staticfiles/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+**/__pycache__/
+*.pyc

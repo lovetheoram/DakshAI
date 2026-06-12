@@ -297,7 +297,7 @@ class UserProfileAPI(APIView):
 
     def get(self, request, user_id):
         user_obj = get_object_or_404(User, id=user_id)
-        data = UserProfileSerializer(user_obj, context={"request": request}).data
+        data = UserProfileSerializer(user_obj.profile, context={"request": request}).data
         return Response(data, status=status.HTTP_200_OK)
 
 

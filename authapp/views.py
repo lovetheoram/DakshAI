@@ -56,5 +56,8 @@ class LogoutView(APIView):
             token = RefreshToken(refresh)
             token.blacklist()
             return Response({"message": "Logged out successfully"})
-        except Exception:
+        except Exception as e:
+            from rest_framework_simplejwt.exceptions import TokenError
+            if isinstance(e, TokenError):
+                return Response({"message": "Logged out successfully (token already invalid/blacklisted)"})
             return Response({"error": "Invalid token"}, status=400)

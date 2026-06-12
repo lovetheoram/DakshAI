@@ -17,10 +17,14 @@ class UserMiniSerializer(serializers.ModelSerializer):
 
     def get_is_following(self, obj):
         request = self.context.get("request")
-        return request.user.following.filter(id=obj.id).exists()
+        if not request or not request.user or request.user.is_anonymous:
+            return False
+        return request.user.following.filter(following_id=obj.id).exists()
 
     def get_is_self(self, obj):
         request = self.context.get("request")
+        if not request or not request.user or request.user.is_anonymous:
+            return False
         return request.user == obj
 
 # ---------------------------------------------------------

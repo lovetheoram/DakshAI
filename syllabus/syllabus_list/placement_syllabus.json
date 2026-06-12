@@ -1,0 +1,3134 @@
+{
+    "exam": {
+        "name": "Placement Preparation",
+        "subjects":[
+            {
+  "name": "Core CS",
+  "topics": [
+    {
+      "name": "Operating Systems",
+      "subtopics": [
+        {
+          "name": "Processes and Threads",
+          "concepts": [
+            {
+              "name": "Process",
+              "description": "Definition of a process as an instance of a program in execution, containing the program code, current activity represented by the program counter, processor registers, and the process stack."
+            },
+            {
+              "name": "Program vs Process",
+              "description": "The distinction between a passive entity stored on disk (program) and an active entity with allocated resources loaded into primary memory (process)."
+            },
+            {
+              "name": "Process State",
+              "description": "The lifecycle stages of a process including New, Ready, Running, Waiting (Blocked), and Terminated, governed by operating system scheduling transitions."
+            },
+            {
+              "name": "Process Control Block",
+              "description": "The data structure used by the operating system kernel to store all structural and architectural parameters of a process, including process ID, program counter, registers, and memory management profiles."
+            },
+            {
+              "name": "Context Switch",
+              "description": "The kernel mechanism of saving the state of an active process or thread and restoring the execution state of another ready entity to achieve concurrency."
+            },
+            {
+              "name": "Thread",
+              "description": "The smallest schedulable unit of execution within a process, sharing the process's text section, data section, and system resources while maintaining its own program counter, registers, and stack space."
+            },
+            {
+              "name": "User Thread",
+              "description": "Threads managed completely above the kernel space by user-level threading libraries, executing quickly without kernel intervention but blocking the entire process if a blocking system call is made."
+            },
+            {
+              "name": "Kernel Thread",
+              "description": "Threads supported and managed directly by the operating system kernel, enabling parallel execution across multi-core processors even when individual threads block."
+            },
+            {
+              "name": "Multithreading",
+              "description": "Architectural models (Many-to-One, One-to-One, Many-to-Many) that define the relationship and mapping between user-level threads and kernel-level execution spaces."
+            },
+            {
+              "name": "Thread Scheduling",
+              "description": "The mechanism by which thread libraries or the kernel allocate CPU execution time slices to independent processing threads within system execution queues."
+            }
+          ]
+        },
+        {
+          "name": "CPU Scheduling",
+          "concepts": [
+            {
+              "name": "FCFS Scheduling",
+              "description": "First-Come, First-Served non-preemptive scheduling policy where jobs are dispatched sequentially based on arrival order, often susceptible to the convoy effect."
+            },
+            {
+              "name": "SJF Scheduling",
+              "description": "Shortest Job First optimal non-preemptive scheduling protocol selecting the execution node with the lowest predicted CPU burst duration."
+            },
+            {
+              "name": "SRTF Scheduling",
+              "description": "Shortest Remaining Time First scheduling model representing the preemptive variant of SJF, intercepting running processes if a shorter burst arrives."
+            },
+            {
+              "name": "Priority Scheduling",
+              "description": "Algorithmic scheduling model assigning CPU ownership based on explicit internal or external numeric ranking, implemented in both preemptive and non-preemptive formats."
+            },
+            {
+              "name": "Round Robin Scheduling",
+              "description": "Preemptive cyclic scheduling mechanism deploying fixed-duration processing windows (time quantums) across ready execution queues to guarantee interactive multi-user response times."
+            },
+            {
+              "name": "Turnaround Time",
+              "description": "The absolute temporal measurement representing the interval spanning from resource submission to absolute process completion."
+            },
+            {
+              "name": "Waiting Time",
+              "description": "The cumulative duration of temporal delays spent by a process resident inside the system ready queue awaiting CPU processing allocation."
+            },
+            {
+              "name": "Response Time",
+              "description": "The precise chronological metric calculating the delta between request submission and the initiation of the first observable behavioral execution response."
+            },
+            {
+              "name": "Starvation",
+              "description": "An indefinite processing layout error where low-priority tasks are perpetually denied execution opportunities due to the constant arrival of higher-ranked tasks."
+            },
+            {
+              "name": "Aging",
+              "description": "A mitigation design pattern that gradually increases the priority of long-waiting, low-priority nodes inside the execution loop to prevent starvation conditions."
+            }
+          ]
+        },
+        {
+          "name": "Synchronization",
+          "concepts": [
+            {
+              "name": "Critical Section",
+              "description": "An architectural program block modifying shared system resource segments, demanding strictly isolated execution guarantees to maintain data integrity."
+            },
+            {
+              "name": "Race Condition",
+              "description": "A concurrent runtime anomaly where concurrent processing threads manipulate shared variables simultaneously, making final data states completely dependent on thread execution order."
+            },
+            {
+              "name": "Mutex",
+              "description": "A locking locking mechanism providing exclusive, binary resource isolation where ownership constraints dictate that the thread acquiring the lock must release it."
+            },
+            {
+              "name": "Semaphore",
+              "description": "An operating system synchronization structure utilizing an internal integer metric adjusted via atomic wait() and signal() calls to manage concurrent execution paths."
+            },
+            {
+              "name": "Binary Semaphore",
+              "description": "A specialized semaphore constrained strictly to integer configurations of 0 and 1, used similarly to a mutex but lacking explicit ownership verification requirements."
+            },
+            {
+              "name": "Counting Semaphore",
+              "description": "A variable semaphore framework initialized to an unrestricted range size, managing thread concurrency across finite, multi-instance resource sets."
+            },
+            {
+              "name": "Monitor",
+              "description": "An abstract, high-level structural synchronization paradigm encapsulating private system parameters, process functions, and condition variables to enforce single-thread class mutations natively."
+            },
+            {
+              "name": "Spin Lock",
+              "description": "A baseline synchronization lock causing low-level kernel loops to evaluate access states continuously, conserving context-switch overheads at the cost of continuous processor cycles."
+            },
+            {
+              "name": "Producer Consumer Problem",
+              "description": "A classical concurrent coordination paradigm ensuring data injection tasks do not run when system storage buffers are full, and extraction tasks halt when buffers are empty."
+            },
+            {
+              "name": "Readers Writers Problem",
+              "description": "A fundamental multi-client synchronization challenge balancing database constraints to allow concurrent reading access while strictly requiring exclusive, isolated thread state ownership for update operations."
+            },
+            {
+              "name": "Dining Philosophers Problem",
+              "description": "An algorithmic resource allocation model analyzing deadlock-avoidance criteria across highly clustered, interdependent multi-process operational layouts."
+            }
+          ]
+        },
+        {
+          "name": "Deadlocks",
+          "concepts": [
+            {
+              "name": "Deadlock",
+              "description": "A severe execution bottleneck condition where a processing pool stays blocked permanently because each task retains locks on nodes wanted by companion components."
+            },
+            {
+              "name": "Necessary Conditions of Deadlock",
+              "description": "The four structural runtime criteria that must be met simultaneously for a deadlock to exist: Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait."
+            },
+            {
+              "name": "Resource Allocation Graph",
+              "description": "A directed geometric model tracking processes and allocated resources as system vertices, where loop formations point to structural deadlocks in non-shared setups."
+            },
+            {
+              "name": "Deadlock Prevention",
+              "description": "A highly restrictive structural mitigation strategy that configures the system to break at least one of the four necessary deadlock criteria before runtime initialization."
+            },
+            {
+              "name": "Deadlock Avoidance",
+              "description": "A runtime tracing protocol evaluating allocation requests using current thread state vectors to ensure the system consistently stays within defined safe zones."
+            },
+            {
+              "name": "Bankers Algorithm",
+              "description": "A classic avoidance testing strategy for multi-instance resource matrices that analyzes prospective task allocation steps before execution to guarantee safety vectors are maintained."
+            },
+            {
+              "name": "Deadlock Detection",
+              "description": "The runtime auditing policy of using specialized tracking engines at set intervals to confirm or locate deadlock states across process allocation maps."
+            },
+            {
+              "name": "Deadlock Recovery",
+              "description": "The manual or automated cleanup steps of terminating locked processes or rollbacking allocation vectors to resolve detected system blocks."
+            }
+          ]
+        },
+        {
+          "name": "Memory Management",
+          "concepts": [
+            {
+              "name": "Logical Address",
+              "description": "The virtual space reference coordinates generated natively by execution processors, requiring address map translation before referencing physical memory nodes."
+            },
+            {
+              "name": "Physical Address",
+              "description": "The hardware data coordinate addressing physical system storage cells inside the primary RAM modules."
+            },
+            {
+              "name": "Address Binding",
+              "description": "The mapping mechanism translating symbolic code links to explicit logical or physical device tracks, occurring during compile, load, or execution phases."
+            },
+            {
+              "name": "Paging",
+              "description": "A hardware-assisted memory management strategy partitioning programs into fixed-size virtual blocks called pages, eliminating external configuration layout gaps."
+            },
+            {
+              "name": "Page Table",
+              "description": "An essential internal index architecture managed by operating system contexts mapping process virtual page numbers to physical RAM page frames."
+            },
+            {
+              "name": "Segmentation",
+              "description": "A logical, user-centric memory mapping schema grouping resource data allocations into variable-length structures called segments based on runtime code categories."
+            },
+            {
+              "name": "Fragmentation",
+              "description": "The degraded state of system memory where unassigned storage cells are broken up or wasted, dropping overall capacity efficiency."
+            },
+            {
+              "name": "Internal Fragmentation",
+              "description": "The systemic waste occurring when allocated memory units are larger than the requested payload sizes, leaving unused bytes trapped within block sectors."
+            },
+            {
+              "name": "External Fragmentation",
+              "description": "The storage anomaly where total unassigned system memory space is large enough to handle allocation requests, but its fragmented layout prevents loading sequential payloads."
+            },
+            {
+              "name": "Virtual Memory",
+              "description": "An advanced storage architectural technique separating a user's logical program address maps from physical memory boundaries, enabling execution of files exceeding baseline hardware RAM limits."
+            },
+            {
+              "name": "Demand Paging",
+              "description": "An optimization layout strategy where virtual memory frames are only swapped from secondary storage blocks into physical RAM channels upon direct instruction execution call."
+            }
+          ]
+        },
+        {
+          "name": "Page Replacement",
+          "concepts": [
+            {
+              "name": "Page Fault",
+              "description": "A hardware trap generated when an executing process references a virtual address page frame that is not currently mapped into physical RAM layers."
+            },
+            {
+              "name": "FIFO Page Replacement",
+              "description": "A baseline swapping strategy tracking allocation queues linearly, selecting the absolute oldest residency page for eviction when fault criteria occur."
+            },
+            {
+              "name": "LRU Page Replacement",
+              "description": "An optimized swapping policy identifying allocation frames by checking past activity, discarding pages that have remained unreferenced for the longest time."
+            },
+            {
+              "name": "Optimal Page Replacement",
+              "description": "An unachievable theoretical baseline algorithm that minimizes faults by evicting pages that will not be used for the longest period in the future, used for benchmarking runtime efficiency."
+            },
+            {
+              "name": "Beladys Anomaly",
+              "description": "An architectural memory anomaly seen under certain layout frameworks (like FIFO) where growing physical page frame capacities counterintuitively triggers higher page fault counts."
+            },
+            {
+              "name": "Thrashing",
+              "description": "A highly critical system failure state where an operating system spends more operational time swapping pages in and out of virtual storage than performing actual instructions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Computer Networks",
+      "subtopics": [
+        {
+          "name": "Network Fundamentals",
+          "concepts": [
+            {
+              "name": "Network",
+              "description": "A system of interconnected autonomous computing devices linked via communication links to share resources, exchange data, and enable digital communications."
+            },
+            {
+              "name": "LAN",
+              "description": "Local Area Network; a network infrastructure providing data communication capabilities across highly confined geographical areas like residential buildings, schools, or individual laboratory facilities."
+            },
+            {
+              "name": "MAN",
+              "description": "Metropolitan Area Network; a regional data infrastructure bridging digital elements across a town or city geographic space, spanning scales larger than individual corporate campuses."
+            },
+            {
+              "name": "WAN",
+              "description": "Wide Area Network; an expansive network topology linking disparate computing endpoints across countries or continents, often using long-haul public telecommunication systems."
+            },
+            {
+              "name": "Bandwidth",
+              "description": "The maximum data transmission capability of a communication link, measuring total bit delivery potential per unit time across an active data link."
+            },
+            {
+              "name": "Latency",
+              "description": "The cumulative temporal delay measuring the exact time duration required for a specific data block or packet to travel from its initial origin source to its destination point."
+            },
+            {
+              "name": "Throughput",
+              "description": "The actual amount of valid data successfully transmitted over a network channel within a given timeframe, reflecting real-world performance under overhead constraints."
+            },
+            {
+              "name": "Packet",
+              "description": "The formatted, byte-bounded routing unit generated at the Network Layer (Layer 3), combining user data payloads with control headers containing network address metrics."
+            },
+            {
+              "name": "Frame",
+              "description": "The explicit data payload unit managed within Data Link Layer boundaries (Layer 2), encapsulating packets with specialized physical synchronization headers and error detection flags."
+            }
+          ]
+        },
+        {
+          "name": "OSI Model",
+          "concepts": [
+            {
+              "name": "Physical Layer",
+              "description": "Layer 1 of the OSI stack, managing raw bitstream transmissions, mechanical connector specifications, and physical signal voltage standards over transmission media."
+            },
+            {
+              "name": "Data Link Layer",
+              "description": "Layer 2 of the OSI stack, providing robust node-to-node frame encapsulation, handling error control check flags, and establishing physical MAC tracking paths."
+            },
+            {
+              "name": "Network Layer",
+              "description": "Layer 3 of the OSI stack, establishing routing algorithms, virtual multi-segment connectivity pathways, and logical IP configuration schemes."
+            },
+            {
+              "name": "Transport Layer",
+              "description": "Layer 4 of the OSI stack, providing reliable end-to-end data delivery, error correction mechanisms, flow control, and port-based process multiplexing."
+            },
+            {
+              "name": "Session Layer",
+              "description": "Layer 5 of the OSI stack, managing, authenticating, and synchronizing long-duration application context connections across multi-system terminals."
+            },
+            {
+              "name": "Presentation Layer",
+              "description": "Layer 6 of the OSI stack, translating disparate system syntax conventions via data compression, formatting adjustments, and programmatic cryptographic encryption steps."
+            },
+            {
+              "name": "Application Layer",
+              "description": "Layer 7 of the OSI stack, interacting directly with user-level software applications via standard communication protocols to enable end-user network services."
+            }
+          ]
+        },
+        {
+          "name": "TCP IP Model",
+          "concepts": [
+            {
+              "name": "TCP IP Architecture",
+              "description": "A production-oriented four-layer networking model built on the Internet protocol suite, focusing on interoperability over strict theoretical layer isolation."
+            },
+            {
+              "name": "Application Layer",
+              "description": "The top TCP/IP architectural tier combining application, presentation, and session services to directly manage interface operations."
+            },
+            {
+              "name": "Transport Layer",
+              "description": "The TCP/IP execution plane responsible for end-to-end host communication management, utilizing TCP and UDP protocol engines to manage data sessions."
+            },
+            {
+              "name": "Internet Layer",
+              "description": "The core TCP/IP protocol routing layout layer, anchoring host packet delivery operations across independent node tracking spaces via IP."
+            },
+            {
+              "name": "Network Access Layer",
+              "description": "The foundation layer of the TCP/IP model, mapping physical hardware tracking media and link layer mechanics to connect directly with physical transmission media."
+            }
+          ]
+        },
+        {
+          "name": "Transport Layer",
+          "concepts": [
+            {
+              "name": "TCP",
+              "description": "Transmission Control Protocol; a connection-oriented transport protocol providing reliable, ordered, and error-checked delivery of a stream of octets between applications."
+            },
+            {
+              "name": "UDP",
+              "description": "User Datagram Protocol; a lightweight, connectionless transport protocol providing minimal message delivery services with no reliability guarantees, optimizing transmission speed."
+            },
+            {
+              "name": "TCP Three Way Handshake",
+              "description": "The multi-step socket sync pattern (SYN, SYN-ACK, ACK) used to reliably establish connection parameters between client and server terminals before data transfer begins."
+            },
+            {
+              "name": "TCP Four Way Termination",
+              "description": "The systematic teardown sequence (FIN, ACK, FIN, ACK) cleanly closing independent data lines when active communication sessions end."
+            },
+            {
+              "name": "Flow Control",
+              "description": "The transport mechanism mapping sender throughput speeds to match receiver buffer capacities, preventing data overruns on slower target terminals."
+            },
+            {
+              "name": "Congestion Control",
+              "description": "The network routing policy using window adjustments (Slow Start, Congestion Avoidance) to lower source output when mid-path packet buffers overload."
+            },
+            {
+              "name": "Sliding Window Protocol",
+              "description": "A dynamic packet tracking framework enabling concurrent multi-segment frame transmissions before requiring explicitly returned acknowledgement markers."
+            }
+          ]
+        },
+        {
+          "name": "Application Protocols",
+          "concepts": [
+            {
+              "name": "HTTP",
+              "description": "Hypertext Transfer Protocol; an application-layer protocol for distributed, collaborative, hypermedia information systems, functioning as the foundation of data communication for the World Wide Web."
+            },
+            {
+              "name": "HTTPS",
+              "description": "The secure extension of HTTP, encrypting message data streams using underlying TLS/SSL cryptographic connection wrappers."
+            },
+            {
+              "name": "DNS",
+              "description": "Domain Name System; a hierarchical distributed naming system mapping human-readable domain text labels to machine-routable logical IP targets."
+            },
+            {
+              "name": "DHCP",
+              "description": "Dynamic Host Configuration Protocol; an infrastructure utility dynamically assigning runtime network profiles, subnet masks, and gateway points to connecting devices."
+            },
+            {
+              "name": "SMTP",
+              "description": "Simple Mail Transfer Protocol; the email delivery framework handling messaging transfers between source platforms and destination mail servers."
+            },
+            {
+              "name": "POP3",
+              "description": "Post Office Protocol version 3; a simple mail retrieval engine pulling server inbox contents directly to a local client device, often purging original copies from the server."
+            },
+            {
+              "name": "IMAP",
+              "description": "Internet Message Access Protocol; an advanced mail storage protocol allowing multiple devices to concurrently view, organize, and sync inbox content states on remote mail servers."
+            },
+            {
+              "name": "FTP",
+              "description": "File Transfer Protocol; a legacy utility built on a dual-channel design pattern to handle file uploads and downloads across remote host nodes."
+            },
+            {
+              "name": "SSH",
+              "description": "Secure Shell; a cryptographic protocol enabling secure command execution and remote administration over unencrypted connection networks."
+            }
+          ]
+        },
+        {
+          "name": "Routing and Addressing",
+          "concepts": [
+            {
+              "name": "IPv4",
+              "description": "A 32-bit logical addressing schema organizing host target coordinates into four 8-bit octet segments, yielding a maximum space of around 4.3 billion unique identifiers."
+            },
+            {
+              "name": "IPv6",
+              "description": "An advanced 128-bit hexadecimal addressing format developed to replace IPv4, scaling address space availability to match growing global IoT numbers."
+            },
+            {
+              "name": "Subnetting",
+              "description": "The network optimization process dividing a large block of IP addresses into smaller, isolated sub-networks to improve routing efficiency and security."
+            },
+            {
+              "name": "CIDR",
+              "description": "Classless Inter-Domain Routing; a flexible method for allocating IP addresses and routing packets, replacing traditional network class limits with bit-mask suffixes."
+            },
+            {
+              "name": "Router",
+              "description": "An intelligent Layer 3 network appliance analyzing packet headers and route matrices to forward data across disparate network topologies."
+            },
+            {
+              "name": "Switch",
+              "description": "A Layer 2 hardware appliance inspecting hardware MAC address targets to forward data frames directly to specific local port connections."
+            },
+            {
+              "name": "MAC Address",
+              "description": "Media Access Control; a unique 48-bit physical identifier permanently burned into hardware network interfaces by manufacturers to handle local link navigation."
+            },
+            {
+              "name": "ARP",
+              "description": "Address Resolution Protocol; a discovery protocol mapping dynamic Layer 3 logical IP addresses to specific Layer 2 physical hardware MAC coordinates within local areas."
+            },
+            {
+              "name": "NAT",
+              "description": "Network Address Translation; a method mapping private, non-routable local area IP scopes into single public interfaces to conserve address availability."
+            }
+          ]
+        },
+        {
+          "name": "Network Security",
+          "concepts": [
+            {
+              "name": "SSL",
+              "description": "Secure Sockets Layer; a legacy cryptographic framework designed to encrypt data pathways across client-server lines, now superseded by modern TLS standards."
+            },
+            {
+              "name": "TLS",
+              "description": "Transport Layer Security; the current cryptographic protocol standard providing data privacy, integrity, and authentication over unsecure network layouts."
+            },
+            {
+              "name": "Digital Certificate",
+              "description": "An electronic validation token signed by public Certificate Authorities verifying the identity and ownership properties of cryptographic public key nodes."
+            },
+            {
+              "name": "Firewall",
+              "description": "A security system monitoring and filtering network traffic based on configured rulesets to prevent unauthorized external access."
+            },
+            {
+              "name": "VPN",
+              "description": "Virtual Private Network; a secure connection overlay that encapsulates and encrypts internet traffic to safely route data streams across public lines."
+            },
+            {
+              "name": "Public Key Encryption",
+              "description": "Asymmetric cryptography utilizing mathematically linked public-private key pairs, where data encrypted by the public key requires the private key to decrypt."
+            },
+            {
+              "name": "Private Key Encryption",
+              "description": "Symmetric cryptography using a single shared key file for both data encryption and decryption stages, requiring secure key distribution channels."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Database Management System",
+      "subtopics": [
+        {
+          "name": "Database Fundamentals",
+          "concepts": [
+            {
+              "name": "Database",
+              "description": "An organized, structured collection of data stored electronically, designed to support efficient data entry, retrieval, and updating operations."
+            },
+            {
+              "name": "DBMS",
+              "description": "Database Management System; a comprehensive software package acting as an interface between databases and end-users to ensure structured data control."
+            },
+            {
+              "name": "RDBMS",
+              "description": "Relational Database Management System; a database paradigm structuring records into strict tabular rows and columns, managing associations through explicit keys."
+            },
+            {
+              "name": "Schema",
+              "description": "The complete logical configuration structure defining database rules, field relations, constraints, and record organizational data frameworks."
+            },
+            {
+              "name": "Instance",
+              "description": "The actual physical snapshot capturing database values and records at a single specific chronological moment."
+            },
+            {
+              "name": "Data Independence",
+              "description": "The database isolation property allowing schema adjustments at one abstraction tier (such as logical structure) without requiring modifications to other levels (like physical storage configurations)."
+            }
+          ]
+        },
+        {
+          "name": "Keys and Constraints",
+          "concepts": [
+            {
+              "name": "Primary Key",
+              "description": "A unique, non-null database index explicitly chosen to identify individual tabular record entries uniquely."
+            },
+            {
+              "name": "Foreign Key",
+              "description": "A relational field constraint mapping to a primary key in another table, enforcing referential integrity across database layouts."
+            },
+            {
+              "name": "Candidate Key",
+              "description": "A minimal set of attributes that can uniquely identify a table row without containing redundant tracking data."
+            },
+            {
+              "name": "Super Key",
+              "description": "Any combination of table attributes that uniquely identifies a row, potentially containing extra non-essential attributes beyond candidate key limits."
+            },
+            {
+              "name": "Alternate Key",
+              "description": "Candidate keys that were not selected as the primary table identifier but still provide valid, unique record identification indexes."
+            },
+            {
+              "name": "Unique Constraint",
+              "description": "An indexing constraint preventing duplicate attribute entry values across a table column, while still allowing null values."
+            },
+            {
+              "name": "Not Null Constraint",
+              "description": "A validation constraint enforcing that a table column cannot accept blank or null entries during record insertion operations."
+            }
+          ]
+        },
+        {
+          "name": "SQL",
+          "concepts": [
+            {
+              "name": "SELECT",
+              "description": "The primary data manipulation operator used to fetch specific record rows and data values from target database tables."
+            },
+            {
+              "name": "WHERE",
+              "description": "A row filtering clause filtering dataset outputs based on explicit conditional logic before row evaluation grouping steps occur."
+            },
+            {
+              "name": "GROUP BY",
+              "description": "An aggregation directive partitioning rows with identical values into summarized sub-groups for functional analysis calculations."
+            },
+            {
+              "name": "HAVING",
+              "description": "A filtering conditional clause applying explicit selection restrictions to post-aggregation datasets generated by GROUP BY actions."
+            },
+            {
+              "name": "ORDER BY",
+              "description": "A presentation directive sorting output datasets in ascending or descending order based on designated table columns."
+            },
+            {
+              "name": "Aggregate Functions",
+              "description": "Mathematical calculation operations (SUM, COUNT, AVG, MIN, MAX) that process multi-row array sets to return single, consolidated summary metrics."
+            },
+            {
+              "name": "Subquery",
+              "description": "An isolated nested query execution embedded inside the filtering statements of a parent SQL query block."
+            },
+            {
+              "name": "View",
+              "description": "A virtual table configuration mapping a stored SQL query definition onto dynamic, real-time table projections."
+            }
+          ]
+        },
+        {
+          "name": "Joins",
+          "concepts": [
+            {
+              "name": "Inner Join",
+              "description": "A row evaluation join returning only the intersection matches where keys match across both source tables."
+            },
+            {
+              "name": "Left Join",
+              "description": "A join returning all rows from the left source table alongside matching values from the right table, substituting nulls if no intersection is found."
+            },
+            {
+              "name": "Right Join",
+              "description": "A join matching right-side database row references against corresponding left-side entries, outputting null fields for unmapped left rows."
+            },
+            {
+              "name": "Full Join",
+              "description": "A broad relational link yielding all records from both target tables, filling empty fields with null markers wherever keys do not match."
+            },
+            {
+              "name": "Self Join",
+              "description": "A tabular join mechanism where a database table is joined with itself to resolve internal hierarchical relationship patterns."
+            },
+            {
+              "name": "Cross Join",
+              "description": "A baseline Cartesian join pairing every row of the primary table with every row of the secondary table, maximizing total row counts."
+            }
+          ]
+        },
+        {
+          "name": "Normalization",
+          "concepts": [
+            {
+              "name": "Functional Dependency",
+              "description": "A relational structural condition where the values of one attribute set uniquely determine the values of another attribute set within a table."
+            },
+            {
+              "name": "1NF",
+              "description": "First Normal Form; structural schema adjustments requiring columns to store only atomic values and preventing repeating group structures."
+            },
+            {
+              "name": "2NF",
+              "description": "Second Normal Form; a normalization tier meeting 1NF conditions and removing all partial dependencies on composite primary key tracks."
+            },
+            {
+              "name": "3NF",
+              "description": "Third Normal Form; schema alignment fulfilling 2NF requirements and eliminating transitive dependency links on non-prime attributes."
+            },
+            {
+              "name": "BCNF",
+              "description": "Boyce-Codd Normal Form; an advanced, stricter variant of 3NF requiring that every functional dependency determinant must be a candidate key."
+            },
+            {
+              "name": "Denormalization",
+              "description": "An optimization strategy intentionally introducing redundant data structures into highly normalized tables to improve complex query read velocities."
+            }
+          ]
+        },
+        {
+          "name": "Transactions",
+          "concepts": [
+            {
+              "name": "Transaction",
+              "description": "A logical unit of work executing database adjustments as a single atomic routine that must either complete fully or leave database states unchanged."
+            },
+            {
+              "name": "ACID Properties",
+              "description": "The four foundational reliability principles of transaction systems: Atomicity, Consistency, Isolation, and Durability."
+            },
+            {
+              "name": "Commit",
+              "description": "The operational command that permanently writes all staged transaction changes to disk storage, making them visible to other users."
+            },
+            {
+              "name": "Rollback",
+              "description": "The recovery step undoing staged transaction changes to return data structures to their pre-execution state after runtime errors occur."
+            },
+            {
+              "name": "Concurrency Control",
+              "description": "The scheduling framework managing multi-client database updates to prevent structural anomalies during simultaneous table access."
+            },
+            {
+              "name": "Locking",
+              "description": "An access control design pattern isolating database rows (using shared or exclusive flags) to prevent multi-transaction conflict conditions."
+            },
+            {
+              "name": "Two Phase Locking",
+              "description": "A protocol ensuring transaction serializability by dividing lock management into a growing locking phase and a subsequent shrinking release phase."
+            }
+          ]
+        },
+        {
+          "name": "Indexing",
+          "concepts": [
+            {
+              "name": "Index",
+              "description": "A specialized pointer reference layout created to speed up data row discovery without requiring full table scans."
+            },
+            {
+              "name": "Clustered Index",
+              "description": "An index determining the physical storage order of data rows within a table based on a designated key attribute, limiting tables to one clustered index."
+            },
+            {
+              "name": "Non Clustered Index",
+              "description": "An index structure that separates pointer search keys from physical record layout locations, pointing to target positions via logical links."
+            },
+            {
+              "name": "B Tree",
+              "description": "A self-balancing search tree layout used by database backends to maintain sorted index pointers for fast block read operations."
+            },
+            {
+              "name": "Hash Index",
+              "description": "A direct lookup pointer mechanism deploying hash function calculations to achieve near-instant access for exact match queries."
+            },
+            {
+              "name": "Query Optimization",
+              "description": "The internal processing mechanism that evaluates execution plans to choose the most efficient pathway for processing SQL statements."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Object Oriented Programming",
+      "subtopics": [
+        {
+          "name": "OOP Fundamentals",
+          "concepts": [
+            {
+              "name": "Class",
+              "description": "An extensible blueprint framework defining structural data properties and functional methods common to all instances created from it."
+            },
+            {
+              "name": "Object",
+              "description": "A discrete runtime instance instantiated from a class definition, maintaining its own internal state allocations."
+            },
+            {
+              "name": "Method",
+              "description": "A programmatic function encapsulated within class boundaries, designed to operate directly on object states."
+            },
+            {
+              "name": "Constructor",
+              "description": "A specialized class initialization function called automatically to instantiate an object block and assign default properties."
+            },
+            {
+              "name": "Instance Variable",
+              "description": "A data field belonging to an individual object instance, where mutations isolate values from companion object copies."
+            },
+            {
+              "name": "Static Variable",
+              "description": "A class-scoped variable shared across all object instances, maintaining a single value space regardless of instantiation counts."
+            }
+          ]
+        },
+        {
+          "name": "Pillars of OOP",
+          "concepts": [
+            {
+              "name": "Encapsulation",
+              "description": "The security design practice of wrapping object states inside protective interfaces, hiding internal access mechanics using private access modifiers."
+            },
+            {
+              "name": "Abstraction",
+              "description": "The structural design process of hiding low-level implementation complexities, exposing only clean interface specifications to users."
+            },
+            {
+              "name": "Inheritance",
+              "description": "The reusability mechanism allowing child classes to automatically inherit fields and functions from parent classes, establishing explicit polymorphic taxonomies."
+            },
+            {
+              "name": "Polymorphism",
+              "description": "The capability of different object structures to interpret identical method calls in distinct, context-specific ways."
+            }
+          ]
+        },
+        {
+          "name": "Inheritance",
+          "concepts": [
+            {
+              "name": "Single Inheritance",
+              "description": "A baseline lineage layout where a derived sub-class extends attributes from exactly one parent super-class structure."
+            },
+            {
+              "name": "Multilevel Inheritance",
+              "description": "An extended inheritance line where a class derives from a child class, creating sequential structural lineage chains."
+            },
+            {
+              "name": "Hierarchical Inheritance",
+              "description": "An inheritance pattern branching out where a single parent super-class provides fundamental attributes to multiple subclass entities."
+            },
+            {
+              "name": "Multiple Inheritance",
+              "description": "An inheritance structure where a subclass extends fields from more than one direct parent class, often requiring interfaces to prevent lookup ambiguity."
+            }
+          ]
+        },
+        {
+          "name": "Polymorphism",
+          "concepts": [
+            {
+              "name": "Method Overloading",
+              "description": "Configuring multiple functions within a single scope with identical names but unique parameter signatures, resolved at compile-time."
+            },
+            {
+              "name": "Method Overriding",
+              "description": "Redefining a parent class method inside a subclass to implement specialized runtime behavior while retaining the original method signature."
+            },
+            {
+              "name": "Compile Time Polymorphism",
+              "description": "Static method resolution patterns (like function overloading or template expansion) handled entirely by compilers prior to runtime execution."
+            },
+            {
+              "name": "Run Time Polymorphism",
+              "description": "Dynamic method dispatch mechanisms resolving active target calls at execution time using virtual method index frameworks."
+            }
+          ]
+        },
+        {
+          "name": "Advanced OOP",
+          "concepts": [
+            {
+              "name": "Interface",
+              "description": "A strict structural contract defining a set of method declarations without concrete implementations, forcing implementing classes to fulfill the behaviors."
+            },
+            {
+              "name": "Abstract Class",
+              "description": "A restricted partial class configuration that cannot be instantiated directly, designed to house common abstract definition paths for subclasses."
+            },
+            {
+              "name": "Association",
+              "description": "A general relationship model establishing connection tracks between two unrelated class systems without declaring explicit lifecycle dependencies."
+            },
+            {
+              "name": "Aggregation",
+              "description": "A weak asymmetric association modeling 'has-a' relations where child components can exist independently of their parent containers."
+            },
+            {
+              "name": "Composition",
+              "description": "A strong form of aggregation where child component lifecycles are strictly bound to their parent container's lifespan."
+            },
+            {
+              "name": "Dependency",
+              "description": "A short-term execution link where a class references another class system briefly as an instantiation argument or transient execution utility."
+            }
+          ]
+        },
+        {
+          "name": "Design Principles",
+          "concepts": [
+            {
+              "name": "SOLID Principles",
+              "description": "The five foundational design tenets used to create flexible, understandable, and maintainable object-oriented software architectures."
+            },
+            {
+              "name": "Single Responsibility Principle",
+              "description": "The modular guideline asserting that a software class should focus on a single core operational goal, giving it only one reason to change."
+            },
+            {
+              "name": "Open Closed Principle",
+              "description": "The extensibility pattern dictating that modules should be open for functional extension but closed to structural changes of their core source files."
+            },
+            {
+              "name": "Liskov Substitution Principle",
+              "description": "The inheritance guideline requiring that parent class references must be completely replaceable by subclass instances without breaking application stability."
+            },
+            {
+              "name": "Interface Segregation Principle",
+              "description": "The optimization tenet advising developers to split broad interfaces into smaller, specialized interfaces so clients are not forced to depend on unused methods."
+            },
+            {
+              "name": "Dependency Inversion Principle",
+              "description": "The decoupling practice forcing high-level business logic components to depend on clean abstract templates rather than volatile, low-level concrete structures."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "System Design Fundamentals",
+      "subtopics": [
+        {
+          "name": "Scalability Basics",
+          "concepts": [
+            {
+              "name": "Scalability",
+              "description": "The capacity of an engineering infrastructure to process growing payload rates efficiently by expanding available execution resources."
+            },
+            {
+              "name": "Vertical Scaling",
+              "description": "Increasing the processing throughput of a system by upgrading the physical hardware capabilities (such as CPU cores, RAM modules, or storage speed) of a single node machine."
+            },
+            {
+              "name": "Horizontal Scaling",
+              "description": "Expanding system capability by integrating additional individual server nodes into a distributed processing cluster."
+            },
+            {
+              "name": "High Availability",
+              "description": "An architectural goal aimed at ensuring continuous service operations and minimizing system downtime through redundant infrastructure design."
+            },
+            {
+              "name": "Fault Tolerance",
+              "description": "The capacity of a system to continue executing its core service tasks smoothly even during the unexpected failure of specific hardware or software components."
+            }
+          ]
+        },
+        {
+          "name": "Load Distribution",
+          "concepts": [
+            {
+              "name": "Load Balancer",
+              "description": "A dedicated reverse proxy routing incoming client request traffic across a clustered pool of backend application servers to optimize resource utilization."
+            },
+            {
+              "name": "Round Robin",
+              "description": "A cyclical traffic routing pattern that distributes incoming network requests sequentially across an ordered list of backend server nodes."
+            },
+            {
+              "name": "Least Connections",
+              "description": "An intelligent load balancing algorithm routing new client connections to whichever backend server is managing the lowest current active session count."
+            },
+            {
+              "name": "Reverse Proxy",
+              "description": "An intermediary gateway server positioned ahead of internal networks to manage client requests, handle encryption handshakes, and isolate backend servers."
+            }
+          ]
+        },
+        {
+          "name": "Caching",
+          "concepts": [
+            {
+              "name": "Cache",
+              "description": "A high-speed, temporary storage layer used to hold active data subsets, reducing the need to query slower primary database storage channels."
+            },
+            {
+              "name": "Cache Hit",
+              "description": "An optimistic execution state where requested application records are successfully found and fetched from the fast cache index without querying storage backends."
+            },
+            {
+              "name": "Cache Miss",
+              "description": "The fallback condition where requested data keys are missing from the cache, requiring the application to fetch the values from slow primary database storage."
+            },
+            {
+              "name": "Redis",
+              "description": "An open-source, in-memory key-value data store used primarily as a high-performance distributed cache engine."
+            },
+            {
+              "name": "Cache Eviction",
+              "description": "The strategy used to clear data from a full cache layer (using rules like LRU or LFU) to free up space for fresh record insertions."
+            }
+          ]
+        },
+        {
+          "name": "Database Scaling",
+          "concepts": [
+            {
+              "name": "Replication",
+              "description": "The practice of copying database records across multiple server instances to guarantee data redundancy and boost read scaling capabilities."
+            },
+            {
+              "name": "Master Slave Architecture",
+              "description": "A relational coordination pattern where a primary master node processes write operations while multiple secondary slave nodes handle read operations."
+            },
+            {
+              "name": "Sharding",
+              "description": "A horizontal partitioning technique that splits large database tables into smaller subsets distributed across completely independent database servers."
+            },
+            {
+              "name": "Partitioning",
+              "description": "The practice of splitting large tables into smaller logical sub-units within a single database instance to improve query search efficiency."
+            }
+          ]
+        },
+        {
+          "name": "Distributed Systems",
+          "concepts": [
+            {
+              "name": "CAP Theorem",
+              "description": "A distributed systems principle stating that a system can guarantee at most two of three core properties simultaneously: Consistency, Availability, and Partition Tolerance."
+            },
+            {
+              "name": "Consistency",
+              "description": "The data integrity goal ensuring that all nodes within a distributed cluster view and return identical database records simultaneously."
+            },
+            {
+              "name": "Availability",
+              "description": "A system design guarantee ensuring that every non-failing node returns a non-error response for incoming requests, regardless of its data state."
+            },
+            {
+              "name": "Partition Tolerance",
+              "description": "The capacity of a distributed system to continue operating normally despite network communication drops or packet delays between server nodes."
+            },
+            {
+              "name": "Eventual Consistency",
+              "description": "A loose consistency model ensuring that data values on distributed nodes will eventually synchronize if no fresh updates are applied to the cluster."
+            }
+          ]
+        },
+        {
+          "name": "Messaging Systems",
+          "concepts": [
+            {
+              "name": "Message Queue",
+              "description": "An asynchronous communication buffer used to decouple applications, passing data payloads between systems via independent queues."
+            },
+            {
+              "name": "Kafka",
+              "description": "A distributed log streaming framework built to ingest, replicate, and process high-throughput event data records in real time."
+            },
+            {
+              "name": "RabbitMQ",
+              "description": "An open-source message broker managing complex message routing patterns using explicit exchange configurations."
+            },
+            {
+              "name": "Producer",
+              "description": "An execution process responsible for creating data messages and pushing them to asynchronous message brokers or log systems."
+            },
+            {
+              "name": "Consumer",
+              "description": "An application node that polls message queues to read and process incoming data streams asynchronously."
+            }
+          ]
+        },
+        {
+          "name": "Microservices",
+          "concepts": [
+            {
+              "name": "Monolith",
+              "description": "A software architecture where all functional domains, business logic steps, and data access layers are packed into a single unified codebase."
+            },
+            {
+              "name": "Microservice",
+              "description": "An architectural pattern breaking applications down into an array of small, independently deployable services that communicate via lightweight APIs."
+            },
+            {
+              "name": "API Gateway",
+              "description": "A single entry point server that accepts client requests, routes traffic to backend microservices, and manages auxiliary tasks like authentication."
+            },
+            {
+              "name": "Service Discovery",
+              "description": "An infrastructure registry enabling microservices to dynamically track and resolve the changing IP coordinates of companion services within a cluster."
+            },
+            {
+              "name": "Circuit Breaker",
+              "description": "A design pattern that monitors microservice request failure rates, opening the circuit to return immediate fallback errors if a service down-path fails."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+            {
+  "name": "Coding & DSA",
+  "topics": [
+    {
+      "name": "Complexity Analysis",
+      "subtopics": [
+        {
+          "name": "Time Complexity",
+          "concepts": [
+            {
+              "name": "Big O Notation",
+              "description": "Mathematical notation used to describe the upper bound of an algorithm's running time, defining the worst-case asymptotic growth rate as input size approaches infinity."
+            },
+            {
+              "name": "Big Omega Notation",
+              "description": "Mathematical notation defining the lower bound of an algorithm's asymptotic growth rate, describing the absolute minimum resource or time execution requirements."
+            },
+            {
+              "name": "Big Theta Notation",
+              "description": "Mathematical notation providing an asymptotically tight bound, capturing both upper and lower bounds to precisely define the exact growth rate of an algorithm."
+            },
+            {
+              "name": "Best Case Complexity",
+              "description": "The minimum number of execution steps or operations required by an algorithm under the most ideal configuration of input data."
+            },
+            {
+              "name": "Average Case Complexity",
+              "description": "The expected number of execution steps or operations calculated across all possible permutations and variations of valid input data sets."
+            },
+            {
+              "name": "Worst Case Complexity",
+              "description": "The maximum absolute limit of resource consumption or execution runtime steps an algorithm will ever require for any input configuration of size N."
+            }
+          ]
+        },
+        {
+          "name": "Space Complexity",
+          "concepts": [
+            {
+              "name": "Auxiliary Space",
+              "description": "The temporary or extra memory allocations introduced directly by an algorithm's logic during execution, excluding the memory space used by the input parameters themselves."
+            },
+            {
+              "name": "Recursive Stack Space",
+              "description": "The implicit memory overhead consumed on the system call stack to store active frame references, local parameters, and return addresses during nested recursive calls."
+            },
+            {
+              "name": "In Place Algorithm",
+              "description": "An algorithm that mutates its native input structures directly without using extensive auxiliary storage allocations, strictly adhering to an O(1) extra space limitation."
+            }
+          ]
+        },
+        {
+          "name": "Recursion Analysis",
+          "concepts": [
+            {
+              "name": "Recursion Tree",
+              "description": "A visual and analytical tree model representing execution branches of a recursive algorithm, where nodes indicate individual execution steps and subproblem decomposition costs."
+            },
+            {
+              "name": "Master Theorem",
+              "description": "An algebraic formula providing instant asymptotic solutions for divide-and-conquer recurrence relations of the form T(n) = aT(n/b) + f(n)."
+            },
+            {
+              "name": "Recurrence Relation",
+              "description": "A mathematical equation modeling an execution routine's runtime complexity by defining its resource cost on an input of size N in terms of its performance on smaller subproblems."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Arrays",
+      "subtopics": [
+        {
+          "name": "Array Fundamentals",
+          "concepts": [
+            {
+              "name": "Traversal",
+              "description": "Iterating sequentially through a block of contiguous memory cells to view or process each stored data record exactly once."
+            },
+            {
+              "name": "Insertion",
+              "description": "Adding a new element at a specific index within an array, requiring down-stream element shifting if target memory slots are located mid-structure."
+            },
+            {
+              "name": "Deletion",
+              "description": "Removing an element from a targeted index pointer, requiring up-stream elements to shift backward to preserve sequential data placement."
+            },
+            {
+              "name": "Searching",
+              "description": "Techniques for locating targeted search keys within an array sequence, matching entries either via linear evaluation or binary division rules."
+            },
+            {
+              "name": "Rotation",
+              "description": "Shifting all elements of an array cyclicly by a factor of K positions, changing indexing references relative to the original array boundaries."
+            }
+          ]
+        },
+        {
+          "name": "Prefix Sum",
+          "concepts": [
+            {
+              "name": "Prefix Sum Array",
+              "description": "A derived preprocessing array where each indexing slot stores the cumulative total of all source values up to that specific index point."
+            },
+            {
+              "name": "Range Sum Query",
+              "description": "An optimization lookup design that uses a precomputed prefix sum array to resolve range query calculations across indices [L, R] in O(1) constant time."
+            },
+            {
+              "name": "Difference Array",
+              "description": "An auxiliary tracking structure that logs boundary mutations, enabling O(1) range updates across array intervals before a final prefix sum reconstruction."
+            }
+          ]
+        },
+        {
+          "name": "Sliding Window",
+          "concepts": [
+            {
+              "name": "Fixed Size Window",
+              "description": "A window technique that shifts an evaluation block of a constant size K across a data sequence to evaluate sub-interval properties without nested loop overheads."
+            },
+            {
+              "name": "Variable Size Window",
+              "description": "A dynamic subarray tracking strategy that expands or contracts the left and right window bounds dynamically to discover structures matching explicit condition limits."
+            },
+            {
+              "name": "Maximum Sum Subarray",
+              "description": "The challenge of identifying a continuous subarray segment within a sequence that produces the highest total sum when adding its elements."
+            },
+            {
+              "name": "Longest Subarray",
+              "description": "Identifying the maximal contiguous sequence span inside an array that fulfills defined parameter configurations or value metrics."
+            }
+          ]
+        },
+        {
+          "name": "Two Pointer",
+          "concepts": [
+            {
+              "name": "Opposite Direction Pointer",
+              "description": "An array iteration strategy tracking elements via independent boundary pointers that step inward toward each other from opposite ends of a sequence."
+            },
+            {
+              "name": "Same Direction Pointer",
+              "description": "An array tracking strategy where both references travel in the same direction at different rates, often tracking structural boundaries or read-write targets."
+            },
+            {
+              "name": "Pair Sum",
+              "description": "A search technique navigating sorted arrays using binary index steps to check if any pair of values equals a targeted target value."
+            },
+            {
+              "name": "Container With Most Water",
+              "description": "A classic optimization problem resolved via inward-converging boundary pointers to maximize coordinate volume bounds based on distance and height restrictions."
+            }
+          ]
+        },
+        {
+          "name": "Array Algorithms",
+          "concepts": [
+            {
+              "name": "Kadane Algorithm",
+              "description": "An optimized dynamic programming approach that scans an array in a single pass to track maximum local sums, resolving the maximum subarray problem in O(N) runtime."
+            },
+            {
+              "name": "Dutch National Flag",
+              "description": "A three-way sorting algorithm that groups identical elements (e.g., 0s, 1s, and 2s) into sorted segments in a single pass using three directional tracking pointers."
+            },
+            {
+              "name": "Moore Voting Algorithm",
+              "description": "A streaming voting algorithm that tracking balanced cancellation counters to discover a majority element (appearing more than N/2 times) in linear O(N) time."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Strings",
+      "subtopics": [
+        {
+          "name": "String Basics",
+          "concepts": [
+            {
+              "name": "String Traversal",
+              "description": "Iterating sequentially through a sequence of characters to examine, transform, or filter individual characters."
+            },
+            {
+              "name": "String Comparison",
+              "description": "Comparing two character arrays sequentially to determine matching equality or character sorting precedence based on lexicographical encoding rules."
+            },
+            {
+              "name": "Substring",
+              "description": "A contiguous sequence of characters extracted from within a larger parent string, preserving the original character ordering."
+            },
+            {
+              "name": "Character Frequency",
+              "description": "Counting the individual occurrence metrics of characters within a text string, often tracked using localized indexing array models."
+            }
+          ]
+        },
+        {
+          "name": "Pattern Matching",
+          "concepts": [
+            {
+              "name": "Naive Matching",
+              "description": "A brute-force string search method checking for pattern matches by shifting and evaluating alignment arrays across every index of a text sequence."
+            },
+            {
+              "name": "KMP Algorithm",
+              "description": "Knuth-Morris-Pratt algorithm; an optimized pattern search tracking precomputed longest proper prefix-suffix (LPS) arrays to skip redundant comparisons during mismatches."
+            },
+            {
+              "name": "Rabin Karp",
+              "description": "A pattern matching approach utilizing rolling hash calculations to scan text intervals quickly, dropping to full string validation steps only on hash matching states."
+            }
+          ]
+        },
+        {
+          "name": "Palindrome Problems",
+          "concepts": [
+            {
+              "name": "Palindrome Check",
+              "description": "Verifying if a sequence of characters reads identically both forward and backward using symmetric boundary tracking pointers."
+            },
+            {
+              "name": "Longest Palindrome",
+              "description": "Discovering the maximal length contiguous substring partition within a target sequence that reads symmetrically forward and backward."
+            },
+            {
+              "name": "Palindrome Partitioning",
+              "description": "A combinatorial challenge dividing a string into distinct substring blocks where every individual segment satisfies palindrome criteria."
+            }
+          ]
+        },
+        {
+          "name": "Hashing Applications",
+          "concepts": [
+            {
+              "name": "Anagram Detection",
+              "description": "Verifying if two distinct strings contain an identical composition of characters by matching their underlying frequency distribution maps."
+            },
+            {
+              "name": "Frequency Count",
+              "description": "Logging string character distribution footprints inside associative hash maps to enable constant-time O(1) character lookup capabilities."
+            },
+            {
+              "name": "Duplicate Detection",
+              "description": "Using lookup hash sets to quickly catch duplicate character occurrences within text streams in a single linear pass."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Linked List",
+      "subtopics": [
+        {
+          "name": "Linked List Basics",
+          "concepts": [
+            {
+              "name": "Singly Linked List",
+              "description": "A linear data structure composed of discrete node blocks, where each node encapsulates a data payload and a unidirectional pointer linking to the subsequent node."
+            },
+            {
+              "name": "Doubly Linked List",
+              "description": "A two-way node link architecture where each block embeds distinct forward (next) and backward (prev) pointer fields to enable bidirectional navigation."
+            },
+            {
+              "name": "Circular Linked List",
+              "description": "A linked list variation where the final node connects its next pointer back to the initial head node, forming a closed loop sequence."
+            }
+          ]
+        },
+        {
+          "name": "Traversal and Manipulation",
+          "concepts": [
+            {
+              "name": "Insertion",
+              "description": "Adding a node into a list structure by remapping adjacent pointer links, avoiding the element-shifting costs seen in array structures."
+            },
+            {
+              "name": "Deletion",
+              "description": "Removing a node block by altering reference tracks to bypass the target node, freeing its memory slot without moving neighboring elements."
+            },
+            {
+              "name": "Reverse Linked List",
+              "description": "Inverting the direction of a list by iterating through nodes and remapping each link pointer to point to its preceding node instead of its successor."
+            },
+            {
+              "name": "Middle Node",
+              "description": "Locating the exact center node of a list in a single pass using a slow pointer paired with a fast pointer running at double speed."
+            }
+          ]
+        },
+        {
+          "name": "Advanced Problems",
+          "concepts": [
+            {
+              "name": "Cycle Detection",
+              "description": "Floyd's Cycle-Finding Algorithm; an optimization strategy detecting loops by checking if a fast pointer overtakes and meets a slow pointer within the list."
+            },
+            {
+              "name": "Merge Two Lists",
+              "description": "Combining two pre-sorted linked lists into a single continuous sorted list by tracking and linking nodes sequentially."
+            },
+            {
+              "name": "Intersection Point",
+              "description": "Discovering the exact shared node block where two independent linked list branches merge into a common trailing sequence."
+            },
+            {
+              "name": "Copy Random Pointer",
+              "description": "Cloning a complex linked list structure where nodes carry both standard directional pointers and unpredictable random link flags."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Stack",
+      "subtopics": [
+        {
+          "name": "Stack Fundamentals",
+          "concepts": [
+            {
+              "name": "Push",
+              "description": "The mutation tracking action that adds a new data element directly onto the top level of a Last-In, First-Out (LIFO) stack structure."
+            },
+            {
+              "name": "Pop",
+              "description": "The retrieval step that unloads and returns the topmost element from an active stack allocation frame."
+            },
+            {
+              "name": "Peek",
+              "description": "An inspection call returning the value of the topmost element on a stack without removing it from the data structure."
+            },
+            {
+              "name": "Stack Overflow",
+              "description": "A runtime structure error that occurs when a push action is attempted on a stack container that has reached its maximum memory allocation limit."
+            }
+          ]
+        },
+        {
+          "name": "Applications",
+          "concepts": [
+            {
+              "name": "Balanced Parenthesis",
+              "description": "A validation algorithm parsing symbol streams, pushing open tokens onto a stack and popping them on closing tokens to verify enclosure matching."
+            },
+            {
+              "name": "Expression Evaluation",
+              "description": "Using stacks to hold operands and operators separately, allowing step-by-step arithmetic resolution of math strings."
+            },
+            {
+              "name": "Infix To Postfix",
+              "description": "The process of converting a standard algebraic expression (A+B) into a postfix expression (AB+) using operator precedence stacks."
+            },
+            {
+              "name": "Postfix Evaluation",
+              "description": "Evaluating a postfix token string by caching parsed operands on a stack and popping the top two values whenever an operator is encountered."
+            }
+          ]
+        },
+        {
+          "name": "Monotonic Stack",
+          "concepts": [
+            {
+              "name": "Next Greater Element",
+              "description": "An O(N) tracking pattern that parses arrays while storing indices on a stack to find the next larger value for each element in the sequence."
+            },
+            {
+              "name": "Previous Greater Element",
+              "description": "A stack-driven lookup technique that identifies the nearest larger element located to the left of a target element within an array sequence."
+            },
+            {
+              "name": "Largest Rectangle Histogram",
+              "description": "An advanced geometric optimization algorithm that tracks monotonic index bars on a stack to find the largest rectangular sub-area within a histogram layout."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Queue",
+      "subtopics": [
+        {
+          "name": "Queue Fundamentals",
+          "concepts": [
+            {
+              "name": "Enqueue",
+              "description": "The data entry step that appends new records onto the back of a First-In, First-Out (FIFO) data structure."
+            },
+            {
+              "name": "Dequeue",
+              "description": "The removal action that clears and returns the oldest entry from the front of a FIFO queue queue."
+            },
+            {
+              "name": "Circular Queue",
+              "description": "An optimized queue implementation that wraps index pointers around to the beginning of the underlying storage array when reaching buffer limits, preventing memory waste."
+            }
+          ]
+        },
+        {
+          "name": "Advanced Queues",
+          "concepts": [
+            {
+              "name": "Deque",
+              "description": "Double-Ended Queue; an advanced queue structure allowing enqueue and dequeue operations to occur symmetrically at both the front and back ends."
+            },
+            {
+              "name": "Priority Queue",
+              "description": "An abstract queue structure where entries are extracted based on assigned priority metrics rather than their insertion order."
+            },
+            {
+              "name": "Monotonic Queue",
+              "description": "A specialized queue tracking items in a strict sorted order, used to find sliding window minimum or maximum values within linear time bounds."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Binary Search",
+      "subtopics": [
+        {
+          "name": "Binary Search Basics",
+          "concepts": [
+            {
+              "name": "Iterative Binary Search",
+              "description": "A loop-driven lookup technique that continually divides a sorted target search space in half, tracking the active boundaries via local variables."
+            },
+            {
+              "name": "Recursive Binary Search",
+              "description": "A divide-and-conquer search approach that updates search space bounds by passing updated index coordinates into nested recursive method calls."
+            },
+            {
+              "name": "Search In Sorted Array",
+              "description": "Finding target elements in structured sequences in logarithmic O(log N) time by checking the midpoint value and halving the remaining search field."
+            }
+          ]
+        },
+        {
+          "name": "Search Space Problems",
+          "concepts": [
+            {
+              "name": "Lower Bound",
+              "description": "An optimization variant discovering the minimal index index in a sorted sequence where the stored value is greater than or equal to a target value."
+            },
+            {
+              "name": "Upper Bound",
+              "description": "Locating the exact minimal index location where the stored array value strictly exceeds a targeted search key value."
+            },
+            {
+              "name": "Binary Search On Answer",
+              "description": "An optimization strategy that applies binary choices to a range of potential solutions, checking feasibility to find the absolute minimum or maximum valid answer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Trees",
+      "subtopics": [
+        {
+          "name": "Tree Fundamentals",
+          "concepts": [
+            {
+              "name": "Node",
+              "description": "The structural building block of a tree, encapsulating data values alongside pointer connections to parent or child nodes."
+            },
+            {
+              "name": "Root",
+              "description": "The unique, top-level node of a tree hierarchy from which all other node paths originate, having no parent node connections."
+            },
+            {
+              "name": "Leaf",
+              "description": "Terminal tree nodes located at the bottom of branches that have no child node connections."
+            },
+            {
+              "name": "Height",
+              "description": "The maximum number of edge transitions tracking downwards from a specific node to the deepest reachable leaf node."
+            },
+            {
+              "name": "Depth",
+              "description": "The total number of edge links tracking upward from a specific node to the top root node."
+            }
+          ]
+        },
+        {
+          "name": "Traversals",
+          "concepts": [
+            {
+              "name": "Preorder",
+              "description": "A depth-first search (DFS) traversal layout processing nodes in a Root-Left-Right sequence pattern."
+            },
+            {
+              "name": "Inorder",
+              "description": "A DFS tracking approach visiting nodes in a Left-Root-Right sequence pattern, outputting values in sorted order when applied to a BST."
+            },
+            {
+              "name": "Postorder",
+              "description": "A DFS tracking sequence processing child nodes completely before evaluating their parents, following a Left-Right-Root pattern."
+            },
+            {
+              "name": "Level Order",
+              "description": "A breadth-first search (BFS) strategy that visits and processes tree nodes level-by-level from top to bottom, navigating horizontal rows sequentially."
+            }
+          ]
+        },
+        {
+          "name": "Tree Algorithms",
+          "concepts": [
+            {
+              "name": "Diameter",
+              "description": "Calculating the longest path distance between any two leaf nodes in a tree, which may or may not pass through the root node."
+            },
+            {
+              "name": "Balanced Tree",
+              "description": "A tree configuration rule where the height difference between the left and right subtrees of any node never exceeds a value of one."
+            },
+            {
+              "name": "Lowest Common Ancestor",
+              "description": "Identifying the deepest shared parent node shared by two target nodes within a tree hierarchy."
+            },
+            {
+              "name": "Path Sum",
+              "description": "Evaluating sequential node tracks from the root down to leaf targets to check if cumulative node values match a target sum metric."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Binary Search Tree",
+      "subtopics": [
+        {
+          "name": "BST Operations",
+          "concepts": [
+            {
+              "name": "Insertion",
+              "description": "Adding a value into a BST while maintaining ordering rules: values smaller than a node route left, while larger values route right."
+            },
+            {
+              "name": "Deletion",
+              "description": "Removing a node from a BST, which requires pointer updates based on whether the node is a leaf, has one child, or has two children."
+            },
+            {
+              "name": "Search",
+              "description": "Finding values in a BST by making binary choices at each node, achieving O(log N) efficiency in balanced configurations."
+            },
+            {
+              "name": "Successor",
+              "description": "Finding the node with the next larger value in a BST, located at the leftmost position of the target node's right subtree."
+            },
+            {
+              "name": "Predecessor",
+              "description": "Finding the node with the next smaller value in a BST, located at the rightmost position of the target node's left subtree."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Heap",
+      "subtopics": [
+        {
+          "name": "Heap Fundamentals",
+          "concepts": [
+            {
+              "name": "Min Heap",
+              "description": "A complete binary tree architecture where every parent node stores a value less than or equal to its child nodes, keeping the absolute minimum value at the root."
+            },
+            {
+              "name": "Max Heap",
+              "description": "A complete binary tree structure where every parent node holds a value greater than or equal to its child nodes, keeping the maximum value at the root."
+            },
+            {
+              "name": "Heapify",
+              "description": "The restructuring operation that reorders binary tree elements downward or upward to restore correct heap properties after data changes."
+            }
+          ]
+        },
+        {
+          "name": "Heap Applications",
+          "concepts": [
+            {
+              "name": "Top K Elements",
+              "description": "An optimization strategy that maintains a min or max heap to extract the K highest or lowest values from a stream without full data sorting operations."
+            },
+            {
+              "name": "Kth Largest Element",
+              "description": "Finding the K-th element in an unsorted list by maintaining a min-heap of size K, which optimizes the search to O(N log K) time."
+            },
+            {
+              "name": "Merge K Sorted Lists",
+              "description": "An efficient algorithm that uses a min-heap to pick the smallest elements from K sorted inputs, merging them into a single sorted list."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hashing",
+      "subtopics": [
+        {
+          "name": "Hash Tables",
+          "concepts": [
+            {
+              "name": "Hash Function",
+              "description": "A mathematical function that maps variable-sized input data payloads into fixed-size integer keys used for array index lookups."
+            },
+            {
+              "name": "Collision",
+              "description": "A hash table conflict condition where two distinct input keys produce identical index coordinates from a hash function."
+            },
+            {
+              "name": "Chaining",
+              "description": "A collision resolution technique where each hash table slot links to a secondary chain structure, like a linked list, to house colliding entries."
+            },
+            {
+              "name": "Open Addressing",
+              "description": "A collision resolution method that keeps data within the main table array by probing alternative indices (using linear, quadratic, or double hashing) when a collision occurs."
+            }
+          ]
+        },
+        {
+          "name": "Hashing Applications",
+          "concepts": [
+            {
+              "name": "Frequency Map",
+              "description": "An associative data structure logging data values alongside their occurrence counts to allow constant-time status checks."
+            },
+            {
+              "name": "Two Sum",
+              "description": "An algorithmic lookup technique using a hash set to check for target complements, solving the pair-matching problem in a single O(N) pass."
+            },
+            {
+              "name": "Duplicate Detection",
+              "description": "The practice of checking elements against an associative lookup structure during a single pass to catch duplicate records immediately."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Graph",
+      "subtopics": [
+        {
+          "name": "Graph Fundamentals",
+          "concepts": [
+            {
+              "name": "Adjacency Matrix",
+              "description": "A 2D mapping matrix where index cell values indicate the presence or weight of directional edge links between vertex nodes."
+            },
+            {
+              "name": "Adjacency List",
+              "description": "An array of linked list nodes tracking adjacent neighbor targets for each individual vertex, optimizing space for sparse graphs."
+            },
+            {
+              "name": "Directed Graph",
+              "description": "A graph structure where edges have explicit directional constraints, restricting traversal paths to specified source-to-target routes."
+            },
+            {
+              "name": "Undirected Graph",
+              "description": "A graph layout where edge links are symmetric, allowing bidirectional traversal between connected vertex nodes."
+            }
+          ]
+        },
+        {
+          "name": "Traversal",
+          "concepts": [
+            {
+              "name": "DFS",
+              "description": "Depth-First Search; a traversal strategy exploring as far along a branch as possible before backtracking, implemented using recursive frames or a stack."
+            },
+            {
+              "name": "BFS",
+              "description": "Breadth-First Search; a level-by-level traversal approach that explores all immediate neighbor nodes before stepping deeper, implemented using a queue."
+            },
+            {
+              "name": "Connected Components",
+              "description": "Isolated groups of nodes within a graph where any two vertices are linked by valid paths, completely separate from other sub-graphs."
+            }
+          ]
+        },
+        {
+          "name": "Shortest Path",
+          "concepts": [
+            {
+              "name": "Dijkstra Algorithm",
+              "description": "A single-source shortest path algorithm that uses a greedy tracking approach to calculate optimal paths across non-negative weighted graphs."
+            },
+            {
+              "name": "Bellman Ford",
+              "description": "A single-source shortest path algorithm that relaxes edges repeatedly, capable of handling negative edge weights and flagging negative cycles."
+            },
+            {
+              "name": "Floyd Warshall",
+              "description": "A dynamic programming algorithm calculating the shortest paths between all pairs of vertices in an all-pairs shortest path matrix configuration."
+            }
+          ]
+        },
+        {
+          "name": "Advanced Graph",
+          "concepts": [
+            {
+              "name": "Topological Sort",
+              "description": "A linear ordering of vertices in a directed acyclic graph (DAG) where every directed edge u -> v ensures node u appears before node v."
+            },
+            {
+              "name": "Union Find",
+              "description": "A disjoint-set data structure providing near constant-time operations to group sets and check for connectivity, optimized via path compression."
+            },
+            {
+              "name": "Minimum Spanning Tree",
+              "description": "A subset of edges in a connected, weighted graph that connects all vertices without loops while minimizing the total edge weight sum."
+            },
+            {
+              "name": "Kruskal Algorithm",
+              "description": "An MST algorithm that sorts all edges by weight and uses a Union-Find structure to greedily add edges if they do not create loops."
+            },
+            {
+              "name": "Prim Algorithm",
+              "description": "A greedy MST algorithm that grows a tree from an initial starting node, repeatedly adding the cheapest edge that connects the growing tree to a new vertex."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Greedy Algorithms",
+      "subtopics": [
+        {
+          "name": "Greedy Strategy",
+          "concepts": [
+            {
+              "name": "Activity Selection",
+              "description": "An optimization task that selects the maximal number of non-overlapping activities by sorting jobs based on their explicit end times."
+            },
+            {
+              "name": "Fractional Knapsack",
+              "description": "A selection algorithm that maximizes knapsack value by sorting items by their value-to-weight ratio, allowing fractional item selections."
+            },
+            {
+              "name": "Huffman Coding",
+              "description": "A data compression technique assigning variable-length prefix codes based on character frequencies, using a binary tree structure."
+            },
+            {
+              "name": "Interval Scheduling",
+              "description": "A greedy approach that sorts and coordinates overlapping timeline intervals to resolve resource assignment conflicts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Backtracking",
+      "subtopics": [
+        {
+          "name": "Recursive Search",
+          "concepts": [
+            {
+              "name": "Subset Generation",
+              "description": "A combinatorial generation strategy using recursive choices to evaluate the inclusion or exclusion of each element, finding all possible subsets."
+            },
+            {
+              "name": "Permutation Generation",
+              "description": "A systematic generation strategy tracking element swaps to find all possible ordering permutations of a data set."
+            },
+            {
+              "name": "Combination Generation",
+              "description": "A recursive generation technique that builds subsets of a fixed length K from a larger pool while preserving unique sequence groupings."
+            }
+          ]
+        },
+        {
+          "name": "Classic Problems",
+          "concepts": [
+            {
+              "name": "N Queen",
+              "description": "A constraint-satisfaction challenge placing N chess queens on an N×N board without any mutual attacks, resolved by pruning invalid recursive paths."
+            },
+            {
+              "name": "Sudoku Solver",
+              "description": "An algorithm that fills grid fields step-by-step, backtracking immediately if a row, column, or subgrid constraint is broken."
+            },
+            {
+              "name": "Rat In Maze",
+              "description": "A pathfinding approach that searches for viable paths through a grid maze, using backtracking steps when hitting structural walls or dead ends."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dynamic Programming",
+      "subtopics": [
+        {
+          "name": "DP Fundamentals",
+          "concepts": [
+            {
+              "name": "Memoization",
+              "description": "A top-down dynamic programming optimization that caches recursive subproblem results in a lookup structure to prevent redundant calculations."
+            },
+            {
+              "name": "Tabulation",
+              "description": "A bottom-up dynamic programming strategy that solves base cases first and populates an execution table sequentially toward the final solution."
+            },
+            {
+              "name": "State Transition",
+              "description": "The mathematical formula or logic defining how a current problem state is calculated from its solved constituent subproblem states."
+            }
+          ]
+        },
+        {
+          "name": "1D DP",
+          "concepts": [
+            {
+              "name": "Fibonacci",
+              "description": "The standard linear DP baseline caching the sums of previous states to resolve historical recursive series transitions in O(N) time."
+            },
+            {
+              "name": "Climbing Stairs",
+              "description": "A combinatorics problem calculating structural pathways over step boundaries using a state model identical to the Fibonacci sequence."
+            },
+            {
+              "name": "House Robber",
+              "description": "An optimization problem that decides between picking or skipping non-adjacent element arrays to maximize gains without triggering constraint locks."
+            }
+          ]
+        },
+        {
+          "name": "2D DP",
+          "concepts": [
+            {
+              "name": "Longest Common Subsequence",
+              "description": "An algorithm that builds a 2D state matrix to find the longest shared subsequence match across two independent string arrays."
+            },
+            {
+              "name": "Edit Distance",
+              "description": "A string metric problem that uses 2D operations to find the minimum number of character mutations (insertions, deletions, or substitutions) needed to transform one string into another."
+            },
+            {
+              "name": "Unique Paths",
+              "description": "A grid routing algorithm that accumulates path values from adjacent grid cells to find total unique routing options across a 2D matrix structure."
+            }
+          ]
+        },
+        {
+          "name": "Knapsack Variants",
+          "concepts": [
+            {
+              "name": "0 1 Knapsack",
+              "description": "A fundamental item-selection optimization problem using a 2D matrix layout to maximize profits under strict item weight constraints, where items cannot be divided."
+            },
+            {
+              "name": "Unbounded Knapsack",
+              "description": "A knapsack variation allowing infinite re-selection of items, solved by checking current weight columns against previously calculated item values."
+            },
+            {
+              "name": "Subset Sum",
+              "description": "A boolean decision model checking an array elements against target matrix values to see if any subset sum exactly matches a target total."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+            {
+  "name": "Aptitude",
+  "topics": [
+    {
+      "name": "Arithmetic",
+      "subtopics": [
+        {
+          "name": "Percentages",
+          "concepts": [
+            {
+              "name": "Percentage Basics",
+              "description": "Fundamental understanding of parts per hundred, fraction-to-percentage conversions, and establishing baseline reference values for comparison."
+            },
+            {
+              "name": "Percentage Increase",
+              "description": "Calculating the relative growth of a quantity using multiplying factors, evaluated as New Value = Original Value × (1 + x/100)."
+            },
+            {
+              "name": "Percentage Decrease",
+              "description": "Determining the relative reduction of a value using fractional multipliers, expressed mathematically as New Value = Original Value × (1 - x/100)."
+            },
+            {
+              "name": "Successive Percentage Change",
+              "description": "Analyzing compound shifts applied sequentially to a changing baseline, calculated via the effective net formula: x + y + (xy/100)."
+            },
+            {
+              "name": "Percentage Comparison",
+              "description": "Evaluating inverse relationships, such as finding how much more or less variable A is relative to variable B when their product remains constant."
+            }
+          ]
+        },
+        {
+          "name": "Profit and Loss",
+          "concepts": [
+            {
+              "name": "Cost Price",
+              "description": "The total financial outlay required to acquire or manufacture a commodity, including overhead expenses like transportation and manufacturing."
+            },
+            {
+              "name": "Selling Price",
+              "description": "The final transaction value at which an item is exchanged or sold to an end consumer."
+            },
+            {
+              "name": "Profit Percentage",
+              "description": "The ratio of net financial gain to the baseline cost price, normalized and expressed as a percentage: [(SP - CP) / CP] × 100."
+            },
+            {
+              "name": "Loss Percentage",
+              "description": "The ratio of net financial deficit to the baseline cost price, calculated as a percentage: [(CP - SP) / CP] × 100."
+            },
+            {
+              "name": "Discount",
+              "description": "The intentional price reduction offered on the catalog rate, calculated as the difference between Marked Price and Selling Price."
+            },
+            {
+              "name": "Marked Price",
+              "description": "The original listed price or retail tag value of an item before applying any discounts or trade reductions."
+            }
+          ]
+        },
+        {
+          "name": "Ratio and Proportion",
+          "concepts": [
+            {
+              "name": "Ratio",
+              "description": "A mathematical comparison of two or more homogeneous quantities of the same unit, expressed as a quotient to show their relative scale."
+            },
+            {
+              "name": "Proportion",
+              "description": "An algebraic equation asserting the exact equality of two distinct ratio relationships, structured as a : b :: c : d."
+            },
+            {
+              "name": "Direct Proportion",
+              "description": "A linear dependency between two variable elements where a change in one causes a mathematically equivalent, scaling change in the other."
+            },
+            {
+              "name": "Inverse Proportion",
+              "description": "A reciprocal relationship between two variable paths where increasing one parameter causes a scaling decrease in the other, keeping their product constant."
+            },
+            {
+              "name": "Partnership Problems",
+              "description": "Calculating profit distribution shares among business entities by scaling allocations to match both capital investment size and active investment duration."
+            }
+          ]
+        },
+        {
+          "name": "Average",
+          "concepts": [
+            {
+              "name": "Simple Average",
+              "description": "The baseline arithmetic mean of a data set, calculated by dividing the sum of all elements by the total count of components."
+            },
+            {
+              "name": "Weighted Average",
+              "description": "An advanced mean computation where individual data values are scaled by their assigned relative importance or frequency weights before averaging."
+            },
+            {
+              "name": "Combined Average",
+              "description": "Determining the net arithmetic mean of a merged group by aggregating the weighted sums of distinct constituent sub-groups."
+            }
+          ]
+        },
+        {
+          "name": "Simple and Compound Interest",
+          "concepts": [
+            {
+              "name": "Simple Interest",
+              "description": "A linear financial return framework where interest accrues exclusively on the original principal sum over time, calculated using I = (P × R × T) / 100."
+            },
+            {
+              "name": "Compound Interest",
+              "description": "An exponential financial return structure where accrued interest is regularly added back into the principal, causing interest to earn interest in subsequent cycles."
+            },
+            {
+              "name": "Annual Compounding",
+              "description": "An interest accumulation framework where yields are computed and added to the principal balance exactly once per calendar year."
+            },
+            {
+              "name": "Half Yearly Compounding",
+              "description": "An interest model where compounding happens twice a year, halving the nominal annual rate and doubling the total tracking periods."
+            },
+            {
+              "name": "Effective Interest Rate",
+              "description": "The actual annualized economic return rate achieved when intra-year compounding frequencies adjust baseline nominal rates upward."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Time and Work",
+      "subtopics": [
+        {
+          "name": "Work Efficiency",
+          "concepts": [
+            {
+              "name": "Individual Efficiency",
+              "description": "The rate of task execution tracking the fractional volume of work a single asset completes per unit time, mathematically modeled as the reciprocal of total completion days."
+            },
+            {
+              "name": "Combined Work",
+              "description": "The net performance of multiple individuals executing tasks concurrently, combining their individual rates of work linearly."
+            },
+            {
+              "name": "Work Distribution",
+              "description": "Dividing wages or project roles among contributing individuals relative to their individual skill parameters and total work completed."
+            },
+            {
+              "name": "Fractional Work Method",
+              "description": "An algebraic approach treating total task volume as a single complete unit (1) to systematically manage and track fractional work assignments."
+            }
+          ]
+        },
+        {
+          "name": "Pipes and Cisterns",
+          "concepts": [
+            {
+              "name": "Filling Pipes",
+              "description": "Inflow conduits contributing volume to a fluid container, modeled as positive work rates in system capacity balance equations."
+            },
+            {
+              "name": "Emptying Pipes",
+              "description": "Outflow channels or leak configurations removing volume from a reservoir, modeled as negative work rates in capacity equations."
+            },
+            {
+              "name": "Combined Pipe Problems",
+              "description": "Analyzing fluid reservoir dynamics when multiple inflow and outflow paths run simultaneously to find total net filling or draining times."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Time Speed Distance",
+      "subtopics": [
+        {
+          "name": "Motion Basics",
+          "concepts": [
+            {
+              "name": "Speed",
+              "description": "The rate of physical spatial translation per unit time, acting as the fundamental metric in motion dynamics."
+            },
+            {
+              "name": "Distance",
+              "description": "The total spatial path length traversed by a moving object during its journey."
+            },
+            {
+              "name": "Time",
+              "description": "The chronological duration spent by a moving asset to travel across a given path segment."
+            },
+            {
+              "name": "Average Speed",
+              "description": "The net metric calculated by dividing total traveled path distance by the total accumulated time duration of a journey, balancing variable speed changes."
+            }
+          ]
+        },
+        {
+          "name": "Relative Motion",
+          "concepts": [
+            {
+              "name": "Relative Speed",
+              "description": "The computed rate of spatial translation tracking one moving body from the perspective of another moving frame of reference."
+            },
+            {
+              "name": "Opposite Direction Motion",
+              "description": "An analytical layout where two objects travel toward or away from each other, requiring the addition of their individual speeds to calculate their net relative speed."
+            },
+            {
+              "name": "Same Direction Motion",
+              "description": "A chasing layout configuration where objects travel in identical directions, requiring the subtraction of individual speeds to calculate net closing speed."
+            }
+          ]
+        },
+        {
+          "name": "Trains",
+          "concepts": [
+            {
+              "name": "Train Crossing Pole",
+              "description": "Analyzing the motion of a train passing an object of negligible width, where the total distance traveled equals the length of the train itself."
+            },
+            {
+              "name": "Train Crossing Platform",
+              "description": "A motion scenario where a train traverses an extended stationary structure, meaning the total distance evaluated equals the combined length of the train and the structure."
+            },
+            {
+              "name": "Train Crossing Train",
+              "description": "Evaluating dynamic multi-body relative motion tasks where two distinct train objects pass or overtake each other on parallel tracks."
+            }
+          ]
+        },
+        {
+          "name": "Boats and Streams",
+          "concepts": [
+            {
+              "name": "Upstream Motion",
+              "description": "Navigating a vessel against the directional flow of a fluid current, resulting in a net speed calculated as boat speed minus stream speed."
+            },
+            {
+              "name": "Downstream Motion",
+              "description": "Vessel navigation aligned with the directional flow of a current, yielding a net speed calculated as the sum of boat speed and stream velocity."
+            },
+            {
+              "name": "Still Water Speed",
+              "description": "The baseline speed capability of a watercraft when operating in completely stationary fluid conditions, free from stream flow adjustments."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Number System",
+      "subtopics": [
+        {
+          "name": "Divisibility",
+          "concepts": [
+            {
+              "name": "Divisibility Rules",
+              "description": "Algorithmic number checks used to evaluate if an integer is completely divisible by a divisor without executing a full long division."
+            },
+            {
+              "name": "Factors",
+              "description": "The complete pool of integer values that divide a targeted integer exactly, leaving a zero remainder."
+            },
+            {
+              "name": "Multiples",
+              "description": "The infinite set of products generated by multiplying a baseline integer by sequential whole numbers."
+            },
+            {
+              "name": "Prime Numbers",
+              "description": "Integers greater than 1 that possess exactly two distinct positive divisors: 1 and the number itself."
+            }
+          ]
+        },
+        {
+          "name": "LCM and HCF",
+          "concepts": [
+            {
+              "name": "Greatest Common Divisor",
+              "description": "Highest Common Factor (HCF); the largest positive integer that divides two or more integers without leaving a remainder."
+            },
+            {
+              "name": "Least Common Multiple",
+              "description": "The smallest positive integer that is a common multiple of a given set of integers."
+            },
+            {
+              "name": "Euclidean Algorithm",
+              "description": "A classic algorithm that computes the HCF of two large integers through sequential remainder reduction steps."
+            }
+          ]
+        },
+        {
+          "name": "Remainders",
+          "concepts": [
+            {
+              "name": "Modulo Arithmetic",
+              "description": "An integer arithmetic system dealing with remainders, where values wrap around upon reaching a specific modulus value."
+            },
+            {
+              "name": "Remainder Theorem",
+              "description": "An algebraic rule stating that dividing a polynomial f(x) by a linear factor (x - a) yields a remainder equal to evaluation f(a)."
+            },
+            {
+              "name": "Cyclic Remainders",
+              "description": "An optimization pattern that leverages recurring, periodic remainder trends to evaluate large exponential expressions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Algebra",
+      "subtopics": [
+        {
+          "name": "Linear Equations",
+          "concepts": [
+            {
+              "name": "Single Variable Equation",
+              "description": "An algebraic equality of degree 1 containing one unknown parameter, solved by isolating the variable using basic arithmetic operations."
+            },
+            {
+              "name": "Simultaneous Equations",
+              "description": "A system of independent linear equations tracking multiple shared variables that must be satisfied simultaneously."
+            },
+            {
+              "name": "Elimination Method",
+              "description": "An algebraic technique that scales and adds or subtracts simultaneous equations to eliminate one variable, making the system easier to solve."
+            }
+          ]
+        },
+        {
+          "name": "Quadratic Equations",
+          "concepts": [
+            {
+              "name": "Roots of Quadratic",
+              "description": "The two variable solutions that satisfy a quadratic equation ax² + bx + c = 0, representing the graph's x-intercepts."
+            },
+            {
+              "name": "Factorization",
+              "description": "Splitting a quadratic expression into a product of linear factors to find its roots."
+            },
+            {
+              "name": "Discriminant",
+              "description": "The value b² - 4ac from the quadratic formula, used to classify whether roots are real and distinct, real and equal, or complex numbers."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Probability and Statistics",
+      "subtopics": [
+        {
+          "name": "Probability",
+          "concepts": [
+            {
+              "name": "Basic Probability",
+              "description": "The likelihood of an event occurring, calculated as the ratio of favorable outcomes to the total sample space."
+            },
+            {
+              "name": "Independent Events",
+              "description": "Distinct events where the occurrence of one does not affect the probability of the other."
+            },
+            {
+              "name": "Conditional Probability",
+              "description": "Calculating the probability of an event occurring given that another event has already occurred, modeled as P(A|B) = P(A ∩ B) / P(B)."
+            }
+          ]
+        },
+        {
+          "name": "Statistics",
+          "concepts": [
+            {
+              "name": "Mean",
+              "description": "The arithmetic average of a dataset, calculated by dividing the sum of all values by the total data count."
+            },
+            {
+              "name": "Median",
+              "description": "The middle value in a sorted dataset, serving as a measure of central tendency that is resilient against extreme outliers."
+            },
+            {
+              "name": "Mode",
+              "description": "The specific value that occurs with the highest frequency within a dataset."
+            },
+            {
+              "name": "Standard Deviation",
+              "description": "A statistical measure of data dispersion that quantifies how much individual data points vary from the mean."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Permutation and Combination",
+      "subtopics": [
+        {
+          "name": "Counting Principles",
+          "concepts": [
+            {
+              "name": "Fundamental Counting Principle",
+              "description": "A rule stating that if one event can occur in M ways and a second can occur in N ways, both events can occur in sequence in M × N ways."
+            },
+            {
+              "name": "Factorial",
+              "description": "The product of all positive integers less than or equal to N, used to calculate structural ordering permutations."
+            },
+            {
+              "name": "Permutations",
+              "description": "The total number of ways to arrange a subset of objects chosen from a larger pool where the order of arrangement matters."
+            },
+            {
+              "name": "Combinations",
+              "description": "The number of ways to select a subset of items from a larger pool where the order of selection does not matter."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Logical Reasoning",
+      "subtopics": [
+        {
+          "name": "Analytical Reasoning",
+          "concepts": [
+            {
+              "name": "Series",
+              "description": "Sequences of numbers or characters that follow a specific pattern, requiring the identification of missing terms."
+            },
+            {
+              "name": "Pattern Recognition",
+              "description": "Identifying recurring logical or geometric relationships within a dataset to predict the next logical step."
+            },
+            {
+              "name": "Odd One Out",
+              "description": "Analyzing a group of elements to identify the single component that does not share the common properties of the rest."
+            },
+            {
+              "name": "Coding Decoding",
+              "description": "A task where words or numbers are encrypted according to specific rule vectors, requiring pattern analysis to decode related inputs."
+            }
+          ]
+        },
+        {
+          "name": "Blood Relations",
+          "concepts": [
+            {
+              "name": "Family Tree",
+              "description": "A diagram mapping generational connections to organize family relationships and resolve lineage questions."
+            },
+            {
+              "name": "Relationship Deduction",
+              "description": "Deducing specific family connections based on descriptive statements about individual family members."
+            }
+          ]
+        },
+        {
+          "name": "Direction Sense",
+          "concepts": [
+            {
+              "name": "Distance Tracking",
+              "description": "Calculating spatial shifts across sequential movements relative to a fixed starting point."
+            },
+            {
+              "name": "Direction Change",
+              "description": "Tracking directional changes (such as left/right turns or compass rotations) to identify a final facing direction."
+            },
+            {
+              "name": "Shortest Path",
+              "description": "Calculating the straight-line displacement between starting and ending points, often using the Pythagorean theorem."
+            }
+          ]
+        },
+        {
+          "name": "Seating Arrangement",
+          "concepts": [
+            {
+              "name": "Linear Arrangement",
+              "description": "Arranging a group of entities in a straight row or parallel lines according to specific spatial constraints."
+            },
+            {
+              "name": "Circular Arrangement",
+              "description": "Arranging entities around a closed loop or table, requiring tracking of clockwise or counter-clockwise facing directions."
+            },
+            {
+              "name": "Constraint Based Arrangement",
+              "description": "Solving complex seating layouts by prioritizing explicit placement rules and systematically ruling out invalid options."
+            }
+          ]
+        },
+        {
+          "name": "Puzzles",
+          "concepts": [
+            {
+              "name": "Scheduling Puzzle",
+              "description": "Organizing days, shifts, or events systematically to satisfy overlapping timing and ordering rules."
+            },
+            {
+              "name": "Floor Puzzle",
+              "description": "A puzzle type where objects or people must be assigned to specific levels of a vertical building layout according to proximity constraints."
+            },
+            {
+              "name": "Box Puzzle",
+              "description": "A stacking logic puzzle requiring the ordering of objects placed vertically on top of one another based on relative distance hints."
+            },
+            {
+              "name": "Grouping Puzzle",
+              "description": "Categorizing items into distinct classes or teams while satisfying specific matching rules and compatibility constraints."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data Interpretation",
+      "subtopics": [
+        {
+          "name": "Tables",
+          "concepts": [
+            {
+              "name": "Percentage Analysis",
+              "description": "Calculating growth rates, distribution shares, and comparison metrics from data structured in rows and columns."
+            },
+            {
+              "name": "Ratio Analysis",
+              "description": "Simplifying and comparing metrics from raw data tables to evaluate relative scales across different tracking categories."
+            },
+            {
+              "name": "Trend Analysis",
+              "description": "Examining data trends across rows or columns to identify upward, downward, or cyclic movements over time."
+            }
+          ]
+        },
+        {
+          "name": "Graphs",
+          "concepts": [
+            {
+              "name": "Bar Graph",
+              "description": "Analyzing discrete datasets represented visually by vertical or horizontal rectangular bars."
+            },
+            {
+              "name": "Line Graph",
+              "description": "Interpreting continuous trend updates and data variations tracked across sequential intervals on an axis map."
+            },
+            {
+              "name": "Pie Chart",
+              "description": "Evaluating proportional breakdowns of a complete dataset, analyzing sector values using percentages or degree distributions out of 360°."
+            },
+            {
+              "name": "Mixed Graph",
+              "description": "An advanced data interpretation task combining multiple visual chart forms (such as pairing a bar chart with a line graph) to analyze interdependent datasets."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Verbal Ability",
+      "subtopics": [
+        {
+          "name": "Grammar",
+          "concepts": [
+            {
+              "name": "Parts of Speech",
+              "description": "The foundational linguistic categories (nouns, verbs, adjectives, etc.) that dictate word functions and structural placement within sentences."
+            },
+            {
+              "name": "Tenses",
+              "description": "Verb forms that indicate the chronological timing of an action across past, present, and future timelines."
+            },
+            {
+              "name": "Subject Verb Agreement",
+              "description": "The grammatical rule requiring that a sentence's verb matches its subject in number, ensuring singular or plural alignment."
+            },
+            {
+              "name": "Articles",
+              "description": "Using definite (the) and indefinite (a/an) modifiers correctly based on context and phonetic constraints."
+            },
+            {
+              "name": "Prepositions",
+              "description": "Words that specify spatial relationships, timing cues, or logical connections between nouns and other sentence elements."
+            }
+          ]
+        },
+        {
+          "name": "Vocabulary",
+          "concepts": [
+            {
+              "name": "Synonyms",
+              "description": "Identifying words that share highly similar definitions within specific contextual boundaries."
+            },
+            {
+              "name": "Antonyms",
+              "description": "Identifying words that have opposite meanings to a given target word."
+            },
+            {
+              "name": "One Word Substitution",
+              "description": "Simplifying descriptive phrases or definitions by replacing them with a single precise word to improve sentence clarity."
+            },
+            {
+              "name": "Idioms and Phrases",
+              "description": "Interpreting cultural expressions whose meanings cannot be understood literally from the individual words themselves."
+            }
+          ]
+        },
+        {
+          "name": "Reading Comprehension",
+          "concepts": [
+            {
+              "name": "Inference Based Questions",
+              "description": "Answering questions by evaluating implicit meanings and reading between the lines of a text, rather than relying on explicit statements."
+            },
+            {
+              "name": "Fact Based Questions",
+              "description": "Locating and verifying explicit details and statements directly from text passages."
+            },
+            {
+              "name": "Vocabulary In Context",
+              "description": "Deducing the meaning of unfamiliar words based on the surrounding context and logic of a passage."
+            }
+          ]
+        },
+        {
+          "name": "Sentence Correction",
+          "concepts": [
+            {
+              "name": "Error Detection",
+              "description": "Identifying syntax errors, grammatical mistakes, or incorrect word choices within a sentence."
+            },
+            {
+              "name": "Sentence Improvement",
+              "description": "Revising phrase structures to improve grammatical correctness, clarity, and stylistic flow."
+            },
+            {
+              "name": "Paragraph Completion",
+              "description": "Evaluating context clues to choose the most logical sentence to complete a paragraph smoothly."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+        {
+  "name": "AI Engineering",
+  "topics": [
+    {
+      "name": "Artificial Intelligence Fundamentals",
+      "subtopics": [
+        {
+          "name": "AI Basics",
+          "concepts": [
+            {
+              "name": "Artificial Intelligence",
+              "description": "The broad engineering discipline of creating computing systems capable of executing complex tasks that traditionally require human intelligence, such as reasoning, learning, and visual perception."
+            },
+            {
+              "name": "Machine Learning",
+              "description": "A core subfield of AI focused on developing mathematical algorithms that allow computer systems to automatically learn patterns and extract insights directly from raw datasets without being explicitly programmed."
+            },
+            {
+              "name": "Deep Learning",
+              "description": "A specialized branch of machine learning utilizing large, multi-layered artificial neural networks to automatically learn high-level feature hierarchies from unstructured datasets."
+            },
+            {
+              "name": "Generative AI",
+              "description": "Advanced neural architectures, such as Large Language Models and Diffusion Networks, trained on massive data distributions to generate completely new text, images, code, or synthetic media pipelines."
+            },
+            {
+              "name": "AI Applications",
+              "description": "Real-world engineering implementations across industries, ranging from automated autonomous driving systems and industrial robotics to medical diagnostic scanners and predictive algorithmic systems."
+            }
+          ]
+        },
+        {
+          "name": "Problem Solving",
+          "concepts": [
+            {
+              "name": "State Space Search",
+              "description": "An algorithmic framework that maps a problem into discrete start states, goal criteria, and transitional operators, navigating through intermediate states to discover an optimal path."
+            },
+            {
+              "name": "Heuristic Search",
+              "description": "An optimized search strategy that leverages domain-specific knowledge or cost estimation functions to prioritize highly promising execution paths, significantly pruning the search space."
+            },
+            {
+              "name": "A Star Search",
+              "description": "A mathematically proven pathfinding algorithm that achieves optimal efficiency by navigating nodes using the cumulative cost function $f(n) = g(n) + h(n)$, balancing actual path distance against estimated remaining heuristic costs."
+            },
+            {
+              "name": "Constraint Satisfaction",
+              "description": "A mathematical framework where a problem is modeled as a set of variables that must be assigned values satisfying a strict matrix of mathematical constraints, limits, or boundary conditions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Machine Learning",
+      "subtopics": [
+        {
+          "name": "Supervised Learning",
+          "concepts": [
+            {
+              "name": "Regression",
+              "description": "A category of supervised learning focused on predicting a continuous numerical target variable by mapping structural patterns and correlation lines between input variables and continuous outputs."
+            },
+            {
+              "name": "Classification",
+              "description": "A supervised predictive modeling approach designed to categorize data instances into discrete, predefined target classes or categorical bins based on historical training boundaries."
+            },
+            {
+              "name": "Training Data",
+              "description": "The core dataset utilized during the learning phase of a model, providing it with historical examples to discover and map internal weights and patterns."
+            },
+            {
+              "name": "Features",
+              "description": "The individual, independent variables or measurable input columns extracted from raw datasets to serve as the structural attributes for model prediction."
+            },
+            {
+              "name": "Labels",
+              "description": "The explicit target variables or ground-truth output columns paired with input features within a supervised dataset, serving as the correct answers for model learning."
+            }
+          ]
+        },
+        {
+          "name": "Unsupervised Learning",
+          "concepts": [
+            {
+              "name": "Clustering",
+              "description": "An unsupervised pattern grouping methodology that analyzes unlabeled datasets to partition instances into distinct groups or clusters based on natural data similarities and distances."
+            },
+            {
+              "name": "K Means",
+              "description": "A classic partition-based clustering algorithm that iteratively refines the spatial coordinates of $K$ distinct centroids, assigning data instances to their nearest center point based on Euclidean distance metrics."
+            },
+            {
+              "name": "Dimensionality Reduction",
+              "description": "Mathematical transformation procedures designed to compress large multi-dimensional feature spaces into lower-dimensional projections, reducing storage and processing costs while mitigating the curse of dimensionality."
+            },
+            {
+              "name": "PCA",
+              "description": "Principal Component Analysis; a linear algebra technique that transforms correlated datasets into an orthogonal space of principal components, maximizing data variance retention along the primary projection axes."
+            }
+          ]
+        },
+        {
+          "name": "Model Evaluation",
+          "concepts": [
+            {
+              "name": "Train Test Split",
+              "description": "An evaluation technique partitioning an input dataset into a larger training pool to fit model weights and an isolated testing subset to validate out-of-sample generalization performance."
+            },
+            {
+              "name": "Cross Validation",
+              "description": "A robust resampling strategy (such as K-Fold Cross Validation) that splits datasets into rotating segments to train and validate models across multiple iterations, minimizing variance in model performance metrics."
+            },
+            {
+              "name": "Precision",
+              "description": "A classification performance metric calculating the ratio of true positive classifications to the total pool of positive predictions, measuring a model's accuracy when predicting a specific class."
+            },
+            {
+              "name": "Recall",
+              "description": "A measurement calculating the ratio of true positive model predictions to the actual number of positive instances in the dataset, evaluating a model's capacity to find all positive instances."
+            },
+            {
+              "name": "F1 Score",
+              "description": "The harmonic mean of precision and recall metrics, providing a single balanced performance indicator that is especially valuable when evaluating highly skewed or imbalanced datasets."
+            },
+            {
+              "name": "ROC AUC",
+              "description": "Receiver Operating Characteristic Area Under the Curve; a threshold-independent metric mapping a model's true positive rate against its false positive rate to evaluate overall classification discrimination power."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Deep Learning",
+      "subtopics": [
+        {
+          "name": "Neural Networks",
+          "concepts": [
+            {
+              "name": "Neuron",
+              "description": "The fundamental mathematical unit of a deep learning model, computing a weighted linear sum of input elements plus a bias factor, before passing the output through a non-linear function."
+            },
+            {
+              "name": "Activation Function",
+              "description": "A non-linear mathematical operation (such as ReLU, Sigmoid, or GELU) applied to a neuron's output, enabling neural networks to learn complex, non-linear relationships in data."
+            },
+            {
+              "name": "Forward Propagation",
+              "description": "The sequential transformation pass where input features are computed layer-by-layer through network weights to produce a final prediction vector at the output layer."
+            },
+            {
+              "name": "Backpropagation",
+              "description": "An optimization routine that computes loss gradients using the mathematical chain rule, propagating errors backward from the output layer to update weights via gradient descent."
+            }
+          ]
+        },
+        {
+          "name": "CNN",
+          "subtopics": [],
+          "concepts": [
+            {
+              "name": "Convolution",
+              "description": "A spatial filtering operation that slides structural matrices (kernels) across input tensors to compute dot products, extracting localized spatial features like edges, textures, and patterns."
+            },
+            {
+              "name": "Pooling",
+              "description": "A spatial downsampling technique (such as Max Pooling or Average Pooling) that reduces the spatial dimensions of feature maps to control memory usage and enforce translation invariance."
+            },
+            {
+              "name": "Feature Maps",
+              "description": "The intermediate 3D output arrays generated by convolutional operations, representing localized structural feature activations across different channels."
+            },
+            {
+              "name": "Image Classification",
+              "description": "An end-to-end computer vision pipeline using deep convolutional blocks to classify complete visual inputs into distinct categorical classes."
+            }
+          ]
+        },
+        {
+          "name": "RNN and Transformers",
+          "concepts": [
+            {
+              "name": "Recurrent Networks",
+              "description": "Neural network architectures engineered to process sequential datasets by routing internal feedback loops to maintain a persistent state configuration over time."
+            },
+            {
+              "name": "LSTM",
+              "description": "Long Short-Term Memory; a specialized RNN architecture that incorporates input, forget, and output gating mechanisms to regulate information flow and mitigate the vanishing gradient problem in long sequences."
+            },
+            {
+              "name": "Attention Mechanism",
+              "description": "A mathematical framework allowing a model to dynamically compute alignment scores across a sequence, focusing on specific relevant elements regardless of their relative distance."
+            },
+            {
+              "name": "Transformer Architecture",
+              "description": "An advanced parallel architecture built entirely on self-attention mechanisms and positional encodings, eliminating recurrence to achieve state-of-the-art scalability for sequence processing."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Large Language Models",
+      "subtopics": [
+        {
+          "name": "LLM Fundamentals",
+          "concepts": [
+            {
+              "name": "Tokens",
+              "description": "The atomic sub-word segments, characters, or complete word fragments generated by a tokenizer to serve as the discrete inputs and outputs for an LLM."
+            },
+            {
+              "name": "Context Window",
+              "description": "The maximum absolute sequence limit (including both input prompt and generated response) that a transformer architecture can process in a single inference pass."
+            },
+            {
+              "name": "Embeddings",
+              "description": "Continuous, high-dimensional vector representations mapping tokens or text blocks into a semantic space where geometric closeness corresponds to linguistic similarity."
+            },
+            {
+              "name": "Inference",
+              "description": "The runtime execution pass where a trained language model processes an input prompt to generate token predictions via autoregressive decoding."
+            },
+            {
+              "name": "Fine Tuning",
+              "description": "An optimization process that updates a pretrained model's weights on a smaller, targeted dataset to adapt its behavior or specialized domain knowledge."
+            }
+          ]
+        },
+        {
+          "name": "Prompt Engineering",
+          "concepts": [
+            {
+              "name": "Zero Shot Prompting",
+              "description": "Presenting a task directly to an LLM without providing any explicit examples, relying entirely on the model's baseline pretrained capabilities."
+            },
+            {
+              "name": "Few Shot Prompting",
+              "description": "Inlining a small set of contextual examples within the input prompt to establish formatting rules or teach nuanced reasoning patterns before the target request."
+            },
+            {
+              "name": "Chain of Thought",
+              "description": "An optimization prompting strategy that guides an LLM to generate explicit intermediate reasoning steps, significantly increasing accuracy on complex logical and math tasks."
+            },
+            {
+              "name": "Structured Output Prompting",
+              "description": "Instruction design techniques combined with schema enforcement rules to guarantee that model outputs strictly follow structured formats like JSON or markdown tables."
+            }
+          ]
+        },
+        {
+          "name": "LLM Evaluation",
+          "concepts": [
+            {
+              "name": "Hallucination",
+              "description": "An LLM performance anomaly where a model generates factual errors, ungrounded claims, or logically inconsistent assertions with high statistical confidence."
+            },
+            {
+              "name": "Grounding",
+              "description": "The process of linking an LLM's generated response to verified source context blocks, ensuring outputs are derived entirely from provided reference materials."
+            },
+            {
+              "name": "Faithfulness",
+              "description": "An evaluation metric measuring how closely an LLM's generated response aligns with and stays true to the provided reference documents, without adding external assumptions."
+            },
+            {
+              "name": "Response Quality",
+              "description": "A multi-dimensional evaluation metric measuring an LLM output's safety alignment, readability, structural precision, and direct semantic relevance to the initial prompt request."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Retrieval Augmented Generation",
+      "subtopics": [
+        {
+          "name": "Vector Databases",
+          "concepts": [
+            {
+              "name": "Embeddings",
+              "description": "The continuous vector spaces generated by embedding models to map structural document chunks and user queries into a multi-dimensional semantic indexing space."
+            },
+            {
+              "name": "Similarity Search",
+              "description": "Mathematical proximity lookups (using metrics like Cosine Distance, Dot Product, or Euclidean Space tracking) to find vectors that closely match a query vector."
+            },
+            {
+              "name": "Vector Index",
+              "description": "Specialized high-performance indexing layouts (such as HNSW or IVF) built to enable sub-linear Approximate Nearest Neighbor (ANN) lookups over massive vector spaces."
+            },
+            {
+              "name": "Semantic Search",
+              "description": "A discovery technique that retrieves documents matching the core conceptual meaning of a query, moving beyond simple keyword matching to understand intent."
+            }
+          ]
+        },
+        {
+          "name": "RAG Pipeline",
+          "concepts": [
+            {
+              "name": "Document Chunking",
+              "description": "The preprocessing phase where long, unstructured text documents are broken down into smaller, coherent text blocks based on token or character limits to optimize index tracking."
+            },
+            {
+              "name": "Retrieval",
+              "description": "The execution phase that converts a user's query into an embedding vector, searches a vector index, and fetches the top matching context blocks."
+            },
+            {
+              "name": "Context Injection",
+              "description": "The process of organizing retrieved context blocks alongside system instructions and the user query to build an expanded prompt payload for an LLM."
+            },
+            {
+              "name": "Answer Generation",
+              "description": "The final stage where the LLM processes the context-enriched prompt to generate a grounded, factually verified response."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Agentic AI",
+      "subtopics": [
+        {
+          "name": "AI Agents",
+          "concepts": [
+            {
+              "name": "Agent Architecture",
+              "description": "An autonomous software loop combining LLM core reasoning engines with state trackers, planning logic, memory storage, and external tools to accomplish goals independently."
+            },
+            {
+              "name": "Tool Calling",
+              "description": "The process where an LLM identifies a task requirement, selects an appropriate tool from a provided schema registry, and generates formatted execution arguments (e.g., JSON calls) for the host system to run."
+            },
+            {
+              "name": "Reasoning Loop",
+              "description": "Iterative processing cycles (such as the ReAct framework: Reason, Act, Observe) that enable an agent to continuously evaluate current performance against target goals."
+            },
+            {
+              "name": "Planning",
+              "description": "Decomposition strategies allowing an agent to break complex, multi-step goals into distinct sub-tasks, adjusting its plan dynamically as runtime execution feedback changes."
+            }
+          ]
+        },
+        {
+          "name": "Multi Agent Systems",
+          "concepts": [
+            {
+              "name": "Supervisor Agent",
+              "description": "A central coordinating agent module that orchestrates a workflow by evaluating task states, managing conversation routing, and tracking goal completion."
+            },
+            {
+              "name": "Worker Agent",
+              "description": "A specialized agent instance optimized for a specific technical domain (e.g., data querying or code compilation), executing tasks assigned by a supervisor agent."
+            },
+            {
+              "name": "Task Delegation",
+              "description": "The mechanism by which complex tasks are split up and assigned dynamically to the most suitable specialized agents based on their configured capabilities."
+            },
+            {
+              "name": "Agent Collaboration",
+              "description": "The communication protocols, message queues, and shared memory structures that enable multiple independent agents to collaborate and solve complex problems collectively."
+            }
+          ]
+        },
+        {
+          "name": "Frameworks",
+          "concepts": [
+            {
+              "name": "LangChain",
+              "description": "An open-source orchestration ecosystem providing foundational modular abstractions, prompt tracking templates, and universal integration connectors for LLM workflows."
+            },
+            {
+              "name": "LangGraph",
+              "description": "A stateful orchestration engine extending LangChain that models multi-agent workflows as stateful cyclic graphs to enable robust agent interactions."
+            },
+            {
+              "name": "CrewAI",
+              "description": "A production-focused multi-agent framework designed to orchestrate structured, collaborative team dynamics among independent role-based agents."
+            },
+            {
+              "name": "AutoGen",
+              "description": "An open-source framework from Microsoft enabling the rapid engineering of highly conversational, customizable multi-agent system layouts."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AI System Design",
+      "subtopics": [
+        {
+          "name": "Production AI",
+          "concepts": [
+            {
+              "name": "Model Serving",
+              "description": "Deploying model endpoints behind robust execution engines (like vLLM, Triton, or TGI) optimized to handle low-latency batching and high concurrent traffic."
+            },
+            {
+              "name": "Caching",
+              "description": "Implementing semantic or exact prompt-response caching layers (such as GPTCache) to intercept incoming requests, reducing backend compute costs and latency."
+            },
+            {
+              "name": "Observability",
+              "description": "Deploying tracing systems (like LangSmith or Arize) to continuously track and audit LLM pipeline states, latency, cost metrics, and token flows."
+            },
+            {
+              "name": "Latency Optimization",
+              "description": "Speeding up inference times using model compression techniques like quantization (FP8, INT4), speculative decoding, or flash attention mechanisms."
+            }
+          ]
+        },
+        {
+          "name": "MLOps",
+          "concepts": [
+            {
+              "name": "Model Deployment",
+              "description": "The practice of pushing validated model assets onto physical or cloud infrastructure configurations using rolling updates or blue-green release strategies."
+            },
+            {
+              "name": "Monitoring",
+              "description": "The practice of continuously tracking production systems to catch data drift, concept drift, API performance anomalies, and target accuracy drops."
+            },
+            {
+              "name": "Versioning",
+              "description": "Maintaining a clear historical record of model artifacts, prompts, hyperparameter configurations, and training datasets using tools like DVC or MLflow registries."
+            },
+            {
+              "name": "CI CD for AI",
+              "description": "Automated deployment pipelines that handle dataset validation, execute automated model evaluation scripts, check prompt regression metrics, and deploy verified updates to production."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AI Applications",
+      "subtopics": [
+        {
+          "name": "Computer Vision",
+          "concepts": [
+            {
+              "name": "Image Classification",
+              "description": "Core computer vision pipelines assigning singular categorical labels to a target input image snapshot."
+            },
+            {
+              "name": "Object Detection",
+              "description": "Advanced multi-task vision models tracking and mapping both spatial bounding box coordinates and corresponding class identities for multiple elements in an image."
+            },
+            {
+              "name": "OCR",
+              "description": "Optical Character Recognition; vision algorithms engineered to extract text characters and layout data out of physical document scans or image files."
+            },
+            {
+              "name": "Segmentation",
+              "description": "High-precision vision modeling analyzing inputs pixel-by-pixel to partition distinct semantic areas or separate independent object masks."
+            }
+          ]
+        },
+        {
+          "name": "Natural Language Processing",
+          "concepts": [
+            {
+              "name": "Text Classification",
+              "description": "Categorizing textual inputs into predefined class labels, commonly used for tasks like spam filtering or intent routing."
+            },
+            {
+              "name": "Named Entity Recognition",
+              "description": "An information extraction task identifying text sequences that reference explicit entities like person names, location terms, monetary values, or corporate brands."
+            },
+            {
+              "name": "Sentiment Analysis",
+              "description": "A classification task that evaluates text data to determine emotional tone states, such as classifying customer feedback as positive, negative, or neutral."
+            },
+            {
+              "name": "Question Answering",
+              "description": "Developing system pipelines designed to parse informational reference texts to generate precise, relevant answers to user inquiries."
+            }
+          ]
+        },
+        {
+          "name": "Recommendation Systems",
+          "concepts": [
+            {
+              "name": "Collaborative Filtering",
+              "description": "A recommendation strategy that uncovers target suggestions by analyzing historic activity matrices and shared behavioral trends among multiple users."
+            },
+            {
+              "name": "Content Based Recommendation",
+              "description": "A recommendation strategy that matches user profiles with items that share similar feature attributes or text embeddings to past items the user liked."
+            },
+            {
+              "name": "Ranking Systems",
+              "description": "Multi-stage recommendation architectures that leverage deep learning models to dynamically score and rank candidate items, optimizing real-time feeds."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AI Ethics and Security",
+      "subtopics": [
+        {
+          "name": "Responsible AI",
+          "concepts": [
+            {
+              "name": "Bias",
+              "description": "Systemic discrimination patterns or skew within model predictions, often caused by non-representative sample balances in the underlying training data."
+            },
+            {
+              "name": "Fairness",
+              "description": "System design guidelines and algorithms built to ensure models provide unbiased outputs across different demographic groups."
+            },
+            {
+              "name": "Transparency",
+              "description": "The practice of fully documenting data paths, architecture configurations, and model versions to ensure system audits are reproducible."
+            },
+            {
+              "name": "Explainability",
+              "description": "Deploying analysis tools (like SHAP or LIME) to help explain and interpret how complex, deep deep learning models arrive at specific predictions."
+            }
+          ]
+        },
+        {
+          "name": "LLM Security",
+          "concepts": [
+            {
+              "name": "Prompt Injection",
+              "description": "An exploit where malicious users embed untrusted text instructions into input prompt fields to overwrite a system's core alignment rules."
+            },
+            {
+              "name": "Data Leakage",
+              "description": "A security failure where an LLM inadvertently exposes private training data, intellectual property, or sensitive user histories during generation."
+            },
+            {
+              "name": "Jailbreaking",
+              "description": "Using adversarial prompts or roleplay scenarios to bypass an LLM's safety guardrails, forcing it to generate harmful or restricted content."
+            },
+            {
+              "name": "Model Safety",
+              "description": "Implementing structural evaluation metrics, moderation filters (like Llama Guard), and validation policies to prevent models from generating toxic outputs."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+        ]
+    }
+}

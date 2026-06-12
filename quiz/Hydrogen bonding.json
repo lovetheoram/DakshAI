@@ -1,0 +1,845 @@
+[
+{
+"question_id": "HB_MCQ_01",
+"question_title": "Zero Condition for H-bonding",
+"concept": "Hydrogen bonding",
+"question": "Which of the following is the primary necessary condition for the formation of a conventional Hydrogen bond?",
+"options": {
+"A": "Hydrogen must be bonded to any non-metal atom.",
+"B": "Hydrogen must be covalently bonded to a highly electronegative atom like F, O, or N.",
+"C": "Hydrogen must be bonded to an atom with low ionization enthalpy.",
+"D": "Hydrogen must be part of a non-polar covalent bond."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_02",
+"question_title": "Dominance of Forces",
+"concept": "Hydrogen bonding",
+"question": "Identify the INCORRECT statement regarding the magnitude of intermolecular forces:",
+"options": {
+"A": "Covalent bonds are generally stronger than Hydrogen bonds.",
+"B": "Hydrogen bonds are generally stronger than Van der Waals forces.",
+"C": "The strength of a typical Hydrogen bond is about 10 to 40 kJ/mol.",
+"D": "Van der Waals forces dominate over Hydrogen bonding in determining the boiling point of H₂O."
+},
+"answer": "D",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_03",
+"question_title": "Symmetry and Physical State",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): H₂O is a liquid at room temperature while H₂S is a gas.\nReason (R): Oxygen is more electronegative than Sulfur, allowing for strong intermolecular Hydrogen bonding in H₂O.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_04",
+"question_title": "Necessary vs Sufficient Conditions",
+"concept": "Hydrogen bonding",
+"question": "Match the molecule to its characteristic Hydrogen bonding type:\n1. o-Nitrophenol  (P) Intermolecular\n2. p-Nitrophenol  (Q) Intramolecular",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-Q, 2-Q",
+"D": "1-P, 2-P"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_05",
+"question_title": "Directional Strength Trend",
+"concept": "Hydrogen bonding",
+"question": "Which of the following represents the correct decreasing order of Hydrogen bond strength?",
+"options": {
+"A": "N-H...N > O-H...O > F-H...F",
+"B": "F-H...F > O-H...O > N-H...N",
+"C": "O-H...O > F-H...F > N-H...N",
+"D": "F-H...F > N-H...N > O-H...O"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_06",
+"question_title": "Overgeneralization of Hydrides",
+"concept": "Hydrogen bonding",
+"question": "Which statement best explains why NH₃ has a significantly higher boiling point than PH₃?",
+"options": {
+"A": "NH₃ has a higher molecular weight than PH₃.",
+"B": "NH₃ molecules are associated through intermolecular Hydrogen bonding.",
+"C": "PH₃ has stronger Van der Waals forces than NH₃.",
+"D": "Nitrogen is less electronegative than Phosphorus."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_07",
+"question_title": "Dominance in Solids",
+"concept": "Hydrogen bonding",
+"question": "The lower density of ice compared to liquid water is primarily due to:",
+"options": {
+"A": "The presence of covalent gaps between atoms.",
+"B": "An open cage-like crystal structure maintained by Hydrogen bonds.",
+"C": "The high vapor pressure of solid ice.",
+"D": "Random thermal motion breaking all Hydrogen bonds."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_08",
+"question_title": "Symmetry Misread in Volatility",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): o-Nitrophenol is steam volatile.\nReason (R): It forms strong intermolecular Hydrogen bonds that increase its boiling point.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "Both A and R are false."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_09",
+"question_title": "Matching Stability Conditions",
+"concept": "Hydrogen bonding",
+"question": "Which pair is correctly matched regarding the existence of species via Hydrogen bonding?",
+"options": {
+"A": "KHF₂ exists | KHCl₂ exists",
+"B": "KHF₂ exists | KHCl₂ does not exist",
+"C": "KHF₂ does not exist | KHCl₂ exists",
+"D": "Neither KHF₂ nor KHCl₂ exists"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_10",
+"question_title": "Sign Confusion in Boiling Points",
+"concept": "Hydrogen bonding",
+"question": "HF has a higher electronegativity difference than H₂O, yet H₂O has a higher boiling point. This is because:",
+"options": {
+"A": "HF forms 4 Hydrogen bonds per molecule while H₂O forms 2.",
+"B": "H₂O forms 4 Hydrogen bonds per molecule while HF forms only 2.",
+"C": "Fluorine is too small to form stable associations.",
+"D": "Oxygen has a lower electronegativity than Fluorine."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_11",
+"question_title": "Overgeneralization of Solubility",
+"concept": "Hydrogen bonding",
+"question": "Which of the following is the most accurate reason for the high water solubility of lower alcohols?",
+"options": {
+"A": "They have very high molecular weights.",
+"B": "They can form Hydrogen bonds with water molecules.",
+"C": "They are completely non-polar compounds.",
+"D": "They react chemically with water to form new salts."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_12",
+"question_title": "Dominance in Dimerization",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Acetic acid has a molecular weight of 120 in benzene solvent instead of 60.\nReason (R): It undergoes dimerization due to intermolecular Hydrogen bonding.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_13",
+"question_title": "Symmetry in Viscosity",
+"concept": "Hydrogen bonding",
+"question": "Match the following liquids with their property cause:\n1. Glycerol (Extremely Viscous) (P) Extensive Intermolecular H-bonding\n2. Ethanol (Less Viscous)      (Q) Limited Intermolecular H-bonding",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_14",
+"question_title": "Partial Condition Error in DNA",
+"concept": "Hydrogen bonding",
+"question": "Identify the INCORRECT statement regarding Hydrogen bonding in biological systems:",
+"options": {
+"A": "DNA double helix is stabilized by H-bonds between base pairs.",
+"B": "Proteins form alpha-helix structures due to H-bonding.",
+"C": "H-bonding only occurs between Carbon and Hydrogen in DNA.",
+"D": "Specific base pairing (A-T, G-C) relies on H-bond donors and acceptors."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_15",
+"question_title": "Sign Confusion in Solubility Trends",
+"concept": "Hydrogen bonding",
+"question": "As the length of the alkyl chain in alcohols increases, their solubility in water:",
+"options": {
+"A": "Increases because of more H-bonding sites.",
+"B": "Decreases because the non-polar part dominates over the -OH group.",
+"C": "Remains constant as long as one -OH group is present.",
+"D": "Increases because molecular weight increases."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_16",
+"question_title": "Overgeneralization of Ring Size",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Intramolecular Hydrogen bonding often leads to chelation.\nReason (R): It typically results in the formation of stable 5 or 6-membered rings.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_17",
+"question_title": "Dominance Confusion in Hydrides",
+"concept": "Hydrogen bonding",
+"question": "In the series PH₃, AsH₃, SbH₃, the boiling point increases from PH₃ to SbH₃. Match the cause:\n1. PH₃ to SbH₃ trend  (P) Van der Waals forces\n2. NH₃ > PH₃           (Q) Hydrogen bonding",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_18",
+"question_title": "Symmetry Misread in Isomers",
+"concept": "Hydrogen bonding",
+"question": "Which molecule will have the highest boiling point among the following?",
+"options": {
+"A": "p-Nitrophenol",
+"B": "o-Nitrophenol",
+"C": "Nitrobenzene",
+"D": "Benzene"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_19",
+"question_title": "Partial Condition for Strength",
+"concept": "Hydrogen bonding",
+"question": "The strength of a Hydrogen bond is MOST significantly affected by:",
+"options": {
+"A": "The number of neutrons in the central atom.",
+"B": "The electronegativity of the atom to which H is covalently attached.",
+"C": "The atmospheric pressure.",
+"D": "The volume of the container."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_MCQ_20",
+"question_title": "Sign Confusion in Solubility Isomers",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Para-nitrophenol is more soluble in water than ortho-nitrophenol.\nReason (R): Ortho-nitrophenol forms intermolecular H-bonds with water, while para-nitrophenol forms intramolecular H-bonds.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "C",
+"sub_questions": []
+}
+,
+{
+"question_id": "HB_BATCH2_01",
+"question_title": "Symmetry and Energy Scales",
+"concept": "Hydrogen bonding",
+"question": "Which of the following statements correctly compares the energy associated with different chemical interactions?",
+"options": {
+"A": "Van der Waals forces (~2-5 kJ/mol) are stronger than Hydrogen bonds.",
+"B": "Hydrogen bonds (~10-40 kJ/mol) are significantly weaker than covalent bonds (~400 kJ/mol).",
+"C": "H-bond strength is independent of the symmetry of the donor atom.",
+"D": "Covalent bonds and Hydrogen bonds have nearly identical bond dissociation energies."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_02",
+"question_title": "Necessary Conditions in Isomers",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): o-Nitrophenol has a higher boiling point than p-nitrophenol.\nReason (R): Intramolecular H-bonding in the ortho-isomer increases the surface area for intermolecular attraction.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "Both A and R are false."
+},
+"answer": "D",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_03",
+"question_title": "Directional Strength Comparison",
+"concept": "Hydrogen bonding",
+"question": "Match the following H-bond interactions with their relative strength based on electronegativity:\n1. F-H...F\n2. O-H...O\n3. N-H...N",
+"options": {
+"A": "1 > 2 > 3",
+"B": "3 > 2 > 1",
+"C": "2 > 1 > 3",
+"D": "1 = 2 = 3"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_04",
+"question_title": "Condition for H-Bond Existence",
+"concept": "Hydrogen bonding",
+"question": "Which of the following molecules does NOT exhibit intermolecular Hydrogen bonding in its pure liquid state?",
+"options": {
+"A": "H₂O",
+"B": "CH₄",
+"C": "HF",
+"D": "NH₃"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_05",
+"question_title": "Dominance Logic in Boiling Points",
+"concept": "Hydrogen bonding",
+"question": "The abnormally high boiling point of H₂O among Group 16 hydrides is best explained by:",
+"options": {
+"A": "The very low molecular weight of Water.",
+"B": "The presence of extensive intermolecular Hydrogen bonding.",
+"C": "The dominance of London dispersion forces in light molecules.",
+"D": "The metallic character of Oxygen."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_06",
+"question_title": "Symmetry in Steam Volatility",
+"concept": "Hydrogen bonding",
+"question": "Compared to p-nitrophenol, o-nitrophenol is more steam volatile. This is because:",
+"options": {
+"A": "The ortho-isomer forms intermolecular H-bonds with steam.",
+"B": "The ortho-isomer undergoes intramolecular H-bonding, preventing association between molecules.",
+"C": "The para-isomer has a lower molecular weight.",
+"D": "Intramolecular H-bonding increases the boiling point of the liquid."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_07",
+"question_title": "Elimination of Density Myths",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Ice floats on water.\nReason (R): In ice, each oxygen atom is surrounded by four hydrogen atoms in a tetrahedral geometry through H-bonds, creating a cage-like structure.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_08",
+"question_title": "Matching Biological Consequences",
+"concept": "Hydrogen bonding",
+"question": "Match the biological structure to the stabilizing H-bonding type:\n1. DNA Double Helix   (P) Intermolecular H-bonding between base pairs\n2. Alpha-Helix Protein (Q) Intramolecular H-bonding within the peptide chain",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_09",
+"question_title": "Sign of Solubility Trends",
+"concept": "Hydrogen bonding",
+"question": "Which statement regarding the solubility of organic compounds in water is correct?",
+"options": {
+"A": "Pentanol is more soluble than Ethanol because it has more Carbon atoms.",
+"B": "Lower alcohols are soluble because they form H-bonds with water.",
+"C": "Acetic acid is insoluble because it forms a dimer.",
+"D": "H-bonding decreases the solubility of polar molecules in water."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_10",
+"question_title": "Dominance in Halide Salts",
+"concept": "Hydrogen bonding",
+"question": "The salt KHF₂ exists as a stable solid whereas KHCl₂ does not exist under normal conditions. This is primarily because:",
+"options": {
+"A": "Fluorine is less electronegative than Chlorine.",
+"B": "The H-F...F bond is strong, whereas H-Cl...Cl is too weak to stabilize the ion.",
+"C": "Chlorine is more likely to form intramolecular H-bonds.",
+"D": "Potassium reacts only with Fluorine."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_11",
+"question_title": "Inconsistency in State Change",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): H₂S has a higher boiling point than H₂O.\nReason (R): Sulfur is larger than Oxygen, so Van der Waals forces in H₂S dominate over any H-bonding in H₂O.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "Both A and R are false."
+},
+"answer": "D",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_12",
+"question_title": "Matching Acidity/Physical Effects",
+"concept": "Hydrogen bonding",
+"question": "Match the molecule to its derived consequence:\n1. Acetic Acid in Benzene   (P) Doubling of molecular weight via Dimerization\n2. Glycerol                (Q) High viscosity via extensive H-bonding",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_13",
+"question_title": "Directional Hydrogen Bonding",
+"concept": "Hydrogen bonding",
+"question": "The specific orientation of Hydrogen bonds in ice leads to:",
+"options": {
+"A": "A decrease in the volume of the solid compared to the liquid.",
+"B": "A hexagonal open-cage structure with empty spaces.",
+"C": "A random arrangement of molecules similar to a gas.",
+"D": "The disappearance of all vacant spaces."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_14",
+"question_title": "Solubility Logic Failure",
+"concept": "Hydrogen bonding",
+"question": "Which of the following explains why glucose is highly soluble in water despite having a large carbon skeleton?",
+"options": {
+"A": "It has many -OH groups that form intermolecular H-bonds with water.",
+"B": "It has intramolecular H-bonds that make it non-polar.",
+"C": "It does not form any H-bonds.",
+"D": "Carbon atoms themselves form H-bonds with water."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_15",
+"question_title": "Assertion on Hydride Trends",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): NH₃ has a higher boiling point than SbH₃.\nReason (R): NH₃ molecules are associated by Hydrogen bonding which is absent in SbH₃.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_16",
+"question_title": "Matching Inter/Intra Concepts",
+"concept": "Hydrogen bonding",
+"question": "Match the following compounds to the primary H-bond category they utilize to maintain their liquid boiling point:\n1. Salicylaldehyde (ortho)  (P) Intramolecular\n2. Water                  (Q) Intermolecular",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_17",
+"question_title": "Symmetry Misread in Halides",
+"concept": "Hydrogen bonding",
+"question": "Which of the following species does NOT exist as a result of the weakness of Hydrogen bonding?",
+"options": {
+"A": "H-F...H-F",
+"B": "H-Cl...H-Cl",
+"C": "[F-H-F]⁻",
+"D": "[Cl-H-Cl]⁻"
+},
+"answer": "D",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_18",
+"question_title": "Partial Condition for Boiling Points",
+"concept": "Hydrogen bonding",
+"question": "HF has a lower boiling point than H₂O. The most accurate reason is:",
+"options": {
+"A": "H₂O is more polar than HF.",
+"B": "H₂O forms a network of 4 H-bonds per molecule, while HF forms only 2.",
+"C": "Oxygen is more electronegative than Fluorine.",
+"D": "Fluorine cannot form Hydrogen bonds."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_19",
+"question_title": "Assertion on Molecular Weights",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): The observed molecular weight of benzoic acid in benzene is twice its formula weight.\nReason (R): Benzoic acid undergoes dissociation into ions when dissolved in benzene.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "Both A and R are false."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH2_20",
+"question_title": "Matching Viscosity and Bond Count",
+"concept": "Hydrogen bonding",
+"question": "Match the molecule to the characteristic number of H-bonding sites (average per molecule in liquid):\n1. H₂O\n2. HF",
+"options": {
+"A": "1-4 bonds, 2-2 bonds",
+"B": "1-2 bonds, 2-4 bonds",
+"C": "1-1 bond, 2-1 bond",
+"D": "1-0 bonds, 2-4 bonds"
+},
+"answer": "A",
+"sub_questions": []
+}
+,
+{
+"question_id": "HB_BATCH3_01",
+"question_title": "Strength and Symmetry Misread",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): The Hydrogen bond in F-H...F is stronger than in O-H...O.\nReason (R): The strength of the Hydrogen bond is directly proportional to the electronegativity of the atom covalently bonded to Hydrogen.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_02",
+"question_title": "Matching Existence Conditions",
+"concept": "Hydrogen bonding",
+"question": "Match the following interactions with their possibility of existence:\n1. [F-H-F]-  (P) Exists due to strong H-bonding\n2. [Cl-H-Cl]- (Q) Does not exist due to weak H-bonding",
+"options": {
+"A": "1-Q, 2-P",
+"B": "1-P, 2-Q",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_03",
+"question_title": "Intermolecular Force Scale",
+"concept": "Hydrogen bonding",
+"question": "Which of the following is the correct typical energy range for a Hydrogen bond?",
+"options": {
+"A": "2 to 5 kJ/mol",
+"B": "10 to 40 kJ/mol",
+"C": "100 to 200 kJ/mol",
+"D": "400 to 500 kJ/mol"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_04",
+"question_title": "Overgeneralization of State",
+"concept": "Hydrogen bonding",
+"question": "Which statement regarding the physical state of hydrides is INCORRECT?",
+"options": {
+"A": "H2O is a liquid because of intermolecular Hydrogen bonding.",
+"B": "H2S is a gas because Sulfur cannot form effective Hydrogen bonds.",
+"C": "All hydrides of Group 16 elements are liquids at room temperature due to H-bonding.",
+"D": "The boiling point of H2O is abnormally high compared to H2Se."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_05",
+"question_title": "Dominance Confusion in Isomers",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): p-Nitrophenol has a higher boiling point than o-nitrophenol.\nReason (R): Intermolecular Hydrogen bonding in p-nitrophenol leads to molecular association, whereas intramolecular bonding in o-nitrophenol prevents it.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_06",
+"question_title": "Symmetry and Density",
+"concept": "Hydrogen bonding",
+"question": "Ice has an open cage-like structure because Hydrogen bonds in ice are:",
+"options": {
+"A": "Randomly distributed.",
+"B": "Highly directional and form a tetrahedral arrangement around Oxygen.",
+"C": "Weaker than the Van der Waals forces in liquid water.",
+"D": "Strictly intramolecular within single H2O molecules."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_07",
+"question_title": "Condition Match for Bonding",
+"concept": "Hydrogen bonding",
+"question": "Match the molecule with the presence of Hydrogen bonding:\n1. Ethyl Alcohol (P) Formed\n2. Diethyl Ether  (Q) Not Formed (in pure state)",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_08",
+"question_title": "Sign Confusion in Solubility",
+"concept": "Hydrogen bonding",
+"question": "Which statement accurately describes the solubility trend in alcohols?",
+"options": {
+"A": "Solubility increases as the hydrophobic alkyl chain length increases.",
+"B": "Solubility decreases as the hydrophobic alkyl chain length increases.",
+"C": "Alcohols are insoluble in water because they are organic.",
+"D": "Solubility is independent of the number of Carbon atoms."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_09",
+"question_title": "Overgeneralization of Rings",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Intramolecular Hydrogen bonding always increases the boiling point of a substance.\nReason (R): It leads to the formation of internal chelate rings which stabilize the individual molecule.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is false but R is true.",
+"D": "A is true but R is false."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_10",
+"question_title": "Dominance in Acetic Acid",
+"concept": "Hydrogen bonding",
+"question": "Acetic acid exists as a dimer in the vapor phase. This phenomenon is caused by:",
+"options": {
+"A": "Strong Covalent bonding between molecules.",
+"B": "Intermolecular Hydrogen bonding.",
+"C": "Intramolecular Hydrogen bonding.",
+"D": "Ion-dipole interactions."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_11",
+"question_title": "Symmetry and Viscosity Matching",
+"concept": "Hydrogen bonding",
+"question": "Which of the following pairings regarding viscosity and Hydrogen bonding is INCORRECT?",
+"options": {
+"A": "Glycerol - High viscosity due to 3 -OH groups.",
+"B": "Ethylene glycol - Higher viscosity than Ethanol.",
+"C": "Ethanol - Higher viscosity than Glycerol.",
+"D": "Water - Higher viscosity than H2S (liquid)."
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_12",
+"question_title": "Condition Error in DNA",
+"concept": "Hydrogen bonding",
+"question": "The stabilization of the DNA double helix is a direct consequence of:",
+"options": {
+"A": "Covalent bonds between Nitrogenous bases.",
+"B": "Intermolecular Hydrogen bonds between specific base pairs (A-T, G-C).",
+"C": "Metallic bonding in the sugar-phosphate backbone.",
+"D": "Van der Waals forces being the only force present."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_13",
+"question_title": "Sign Confusion in HF vs Water",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Water has a higher boiling point than HF.\nReason (R): Fluorine is more electronegative than Oxygen.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_14",
+"question_title": "Overgeneralization of Chlorine",
+"concept": "Hydrogen bonding",
+"question": "Which of the following is the most valid reason why Chlorine typically does not form strong Hydrogen bonds despite having the same electronegativity as Nitrogen?",
+"options": {
+"A": "Chlorine is a gas at room temperature.",
+"B": "Chlorine has a larger atomic size, leading to a lower charge density.",
+"C": "Chlorine is more electronegative than Nitrogen in reality.",
+"D": "Chlorine can only form covalent bonds."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_15",
+"question_title": "Dominance in Hydride Series",
+"concept": "Hydrogen bonding",
+"question": "Match the hydride with the reason for its boiling point position:\n1. NH3 (Highest in group) (P) Intermolecular Hydrogen bonding\n2. PH3 (Lowest in group)  (Q) Lack of H-bonding and low Van der Waals forces",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_16",
+"question_title": "Symmetry in Volatility",
+"concept": "Hydrogen bonding",
+"question": "The steam volatility of o-nitrophenol is significantly higher than p-nitrophenol because:",
+"options": {
+"A": "o-Nitrophenol is more polar.",
+"B": "p-Nitrophenol is more associated through intermolecular H-bonds.",
+"C": "o-Nitrophenol has a higher molecular weight.",
+"D": "p-Nitrophenol forms internal chelate rings."
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_17",
+"question_title": "Assertion on Solubility Isomers",
+"concept": "Hydrogen bonding",
+"question": "Assertion (A): Para-nitrophenol is more soluble in water than ortho-nitrophenol.\nReason (R): The para-isomer can form Hydrogen bonds with water molecules, while the ortho-isomer is involved in intramolecular H-bonding.",
+"options": {
+"A": "Both A and R are true and R is the correct explanation of A.",
+"B": "Both A and R are true but R is NOT the correct explanation of A.",
+"C": "A is true but R is false.",
+"D": "A is false but R is true."
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_18",
+"question_title": "Sign Confusion in Bond Strength",
+"concept": "Hydrogen bonding",
+"question": "Which of the following represents an INCORRECT relative strength of interaction?",
+"options": {
+"A": "Covalent bond > Hydrogen bond",
+"B": "Hydrogen bond > Van der Waals forces",
+"C": "Van der Waals forces > Hydrogen bond",
+"D": "O-H...O > N-H...N"
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_19",
+"question_title": "Overgeneralization of Proteins",
+"concept": "Hydrogen bonding",
+"question": "Match the protein structure with the bonding interaction:\n1. Secondary structure (Alpha-helix) (P) H-bonding\n2. Primary structure (Sequence)      (Q) Peptide (Covalent) bonding",
+"options": {
+"A": "1-P, 2-Q",
+"B": "1-Q, 2-P",
+"C": "1-P, 2-P",
+"D": "1-Q, 2-Q"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "HB_BATCH3_20",
+"question_title": "Dominance in Density Change",
+"concept": "Hydrogen bonding",
+"question": "When ice melts into liquid water at 273 K, its density increases because:",
+"options": {
+"A": "Hydrogen bonds are completely destroyed.",
+"B": "The cage-like structure collapses as some H-bonds break.",
+"C": "Molecules move further apart due to kinetic energy.",
+"D": "New covalent bonds are formed between water molecules."
+},
+"answer": "B",
+"sub_questions": []
+}
+]
+

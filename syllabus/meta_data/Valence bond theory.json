@@ -1,0 +1,133 @@
+{
+"meta": {
+"concept": "Valence Bond Theory, Hybridization, Resonance, and Orbital Overlap",
+"chapter": "Chemical Bonding",
+"syllabus_level": "JEE Main"
+},
+"layer_1_hard_formulas": [
+{
+"id": "F1",
+"formula": "H = 1/2 [V + M - C + A]",
+"used_for": "Calculating the hybridization number (H) of the central atom."
+},
+{
+"id": "F2",
+"formula": "Bond Order (Resonance) = Total number of bonds in all structures / Total number of resonating structures",
+"used_for": "Determining fractional bond orders in species like CO3^2-, PO4^3-, or benzene."
+},
+{
+"id": "F3",
+"formula": "Formal Charge = [V - L - 1/2(S)]",
+"used_for": "Evaluating the most stable resonating structure among multiple possibilities."
+},
+{
+"id": "F4",
+"formula": "% s-character = (1 / H) * 100",
+"used_for": "Relating hybridization (sp, sp2, sp3) to electronegativity and bond length."
+}
+],
+"layer_2_rule_based_logics": [
+{
+"id": "R1",
+"rule": "Overlap Criteria: Sigma (σ) bonds are formed by head-on overlap; Pi (π) bonds are formed by lateral/sideways overlap.",
+"applied_when": "Distinguishing between primary framework bonds and multiple bonds."
+},
+{
+"id": "R2",
+"rule": "Hybridization Constraint: Only atomic orbitals of similar energy belonging to the same atom/ion can undergo hybridization.",
+"applied_when": "Identifying valid hybrid orbital sets (e.g., 2s and 2p)."
+},
+{
+"id": "R3",
+"rule": "Symmetry of Hybrids: Hybrid orbitals are oriented in space to minimize electron-pair repulsion (VSEPR-aligned orientations).",
+"applied_when": "Predicting the spatial arrangement of σ-bonds."
+},
+{
+"id": "R4",
+"rule": "Resonance Stability: Structures with more covalent bonds, complete octets, and minimal formal charge separation are more stable.",
+"applied_when": "Comparing the contribution of various canonical forms to the resonance hybrid."
+},
+{
+"id": "R5",
+"rule": "Orbital Conservation: The number of hybrid orbitals produced is always equal to the number of atomic orbitals mixed.",
+"applied_when": "Determining the total capacity for bonds and lone pairs on a central atom."
+},
+{
+"id": "R6",
+"rule": "Pi Bond Exclusion: Hybrid orbitals are used for σ-bonds and lone pairs only; π-bonds are formed by unhybridized p-orbitals.",
+"applied_when": "Calculating the remaining p-orbitals for multiple bonding in sp or sp2 systems."
+}
+],
+"layer_3_derived_consequences": [
+{
+"id": "C1",
+"consequence": "As the value of H increases from 2 to 4, the bond angle decreases (180° to 120° to 109.5°).",
+"derived_from": ["F1", "R3"]
+},
+{
+"id": "C2",
+"consequence": "Molecules with sp hybridization (H=2) are always linear in their σ-bond framework.",
+"derived_from": ["F1", "R3", "R6"]
+},
+{
+"id": "C3",
+"consequence": "In the resonance hybrid of CO3^2-, all three C-O bond lengths are identical and intermediate between single and double bonds.",
+"derived_from": ["F2", "R4"]
+},
+{
+"id": "C4",
+"consequence": "A higher formal charge on an atom in a specific canonical structure indicates a less significant contribution to the actual hybrid.",
+"derived_from": ["F3", "R4"]
+},
+{
+"id": "C5",
+"consequence": "Increasing s-character (sp > sp2 > sp3) leads to shorter bond lengths and stronger bonds.",
+"derived_from": ["F4"]
+},
+{
+"id": "C6",
+"consequence": "An atom with sp hybridization is more electronegative than the same atom with sp3 hybridization.",
+"derived_from": ["F4"]
+},
+{
+"id": "C7",
+"consequence": "A σ-bond is stronger than a π-bond because head-on overlap is more effective than lateral overlap.",
+"derived_from": ["R1"]
+},
+{
+"id": "C8",
+"consequence": "Rotation is restricted about a π-bond but free about a σ-bond due to the nature of orbital overlap.",
+"derived_from": ["R1"]
+},
+{
+"id": "C9",
+"consequence": "If an atom is sp2 hybridized, it must have one unhybridized p-orbital available to potentially form one π-bond.",
+"derived_from": ["R2", "R6"]
+},
+{
+"id": "C10",
+"consequence": "The hybrid orbitals are always equivalent in energy and shape, regardless of the parent atomic orbital types.",
+"derived_from": ["R2", "R5"]
+},
+{
+"id": "C11",
+"consequence": "Resonance hybrid energy is always lower than the energy of any single canonical structure (Resonance Energy stabilization).",
+"derived_from": ["R4"]
+},
+{
+"id": "C12",
+"consequence": "Lone pairs are accommodated in hybrid orbitals, occupying the same spatial regions as σ-bonds.",
+"derived_from": ["R3", "R6"]
+},
+{
+"id": "C13",
+"consequence": "d-orbitals are involved in hybridization only when the central atom is from the 3rd period or higher (e.g., sp3d, sp3d2).",
+"derived_from": ["R2", "F1"]
+},
+{
+"id": "C14",
+"consequence": "For benzene, the bond order of 1.5 implies that every C-C bond is exactly the same strength.",
+"derived_from": ["F2"]
+}
+]
+}

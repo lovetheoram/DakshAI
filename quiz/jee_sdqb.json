@@ -1,0 +1,827 @@
+[
+  {
+    "header": "Question 1: Electric Potential of Spheres (QID: P-001)",
+    "question_id": "P-001",
+    "question_title": "Potential of Concentric Spheres",
+    "concept": "Electric potential and capacitors",
+    "question": "Two concentric, thin conducting spherical shells of radii $R_1$ and $R_2$ ($R_1 < R_2$) have charges $Q_1$ and $Q_2$ respectively. The electric potential on the outer surface of the outer shell is $V_2$ and the electric potential on the inner surface of the inner shell is $V_1$. Find $V_1$ and $V_2$. ",
+    "options": {
+      "A": "V_1 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_2}], V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_2} + \\frac{Q_2}{R_2}]",
+      "B": "V_1 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_1}], V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_2} + \\frac{Q_2}{R_2}]",
+      "C": "V_1 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_2}], V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_2}]",
+      "D": "V_1 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_2}], V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_2} + \\frac{Q_2}{R_1}]"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "P-001-a",
+        "type": "comfort",
+        "concept": "Electric potential and capacitors",
+        "question": "What is the formula for the electric potential (V) at a distance $r$ from the center of a charged spherical shell of radius $R$ and charge $Q$, for the cases $r > R$ and $r ≤ R$?",
+        "options": {
+          "A": "V_{r>R} = \\frac{1}{4πε_0} \\frac{Q}{R}$, V_{r≤R} = \\frac{1}{4πε_0} \\frac{Q}{r}",
+          "B": "V_{r>R} = \\frac{1}{4πε_0} \\frac{Q}{r}$, V_{r≤R} = \\frac{1}{4πε_0} \\frac{Q}{R}",
+          "C": "V_{r>R} = \\frac{1}{4πε_0} \\frac{Q}{r}$, V_{r≤R} = \\frac{1}{4πε_0} \\frac{Q}{r}",
+          "D": "V_{r>R} = \\frac{1}{4πε_0} \\frac{Q}{R}$, V_{r≤R} = \\frac{1}{4πε_0} \\frac{Q}{R}"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-001-b",
+        "type": "grounding",
+        "concept": "Electric potential and capacitors",
+        "question": "The potential $V_2$ is at a distance $r=R_2$ from the center. For this point, is the distance from the center greater than, less than, or equal to the radii $R_1$ and $R_2$?",
+        "options": {
+          "A": "r < R_1 and r = R_2",
+          "B": "r = R_1 and r = R_2",
+          "C": "r > R_1 and r = R_2",
+          "D": "r > R_1 and r < R_2"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "P-001-c",
+        "type": "precursor",
+        "concept": "Electric potential and capacitors",
+        "question": "Using the superposition principle and the result from (a), what is the total electric potential $V_2$ at the outer surface of the outer shell ($r=R_2$) due to charges $Q_1$ (inner shell) and $Q_2$ (outer shell)?",
+        "options": {
+          "A": "V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_2} + \\frac{Q_2}{R_2}]",
+          "B": "V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_2}]",
+          "C": "V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_2} + \\frac{Q_2}{R_1}]",
+          "D": "V_2 = \\frac{1}{4πε_0} [\\frac{Q_1}{R_1} + \\frac{Q_2}{R_1}]"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 2: Moment of Inertia Calculation (QID: P-002)",
+    "question_id": "P-002",
+    "question_title": "Moment of Inertia of Ring",
+    "concept": "Moment of inertia",
+    "question": "A ring of mass $M$ and radius $R$ is rolling without slipping with an angular velocity $ω$. The moment of inertia of the ring about an axis passing through its centre and perpendicular to its plane is $MR^2$. Calculate the moment of inertia of the ring about an axis passing through the periphery of the ring and parallel to its axis of rotation. ",
+    "options": {
+      "A": "2MR^2",
+      "B": "MR^2/2",
+      "C": "3MR^2/2",
+      "D": "3MR^2"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "P-002-a",
+        "type": "comfort",
+        "concept": "Moment of inertia",
+        "question": "State the Parallel Axis Theorem for moment of inertia, relating the moment of inertia $I$ about an arbitrary axis to the moment of inertia $I_{cm}$ about a parallel axis passing through the center of mass, where $M$ is the total mass and $d$ is the perpendicular distance between the axes.",
+        "options": {
+          "A": "$I = I_{cm} - Md^2$",
+          "B": "$I = I_{cm} + Md^2$",
+          "C": "$I = Md^2$",
+          "D": "$I = I_{cm} + 2Md^2$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-002-b",
+        "type": "grounding",
+        "concept": "Moment of inertia",
+        "question": "In the given problem, the axis passes through the periphery of the ring and is parallel to the central axis. What is the perpendicular distance ($d$) between these two parallel axes, in terms of the radius $R$?",
+        "options": {
+          "A": "$d = R/2$",
+          "B": "$d = 2R$",
+          "C": "$d = R$",
+          "D": "$d = 0$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "P-002-c",
+        "type": "precursor",
+        "concept": "Moment of inertia",
+        "question": "Given the moment of inertia $I_{cm} = MR^2$ and the distance $d=R$, what is the magnitude of the $Md^2$ term that needs to be added to $I_{cm}$ according to the Parallel Axis Theorem?",
+        "options": {
+          "A": "$MR^2/2$",
+          "B": "$MR^2$",
+          "C": "$2MR^2$",
+          "D": "$3MR^2$"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "header": "Question 3: Angle between Lines (QID: M-001)",
+    "question_id": "M-001",
+    "question_title": "Angle Between Two Lines",
+    "concept": "Straight line equations and angles",
+    "question": "The angle between the lines $y = (2 - \\sqrt{3})x + 5$ and $y = (2 + \\sqrt{3})x - 7$ is:",
+    "options": {
+      "A": "$30°$",
+      "B": "$45°$",
+      "C": "$60°$",
+      "D": "$90°$"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "M-001-a",
+        "type": "comfort",
+        "concept": "Straight line equations and angles",
+        "question": "What is the formula for the acute angle $\\theta$ between two lines with slopes $m_1$ and $m_2$?",
+        "options": {
+          "A": "$\\tan \\theta = |\\frac{m_1 - m_2}{1 - m_1 m_2}|$",
+          "B": "$\\tan \\theta = |\\frac{m_1 + m_2}{1 - m_1 m_2}|$",
+          "C": "$\\tan \\theta = |\\frac{m_1 - m_2}{1 + m_1 m_2}|$",
+          "D": "$\\tan \\theta = |\\frac{1 - m_1 m_2}{m_1 - m_2}|$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "M-001-b",
+        "type": "grounding",
+        "concept": "Straight line equations and angles",
+        "question": "Identify the slopes $m_1$ and $m_2$ of the lines $y = (2 - \\sqrt{3})x + 5$ and $y = (2 + \\sqrt{3})x - 7$, respectively, by comparing them to the slope-intercept form $y=mx+c$.",
+        "options": {
+          "A": "$m_1 = 5, m_2 = -7$",
+          "B": "$m_1 = 2 - \\sqrt{3}, m_2 = 2 + \\sqrt{3}$",
+          "C": "$m_1 = 2, m_2 = 2$",
+          "D": "$m_1 = -5, m_2 = 7$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-001-c",
+        "type": "precursor",
+        "concept": "Straight line equations and angles",
+        "question": "Given $m_1 = 2 - \\sqrt{3}$ and $m_2 = 2 + \\sqrt{3}$, what is the value of the numerator, $|m_1 - m_2|$, and the denominator, $1 + m_1 m_2$, for the angle formula?",
+        "options": {
+          "A": "$|m_1 - m_2| = 2\\sqrt{3}$, $1 + m_1 m_2 = 2$",
+          "B": "$|m_1 - m_2| = 2\\sqrt{3}$, $1 + m_1 m_2 = 4$",
+          "C": "$|m_1 - m_2| = 4$, $1 + m_1 m_2 = 2$",
+          "D": "$|m_1 - m_2| = -2\\sqrt{3}$, $1 + m_1 m_2 = 4$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 4: Rate of Change (QID: M-002)",
+    "question_id": "M-002",
+    "question_title": "Rate of Change of Area",
+    "concept": "Applications of derivatives",
+    "question": "The radius of a circle is increasing uniformly at the rate of $3$ cm/s. The rate at which the area of the circle is increasing when the radius is $10$ cm is:",
+    "options": {
+      "A": "$30\\pi$ cm$^2$/s",
+      "B": "$10\\pi$ cm$^2$/s",
+      "C": "$6\\pi$ cm$^2$/s",
+      "D": "$60\\pi$ cm$^2$/s"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "M-002-a",
+        "type": "comfort",
+        "concept": "Applications of derivatives",
+        "question": "Write the formula for the area ($A$) of a circle in terms of its radius ($r$) and the expression for the rate of change of area ($\\frac{dA}{dt}$) using the chain rule, given the rate of change of radius ($\\frac{dr}{dt}$).",
+        "options": {
+          "A": "$A = 2\\pi r$, $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$",
+          "B": "$A = \\pi r^2$, $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$",
+          "C": "$A = \\pi r^2$, $\\frac{dA}{dt} = \\pi r^2 \\frac{dr}{dt}$",
+          "D": "$A = 2\\pi r$, $\\frac{dA}{dt} = \\pi r^2 \\frac{dr}{dt}$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-002-b",
+        "type": "grounding",
+        "concept": "Applications of derivatives",
+        "question": "Identify the values of $\\frac{dr}{dt}$ and $r$ that need to be substituted into the formula for $\\frac{dA}{dt}$ from the main question.",
+        "options": {
+          "A": "$\\frac{dr}{dt} = 3$ cm/s, $r = 10$ cm",
+          "B": "$\\frac{dr}{dt} = 10$ cm/s, $r = 3$ cm",
+          "C": "$\\frac{dr}{dt} = 6$ cm/s, $r = 10$ cm",
+          "D": "$\\frac{dr}{dt} = 3$ cm/s, $r = 5$ cm"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "M-002-c",
+        "type": "precursor",
+        "concept": "Applications of derivatives",
+        "question": "Substitute the derivative of the area formula, $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$, with the values $r=10$ cm and $\\frac{dr}{dt}=3$ cm/s to find the value of the term $2\\pi r \\frac{dr}{dt}$.",
+        "options": {
+          "A": "$2\\pi (3)(10) = 60\\pi$",
+          "B": "$2\\pi (10)(3) = 60\\pi$",
+          "C": "$2\\pi (3)(10) = 30\\pi$",
+          "D": "$2\\pi (10)(3) = 30\\pi$"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "header": "Question 5: Mean Free Path (QID: P-003)",
+    "question_id": "P-003",
+    "question_title": "Mean Free Path and Density",
+    "concept": "Kinetic theory of gases",
+    "question": "If the density of a gas is doubled at constant temperature, the mean free path $(\\lambda)$ of the gas molecules will be:",
+    "options": {
+      "A": "Doubled",
+      "B": "Halved",
+      "C": "Quadrupled",
+      "D": "Unchanged"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "P-003-a",
+        "type": "comfort",
+        "concept": "Kinetic theory of gases",
+        "question": "State the relationship between the mean free path $(\\lambda)$, number density $(n)$, and molecular diameter $(d)$ of a gas.",
+        "options": {
+          "A": "$\\lambda \\propto \\frac{1}{n d}$",
+          "B": "$\\lambda \\propto \\frac{1}{n^2 d^2}$",
+          "C": "$\\lambda \\propto \\frac{1}{n d^2}$",
+          "D": "$\\lambda \\propto n d^2$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "P-003-b",
+        "type": "grounding",
+        "concept": "Kinetic theory of gases",
+        "question": "How is the number density $(n)$ of a gas related to its mass density $(\\rho)$ and the mass of one molecule $(m)$?",
+        "options": {
+          "A": "$\\rho = nm$",
+          "B": "$n = \\rho m$",
+          "C": "$\\rho = n^2 m$",
+          "D": "$n = \\frac{1}{\\rho m}$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "P-003-c",
+        "type": "precursor",
+        "concept": "Kinetic theory of gases",
+        "question": "Assuming the molecular diameter ($d$) and molecular mass ($m$) are constant, how does the mean free path $(\\lambda)$ change if the mass density $(\\rho)$ is doubled from $\\rho$ to $2\\rho$?",
+        "options": {
+          "A": "It remains the same since $\\lambda \\propto \\rho$",
+          "B": "It is halved since $\\lambda \\propto 1/\\rho$",
+          "C": "It is doubled since $\\lambda \\propto \\rho$",
+          "D": "It is quadrupled since $\\lambda \\propto 1/\\rho^2$"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "header": "Question 6: Vector Dot Product (QID: M-003)",
+    "question_id": "M-003",
+    "question_title": "Angle Between Two Vectors",
+    "concept": "Vectors and operations",
+    "question": "If $\\vec{a} = 2\\hat{i} - 3\\hat{j} + 6\\hat{k}$ and $\\vec{b} = 2\\hat{i} + 3\\hat{j} - \\hat{k}$, find the cosine of the angle between $\\vec{a}$ and $\\vec{b}$.",
+    "options": {
+      "A": "$-\\frac{13}{49}$",
+      "B": "$-\\frac{1}{49}$",
+      "C": "$+\\frac{13}{49}$",
+      "D": "$+\\frac{1}{49}$"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "M-003-a",
+        "type": "comfort",
+        "concept": "Vectors and operations",
+        "question": "State the formula for the cosine of the angle $\\theta$ between two vectors $\\vec{a}$ and $\\vec{b}$ in terms of their dot product and magnitudes.",
+        "options": {
+          "A": "$\\cos \\theta = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| + |\\vec{b}|}$",
+          "B": "$\\cos \\theta = \\frac{|\\vec{a}| |\\vec{b}|}{\\vec{a} \\cdot \\vec{b}}$",
+          "C": "$\\cos \\theta = \\frac{\\vec{a} \\cdot \\vec{b}}{|\\vec{a}| |\\vec{b}|}$",
+          "D": "$\\cos \\theta = \\frac{\\vec{a} \\times \\vec{b}}{|\\vec{a}| |\\vec{b}|}$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "M-003-b",
+        "type": "grounding",
+        "concept": "Vectors and operations",
+        "question": "Calculate the magnitude of the vector $\\vec{a} = 2\\hat{i} - 3\\hat{j} + 6\\hat{k}$ and the vector $\\vec{b} = 2\\hat{i} + 3\\hat{j} - \\hat{k}$.",
+        "options": {
+          "A": "$|\\vec{a}| = 7, |\\vec{b}| = \\sqrt{14}$",
+          "B": "$|\\vec{a}| = \\sqrt{49}, |\\vec{b}| = 7$",
+          "C": "$|\\vec{a}| = 7, |\\vec{b}| = 49$",
+          "D": "$|\\vec{a}| = 49, |\\vec{b}| = \\sqrt{14}$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "M-003-c",
+        "type": "precursor",
+        "concept": "Vectors and operations",
+        "question": "Calculate the dot product $\\vec{a} \\cdot \\vec{b}$ for $\\vec{a} = 2\\hat{i} - 3\\hat{j} + 6\\hat{k}$ and $\\vec{b} = 2\\hat{i} + 3\\hat{j} - \\hat{k}$.",
+        "options": {
+          "A": "$2(2) + (-3)(3) + 6(-1) = -11$",
+          "B": "$2(2) + (-3)(3) + 6(-1) = -13$",
+          "C": "$2(2) - 3(3) + 6(-1) = -9$",
+          "D": "$2(2) + 3(3) - 6(1) = 7$"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "header": "Question 7: Wave Speed and Frequency (QID: P-004)",
+    "question_id": "P-004",
+    "question_title": "Wave Speed and Frequency Change",
+    "concept": "Wave motion",
+    "question": "A transverse wave is produced in a wire whose breaking stress is $10^9$ N/m$^2$ and density is $1000$ kg/m$^3$. The speed of the wave is doubled when the frequency is increased from $f$ to $2f$. By what factor does the linear mass density change?",
+    "options": {
+      "A": "1/4",
+      "B": "1/2",
+      "C": "2",
+      "D": "4"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "P-004-a",
+        "type": "comfort",
+        "concept": "Wave motion",
+        "question": "State the formula for the speed ($v$) of a transverse wave on a string in terms of the tension ($T$) and the linear mass density $(\\mu)$.",
+        "options": {
+          "A": "$v = \\mu / T$",
+          "B": "$v = \\sqrt{T/\\mu}$",
+          "C": "$v = T/\\mu$",
+          "D": "$v = \\sqrt{\\mu/T}$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-004-b",
+        "type": "grounding",
+        "concept": "Wave motion",
+        "question": "If the speed is doubled from $v$ to $2v$, and the tension ($T$) remains constant, how must the new linear mass density $(\\mu')$ relate to the original linear mass density $(\\mu)$?",
+        "options": {
+          "A": "$2v = \\sqrt{T/\\mu'}$",
+          "B": "$v = 2\\sqrt{T/\\mu'}$",
+          "C": "$v/2 = \\sqrt{T/\\mu'}$",
+          "D": "$4v = \\sqrt{T/\\mu'}$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "P-004-c",
+        "type": "precursor",
+        "concept": "Wave motion",
+        "question": "From the original relationship $v = \\sqrt{T/\\mu}$ and the new relationship $2v = \\sqrt{T/\\mu'}$, find the ratio $\\mu' / \\mu$.",
+        "options": {
+          "A": "$\\mu' / \\mu = 1/2$",
+          "B": "$\\mu' / \\mu = 2$",
+          "C": "$\\mu' / \\mu = 4$",
+          "D": "$\\mu' / \\mu = 1/4$"
+        },
+        "answer": "D"
+      }
+    ]
+  },
+  {
+    "header": "Question 8: Complex Number Modulus (QID: M-004)",
+    "question_id": "M-004",
+    "question_title": "Modulus of Complex Number",
+    "concept": "Complex numbers and Argand diagram",
+    "question": "If $z = \\frac{1}{2}(i - 1)$, find the value of $|z^7|$.",
+    "options": {
+      "A": "$\\frac{1}{8}$",
+      "B": "$\\frac{1}{16}$",
+      "C": "$\\frac{1}{32\\sqrt{2}}$",
+      "D": "$\\frac{1}{64}$"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "M-004-a",
+        "type": "comfort",
+        "concept": "Complex numbers and Argand diagram",
+        "question": "State the properties of modulus for the product of complex numbers, $|z_1 z_2|$ and for the power of a complex number, $|z^n|$.",
+        "options": {
+          "A": "$|z_1 z_2| = |z_1| + |z_2|$, $|z^n| = n|z|$",
+          "B": "$|z_1 z_2| = |z_1| |z_2|$, $|z^n| = |z|^n$",
+          "C": "$|z_1 z_2| = \\sqrt{|z_1| + |z_2|}$, $|z^n| = |z|^n$",
+          "D": "$|z_1 z_2| = |z_1| |z_2|$, $|z^n| = n|z|$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-004-b",
+        "type": "grounding",
+        "concept": "Complex numbers and Argand diagram",
+        "question": "For $z = \\frac{1}{2}(i - 1)$, use the product property of modulus $|z_1 z_2| = |z_1| |z_2|$ to find $|z|$. Note that $\\frac{1}{2}$ is a real number.",
+        "options": {
+          "A": "$|z| = \\frac{1}{2} \\cdot |i - 1| = \\frac{1}{2} \\cdot \\sqrt{1^2 + 1^2} = \\frac{\\sqrt{2}}{2}$",
+          "B": "$|z| = \\frac{1}{2} \\cdot |i - 1| = \\frac{1}{2} \\cdot \\sqrt{1^2 + (-1)^2} = \\frac{\\sqrt{2}}{2}$",
+          "C": "$|z| = \\frac{1}{2} \\cdot |i - 1| = \\frac{1}{2} \\cdot \\sqrt{(-1)^2 + 1^2} = \\sqrt{2}$",
+          "D": "$|z| = \\frac{1}{2} \\cdot |i - 1| = \\frac{1}{2} \\cdot \\sqrt{(-1)^2 + 1^2} = 1$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-004-c",
+        "type": "precursor",
+        "concept": "Complex numbers and Argand diagram",
+        "question": "Given $|z| = \\frac{\\sqrt{2}}{2}$, simplify $|z|^7 = (\\frac{\\sqrt{2}}{2})^7$ using the power rule $|z^n| = |z|^n$.",
+        "options": {
+          "A": "$(\\frac{\\sqrt{2}}{2})^7 = \\frac{8\\sqrt{2}}{128} = \\frac{1}{16\\sqrt{2}}$",
+          "B": "$(\\frac{\\sqrt{2}}{2})^7 = \\frac{8\\sqrt{2}}{64} = \\frac{\\sqrt{2}}{8}$",
+          "C": "$(\\frac{\\sqrt{2}}{2})^7 = \\frac{8\\sqrt{2}}{128} = \\frac{\\sqrt{2}}{16}$",
+          "D": "$(\\frac{\\sqrt{2}}{2})^7 = \\frac{8\\sqrt{2}}{128} = \\frac{1}{32\\sqrt{2}}$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 9: Electric Field and Flux (QID: P-005)",
+    "question_id": "P-005",
+    "question_title": "Electric Flux of Point Charge",
+    "concept": "Gauss’s law",
+    "question": "A charge $q$ is placed at the centre of a cube. The electric flux coming out from any face is:",
+    "options": {
+      "A": "$\\frac{q}{\\epsilon_0}$",
+      "B": "$\\frac{q}{6\\epsilon_0}$",
+      "C": "$\\frac{q}{3\\epsilon_0}$",
+      "D": "$\\frac{q}{2\\epsilon_0}$"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "P-005-a",
+        "type": "comfort",
+        "concept": "Gauss’s law",
+        "question": "State Gauss's Law, which relates the total electric flux $(\\Phi_{total})$ through a closed surface ($S$) to the total charge enclosed ($Q_{enc}$) by the surface.",
+        "options": {
+          "A": "$\\Phi_{total} = Q_{enc} \\epsilon_0$",
+          "B": "$\\Phi_{total} = \\frac{Q_{enc}}{\\epsilon_0}$",
+          "C": "$\\Phi_{total} = \\frac{\\epsilon_0}{Q_{enc}}$",
+          "D": "$\\Phi_{total} = Q_{enc}^2 / \\epsilon_0$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-005-b",
+        "type": "grounding",
+        "concept": "Gauss’s law",
+        "question": "For the given cube enclosing a charge $q$ at its center, what is the total electric flux ($\\Phi_{total}$) coming out of all six faces of the cube, according to Gauss's Law?",
+        "options": {
+          "A": "$\\Phi_{total} = \\frac{6q}{\\epsilon_0}$",
+          "B": "$\\Phi_{total} = 0$",
+          "C": "$\\Phi_{total} = \\frac{q}{\\epsilon_0}$",
+          "D": "$\\Phi_{total} = \\frac{q}{6\\epsilon_0}$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "P-005-c",
+        "type": "precursor",
+        "concept": "Gauss’s law",
+        "question": "Assuming the charge $q$ is at the center, each of the cube's six faces contributes equally to the total flux. If the total flux is $\\Phi_{total} = \\frac{q}{\\epsilon_0}$, what is the flux $(\\Phi_{face})$ coming out from *any one* face?",
+        "options": {
+          "A": "$\\Phi_{face} = \\frac{q}{\\epsilon_0}$",
+          "B": "$\\Phi_{face} = 6 \\cdot \\frac{q}{\\epsilon_0}$",
+          "C": "$\\Phi_{face} = \\frac{1}{6} \\cdot \\frac{q}{\\epsilon_0}$",
+          "D": "$\\Phi_{face} = 0$"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "header": "Question 10: Linear Differential Equation (QID: M-005)",
+    "question_id": "M-005",
+    "question_title": "Solving Linear Differential Equation",
+    "concept": "Ordinary differential equations",
+    "question": "The general solution of the differential equation $\\frac{dy}{dx} + y \\tan x = \\sec x$ is:",
+    "options": {
+      "A": "$y = \\sin x + c \\cos x$",
+      "B": "$y = \\cos x + c \\sin x$",
+      "C": "$y = \\tan x + c \\sin x$",
+      "D": "$y = \\sec x + c \\cos x$"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "M-005-a",
+        "type": "comfort",
+        "concept": "Ordinary differential equations",
+        "question": "The given equation $\\frac{dy}{dx} + y \\tan x = \\sec x$ is a linear differential equation of the form $\\frac{dy}{dx} + P(x)y = Q(x)$. State the formula for the Integrating Factor (I.F.) and the general solution.",
+        "options": {
+          "A": "I.F. $= e^{\\int Q(x) dx}$, Solution: $y \\cdot (I.F.) = \\int Q(x) \\cdot (I.F.) dx + C$",
+          "B": "I.F. $= e^{\\int P(x) dx}$, Solution: $y \\cdot (I.F.) = \\int Q(x) \\cdot (I.F.) dx + C$",
+          "C": "I.F. $= e^{\\int P(x) dx}$, Solution: $x \\cdot (I.F.) = \\int Q(x) \\cdot (I.F.) dy + C$",
+          "D": "I.F. $= e^{\\int P(x) dx}$, Solution: $y \\cdot (I.F.) = \\int P(x) \\cdot (I.F.) dx + C$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-005-b",
+        "type": "grounding",
+        "concept": "Ordinary differential equations",
+        "question": "For the equation, identify $P(x)$ and $Q(x)$, and calculate the Integrating Factor (I.F.) $= e^{\\int P(x) dx}$. Recall that $\\int \\tan x dx = \\ln|\\sec x|$.",
+        "options": {
+          "A": "$P(x) = \\tan x$, $Q(x) = \\sec x$, I.F. $= \\sec x$",
+          "B": "$P(x) = \\sec x$, $Q(x) = \\tan x$, I.F. $= \\sec x$",
+          "C": "$P(x) = \\tan x$, $Q(x) = \\sec x$, I.F. $= \\cos x$",
+          "D": "$P(x) = \\sec x$, $Q(x) = \\tan x$, I.F. $= \\cos x$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "M-005-c",
+        "type": "precursor",
+        "concept": "Ordinary differential equations",
+        "question": "Using the solution formula $y \\cdot (I.F.) = \\int Q(x) \\cdot (I.F.) dx + C$ with I.F. $=\\sec x$ and $Q(x) = \\sec x$, find the integrand $Q(x) \\cdot (I.F.)$ and calculate the integral $\\int Q(x) \\cdot (I.F.) dx$.",
+        "options": {
+          "A": "Integrand is $\\sec^2 x$. Integral is $\\tan x + C$",
+          "B": "Integrand is $\\sec x \\tan x$. Integral is $\\sec x + C$",
+          "C": "Integrand is $\\sec^2 x$. Integral is $\\sec x + C$",
+          "D": "Integrand is $\\sec x \\tan x$. Integral is $\\tan x + C$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 11: Electric Potential Energy (QID: P-006)",
+    "question_id": "P-006",
+    "question_title": "Energy Stored in Capacitor",
+    "concept": "Electric potential and capacitors",
+    "question": "A capacitor of capacitance $C$ is fully charged by a battery of EMF $\\varepsilon$. It is then disconnected from the battery and connected to an uncharged capacitor of capacitance $3C$. The electric potential energy stored in the system is:",
+    "options": {
+      "A": "$\\frac{1}{4} C \\varepsilon^2$",
+      "B": "$\\frac{1}{2} C \\varepsilon^2$",
+      "C": "$\\frac{3}{8} C \\varepsilon^2$",
+      "D": "$\\frac{1}{8} C \\varepsilon^2$"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "P-006-a",
+        "type": "comfort",
+        "concept": "Electric potential and capacitors",
+        "question": "State the formulas for the initial charge ($Q_0$) on a capacitor with capacitance $C$ and voltage $V$ (or EMF $\\varepsilon$), and the initial energy stored ($U_0$).",
+        "options": {
+          "A": "$Q_0 = C\\varepsilon$, $U_0 = \\frac{1}{2} C \\varepsilon^2$",
+          "B": "$Q_0 = C/\\varepsilon$, $U_0 = C \\varepsilon^2$",
+          "C": "$Q_0 = C\\varepsilon$, $U_0 = C \\varepsilon^2$",
+          "D": "$Q_0 = \\varepsilon/C$, $U_0 = \\frac{1}{2} C \\varepsilon^2$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "P-006-b",
+        "type": "grounding",
+        "concept": "Electric potential and capacitors",
+        "question": "After the fully charged capacitor ($C$) is connected to the uncharged capacitor ($3C$), the total charge in the system is conserved. What is the total capacitance ($C_{eq}$) and total charge ($Q_{total}$) of the new system in terms of $C$ and $\\varepsilon$?",
+        "options": {
+          "A": "$C_{eq} = 2C$, $Q_{total} = C\\varepsilon$",
+          "B": "$C_{eq} = 4C$, $Q_{total} = C\\varepsilon$",
+          "C": "$C_{eq} = 4C$, $Q_{total} = 4C\\varepsilon$",
+          "D": "$C_{eq} = 3C$, $Q_{total} = C\\varepsilon$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-006-c",
+        "type": "precursor",
+        "concept": "Electric potential and capacitors",
+        "question": "The total electric potential energy stored in the final system is $U_f = \\frac{Q_{total}^2}{2C_{eq}}$. Using $Q_{total} = C\\varepsilon$ and $C_{eq} = 4C$, calculate the final stored energy $U_f$.",
+        "options": {
+          "A": "$U_f = \\frac{(C\\varepsilon)^2}{2(4C)} = \\frac{C\\varepsilon^2}{8}$",
+          "B": "$U_f = \\frac{(C\\varepsilon)^2}{2(3C)} = \\frac{C\\varepsilon^2}{6}$",
+          "C": "$U_f = \\frac{(4C\\varepsilon)^2}{2(4C)} = 2C\\varepsilon^2$",
+          "D": "$U_f = \\frac{(C\\varepsilon)^2}{2(C)} = \\frac{C\\varepsilon^2}{2}$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 12: Sequence Sum to Infinity (QID: M-006)",
+    "question_id": "M-006",
+    "question_title": "Sum of Geometric Series",
+    "concept": "Arithmetic and geometric progressions",
+    "question": "The sum of the series $1 + \\frac{1}{3} + \\frac{1}{9} + \\frac{1}{27} + \\dots$ up to infinity is:",
+    "options": {
+      "A": "$3/2$",
+      "B": "$2/3$",
+      "C": "$4/3$",
+      "D": "$3/4$"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "M-006-a",
+        "type": "comfort",
+        "concept": "Arithmetic and geometric progressions",
+        "question": "Identify the type of series and state the formula for the sum to infinity ($S_\\infty$) for a series with first term $a$ and common ratio $r$, provided $|r| < 1$.",
+        "options": {
+          "A": "Arithmetic Progression, $S_\\infty = \\frac{n}{2}(a+l)$",
+          "B": "Geometric Progression, $S_\\infty = \\frac{a}{1 - r}$",
+          "C": "Geometric Progression, $S_\\infty = \\frac{a}{r - 1}$",
+          "D": "Arithmetic Progression, $S_\\infty$ does not exist"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-006-b",
+        "type": "grounding",
+        "concept": "Arithmetic and geometric progressions",
+        "question": "For the series $1 + \\frac{1}{3} + \\frac{1}{9} + \\frac{1}{27} + \\dots$, identify the first term ($a$) and the common ratio ($r$).",
+        "options": {
+          "A": "$a = 1, r = 3$",
+          "B": "$a = 1, r = 1/3$",
+          "C": "$a = 1/3, r = 1$",
+          "D": "$a = 1/3, r = 3$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-006-c",
+        "type": "precursor",
+        "concept": "Arithmetic and geometric progressions",
+        "question": "Substitute the values $a=1$ and $r=1/3$ into the sum to infinity formula, $S_\\infty = \\frac{a}{1 - r}$, to find the value of the denominator.",
+        "options": {
+          "A": "$1 - 1/3 = 2/3$",
+          "B": "$1 - 3 = -2$",
+          "C": "$1 + 1/3 = 4/3$",
+          "D": "$1/(1 - 1/3) = 3/2$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 13: Young's Double Slit Experiment (QID: P-007)",
+    "question_id": "P-007",
+    "question_title": "Fringe Width in YDSE",
+    "concept": "Wave optics",
+    "question": "In Young’s double-slit experiment, the distance between the slits is halved and the distance between the screen and the slit is doubled. The fringe width for the new setup compared to the old setup will be:",
+    "options": {
+      "A": "Half",
+      "B": "Same",
+      "C": "Double",
+      "D": "Quadruple"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "P-007-a",
+        "type": "comfort",
+        "concept": "Wave optics",
+        "question": "State the formula for the fringe width $(\\beta)$ in Young’s Double Slit Experiment (YDSE), in terms of the wavelength $(\\lambda)$, distance between the screen and slits ($D$), and distance between the slits ($d$).",
+        "options": {
+          "A": "$\\beta = \\frac{d\\lambda}{D}$",
+          "B": "$\\beta = \\frac{D\\lambda}{d}$",
+          "C": "$\\beta = \\frac{\\lambda}{Dd}$",
+          "D": "$\\beta = \\frac{D}{d\\lambda}$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "P-007-b",
+        "type": "grounding",
+        "concept": "Wave optics",
+        "question": "The new distance between the slits is $d' = d/2$ and the new distance between the screen and slits is $D' = 2D$. Substitute these new values into the fringe width formula $\\beta' = \\frac{D'\\lambda}{d'}$.",
+        "options": {
+          "A": "$\\beta' = \\frac{(2D)\\lambda}{(d/2)}$",
+          "B": "$\\beta' = \\frac{(D/2)\\lambda}{(2d)}$",
+          "C": "$\\beta' = \\frac{(2D)\\lambda}{(2d)}$",
+          "D": "$\\beta' = \\frac{(D/2)\\lambda}{(d/2)}$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "P-007-c",
+        "type": "precursor",
+        "concept": "Wave optics",
+        "question": "Simplify the expression $\\beta' = \\frac{(2D)\\lambda}{(d/2)}$ in terms of the original fringe width $\\beta = \\frac{D\\lambda}{d}$.",
+        "options": {
+          "A": "$\\beta' = 2 \\cdot \\frac{D\\lambda}{d} = 2\\beta$",
+          "B": "$\\beta' = \\frac{1}{4} \\cdot \\frac{D\\lambda}{d} = \\frac{1}{4}\\beta$",
+          "C": "$\\beta' = 4 \\cdot \\frac{D\\lambda}{d} = 4\\beta$",
+          "D": "$\\beta' = \\frac{D\\lambda}{d} = \\beta$"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "header": "Question 14: Definite Integral of Function (QID: M-007)",
+    "question_id": "M-007",
+    "question_title": "Definite Integral Property",
+    "concept": "Definite integrals and areas",
+    "question": "If $f(x) = |x| + |x-1|$, evaluate the definite integral $\\int_{-1}^{2} f(x) dx$.",
+    "options": {
+      "A": "$\\frac{11}{2}$",
+      "B": "$5$",
+      "C": "$\\frac{13}{2}$",
+      "D": "$6$"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "M-007-a",
+        "type": "comfort",
+        "concept": "Definite integrals and areas",
+        "question": "State the definition of the modulus function $|u|$, and the property of definite integrals that allows splitting the integral $\\int_a^b f(x) dx$ at an intermediate point $c$ ($a < c < b$).",
+        "options": {
+          "A": "$|u| = u$ for $u<0$ and $-u$ for $u\\ge 0$. Split: $\\int_a^c f(x) dx - \\int_c^b f(x) dx$",
+          "B": "$|u| = u$ for $u\\ge 0$ and $-u$ for $u<0$. Split: $\\int_a^c f(x) dx + \\int_c^b f(x) dx$",
+          "C": "$|u| = u$ for all $u$. Split: $\\int_a^c f(x) dx + \\int_c^b f(x) dx$",
+          "D": "$|u| = u$ for $u\\ge 0$ and $-u$ for $u<0$. Split: $\\int_a^b f(x) dx + \\int_b^c f(x) dx$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-007-b",
+        "type": "grounding",
+        "concept": "Definite integrals and areas",
+        "question": "Determine the piecewise definition of $f(x) = |x| + |x-1|$ over the interval $[-1, 2]$. (The critical points for the modulus are $x=0$ and $x=1$).",
+        "options": {
+          "A": "$f(x) = 1$ for $x \\in [-1, 0]$, $f(x) = 1 - 2x$ for $x \\in [0, 1]$, $f(x) = 2x - 1$ for $x \\in [1, 2]$",
+          "B": "$f(x) = 1 - 2x$ for $x \\in [-1, 0]$, $f(x) = 1$ for $x \\in [0, 1]$, $f(x) = 2x - 1$ for $x \\in [1, 2]$",
+          "C": "$f(x) = 1$ for $x \\in [-1, 0]$, $f(x) = 2x - 1$ for $x \\in [0, 1]$, $f(x) = 1 - 2x$ for $x \\in [1, 2]$",
+          "D": "$f(x) = 1 - 2x$ for $x \\in [-1, 0]$, $f(x) = 2x - 1$ for $x \\in [0, 1]$, $f(x) = 1$ for $x \\in [1, 2]$"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "M-007-c",
+        "type": "precursor",
+        "concept": "Definite integrals and areas",
+        "question": "Using the piecewise definition, write the definite integral $\\int_{-1}^{2} f(x) dx$ as the sum of three integrals over the subintervals $[-1, 0]$, $[0, 1]$, and $[1, 2]$.",
+        "options": {
+          "A": "$\\int_{-1}^{0} (1 - 2x) dx + \\int_{0}^{1} (1) dx + \\int_{1}^{2} (2x - 1) dx$",
+          "B": "$\\int_{-1}^{0} (2x - 1) dx + \\int_{0}^{1} (1) dx + \\int_{1}^{2} (1 - 2x) dx$",
+          "C": "$\\int_{-1}^{0} (1) dx + \\int_{0}^{1} (2x - 1) dx + \\int_{1}^{2} (1 - 2x) dx$",
+          "D": "$\\int_{-1}^{0} (1 - 2x) dx + \\int_{0}^{1} (2x - 1) dx + \\int_{1}^{2} (1) dx$"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "header": "Question 15: Gravitational Potential Energy (QID: P-008)",
+    "question_id": "P-008",
+    "question_title": "Potential Energy of Satellite",
+    "concept": "Satellites and escape velocity",
+    "question": "A satellite of mass $m$ is revolving around the earth (mass $M$, radius $R$) in a circular orbit of radius $r$. The total energy of the satellite is:",
+    "options": {
+      "A": "$\\frac{GMm}{2r}$",
+      "B": "$-\\frac{GMm}{r}$",
+      "C": "$-\\frac{GMm}{2r}$",
+      "D": "$\\frac{GMm}{r}$"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "P-008-a",
+        "type": "comfort",
+        "concept": "Satellites and escape velocity",
+        "question": "State the formulas for the kinetic energy ($K$) and gravitational potential energy ($U$) of a satellite of mass $m$ orbiting a planet of mass $M$ in a circular orbit of radius $r$.",
+        "options": {
+          "A": "$K = \\frac{GMm}{2r}$, $U = -\\frac{GMm}{r}$",
+          "B": "$K = -\\frac{GMm}{r}$, $U = \\frac{GMm}{2r}$",
+          "C": "$K = \\frac{GMm}{r}$, $U = -\\frac{GMm}{2r}$",
+          "D": "$K = \\frac{GMm}{2r}$, $U = -\\frac{GMm}{2r}$"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "P-008-b",
+        "type": "grounding",
+        "concept": "Satellites and escape velocity",
+        "question": "For a satellite in a circular orbit, the necessary centripetal force is provided by the gravitational force. Relate the orbital velocity ($v$) to the orbital radius ($r$) by equating the gravitational force $\\frac{GMm}{r^2}$ to the centripetal force $\\frac{mv^2}{r}$.",
+        "options": {
+          "A": "$v^2 = \\frac{GM}{2r}$",
+          "B": "$v^2 = \\frac{GMm}{r}$",
+          "C": "$v^2 = \\frac{GM}{r}$",
+          "D": "$v^2 = \\frac{GMm}{r^2}$"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "P-008-c",
+        "type": "precursor",
+        "concept": "Satellites and escape velocity",
+        "question": "The total energy ($E$) is the sum of kinetic energy ($K$) and potential energy ($U$). Substitute the values for $K = \\frac{1}{2}mv^2$ (using $v^2 = \\frac{GM}{r}$) and $U = -\\frac{GMm}{r}$ into $E = K + U$.",
+        "options": {
+          "A": "$E = \\frac{1}{2}m(\\frac{GM}{r}) + (-\\frac{GMm}{r}) = \\frac{GMm}{r} + \\frac{GMm}{r} = \\frac{2GMm}{r}$",
+          "B": "$E = \\frac{1}{2}m(\\frac{GM}{r}) + (-\\frac{GMm}{r}) = \\frac{GMm}{2r} + \\frac{GMm}{r} = \\frac{3GMm}{2r}$",
+          "C": "$E = \\frac{1}{2}m(\\frac{GM}{r}) + (-\\frac{GMm}{r}) = \\frac{GMm}{2r} - \\frac{GMm}{r} = -\\frac{GMm}{2r}$",
+          "D": "$E = \\frac{1}{2}m(\\frac{GM}{r}) + (-\\frac{GMm}{r}) = \\frac{GMm}{r} - \\frac{GMm}{2r} = \\frac{GMm}{2r}$"
+        },
+        "answer": "C"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1474 @@
+{
+    "exam": {
+        "name": "JEE Main",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "topics": [
+                    {
+                        "name": "Algebra",
+                        "subtopics": [
+                            {
+                                "name": "Sets, Relations and Functions",
+                                "concepts": [
+                                    {
+                                        "name": "Sets and their representation",
+                                        "description": "Formal definition of a set, types of sets (finite, infinite, singleton, null), and all standard representation methods including roster, set-builder, and Venn diagram visualization for precise understanding."
+                                    },
+                                    {
+                                        "name": "Union, intersection and complement of sets",
+                                        "description": "Exact definitions, properties, and operations on sets including union, intersection, difference, and complement. Emphasis on Venn diagrams, laws, and practical problem applications."
+                                    },
+                                    {
+                                        "name": "Algebraic properties of sets",
+                                        "description": "All fundamental set operation laws: commutative, associative, distributive, identity, idempotent, absorption, and De Morgan’s laws with examples for problem-solving."
+                                    },
+                                    {
+                                        "name": "Power set",
+                                        "description": "Definition, cardinality formula, and properties of the power set. Applications in combinatorics and objective-type problems."
+                                    },
+                                    {
+                                        "name": "Relations",
+                                        "description": "Definition of a relation as a subset of Cartesian product, types of relations (reflexive, symmetric, transitive, equivalence, partial order), and representation through matrices and digraphs."
+                                    },
+                                    {
+                                        "name": "Equivalence relations",
+                                        "description": "Equivalence relation properties, identification criteria, equivalence classes, and partitioning sets with rigorous examples."
+                                    },
+                                    {
+                                        "name": "Functions",
+                                        "description": "Precise definition of a function, domain, codomain, range, mapping rules, and problem-solving framework."
+                                    },
+                                    {
+                                        "name": "One-one, into and onto functions",
+                                        "description": "Injective, surjective, bijective function definitions with clear identification methods, tests, and illustrative examples."
+                                    },
+                                    {
+                                        "name": "Composition of functions",
+                                        "description": "Definition, evaluation, domain restrictions, and properties of composite functions, with application in problem-solving and functional equations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Complex Numbers and Quadratic Equations",
+                                "concepts": [
+                                    {
+                                        "name": "Complex numbers as ordered pairs",
+                                        "description": "Complex numbers defined as (a, b), correspondence with a + ib, and geometric interpretation."
+                                    },
+                                    {
+                                        "name": "Algebra of complex numbers",
+                                        "description": "All operations: addition, subtraction, multiplication, division, and conjugation with standard problem-solving applications."
+                                    },
+                                    {
+                                        "name": "Argand diagram",
+                                        "description": "Geometrical representation in complex plane, plotting, modulus, argument, and vector interpretation."
+                                    },
+                                    {
+                                        "name": "Modulus of a complex number",
+                                        "description": "Magnitude of complex numbers, properties, inequalities, and practical computation for problem-solving."
+                                    },
+                                    {
+                                        "name": "Argument of a complex number",
+                                        "description": "Definition, principal argument, properties, and use in representing and solving complex number problems."
+                                    },
+                                    {
+                                        "name": "Quadratic equations",
+                                        "description": "General quadratic equation in real and complex domains, formulation, and standard problem-solving framework."
+                                    },
+                                    {
+                                        "name": "Solutions of quadratic equations",
+                                        "description": "Methods: factorization, completing the square, quadratic formula, and discriminant-based analysis."
+                                    },
+                                    {
+                                        "name": "Relations between roots and coefficients",
+                                        "description": "Exact relations between sum and product of roots with coefficients, applied in equations construction and verification."
+                                    },
+                                    {
+                                        "name": "Nature of roots",
+                                        "description": "Classification using discriminant: real distinct, real equal, complex roots, with problem-solving strategies."
+                                    },
+                                    {
+                                        "name": "Formation of quadratic equations",
+                                        "description": "Systematic formation from given roots, sum/product of roots, and applied problem examples."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Matrices and Determinants",
+                                "concepts": [
+                                    {
+                                        "name": "Matrices",
+                                        "description": "Definition, types (row, column, square, diagonal, zero, identity), order, and representation methods."
+                                    },
+                                    {
+                                        "name": "Algebra of matrices",
+                                        "description": "Operations: addition, subtraction, multiplication, scalar multiplication, and properties."
+                                    },
+                                    {
+                                        "name": "Determinants",
+                                        "description": "Definition, evaluation of 2×2 and 3×3 determinants, and properties for simplification."
+                                    },
+                                    {
+                                        "name": "Evaluation of determinants",
+                                        "description": "Systematic evaluation using cofactor expansion, row/column operations, and problem-solving shortcuts."
+                                    },
+                                    {
+                                        "name": "Area of triangle using determinants",
+                                        "description": "Application to coordinate geometry to calculate triangle area using determinant formula."
+                                    },
+                                    {
+                                        "name": "Adjoint of a matrix",
+                                        "description": "Definition, calculation of adjoint using cofactors, and use in finding inverses."
+                                    },
+                                    {
+                                        "name": "Inverse of a matrix",
+                                        "description": "Calculation using adjoint and determinant, with conditions and examples for solving linear systems."
+                                    },
+                                    {
+                                        "name": "Test of consistency",
+                                        "description": "Consistency criteria for systems of linear equations using determinant and rank methods."
+                                    },
+                                    {
+                                        "name": "Solution of linear equations",
+                                        "description": "Methods using inverse matrix, Cramer’s rule, and Gaussian elimination for exact solutions."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Permutations and Combinations",
+                                "concepts": [
+                                    {
+                                        "name": "Fundamental principle of counting",
+                                        "description": "Sequential event counting rule and application in problem decomposition."
+                                    },
+                                    {
+                                        "name": "Permutations",
+                                        "description": "Arrangement of objects where order matters, including circular and constrained arrangements."
+                                    },
+                                    {
+                                        "name": "Combinations",
+                                        "description": "Selection of objects where order doesn’t matter, and applications to binomial problems."
+                                    },
+                                    {
+                                        "name": "Meaning of P(n, r)",
+                                        "description": "Permutation notation, meaning, formula derivation, and problem-solving applications."
+                                    },
+                                    {
+                                        "name": "Meaning of C(n, r)",
+                                        "description": "Combination notation, meaning, formula, and applications in counting problems."
+                                    }
+                                    
+                                ]
+                            },
+                            {
+                                "name": "Binomial Theorem",
+                                "concepts": [
+                                    {
+                                        "name": "Binomial theorem",
+                                        "description": "Precise statement for (a+b)^n, derivation, and expansion with examples for problem-solving."
+                                    },
+                                    {
+                                        "name": "General term",
+                                        "description": "Formula, identification, and manipulation of general term in binomial expansions."
+                                    },
+                                    {
+                                        "name": "Middle term",
+                                        "description": "Calculation and application of middle term(s) in expansions."
+                                    },
+                                    {
+                                        "name": "Simple applications",
+                                        "description": "Coefficient identification, sums, and problem-solving based on binomial theorem."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Sequence and Series",
+                                "concepts": [
+                                    {
+                                        "name": "Arithmetic progression",
+                                        "description": "Definition, general term, sum formula, and properties."
+                                    },
+                                    {
+                                        "name": "Geometric progression",
+                                        "description": "Definition, general term, sum formulas, and problem-solving tips."
+                                    },
+                                    {
+                                        "name": "Insertion of arithmetic means",
+                                        "description": "Methods for inserting arithmetic means between two numbers with examples."
+                                    },
+                                    {
+                                        "name": "Insertion of geometric means",
+                                        "description": "Methods for inserting geometric means with illustrative problems."
+                                    },
+                                    {
+                                        "name": "Relation between A.M. and G.M.",
+                                        "description": "Inequality relation, derivation, and problem-solving applications."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Trigonometry",
+                        "subtopics": [
+                            {
+                                "name": "Trigonometry",
+                                "concepts": [
+                                    {
+                                        "name": "Trigonometric functions",
+                                        "description": "Definitions of sin, cos, tan, cosec, sec, cot, domains, ranges, and fundamental properties."
+                                    },
+                                    {
+                                        "name": "Trigonometric identities",
+                                        "description": "All essential identities including Pythagorean, sum-difference, double-angle, half-angle, and product-to-sum formulas for direct problem-solving."
+                                    },
+                                    {
+                                        "name": "Inverse trigonometric functions",
+                                        "description": "Definitions, principal values, properties, and applications in solving equations."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Calculus",
+                        "subtopics": [
+                            {
+                                "name": "Limits, Continuity and Differentiability",
+                                "concepts": [
+                                    {
+                                        "name": "Real-valued functions",
+                                        "description": "Functions with real outputs, domains, codomains, and properties for analysis."
+                                    },
+                                    {
+                                        "name": "Algebra of functions",
+                                        "description": "Operations including sum, difference, product, quotient, and composite functions."
+                                    },
+                                    {
+                                        "name": "Types of functions",
+                                        "description": "Polynomial, rational, trigonometric, logarithmic, exponential with analysis and examples."
+                                    },
+                                    {
+                                        "name": "Graphs of functions",
+                                        "description": "Plotting, behavior, and transformations of simple functions."
+                                    },
+                                    {
+                                        "name": "Limits",
+                                        "description": "Rigorous evaluation of limits, L’Hospital’s rule, and problem-solving strategies."
+                                    },
+                                    {
+                                        "name": "Continuity",
+                                        "description": "Definition, types, and identification of continuous functions with examples."
+                                    },
+                                    {
+                                        "name": "Differentiability",
+                                        "description": "Definition, tests, and relationship with continuity."
+                                    },
+                                    {
+                                        "name": "Rules of differentiation",
+                                        "description": "Derivative of sum, difference, product, quotient, and chain rules with examples."
+                                    },
+                                    {
+                                        "name": "Differentiation of standard functions",
+                                        "description": "Trigonometric, inverse trigonometric, logarithmic, and exponential functions."
+                                    },
+                                    {
+                                        "name": "Composite and implicit differentiation",
+                                        "description": "Techniques for complex function differentiation and implicit functions."
+                                    },
+                                    {
+                                        "name": "Second order derivatives",
+                                        "description": "Definition and application in concavity, points of inflection, and acceleration."
+                                    },
+                                    {
+                                        "name": "Applications of derivatives",
+                                        "description": "Rate of change, monotonicity, maxima, minima, and problem-solving strategies."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Integral Calculus",
+                                "concepts": [
+                                    {
+                                        "name": "Indefinite integrals",
+                                        "description": "Integration as inverse of differentiation, rules, and standard formulas."
+                                    },
+                                    {
+                                        "name": "Fundamental integrals",
+                                        "description": "Integration of algebraic, trigonometric, exponential, and logarithmic functions."
+                                    },
+                                    {
+                                        "name": "Integration by substitution",
+                                        "description": "Change of variables for solving integrals efficiently."
+                                    },
+                                    {
+                                        "name": "Integration by parts",
+                                        "description": "Formula derivation and application for complex integrals."
+                                    },
+                                    {
+                                        "name": "Integration by partial fractions",
+                                        "description": "Method to integrate rational functions using decomposition into partial fractions."
+                                    },
+                                    {
+                                        "name": "Integration using trigonometric identities",
+                                        "description": "Utilizing trig identities to simplify and evaluate integrals."
+                                    },
+                                    {
+                                        "name": "Definite integrals",
+                                        "description": "Evaluation of integrals with limits and properties, applications to area and total change."
+                                    },
+                                    {
+                                        "name": "Fundamental theorem of calculus",
+                                        "description": "Exact relation between differentiation and integration, applied to problem-solving."
+                                    },
+                                    {
+                                        "name": "Area under curves",
+                                        "description": "Computation of area bounded by curves using definite integrals."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Differential Equations",
+                                "concepts": [
+                                    {
+                                        "name": "Differential equations",
+                                        "description": "Order, degree, general and particular solutions, and types of differential equations."
+                                    },
+                                    {
+                                        "name": "Separation of variables",
+                                        "description": "Technique for solving first-order separable differential equations."
+                                    },
+                                    {
+                                        "name": "Homogeneous differential equations",
+                                        "description": "Methods to solve homogeneous equations using substitution and simplification."
+                                    },
+                                    {
+                                        "name": "Linear differential equations",
+                                        "description": "Solution of first-order and higher-order linear differential equations using standard methods."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Coordinate Geometry",
+                        "subtopics": [
+                            {
+                                "name": "Coordinate Geometry",
+                                "concepts": [
+                                    {
+                                        "name": "Cartesian coordinate system",
+                                        "description": "Rectangular coordinate system, axes, quadrants, and plotting points."
+                                    },
+                                    {
+                                        "name": "Distance formula",
+                                        "description": "Exact formula for distance between two points in 2D space."
+                                    },
+                                    {
+                                        "name": "Section formula",
+                                        "description": "Internal and external division formulas and examples."
+                                    },
+                                    {
+                                        "name": "Locus",
+                                        "description": "Definition, equation of a locus, and application in problem-solving."
+                                    },
+                                    {
+                                        "name": "Straight lines",
+                                        "description": "Equation forms: slope-intercept, point-slope, general; properties and intersection points."
+                                    },
+                                    {
+                                        "name": "Angle between lines",
+                                        "description": "Formula, derivation, and geometric interpretation."
+                                    },
+                                    {
+                                        "name": "Distance of a point from a line",
+                                        "description": "Perpendicular distance formula and applications."
+                                    },
+                                    {
+                                        "name": "Circle",
+                                        "description": "Equation, radius, diameter, tangent, chord properties, and applications."
+                                    },
+                                    {
+                                        "name": "Parabola",
+                                        "description": "Standard forms, vertex, focus, directrix, axis, and problem-solving applications."
+                                    },
+                                    {
+                                        "name": "Ellipse",
+                                        "description": "Equation, axes, foci, eccentricity, and applications."
+                                    },
+                                    {
+                                        "name": "Hyperbola",
+                                        "description": "Equation, axes, foci, eccentricity, asymptotes, and applications."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Vector and Three Dimensional Geometry",
+                        "subtopics": [
+                            {
+                                "name": "Vector Algebra",
+                                "concepts": [
+                                    {
+                                        "name": "Vectors and scalars",
+                                        "description": "Definitions, examples, and differences."
+                                    },
+                                    {
+                                        "name": "Vector addition",
+                                        "description": "Graphical and algebraic methods, properties, and applications."
+                                    },
+                                    {
+                                        "name": "Components of a vector",
+                                        "description": "Resolution in 2D and 3D, unit vectors, and applications."
+                                    },
+                                    {
+                                        "name": "Scalar product",
+                                        "description": "Dot product, properties, angle between vectors, and projection applications."
+                                    },
+                                    {
+                                        "name": "Vector product",
+                                        "description": "Cross product, properties, area calculation, and perpendicular vector applications."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Three Dimensional Geometry",
+                                "concepts": [
+                                    {
+                                        "name": "Coordinates in space",
+                                        "description": "Position of points in 3D space, coordinate notation, and plotting."
+                                    },
+                                    {
+                                        "name": "Distance between two points",
+                                        "description": "3D distance formula, derivation, and problem-solving."
+                                    },
+                                    {
+                                        "name": "Direction ratios and direction cosines",
+                                        "description": "Line orientation in space, computation, and applications."
+                                    },
+                                    {
+                                        "name": "Angle between lines 3D",
+                                        "description": "3D angle computation using dot product of direction ratios."
+                                    },
+                                    {
+                                        "name": "Equation of a line",
+                                        "description": "Vector, symmetric, and parametric forms with examples."
+                                    },
+                                    {
+                                        "name": "Skew lines",
+                                        "description": "Definition, shortest distance formula, and problem-solving methods."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Statistics and Probability",
+                        "subtopics": [
+                            {
+                                "name": "Statistics",
+                                "concepts": [
+                                    {
+                                        "name": "Mean",
+                                        "description": "Calculation for grouped and ungrouped data, weighted mean, and applications."
+                                    },
+                                    {
+                                        "name": "Median",
+                                        "description": "Determination using direct formula or cumulative frequency method."
+                                    },
+                                    {
+                                        "name": "Mode",
+                                        "description": "Determination using formula, histogram interpretation, and applications."
+                                    },
+                                    {
+                                        "name": "Variance",
+                                        "description": "Definition, formula, and computation for sample and population."
+                                    },
+                                    {
+                                        "name": "Standard deviation",
+                                        "description": "Square root of variance, properties, and applications."
+                                    },
+                                    {
+                                        "name": "Mean deviation",
+                                        "description": "Mean deviation about mean or median, calculation, and application."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Probability",
+                                "concepts": [
+                                    {
+                                        "name": "Probability of an event",
+                                        "description": "Definition, properties, sample space, and classical probability calculation."
+                                    },
+                                    {
+                                        "name": "Addition theorem of probability",
+                                        "description": "Union of events, mutually exclusive and non-exclusive cases."
+                                    },
+                                    {
+                                        "name": "Multiplication theorem of probability",
+                                        "description": "Conditional probability, independent events, and applications."
+                                    },
+                                    {
+                                        "name": "Bayes' theorem",
+                                        "description": "Formula derivation and application in conditional probability problems."
+                                    },
+                                    {
+                                        "name": "Random variable",
+                                        "description": "Discrete random variables, probability mass function, expectation, and variance."
+                                    },
+                                    {
+                                        "name": "Probability distribution",
+                                        "description": "Discrete distributions, expected value, variance, and cumulative distribution functions."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Physics",
+                "topics": [
+                    {
+                        "name": "Mechanics",
+                        "subtopics": [
+                            {
+                                "name": "Units and Measurements",
+                                "concepts": [
+                                    {
+                                        "name": "Physical quantities and units",
+                                        "description": "Exhaustive definition of physical quantities with complete SI system coverage, fundamental and derived units, and dimensional consistency rules."
+                                    },
+                                    {
+                                        "name": "Measurement techniques",
+                                        "description": "All standard measurement methods, least count calculation, significant figures, and propagation of measurement errors."
+                                    },
+                                    {
+                                        "name": "Errors in measurements",
+                                        "description": "Detailed classification of errors: systematic, random, gross, and techniques to minimize and analyze them."
+                                    },
+                                    {
+                                        "name": "Dimensional analysis",
+                                        "description": "Dimensional formulae of all physical quantities, verification of equations, derivation of relations using dimensional homogeneity."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Kinematics",
+                                "concepts": [
+                                    {
+                                        "name": "Frame of reference",
+                                        "description": "Complete understanding of inertial and non-inertial frames, relative motion, and transformations between frames."
+                                    },
+                                    {
+                                        "name": "Motion in a straight line",
+                                        "description": "Displacement, distance, speed, velocity, and graphical interpretation with position-time and velocity-time analysis."
+                                    },
+                                    {
+                                        "name": "Uniformly accelerated motion",
+                                        "description": "Equations of motion derivation, analysis of motion graphs, and problem-solving for constant acceleration."
+                                    },
+                                    {
+                                        "name": "Relative velocity",
+                                        "description": "Vectorial treatment of relative motion in one and two dimensions, including riverboat and train problems."
+                                    },
+                                    {
+                                        "name": "Motion in a plane",
+                                        "description": "Projectile motion, range, maximum height, time of flight, and vector decomposition of motion."
+                                    },
+                                    {
+                                        "name": "Uniform circular motion",
+                                        "description": "Angular displacement, velocity, centripetal acceleration, centripetal force, and dynamics of circular motion."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Laws of Motion",
+                                "concepts": [
+                                    {
+                                        "name": "Newton’s laws of motion",
+                                        "description": "Comprehensive analysis of inertia, momentum, impulse, and their applications in mechanics."
+                                    },
+                                    {
+                                        "name": "Conservation of linear momentum",
+                                        "description": "Detailed treatment of elastic and inelastic collisions in one and two dimensions."
+                                    },
+                                    {
+                                        "name": "Equilibrium of forces",
+                                        "description": "Complete understanding of concurrent and non-concurrent force equilibrium conditions."
+                                    },
+                                    {
+                                        "name": "Friction",
+                                        "description": "Static, kinetic, rolling friction, laws of friction, and applications in motion analysis."
+                                    },
+                                    {
+                                        "name": "Circular motion dynamics",
+                                        "description": "Detailed study of centripetal and centrifugal forces, banked curves, and conical pendulum dynamics."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Work, Energy and Power",
+                                "concepts": [
+                                    {
+                                        "name": "Work by constant and variable forces",
+                                        "description": "Line integral treatment, work done by varying forces, and work-energy principles."
+                                    },
+                                    {
+                                        "name": "Kinetic and potential energy",
+                                        "description": "Derivation of kinetic and potential energy, work-energy theorem, and practical applications."
+                                    },
+                                    {
+                                        "name": "Conservation of mechanical energy",
+                                        "description": "Comprehensive treatment of conservative and non-conservative forces and energy transformations."
+                                    },
+                                    {
+                                        "name": "Motion in a vertical circle",
+                                        "description": "Energy and dynamics analysis of objects in vertical circular paths, including tension and velocity relations."
+                                    },
+                                    {
+                                        "name": "Collisions",
+                                        "description": "Elastic and inelastic collisions, coefficient of restitution, momentum and energy considerations in 1D and 2D collisions."
+                                    },
+                                    {
+                                        "name": "Power",
+                                        "description": "Average and instantaneous power, derivations, and problem-solving techniques."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Rotational Motion",
+                                "concepts": [
+                                    {
+                                        "name": "Centre of mass",
+                                        "description": "Determination for two-particle systems and rigid bodies, motion of center of mass, and practical applications."
+                                    },
+                                    {
+                                        "name": "Rotational kinematics",
+                                        "description": "Angular displacement, velocity, acceleration, and rotational motion equations analogous to linear motion."
+                                    },
+                                    {
+                                        "name": "Torque and angular momentum",
+                                        "description": "Definition, vector treatment, conservation laws, and applications to rigid bodies."
+                                    },
+                                    {
+                                        "name": "Moment of inertia",
+                                        "description": "Radius of gyration, derivation for standard bodies, and application in rotational dynamics."
+                                    },
+                                    {
+                                        "name": "Parallel and perpendicular axis theorems",
+                                        "description": "Derivations and applications to compute moments of inertia of complex bodies."
+                                    },
+                                    {
+                                        "name": "Equilibrium of rigid bodies",
+                                        "description": "Static and rotational equilibrium conditions, problem-solving with forces and torques."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Gravitation",
+                                "concepts": [
+                                    {
+                                        "name": "Universal law of gravitation",
+                                        "description": "Newton’s law of gravitation, derivation, and vector treatment."
+                                    },
+                                    {
+                                        "name": "Acceleration due to gravity",
+                                        "description": "Variation with altitude and depth, derivation, and applications in planetary motion."
+                                    },
+                                    {
+                                        "name": "Kepler’s laws",
+                                        "description": "Derivation from Newton’s laws, orbital mechanics, and application to planetary motion."
+                                    },
+                                    {
+                                        "name": "Gravitational potential energy",
+                                        "description": "Derivation, potential due to system of masses, and escape velocity."
+                                    },
+                                    {
+                                        "name": "Satellites",
+                                        "description": "Orbital velocity, time period, energy of satellites, geostationary and low-earth orbit applications."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Properties of Solids and Liquids",
+                                "concepts": [
+                                    {
+                                        "name": "Elasticity",
+                                        "description": "Stress-strain curve, Hooke’s law, limits of proportionality, elastic and plastic behavior."
+                                    },
+                                    {
+                                        "name": "Elastic moduli",
+                                        "description": "Young’s, bulk, and shear modulus derivations and applications."
+                                    },
+                                    {
+                                        "name": "Fluid pressure",
+                                        "description": "Pascal’s law, hydrostatic pressure, and practical examples in fluids."
+                                    },
+                                    {
+                                        "name": "Viscosity",
+                                        "description": "Stokes’ law, terminal velocity, and measurement of viscosity."
+                                    },
+                                    {
+                                        "name": "Fluid dynamics",
+                                        "description": "Equation of continuity, Bernoulli’s principle, streamline vs turbulent flow."
+                                    },
+                                    {
+                                        "name": "Surface tension",
+                                        "description": "Surface energy, angle of contact, capillarity, and excess pressure in drops and bubbles."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Thermal Physics",
+                        "subtopics": [
+                            {
+                                "name": "Thermodynamics",
+                                "concepts": [
+                                    {
+                                        "name": "Thermal equilibrium",
+                                        "description": "Zeroth law of thermodynamics, temperature definition, and measurement."
+                                    },
+                                    {
+                                        "name": "Heat and internal energy",
+                                        "description": "Work-energy relation, internal energy, specific heat, and calorimetry."
+                                    },
+                                    {
+                                        "name": "First law of thermodynamics",
+                                        "description": "Mathematical formulation, isothermal and adiabatic processes, and energy conservation."
+                                    },
+                                    {
+                                        "name": "Second law of thermodynamics",
+                                        "description": "Entropy, reversible and irreversible processes, and Clausius and Kelvin statements."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Kinetic Theory of Gases",
+                                "concepts": [
+                                    {
+                                        "name": "Equation of state of a gas",
+                                        "description": "Ideal gas equation derivation and applications to thermodynamic processes."
+                                    },
+                                    {
+                                        "name": "Kinetic theory postulates",
+                                        "description": "Microscopic explanation of pressure, temperature, and energy of gases."
+                                    },
+                                    {
+                                        "name": "RMS speed",
+                                        "description": "Root mean square, mean, and most probable speeds, degrees of freedom, and equipartition theorem."
+                                    },
+                                    {
+                                        "name": "Mean free path",
+                                        "description": "Derivation, molecular collisions, and gas transport properties."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Oscillations and Waves",
+                                "concepts": [
+                                    {
+                                        "name": "Simple harmonic motion",
+                                        "description": "Equation of motion, energy, phase, and representation in graphs."
+                                    },
+                                    {
+                                        "name": "Simple pendulum",
+                                        "description": "Time period derivation, small angle approximation, and energy analysis."
+                                    },
+                                    {
+                                        "name": "Wave motion",
+                                        "description": "Longitudinal and transverse waves, speed, wavelength, frequency, and energy transport."
+                                    },
+                                    {
+                                        "name": "Superposition of waves",
+                                        "description": "Standing waves, beats, nodes and antinodes, and applications in instruments."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Electromagnetism",
+                        "subtopics": [
+                            {
+                                "name": "Electrostatics",
+                                "concepts": [
+                                    {
+                                        "name": "Electric charges and Coulomb’s law",
+                                        "description": "Quantitative treatment, superposition principle, and force between multiple charges."
+                                    },
+                                    {
+                                        "name": "Electric field",
+                                        "description": "Field due to point charges, continuous distributions, dipoles, and field lines."
+                                    },
+                                    {
+                                        "name": "Gauss’s law",
+                                        "description": "Applications to symmetric charge distributions, flux calculation, and field derivation."
+                                    },
+                                    {
+                                        "name": "Electric potential",
+                                        "description": "Potential energy, equipotential surfaces, and relation to electric field."
+                                    },
+                                    {
+                                        "name": "Capacitance",
+                                        "description": "Parallel plate capacitor, energy stored, series and parallel combinations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Current Electricity",
+                                "concepts": [
+                                    {
+                                        "name": "Electric current",
+                                        "description": "Drift velocity, mobility, current density, and microscopic model of conduction."
+                                    },
+                                    {
+                                        "name": "Ohm’s law",
+                                        "description": "Resistance, I–V characteristics, limitations and temperature dependence."
+                                    },
+                                    {
+                                        "name": "Electrical circuits",
+                                        "description": "Series and parallel resistances, network analysis, and power calculations."
+                                    },
+                                    {
+                                        "name": "Kirchhoff’s laws",
+                                        "description": "Current and voltage laws, application in Wheatstone bridge and meter bridge."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Magnetic Effects of Current and Magnetism",
+                                "concepts": [
+                                    {
+                                        "name": "Biot–Savart law",
+                                        "description": "Magnetic field due to current elements, derivation and applications."
+                                    },
+                                    {
+                                        "name": "Ampere’s circuital law",
+                                        "description": "Calculation of magnetic fields for symmetric configurations."
+                                    },
+                                    {
+                                        "name": "Lorentz force",
+                                        "description": "Force on moving charge in electric and magnetic fields, velocity selector."
+                                    },
+                                    {
+                                        "name": "Magnetic dipole",
+                                        "description": "Torque, potential energy in external field, and magnetic moment."
+                                    },
+                                    {
+                                        "name": "Magnetic materials",
+                                        "description": "Dia-, para-, and ferromagnetism, hysteresis, and applications."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Electromagnetic Induction and Alternating Currents",
+                                "concepts": [
+                                    {
+                                        "name": "Faraday’s laws",
+                                        "description": "Induced emf, Lenz’s law, and applications in moving conductor and changing flux."
+                                    },
+                                    {
+                                        "name": "Inductance",
+                                        "description": "Self and mutual inductance, energy stored, and RL, LC, RLC circuits."
+                                    },
+                                    {
+                                        "name": "Alternating current",
+                                        "description": "RMS value, peak value, phase difference, and impedance in AC circuits."
+                                    },
+                                    {
+                                        "name": "LCR circuits",
+                                        "description": "Series and parallel resonance, quality factor, and power in AC circuits."
+                                    },
+                                    {
+                                        "name": "Transformer and AC generator",
+                                        "description": "Principle of energy conversion, EMF equations, and efficiency."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Electromagnetic Waves",
+                                "concepts": [
+                                    {
+                                        "name": "Displacement current",
+                                        "description": "Maxwell’s correction to Ampere’s law and wave equation derivation."
+                                    },
+                                    {
+                                        "name": "Electromagnetic spectrum",
+                                        "description": "Complete spectrum from radio to gamma rays with applications and energy considerations."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Optics",
+                        "subtopics": [
+                            {
+                                "name": "Ray Optics",
+                                "concepts": [
+                                    {
+                                        "name": "Reflection of light",
+                                        "description": "Spherical mirrors, mirror formula, image formation, and magnification."
+                                    },
+                                    {
+                                        "name": "Refraction of light",
+                                        "description": "Snell’s law, total internal reflection, critical angle, and prism applications."
+                                    },
+                                    {
+                                        "name": "Lenses",
+                                        "description": "Lens formula, magnification, power, and combination of lenses."
+                                    },
+                                    {
+                                        "name": "Optical instruments",
+                                        "description": "Microscope and telescope, angular magnification, and resolving power."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Wave Optics",
+                                "concepts": [
+                                    {
+                                        "name": "Huygens’ principle",
+                                        "description": "Wavefront propagation, secondary wavelets, and applications in diffraction and refraction."
+                                    },
+                                    {
+                                        "name": "Interference",
+                                        "description": "Young’s double slit experiment, fringe width, and coherent sources."
+                                    },
+                                    {
+                                        "name": "Diffraction",
+                                        "description": "Single slit and diffraction grating, minima, maxima, and resolving power."
+                                    },
+                                    {
+                                        "name": "Polarization",
+                                        "description": "Brewster’s law, plane and circular polarization, and applications of polarizers."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Modern Physics",
+                        "subtopics": [
+                            {
+                                "name": "Dual Nature of Matter and Radiation",
+                                "concepts": [
+                                    {
+                                        "name": "Photoelectric effect",
+                                        "description": "Einstein’s equation, work function, and threshold frequency."
+                                    },
+                                    {
+                                        "name": "de Broglie hypothesis",
+                                        "description": "Matter waves, wavelength, and applications in diffraction experiments."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Atoms and Nuclei",
+                                "concepts": [
+                                    {
+                                        "name": "Atomic models",
+                                        "description": "Rutherford and Bohr models, quantization of angular momentum, and spectral lines."
+                                    },
+                                    {
+                                        "name": "Nuclear physics",
+                                        "description": "Mass defect, binding energy, nuclear reactions, fission, fusion, and energy calculations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Electronic Devices",
+                                "concepts": [
+                                    {
+                                        "name": "Semiconductors",
+                                        "description": "Intrinsic and extrinsic semiconductors, doping, carrier concentration, and conductivity."
+                                    },
+                                    {
+                                        "name": "Diodes",
+                                        "description": "PN junction diode, rectifier, Zener diode, voltage regulation, and characteristics."
+                                    },
+                                    {
+                                        "name": "Optoelectronic devices",
+                                        "description": "LED, photodiode, solar cell, working principles, and applications."
+                                    },
+                                    {
+                                        "name": "Logic gates",
+                                        "description": "OR, AND, NOT, NAND, NOR gates, truth tables, and circuit applications."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Chemistry",
+                "topics": [
+                    {
+                        "name": "Physical Chemistry",
+                        "subtopics": [
+                            {
+                                "name": "Some Basic Concepts in Chemistry",
+                                "concepts": [
+                                    {
+                                        "name": "Matter and its nature",
+                                        "description": "Comprehensive understanding of atom, molecule, element, and compound, including classification and fundamental properties."
+                                    },
+                                    {
+                                        "name": "Laws of chemical combination",
+                                        "description": "Dalton’s atomic theory, law of constant proportions, and experimental validations."
+                                    },
+                                    {
+                                        "name": "Atomic and molecular masses",
+                                        "description": "Precise determination of relative atomic mass (RAM) and relative molecular mass (RMM), isotopic variations, and applications."
+                                    },
+                                    {
+                                        "name": "Mole concept",
+                                        "description": "Molar mass calculations, Avogadro number applications, stoichiometry, and conversion among mass, moles, and number of particles."
+                                    },
+                                    {
+                                        "name": "Percentage composition",
+                                        "description": "Empirical and molecular formula derivation, mass percentage, and analytical problem-solving."
+                                    },
+                                    {
+                                        "name": "Chemical equations",
+                                        "description": "Balancing, stoichiometric calculations, limiting reagent determination, and reaction yield analysis."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Atomic Structure",
+                                "concepts": [
+                                    {
+                                        "name": "Electromagnetic radiation",
+                                        "description": "Nature of radiation, spectrum, wavelength, frequency, and energy relations."
+                                    },
+                                    {
+                                        "name": "Photoelectric effect",
+                                        "description": "Experimental observations, Einstein’s equation, and implications for quantum theory."
+                                    },
+                                    {
+                                        "name": "Bohr’s atomic model",
+                                        "description": "Postulates, energy levels, quantization of angular momentum, and limitations."
+                                    },
+                                    {
+                                        "name": "Dual nature of matter",
+                                        "description": "de Broglie hypothesis, matter waves, and experimental confirmations through diffraction."
+                                    },
+                                    {
+                                        "name": "Heisenberg uncertainty principle",
+                                        "description": "Quantum mechanical limitations in position and momentum measurements."
+                                    },
+                                    {
+                                        "name": "Quantum mechanical model of atom",
+                                        "description": "Wave functions, Schrödinger equation, atomic orbitals, and probability interpretation."
+                                    },
+                                    {
+                                        "name": "Quantum numbers",
+                                        "description": "Principal, azimuthal, magnetic, and spin quantum numbers and their role in electronic structure."
+                                    },
+                                    {
+                                        "name": "Shapes of orbitals",
+                                        "description": "s, p, d orbital shapes and angular nodal planes."
+                                    },
+                                    {
+                                        "name": "Electronic configuration",
+                                        "description": "Aufbau principle, Pauli exclusion, Hund’s rule, and configuration exceptions."
+                                    },
+                                    {
+                                        "name": "Orbital stability",
+                                        "description": "Half-filled and fully filled orbital stability concepts and energy considerations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Chemical Thermodynamics",
+                                "concepts": [
+                                    {
+                                        "name": "Thermodynamic system",
+                                        "description": "Definition of system, surroundings, state and path functions, open/closed systems, and extensive vs intensive properties."
+                                    },
+                                    {
+                                        "name": "First law of thermodynamics",
+                                        "description": "Internal energy, heat, work, mathematical expressions, and applications in isothermal, adiabatic, and cyclic processes."
+                                    },
+                                    {
+                                        "name": "Enthalpy changes",
+                                        "description": "Bond enthalpy, combustion, formation, solution enthalpies, and calorimetry calculations."
+                                    },
+                                    {
+                                        "name": "Hess’s law",
+                                        "description": "Constant heat summation principle, derivation, and problem-solving using reaction cycles."
+                                    },
+                                    {
+                                        "name": "Second law of thermodynamics",
+                                        "description": "Entropy concept, spontaneous vs non-spontaneous processes, and criteria for reversibility."
+                                    },
+                                    {
+                                        "name": "Gibbs free energy",
+                                        "description": "G = H – TS, spontaneity criterion, equilibrium, and temperature dependence of reactions."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Solutions",
+                                "concepts": [
+                                    {
+                                        "name": "Concentration terms",
+                                        "description": "Molarity, molality, mole fraction, percentage composition, and interconversion methods."
+                                    },
+                                    {
+                                        "name": "Raoult’s law",
+                                        "description": "Vapor pressure of ideal and non-ideal solutions, deviations, and colligative effect analysis."
+                                    },
+                                    {
+                                        "name": "Colligative properties",
+                                        "description": "Elevation of boiling point, depression of freezing point, osmotic pressure, and quantitative calculations."
+                                    },
+                                    {
+                                        "name": "Van’t Hoff factor",
+                                        "description": "Abnormal molar mass determination and effect on colligative properties."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Equilibrium",
+                                "concepts": [
+                                    {
+                                        "name": "Dynamic equilibrium",
+                                        "description": "Physical and chemical equilibrium, reversible reactions, and rate equality concepts."
+                                    },
+                                    {
+                                        "name": "Law of chemical equilibrium",
+                                        "description": "Equilibrium constants Kp and Kc derivation, calculations, and applications."
+                                    },
+                                    {
+                                        "name": "Le Chatelier’s principle",
+                                        "description": "Effect of concentration, temperature, and pressure on equilibrium position."
+                                    },
+                                    {
+                                        "name": "Ionic equilibrium",
+                                        "description": "Strong and weak electrolytes, dissociation constants, and degree of ionization."
+                                    },
+                                    {
+                                        "name": "Acids and bases",
+                                        "description": "Arrhenius, Bronsted-Lowry, and Lewis definitions with applications."
+                                    },
+                                    {
+                                        "name": "pH scale",
+                                        "description": "Calculation of pH, pOH, buffer solutions, and titration curves."
+                                    },
+                                    {
+                                        "name": "Solubility product",
+                                        "description": "Sparingly soluble salts, Ksp calculations, and common ion effect."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Redox Reactions and Electrochemistry",
+                                "concepts": [
+                                    {
+                                        "name": "Oxidation and reduction",
+                                        "description": "Oxidation number concept, balancing redox reactions, and electron transfer principles."
+                                    },
+                                    {
+                                        "name": "Electrochemical cells",
+                                        "description": "Galvanic and electrolytic cells, cell construction, and standard applications."
+                                    },
+                                    {
+                                        "name": "Electrode potential",
+                                        "description": "Standard electrode potentials, Nernst equation, and calculation of cell EMF."
+                                    },
+                                    {
+                                        "name": "Nernst equation",
+                                        "description": "Mathematical formulation, concentration dependence of EMF, and temperature corrections."
+                                    },
+                                    {
+                                        "name": "Conductance",
+                                        "description": "Molar conductivity, equivalent conductivity, Kohlrausch’s law, and ionic mobility."
+                                    },
+                                    {
+                                        "name": "Batteries and fuel cells",
+                                        "description": "Dry cell, lead-acid accumulator, hydrogen-oxygen fuel cell, and energy density considerations."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Chemical Kinetics",
+                                "concepts": [
+                                    {
+                                        "name": "Rate of reaction",
+                                        "description": "Factors affecting reaction rate, temperature, concentration, catalyst effects."
+                                    },
+                                    {
+                                        "name": "Order and molecularity",
+                                        "description": "Rate law, rate constant, and derivation of reaction order."
+                                    },
+                                    {
+                                        "name": "Integrated rate equations",
+                                        "description": "Zero and first order reaction analysis, half-life calculations, and graphical methods."
+                                    },
+                                    {
+                                        "name": "Arrhenius equation",
+                                        "description": "Temperature dependence, activation energy derivation, and graphical determination."
+                                    },
+                                    {
+                                        "name": "Collision theory",
+                                        "description": "Bimolecular gaseous reactions, steric factor, and molecular orientation considerations."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Inorganic Chemistry",
+                        "subtopics": [
+                            {
+                                "name": "Classification of Elements and Periodicity",
+                                "concepts": [
+                                    {
+                                        "name": "Modern periodic law",
+                                        "description": "Periodic table construction, long form periodic table, and classification of elements."
+                                    },
+                                    {
+                                        "name": "Periodic trends",
+                                        "description": "Atomic radius, ionic radius, ionization enthalpy, electron affinity, and electronegativity trends with justification."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Chemical Bonding and Molecular Structure",
+                                "concepts": [
+                                    {
+                                        "name": "Ionic bonding",
+                                        "description": "Lattice energy, Born-Haber cycle, and crystal structure analysis."
+                                    },
+                                    {
+                                        "name": "Covalent bonding",
+                                        "description": "Electronegativity difference, bond polarity, dipole moment, and bond energy."
+                                    },
+                                    {
+                                        "name": "VSEPR theory",
+                                        "description": "Molecular shapes, bond angles, and steric number."
+                                    },
+                                    {
+                                        "name": "Valence bond theory",
+                                        "description": "Hybridization, resonance, and orbital overlap explanation."
+                                    },
+                                    {
+                                        "name": "Molecular orbital theory",
+                                        "description": "Bond order, paramagnetism, diamagnetism, and energy level diagrams."
+                                    },
+                                    {
+                                        "name": "Hydrogen bonding",
+                                        "description": "Intermolecular interactions, effect on physical properties, and examples."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "p-Block Elements",
+                                "concepts": [
+                                    {
+                                        "name": "Group 13 to 18 elements",
+                                        "description": "Detailed electronic configuration, oxidation states, general properties, and chemical trends."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "d- and f-Block Elements",
+                                "concepts": [
+                                    {
+                                        "name": "Transition elements",
+                                        "description": "Electronic configuration, oxidation states, complex formation, and properties of Cr and Mn."
+                                    },
+                                    {
+                                        "name": "Lanthanoids",
+                                        "description": "Electronic configuration, contraction effect, and chemistry of 4f elements."
+                                    },
+                                    {
+                                        "name": "Actinoids",
+                                        "description": "Oxidation states, radioactivity, and chemistry of 5f elements."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Coordination Compounds",
+                                "concepts": [
+                                    {
+                                        "name": "Werner’s theory",
+                                        "description": "Coordination number, ligands, and primary vs secondary valency."
+                                    },
+                                    {
+                                        "name": "IUPAC nomenclature",
+                                        "description": "Mononuclear complex naming rules and examples."
+                                    },
+                                    {
+                                        "name": "Isomerism",
+                                        "description": "Structural (linkage, coordination) and stereoisomerism (geometrical, optical)."
+                                    },
+                                    {
+                                        "name": "Bonding theories",
+                                        "description": "Valence bond theory (VBT) and crystal field theory (CFT) explanations."
+                                    },
+                                    {
+                                        "name": "Applications",
+                                        "description": "Biological, analytical, and industrial importance of coordination compounds."
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Organic Chemistry",
+                        "subtopics": [
+                            {
+                                "name": "Purification and Characterisation",
+                                "concepts": [
+                                    {
+                                        "name": "Purification techniques",
+                                        "description": "Crystallization, distillation, sublimation, and chromatography methods."
+                                    },
+                                    {
+                                        "name": "Qualitative analysis",
+                                        "description": "Detection of nitrogen, sulfur, and halogens in organic compounds."
+                                    },
+                                    {
+                                        "name": "Quantitative analysis",
+                                        "description": "Estimation of C, H, N, and halogens using classical methods."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "General Organic Chemistry",
+                                "concepts": [
+                                    {
+                                        "name": "Hybridization and molecular shape",
+                                        "description": "sp, sp2, sp3 hybridization and geometry of molecules."
+                                    },
+                                    {
+                                        "name": "Isomerism",
+                                        "description": "Structural and stereoisomerism including optical and geometrical."
+                                    },
+                                    {
+                                        "name": "Reaction intermediates",
+                                        "description": "Carbocations, carbanions, free radicals, and their stability."
+                                    },
+                                    {
+                                        "name": "Electronic effects",
+                                        "description": "Inductive, resonance, hyperconjugation, and their effect on reactivity."
+                                    },
+                                    {
+                                        "name": "Reaction types",
+                                        "description": "Addition, substitution, elimination, rearrangement with mechanistic pathways."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Hydrocarbons",
+                                "concepts": [
+                                    {
+                                        "name": "Alkanes",
+                                        "description": "Preparation, physical and chemical properties, conformations, and reactions."
+                                    },
+                                    {
+                                        "name": "Alkenes",
+                                        "description": "Electrophilic addition reactions, Markovnikov and anti-Markovnikov rules."
+                                    },
+                                    {
+                                        "name": "Alkynes",
+                                        "description": "Acidic character, addition and substitution reactions."
+                                    },
+                                    {
+                                        "name": "Aromatic hydrocarbons",
+                                        "description": "Benzene, concept of aromaticity, and electrophilic substitution reactions."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Organic Compounds Containing Functional Groups",
+                                "concepts": [
+                                    {
+                                        "name": "Haloalkanes",
+                                        "description": "SN1 and SN2 mechanisms, reactivity, and applications."
+                                    },
+                                    {
+                                        "name": "Alcohols and phenols",
+                                        "description": "Preparation, reactions, acidity, and oxidation behavior."
+                                    },
+                                    {
+                                        "name": "Ethers",
+                                        "description": "Structure, preparation, reactions, and cleavage reactions."
+                                    },
+                                    {
+                                        "name": "Aldehydes and ketones",
+                                        "description": "Carbonyl chemistry, nucleophilic addition, and named reactions."
+                                    },
+                                    {
+                                        "name": "Carboxylic acids",
+                                        "description": "Acidity, derivatives, and reaction mechanisms."
+                                    },
+                                    {
+                                        "name": "Amines",
+                                        "description": "Basicity, preparation, reactions, and aromatic amines."
+                                    },
+                                    {
+                                        "name": "Diazonium salts",
+                                        "description": "Preparation, stability, and synthetic applications in azo dyes."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Biomolecules and Polymers",
+                                "concepts": [
+                                    {
+                                        "name": "Carbohydrates",
+                                        "description": "Monosaccharides, disaccharides, structure, and reactions."
+                                    },
+                                    {
+                                        "name": "Proteins",
+                                        "description": "Amino acids, peptide bond formation, primary to quaternary structure, and functions."
+                                    },
+                                    {
+                                        "name": "Nucleic acids",
+                                        "description": "DNA, RNA, structure, and function."
+                                    },
+                                    {
+                                        "name": "Vitamins and hormones",
+                                        "description": "Classification, structure, function, and deficiency diseases."
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Practical Chemistry Principles",
+                                "concepts": [
+                                    {
+                                        "name": "Salt analysis",
+                                        "description": "Systematic qualitative analysis of common cations and anions."
+                                    },
+                                    {
+                                        "name": "Titrimetric analysis",
+                                        "description": "Acid-base, redox, and complexometric titrations with calculations."
+                                    },
+                                    {
+                                        "name": "Thermochemistry experiments",
+                                        "description": "Experimental determination of enthalpy changes of solution and neutralization."
+                                    },
+                                    {
+                                        "name": "Kinetic experiments",
+                                        "description": "Rate determination of reactions using physical and chemical methods."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

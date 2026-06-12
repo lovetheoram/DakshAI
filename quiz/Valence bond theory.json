@@ -1,0 +1,843 @@
+[
+  {
+    "question_id": "CHM-CB-01",
+    "question_title": "IU-01 | Hybridization Requirements",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is a mandatory condition for atomic orbitals to undergo hybridization?",
+    "options": {
+      "A": "All orbitals of the valence shell must participate in hybridization.",
+      "B": "Only orbitals of similar energy belonging to the same atom can hybridize.",
+      "C": "Hybridization occurs only between orbitals of different atoms.",
+      "D": "Only half-filled orbitals are capable of undergoing hybridization."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-02",
+    "question_title": "IU-02 | Bond Strength Comparison",
+    "concept": "Valence bond theory",
+    "question": "Regarding the overlap of atomic orbitals, which statement is incorrect?",
+    "options": {
+      "A": "A sigma (σ) bond is formed by the head-on overlap of orbitals.",
+      "B": "A pi (π) bond is formed by the lateral overlap of orbitals.",
+      "C": "A pi bond is stronger than a sigma bond due to sideways proximity.",
+      "D": "The extent of overlap is greater in sigma bonds than in pi bonds."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-03",
+    "question_title": "IU-03 | Resonance Symmetry",
+    "concept": "Valence bond theory",
+    "question": "Assertion: In the carbonate ion (CO₃²⁻), all carbon-oxygen bonds have the same length.\nReason: The carbonate ion exists as a resonance hybrid where the double bond character is distributed equally.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the correct explanation.",
+      "C": "Assertion is true but Reason is false.",
+      "D": "Both Assertion and Reason are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-04",
+    "question_title": "IU-04 | Hybridization Mapping",
+    "concept": "Valence bond theory",
+    "question": "Match the following hybridization states with their ideal bond angles:\n1. sp (i) 109.5°\n2. sp² (ii) 180°\n3. sp³ (iii) 120°",
+    "options": {
+      "A": "1-i, 2-ii, 3-iii",
+      "B": "1-ii, 2-iii, 3-i",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-i, 3-iii"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-05",
+    "question_title": "IU-05 | Orbital Directionality",
+    "concept": "Valence bond theory",
+    "question": "Which directional property is unique to the formation of a pi (π) bond?",
+    "options": {
+      "A": "Overlap occurs along the internuclear axis.",
+      "B": "It results in cylindrical charge symmetry about the bond axis.",
+      "C": "It involves the lateral overlap of p-orbitals perpendicular to the axis.",
+      "D": "It allows free rotation of the bonded atoms."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-06",
+    "question_title": "IU-01 | s-character Effects",
+    "concept": "Valence bond theory",
+    "question": "Compare the properties of sp, sp², and sp³ hybrid orbitals. Which statement is true?",
+    "options": {
+      "A": "The sp hybrid orbital is the least electronegative because it has the most s-character.",
+      "B": "The sp³ hybrid orbital results in the shortest bond lengths.",
+      "C": "Electronegativity increases as the % s-character of the hybrid orbital increases.",
+      "D": "An atom with sp hybridization is larger than the same atom with sp³ hybridization."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-07",
+    "question_title": "IU-02 | Hybrid vs Pure Orbitals",
+    "concept": "Valence bond theory",
+    "question": "In a multiple bond (e.g., C=C), which type of orbital is used exclusively for the pi (π) component?",
+    "options": {
+      "A": "sp² hybrid orbitals",
+      "B": "Unhybridized p-orbitals",
+      "C": "sp³ hybrid orbitals",
+      "D": "s-orbitals"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-08",
+    "question_title": "IU-03 | Resonance Contribution",
+    "concept": "Valence bond theory",
+    "question": "Assertion: The energy of the resonance hybrid is always higher than the energy of the most stable canonical structure.\nReason: Canonical structures are real molecules while the hybrid is imaginary.",
+    "options": {
+      "A": "Both Assertion and Reason are true.",
+      "B": "Both Assertion and Reason are false.",
+      "C": "Assertion is true, Reason is false.",
+      "D": "Assertion is false, Reason is true."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-09",
+    "question_title": "IU-04 | Bond Order Logic",
+    "concept": "Valence bond theory",
+    "question": "Which condition is sufficient to conclude that a molecule like benzene has a bond order of 1.5?",
+    "options": {
+      "A": "It has exactly three double bonds in its structure.",
+      "B": "It has two equivalent resonating structures with alternating single and double bonds.",
+      "C": "The carbon atoms are sp³ hybridized.",
+      "D": "All carbon-carbon bonds are of different lengths."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-10",
+    "question_title": "IU-05 | Rotation Constraints",
+    "concept": "Valence bond theory",
+    "question": "How does the nature of orbital overlap affect the rotation of a molecule around a carbon-carbon double bond?",
+    "options": {
+      "A": "Rotation is free because the sigma bond is cylindrical.",
+      "B": "Rotation is restricted because lateral p-orbital overlap would be broken.",
+      "C": "Rotation is free because pi bonds are weaker than sigma bonds.",
+      "D": "Rotation is restricted because hybrid orbitals are oriented at 120°."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-11",
+    "question_title": "IU-01 | Orbital Conservation",
+    "concept": "Valence bond theory",
+    "question": "If an atom undergoes sp³ hybridization, how many hybrid orbitals are produced?",
+    "options": {
+      "A": "One",
+      "B": "Three",
+      "C": "Four",
+      "D": "Eight"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-12",
+    "question_title": "IU-02 | Hybrid Dominance",
+    "concept": "Valence bond theory",
+    "question": "Assertion: Hybrid orbitals form stronger bonds than pure atomic orbitals.\nReason: Hybrid orbitals are more directional and allow for more effective overlap.",
+    "options": {
+      "A": "Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true, Reason is false.",
+      "D": "Assertion is false, Reason is true."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-13",
+    "question_title": "IU-03 | Formal Charge Matching",
+    "concept": "Valence bond theory",
+    "question": "In evaluating resonance structures, which configuration represents the most stable and dominant contributor?",
+    "options": {
+      "A": "The structure with the maximum formal charge separation.",
+      "B": "The structure where the formal charges are minimized.",
+      "C": "The structure with the fewest covalent bonds.",
+      "D": "The structure where the octet rule is not satisfied for the central atom."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-14",
+    "question_title": "IU-04 | Period Constraints",
+    "concept": "Valence bond theory",
+    "question": "Which statement regarding d-orbital participation in hybridization is incorrect?",
+    "options": {
+      "A": "d-orbitals are involved in sp³d hybridization.",
+      "B": "Carbon can use d-orbitals to expand its octet during sp³d² hybridization.",
+      "C": "Only elements from the 3rd period or higher can utilize d-orbitals for hybridization.",
+      "D": "The energy of d-orbitals must be comparable to the s and p orbitals being used."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-15",
+    "question_title": "IU-05 | Symmetry of Sigma Bonds",
+    "concept": "Valence bond theory",
+    "question": "Which of the following describes the electron distribution in a sigma (σ) bond?",
+    "options": {
+      "A": "Symmetric about the internuclear axis.",
+      "B": "Concentrated in two lobes above and below the bond axis.",
+      "C": "Zero along the internuclear axis.",
+      "D": "Distributed in a ring around the center of the bond."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-16",
+    "question_title": "IU-01 | Geometry and Hybridization",
+    "concept": "Valence bond theory",
+    "question": "Assertion: A molecule with sp hybridization at the central atom is always linear.\nReason: Hybridization determines the spatial arrangement of the sigma bond framework.",
+    "options": {
+      "A": "Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true, Reason is false.",
+      "D": "Assertion is false, Reason is true."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-17",
+    "question_title": "IU-02 | Lone Pair Accommodation",
+    "concept": "Valence bond theory",
+    "question": "Where are lone pairs of electrons typically accommodated in an atom that has undergone hybridization?",
+    "options": {
+      "A": "In unhybridized p-orbitals only.",
+      "B": "In the hybrid orbitals alongside sigma bonds.",
+      "C": "Outside the valence shell entirely.",
+      "D": "In pi bonds."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-18",
+    "question_title": "IU-03 | Benzene Properties",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is eliminated when considering the resonance hybrid of benzene?",
+    "options": {
+      "A": "The equality of C-C bond lengths.",
+      "B": "The distinction between localized single and double bonds.",
+      "C": "The stability of the ring structure.",
+      "D": "The sp² hybridization of carbon atoms."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-19",
+    "question_title": "IU-04 | Overlap Efficiency",
+    "concept": "Valence bond theory",
+    "question": "Which type of overlap is considered the most effective for bond formation?",
+    "options": {
+      "A": "p-p lateral overlap",
+      "B": "s-p lateral overlap",
+      "C": "p-p head-on overlap",
+      "D": "d-p lateral overlap."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-20",
+    "question_title": "IU-05 | Stability and Resonance",
+    "concept": "Valence bond theory",
+    "question": "Assertion: Increasing the number of resonating structures generally increases the stability of a species.\nReason: More structures lead to greater delocalization of electron density and lower overall energy.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is false, Reason is true.",
+      "D": "Assertion is true, Reason is false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-21",
+    "question_title": "IU-03 | Resonance Geometry",
+    "concept": "Valence bond theory",
+    "question": "Which statement correctly describes the geometric properties of the carbonate ion (CO₃²⁻) based on resonance theory?",
+    "options": {
+      "A": "It contains one short C=O bond and two longer C-O bonds.",
+      "B": "The bond angles are exactly 120° due to the equivalent nature of all resonance contributors.",
+      "C": "The carbon atom constantly shifts between sp² and sp³ hybridization states.",
+      "D": "The oxygen atoms carry different formal charges to maintain structural asymmetry."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-22",
+    "question_title": "IU-04 | Hybridization Stability",
+    "concept": "Valence bond theory",
+    "question": "Assertion: The presence of lone pairs on the central atom is sufficient to determine the hybridization state H.\nReason: Hybrid orbitals are only used to accommodate bonding electron pairs, while lone pairs remain in pure atomic orbitals.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true but Reason is false.",
+      "D": "Both Assertion and Reason are false."
+    },
+    "answer": "D",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-23",
+    "question_title": "IU-05 | Orbital Overlap Matching",
+    "concept": "Valence bond theory",
+    "question": "Match the following bond types with their characteristic overlap behavior:\n1. Sigma (σ) bond | (i) Lateral overlap of p-orbitals\n2. Pi (π) bond | (ii) Head-on overlap along the axis\n3. Restricted rotation | (iii) Consequence of lateral overlap",
+    "options": {
+      "A": "1-i, 2-ii, 3-iii",
+      "B": "1-ii, 2-i, 3-iii",
+      "C": "1-ii, 2-iii, 3-i",
+      "D": "1-i, 2-iii, 3-ii"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-24",
+    "question_title": "IU-01 | Hybridization Limits",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is an incorrect application of hybridization rules for a central atom?",
+    "options": {
+      "A": "A 2p orbital can hybridize with a 2s orbital of the same atom.",
+      "B": "A 2s orbital can hybridize with a 3s orbital to form stable hybrid sets.",
+      "C": "The number of hybrid orbitals produced must equal the number of atomic orbitals mixed.",
+      "D": "Hybrid orbitals are always degenerate (equivalent in energy)."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-25",
+    "question_title": "IU-02 | Bond Comparison",
+    "concept": "Valence bond theory",
+    "question": "Which statement correctly identifies the dominant factor in the strength of a covalent bond?",
+    "options": {
+      "A": "Pi bonds are stronger than sigma bonds because they involve more p-orbitals.",
+      "B": "The extent of orbital overlap is greater in head-on (axial) overlap than in lateral overlap.",
+      "C": "Hybridization reduces the strength of a bond compared to pure s-s overlap.",
+      "D": "Lateral overlap is the primary determinant of molecular framework stability."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-26",
+    "question_title": "IU-03 | Resonance Energy",
+    "concept": "Valence bond theory",
+    "question": "In a resonance hybrid, how does the energy of the actual molecule compare to its individual canonical structures?",
+    "options": {
+      "A": "It is equal to the average energy of all canonical structures.",
+      "B": "It is always lower than the energy of any single canonical structure.",
+      "C": "It is higher than the most stable structure due to electron repulsion.",
+      "D": "It is exactly equal to the energy of the most stable canonical structure."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-27",
+    "question_title": "IU-04 | Hybridization Conditions",
+    "concept": "Valence bond theory",
+    "question": "Assertion: For an atom to exhibit sp³d hybridization, it must belong to the 3rd period or higher.\nReason: Only atoms with available d-orbitals in their valence shell can expand their coordination number beyond four.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true but Reason is false.",
+      "D": "Both Assertion and Reason are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-28",
+    "question_title": "IU-05 | Symmetry and Pi Bonds",
+    "concept": "Valence bond theory",
+    "question": "Match the orbital interaction with the resulting bond property:\n1. sp² hybridization | (i) Linear geometry\n2. sp hybridization | (ii) One unhybridized p-orbital\n3. One pi bond | (iii) Two unhybridized p-orbitals",
+    "options": {
+      "A": "1-ii, 2-iii, 3-ii",
+      "B": "1-ii, 2-i, 3-ii",
+      "C": "1-i, 2-ii, 3-iii",
+      "D": "1-iii, 2-ii, 3-i"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-29",
+    "question_title": "IU-01 | s-character Comparison",
+    "concept": "Valence bond theory",
+    "question": "Compare the electronegativity of a Nitrogen atom in different states. Which sequence is correct?",
+    "options": {
+      "A": "sp < sp² < sp³",
+      "B": "sp³ < sp² < sp",
+      "C": "sp² < sp³ < sp",
+      "D": "sp³ < sp < sp²"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-30",
+    "question_title": "IU-02 | Hybridization Trends",
+    "concept": "Valence bond theory",
+    "question": "As the hybridization of an atom changes from sp to sp³, which of the following increases?",
+    "options": {
+      "A": "The % s-character of the hybrid orbitals.",
+      "B": "The bond angle between the hybrid orbitals.",
+      "C": "The bond length of the resulting sigma bonds.",
+      "D": "The electronegativity of the central atom."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-31",
+    "question_title": "IU-03 | Structural Contribution",
+    "concept": "Valence bond theory",
+    "question": "Assertion: The resonance hybrid of a molecule is a time-averaged oscillation between different canonical structures.\nReason: In a hybrid, electrons are delocalized, and the actual structure is a single, weighted average state.",
+    "options": {
+      "A": "Assertion is true, Reason is true; Reason is the correct explanation.",
+      "B": "Assertion is true, Reason is false.",
+      "C": "Assertion is false, Reason is true.",
+      "D": "Both are false."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-32",
+    "question_title": "IU-04 | Hybridization Mapping",
+    "concept": "Valence bond theory",
+    "question": "Match the hybridization value (H) with the expected electronic geometry:\n1. H = 2 | (i) Tetrahedral\n2. H = 3 | (ii) Linear\n3. H = 4 | (iii) Trigonal Planar",
+    "options": {
+      "A": "1-ii, 2-iii, 3-i",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-i, 3-iii"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-33",
+    "question_title": "IU-05 | Pi Bond Nature",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is a necessary condition for an atom to form a pi (π) bond?",
+    "options": {
+      "A": "The atom must be sp³ hybridized.",
+      "B": "The atom must have at least one unhybridized p-orbital.",
+      "C": "The atom must overlap its hybrid orbitals laterally.",
+      "D": "The atom must be from the 1st period of the periodic table."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-34",
+    "question_title": "IU-01 | Bond Length Factors",
+    "concept": "Valence bond theory",
+    "question": "Regarding C-H bonds, which of the following is true concerning bond length?",
+    "options": {
+      "A": "C(sp³)-H > C(sp²)-H > C(sp)-H",
+      "B": "C(sp)-H > C(sp²)-H > C(sp³)-H",
+      "C": "C(sp²)-H > C(sp)-H > C(sp³)-H",
+      "D": "All C-H bonds are equal regardless of hybridization."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-35",
+    "question_title": "IU-02 | Resonance Rules",
+    "concept": "Valence bond theory",
+    "question": "Assertion: Resonance structures must have the same number of unpaired electrons.\nReason: Resonance involves only the shift of nuclei, keeping electron counts constant.",
+    "options": {
+      "A": "Assertion is true, Reason is false.",
+      "B": "Assertion is false, Reason is true.",
+      "C": "Both are true.",
+      "D": "Both are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-36",
+    "question_title": "IU-03 | Fractional Bond Order",
+    "concept": "Valence bond theory",
+    "question": "Match the species with its Carbon-Carbon bond order:\n1. Ethane | (i) 1.5\n2. Ethene | (ii) 1.0\n3. Benzene | (iii) 2.0",
+    "options": {
+      "A": "1-ii, 2-iii, 3-i",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-i, 3-iii"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-37",
+    "question_title": "IU-04 | Hybridization Identification",
+    "concept": "Valence bond theory",
+    "question": "Which of the following molecules contains a central atom that is not sp² hybridized?",
+    "options": {
+      "A": "BF₃",
+      "B": "CO₃²⁻",
+      "C": "CH₄",
+      "D": "C₂H₄"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-38",
+    "question_title": "IU-05 | Bond Character",
+    "concept": "Valence bond theory",
+    "question": "Which of the following properties is associated with the formation of a sigma (σ) bond?",
+    "options": {
+      "A": "It is formed by the sideways overlap of d-orbitals.",
+      "B": "It results in a nodal plane containing the internuclear axis.",
+      "C": "It is the only bond type present in a single covalent bond.",
+      "D": "It prevents the rotation of atoms around the bond axis."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-39",
+    "question_title": "IU-01 | Formal Charge Stability",
+    "concept": "Valence bond theory",
+    "question": "Assertion: A resonance structure with a negative charge on a more electronegative atom is more stable.\nReason: Formal charge distribution does not affect the energy of a canonical form.",
+    "options": {
+      "A": "Assertion is true, Reason is false.",
+      "B": "Assertion is false, Reason is true.",
+      "C": "Both are true.",
+      "D": "Both are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-40",
+    "question_title": "IU-02 | Hybridization Mixing",
+    "concept": "Valence bond theory",
+    "question": "Match the atomic orbitals being mixed with the resulting hybrid type:\n1. one s + one p | (i) sp²\n2. one s + two p | (ii) sp³\n3. one s + three p | (iii) sp",
+    "options": {
+      "A": "1-iii, 2-i, 3-ii",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-ii, 2-iii, 3-i",
+      "D": "1-iii, 2-ii, 3-i"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+
+  {
+    "question_id": "CHM-CB-41",
+    "question_title": "IU-05 | Overlap Symmetry",
+    "concept": "Valence bond theory",
+    "question": "Assertion: A pi (π) bond is formed by the lateral overlap of p-orbitals.\nReason: The electron density in a pi bond is concentrated along the internuclear axis, creating cylindrical symmetry.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true but Reason is false.",
+      "D": "Both Assertion and Reason are false."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-42",
+    "question_title": "IU-01 | Hybridization Mixing Rules",
+    "concept": "Valence bond theory",
+    "question": "Which set of conditions is necessary to produce a valid set of hybrid orbitals?",
+    "options": {
+      "A": "Mixing of 2s and 3p orbitals from different atoms.",
+      "B": "Mixing of 2s and 2p orbitals of the same atom.",
+      "C": "Mixing of any two orbitals regardless of their energy levels.",
+      "D": "Mixing of valence orbitals with core inner-shell orbitals."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-43",
+    "question_title": "IU-02 | Bond Strength Determinants",
+    "concept": "Valence bond theory",
+    "question": "Which of the following describes the correct order of bond strength for the same pair of atoms?",
+    "options": {
+      "A": "Sigma bond > Pi bond",
+      "B": "Pi bond > Sigma bond",
+      "C": "Sigma bond = Pi bond",
+      "D": "Pi bond strength is independent of overlap."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-44",
+    "question_title": "IU-03 | Resonance Identicality",
+    "concept": "Valence bond theory",
+    "question": "Regarding the resonance structures of the nitrate ion (NO₃⁻), which statement is incorrect?",
+    "options": {
+      "A": "All three N-O bonds are identical in the resonance hybrid.",
+      "B": "The bond order for each N-O bond is exactly 1.0.",
+      "C": "The nitrogen atom remains sp² hybridized across all structures.",
+      "D": "The formal charges are distributed across the oxygen atoms."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-45",
+    "question_title": "IU-04 | Hybridization Mapping",
+    "concept": "Valence bond theory",
+    "question": "Assertion: A molecule with H=4 always possesses a perfect tetrahedral bond angle of 109.5°.\nReason: The value of H only determines the number of hybrid orbitals, not the specific distribution between bonds and lone pairs.",
+    "options": {
+      "A": "Both Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Both Assertion and Reason are true but Reason is not the correct explanation.",
+      "C": "Assertion is false, Reason is true.",
+      "D": "Assertion is true, Reason is false."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-46",
+    "question_title": "IU-05 | Rotational Freedom",
+    "concept": "Valence bond theory",
+    "question": "Which of the following bonds allows for free rotation around the internuclear axis?",
+    "options": {
+      "A": "A single sigma (σ) bond.",
+      "B": "A double bond consisting of one σ and one π bond.",
+      "C": "A triple bond consisting of one σ and two π bonds.",
+      "D": "Any bond involving p-orbital overlap."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-47",
+    "question_title": "IU-01 | Orbital Conservation Match",
+    "concept": "Valence bond theory",
+    "question": "Match the starting atomic orbitals with the resulting hybrid set:\n1. s + pₓ + pᵧ | (i) sp³\n2. s + pₓ | (ii) sp²\n3. s + pₓ + pᵧ + p_z | (iii) sp",
+    "options": {
+      "A": "1-ii, 2-iii, 3-i",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-ii, 3-i",
+      "D": "1-ii, 2-i, 3-iii"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-48",
+    "question_title": "IU-02 | Effective Overlap",
+    "concept": "Valence bond theory",
+    "question": "Which statement accurately compares the effectiveness of orbital overlap in bonding?",
+    "options": {
+      "A": "Lateral overlap is more effective than axial overlap.",
+      "B": "Head-on overlap leads to higher electron density between nuclei than sideways overlap.",
+      "C": "Overlap efficiency is independent of the direction of the orbitals.",
+      "D": "s-orbitals can only participate in lateral overlap."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-49",
+    "question_title": "IU-03 | Resonance Stabilization",
+    "concept": "Valence bond theory",
+    "question": "Assertion: The resonance hybrid is more stable than any individual canonical structure.\nReason: Stability is achieved because every canonical structure is a real, isolable compound.",
+    "options": {
+      "A": "Assertion is true, Reason is false.",
+      "B": "Assertion is false, Reason is true.",
+      "C": "Both are true.",
+      "D": "Both are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-50",
+    "question_title": "IU-04 | H-Number Application",
+    "concept": "Valence bond theory",
+    "question": "If a central atom has 3 sigma bonds and 1 lone pair, what is its hybridization state according to VBT?",
+    "options": {
+      "A": "sp",
+      "B": "sp²",
+      "C": "sp³",
+      "D": "sp³d"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-51",
+    "question_title": "IU-05 | Orbital Symmetry Match",
+    "concept": "Valence bond theory",
+    "question": "Match the bond type with its symmetry property:\n1. Sigma (σ) | (i) Nodal plane along the internuclear axis\n2. Pi (π) | (ii) Cylindrical symmetry around the axis\n3. Delta (δ) | (iii) Two nodal planes",
+    "options": {
+      "A": "1-ii, 2-i, 3-iii",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-iii, 3-i"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-52",
+    "question_title": "IU-01 | Bond Length Trends",
+    "concept": "Valence bond theory",
+    "question": "Which statement correctly relates s-character to bond properties in hybrid orbitals?",
+    "options": {
+      "A": "As % s-character increases, bond length increases.",
+      "B": "As % s-character increases, the hybrid orbital becomes more elongated.",
+      "C": "As % s-character increases, bond strength increases.",
+      "D": "As % s-character decreases, electronegativity increases."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-53",
+    "question_title": "IU-02 | Hybrid Degeneracy",
+    "concept": "Valence bond theory",
+    "question": "Assertion: All four sp³ hybrid orbitals of a carbon atom are identical in shape and energy.\nReason: They are formed by the mixing of one 2s and three 2p orbitals, which are themselves identical in energy.",
+    "options": {
+      "A": "Assertion is true, Reason is false.",
+      "B": "Assertion is false, Reason is true.",
+      "C": "Both are true.",
+      "D": "Both are false."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-54",
+    "question_title": "IU-03 | Bond Equality",
+    "concept": "Valence bond theory",
+    "question": "In the benzene molecule (C₆H₆), what is the relationship between the different carbon-carbon bonds under VBT resonance?",
+    "options": {
+      "A": "There are three short double bonds and three long single bonds.",
+      "B": "All six bonds are equivalent due to delocalization.",
+      "C": "The bonds are constantly vibrating between single and double states.",
+      "D": "Four bonds are single and two are double."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-55",
+    "question_title": "IU-04 | Hybridization Geometry Match",
+    "concept": "Valence bond theory",
+    "question": "Match the hybridization with the unhybridized p-orbitals remaining for multiple bonding:\n1. sp | (i) Zero p-orbitals remaining\n2. sp² | (ii) Two p-orbitals remaining\n3. sp³ | (iii) One p-orbital remaining",
+    "options": {
+      "A": "1-ii, 2-iii, 3-i",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-i, 3-iii"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-56",
+    "question_title": "IU-05 | Pi Bond Characteristics",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is true about a pi (π) bond formed via lateral overlap?",
+    "options": {
+      "A": "It can exist independently without a sigma bond.",
+      "B": "It is formed by the overlap of hybrid orbitals.",
+      "C": "It has a region of zero electron density along the internuclear axis.",
+      "D": "It is stronger than a sigma bond formed by the same atoms."
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-57",
+    "question_title": "IU-01 | Hybridization Geometry",
+    "concept": "Valence bond theory",
+    "question": "Assertion: The geometry of a molecule is determined by the sigma bond framework and lone pairs in hybrid orbitals.\nReason: Pi bonds are ignored when calculating the hybridization number H.",
+    "options": {
+      "A": "Assertion and Reason are true and Reason is the correct explanation.",
+      "B": "Assertion and Reason are true but Reason is not the explanation.",
+      "C": "Assertion is true, Reason is false.",
+      "D": "Assertion is false, Reason is true."
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-58",
+    "question_title": "IU-02 | Orbital Energy",
+    "concept": "Valence bond theory",
+    "question": "Which of the following is true regarding the energy of hybrid orbitals compared to parent orbitals?",
+    "options": {
+      "A": "They are lower in energy than the s-orbital they were formed from.",
+      "B": "They are intermediate in energy between the parent s and p orbitals.",
+      "C": "They have higher energy than the parent p-orbitals.",
+      "D": "Their energy depends on the number of electrons they hold."
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-59",
+    "question_title": "IU-03 | Resonance Formula Match",
+    "concept": "Valence bond theory",
+    "question": "Match the species with its resonance-derived Bond Order:\n1. CO₃²⁻ | (i) 1.5\n2. Benzene | (ii) 1.33\n3. PO₄³⁻ | (iii) 1.25",
+    "options": {
+      "A": "1-ii, 2-i, 3-iii",
+      "B": "1-i, 2-ii, 3-iii",
+      "C": "1-iii, 2-i, 3-ii",
+      "D": "1-ii, 2-iii, 3-i"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "CHM-CB-60",
+    "question_title": "IU-04 | Hybridization Limitations",
+    "concept": "Valence bond theory",
+    "question": "Which of the following atoms cannot undergo sp³ hybridization due to orbital limitations?",
+    "options": {
+      "A": "Carbon",
+      "B": "Hydrogen",
+      "C": "Nitrogen",
+      "D": "Oxygen"
+    },
+    "answer": "B",
+    "sub_questions": []
+  }
+]

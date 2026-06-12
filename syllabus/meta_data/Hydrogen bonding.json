@@ -1,0 +1,108 @@
+{
+"meta": {
+"concept": "Hydrogen bonding, Intermolecular interactions, and physical properties",
+"chapter": "Chemical Bonding",
+"syllabus_level": "JEE Main"
+},
+"layer_1_hard_formulas": [
+{
+"id": "F1",
+"formula": "Strength of H-bond ≈ 10 to 40 kJ/mol",
+"used_for": "Comparing H-bond energy with covalent bonds (~400 kJ/mol) and Van der Waals forces (~2 to 5 kJ/mol)."
+},
+{
+"id": "F2",
+"formula": "Boiling Point ∝ Magnitude of Intermolecular Forces",
+"used_for": "Explaining the abnormally high boiling points of H2O, HF, and NH3 relative to their group hydrides."
+}
+],
+"layer_2_rule_based_logics": [
+{
+"id": "R1",
+"rule": "Primary Condition: H must be covalently bonded to a highly electronegative atom (F, O, or N).",
+"applied_when": "Identifying the existence of a Hydrogen bond in a molecule."
+},
+{
+"id": "R2",
+"rule": "Intramolecular H-bonding: Occurs within the same molecule, typically forming 5 or 6-membered chelate rings.",
+"applied_when": "Explaining properties of o-nitrophenol or salicylaldehyde."
+},
+{
+"id": "R3",
+"rule": "Intermolecular H-bonding: Occurs between different molecules of the same or different substances.",
+"applied_when": "Explaining high viscosity, surface tension, and boiling points."
+},
+{
+"id": "R4",
+"rule": "Water-Solubility Logic: A substance is soluble in water if it can form H-bonds with water molecules.",
+"applied_when": "Predicting solubility of alcohols, carboxylic acids, and amines in water."
+},
+{
+"id": "R5",
+"rule": "Strength Trend: Strength of H-bond increases with the electronegativity of the atom attached to H (F-H...F > O-H...O > N-H...N).",
+"applied_when": "Comparing H-bond strengths across different species."
+}
+],
+"layer_3_derived_consequences": [
+{
+"id": "C1",
+"consequence": "H2O is a liquid at room temperature while H2S is a gas because oxygen can form H-bonds while sulfur cannot.",
+"derived_from": ["R1", "R3"]
+},
+{
+"id": "C2",
+"consequence": "Ice has a lower density than liquid water because H-bonding creates an open cage-like structure with voids.",
+"derived_from": ["R3"]
+},
+{
+"id": "C3",
+"consequence": "o-Nitrophenol is steam volatile and has a lower boiling point than p-nitrophenol due to intramolecular H-bonding reducing intermolecular association.",
+"derived_from": ["R2", "R3"]
+},
+{
+"id": "C4",
+"consequence": "Acetic acid exists as a dimer in benzene or vapor phase, doubling its observed molecular weight.",
+"derived_from": ["R3", "F1"]
+},
+{
+"id": "C5",
+"consequence": "HF has a lower boiling point than H2O despite F being more electronegative than O, because H2O forms 4 H-bonds per molecule while HF forms only 2.",
+"derived_from": ["R5", "R3"]
+},
+{
+"id": "C6",
+"consequence": "The solubility of alcohols decreases as the length of the non-polar alkyl chain increases, despite the presence of the H-bonding -OH group.",
+"derived_from": ["R4"]
+},
+{
+"id": "C7",
+"consequence": "Glycerol is highly viscous because it contains three -OH groups capable of extensive intermolecular H-bonding.",
+"derived_from": ["R3"]
+},
+{
+"id": "C8",
+"consequence": "The KHF2 salt exists (containing the [F-H-F]- ion), but KHCl2 does not exist because Chlorine cannot form strong H-bonds.",
+"derived_from": ["R1", "R5"]
+},
+{
+"id": "C9",
+"consequence": "DNA double helix structure is stabilized by H-bonding between specific base pairs (A-T and G-C).",
+"derived_from": ["R1", "R3"]
+},
+{
+"id": "C10",
+"consequence": "Para-nitrophenol has higher solubility in water than ortho-nitrophenol because the para-isomer can form intermolecular H-bonds with water.",
+"derived_from": ["R2", "R4"]
+},
+{
+"id": "C11",
+"consequence": "In the series NH3, PH3, AsH3, SbH3, NH3 has the highest boiling point due to H-bonding, then the trend increases from PH3 to SbH3 due to Van der Waals forces.",
+"derived_from": ["F2", "R1"]
+},
+{
+"id": "C12",
+"consequence": "Extensive H-bonding in proteins leads to the formation of alpha-helix and beta-pleated sheet secondary structures.",
+"derived_from": ["R2", "R3"]
+}
+]
+}

@@ -1,0 +1,844 @@
+[
+{
+"question_id": "MOT-01",
+"question_title": "Bond Existence Condition",
+"concept": "Molecular orbital theory",
+"question": "Which of the following conditions strictly identifies a molecule that cannot exist in a stable state according to MOT?",
+"options": {
+"A": "Number of bonding electrons is equal to antibonding electrons",
+"B": "Number of bonding electrons is greater than antibonding electrons",
+"C": "The molecule has an even number of total electrons",
+"D": "The molecule contains at least one unpaired electron"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-02",
+"question_title": "Stability Dominance",
+"concept": "Molecular orbital theory",
+"question": "Identify the incorrect statement regarding the relative stability of diatomic species.",
+"options": {
+"A": "Higher bond order generally implies higher bond dissociation energy",
+"B": "If bond orders are identical, the species with more antibonding electrons is more stable",
+"C": "Removing an electron from an antibonding orbital increases stability",
+"D": "Stability is directly proportional to the net bonding effect (Nb - Na)"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-03",
+"question_title": "Orbital Symmetry Balance",
+"concept": "Molecular orbital theory",
+"question": "Assertion: The bond order of He₂ is zero.\nReason: The stabilizing effect of two bonding electrons is cancelled by the destabilizing effect of two antibonding electrons.",
+"options": {
+"A": "Both Assertion and Reason are correct and Reason is the correct explanation",
+"B": "Both Assertion and Reason are correct but Reason is not the correct explanation",
+"C": "Assertion is correct but Reason is incorrect",
+"D": "Assertion is incorrect but Reason is correct"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-04",
+"question_title": "Paramagnetism Requirements",
+"concept": "Molecular orbital theory",
+"question": "Match the species to its necessary magnetic condition: \n1. B₂ (10e⁻) \n2. C₂ (12e⁻)\nWhich pairing is correct?",
+"options": {
+"A": "1: Diamagnetic, 2: Paramagnetic",
+"B": "1: Paramagnetic, 2: Diamagnetic",
+"C": "1: Paramagnetic, 2: Paramagnetic",
+"D": "1: Diamagnetic, 2: Diamagnetic"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-05",
+"question_title": "Bond Length Direction",
+"concept": "Molecular orbital theory",
+"question": "What is the correct directional relationship between Bond Order (B.O.) and Bond Length (B.L.)?",
+"options": {
+"A": "B.O. increases, B.L. increases",
+"B": "B.O. decreases, B.L. decreases",
+"C": "B.O. increases, B.L. decreases",
+"D": "B.O. remains constant, B.L. always increases"
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "MOT-06",
+"question_title": "Non-Existence Logic",
+"concept": "Molecular orbital theory",
+"question": "Which statement correctly compares the existence of Be₂ and Li₂?",
+"options": {
+"A": "Both exist because they are second-period elements",
+"B": "Be₂ does not exist because its net bond order is zero",
+"C": "Li₂ does not exist because it has odd number of electrons",
+"D": "Be₂ exists because it has more electrons than Li₂"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-07",
+"question_title": "Antibonding Influence",
+"concept": "Molecular orbital theory",
+"question": "When an electron is added to an antibonding molecular orbital, what is the immediate effect on the bond?",
+"options": {
+"A": "The bond order increases",
+"B": "The bond length decreases",
+"C": "The bond strength decreases",
+"D": "The molecule always becomes diamagnetic"
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "MOT-08",
+"question_title": "Symmetry and Energy",
+"concept": "Molecular orbital theory",
+"question": "Assertion: In N₂, the σ2pz orbital is higher in energy than π2px and π2py.\nReason: S-P mixing occurs only in molecules with more than 14 electrons.",
+"options": {
+"A": "Both Assertion and Reason are correct",
+"B": "Assertion is correct but Reason is incorrect",
+"C": "Assertion is incorrect but Reason is correct",
+"D": "Both are incorrect"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-09",
+"question_title": "Condition for Stability",
+"concept": "Molecular orbital theory",
+"question": "Match the electronic condition to the stability result:\n1. Nb > Na\n2. Nb ≤ Na",
+"options": {
+"A": "1: Stable, 2: Unstable/Non-existent",
+"B": "1: Unstable, 2: Stable",
+"C": "1: Always paramagnetic, 2: Always diamagnetic",
+"D": "1: Non-existent, 2: Stable"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-10",
+"question_title": "Oxygen Ion Trends",
+"concept": "Molecular orbital theory",
+"question": "Comparing O₂ and O₂⁺, which trend is correctly identified?",
+"options": {
+"A": "O₂⁺ has a shorter bond length than O₂",
+"B": "O₂ has a higher bond order than O₂⁺",
+"C": "O₂⁺ is diamagnetic while O₂ is paramagnetic",
+"D": "Removal of an electron from O₂ decreases its stability"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-11",
+"question_title": "Zero Bond Order Identification",
+"concept": "Molecular orbital theory",
+"question": "Which of the following species is eliminated from the list of stable molecules due to a zero bond order?",
+"options": {
+"A": "H₂⁺",
+"B": "He₂⁺",
+"C": "He₂",
+"D": "Li₂"
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "MOT-12",
+"question_title": "Nitrogen Stability Shift",
+"concept": "Molecular orbital theory",
+"question": "Assertion: N₂⁺ is less stable than N₂.\nReason: In N₂, the electron is removed from a bonding molecular orbital to form N₂⁺.",
+"options": {
+"A": "Assertion and Reason are correct; Reason is the correct explanation",
+"B": "Assertion and Reason are correct; Reason is not the explanation",
+"C": "Assertion is correct; Reason is incorrect",
+"D": "Assertion is incorrect; Reason is correct"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-13",
+"question_title": "Isoelectronic Character",
+"concept": "Molecular orbital theory",
+"question": "Match the isoelectronic pairs that share the same bond order:\n1. N₂\n2. O₂²⁻",
+"options": {
+"A": "1: CO, 2: F₂",
+"B": "1: O₂, 2: B₂",
+"C": "1: NO⁺, 2: N₂",
+"D": "1: F₂, 2: O₂"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-14",
+"question_title": "Orbital Filling Order",
+"concept": "Molecular orbital theory",
+"question": "Identify the incorrect statement regarding the filling of molecular orbitals for O₂.",
+"options": {
+"A": "The σ2pz orbital is filled before the π2p orbitals",
+"B": "The π*2p orbitals contain two unpaired electrons",
+"C": "It follows the sequence for species with total electrons > 14",
+"D": "The π2p orbitals are higher in energy than the σ2pz orbital"
+},
+"answer": "D",
+"sub_questions": []
+},
+{
+"question_id": "MOT-15",
+"question_title": "Bond Order Sign Logic",
+"concept": "Molecular orbital theory",
+"question": "Which observation correctly indicates a decrease in bond order?",
+"options": {
+"A": "Moving from O₂ to O₂⁺",
+"B": "Moving from N₂ to N₂⁺",
+"C": "Moving from O₂²⁻ to O₂",
+"D": "Moving from H₂ to H₂⁺"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-16",
+"question_title": "LCAO Principle",
+"concept": "Molecular orbital theory",
+"question": "Assertion: The number of molecular orbitals formed is always equal to the number of atomic orbitals combined.\nReason: Molecular orbitals are formed by the linear combination of atomic orbitals (LCAO).",
+"options": {
+"A": "Assertion and Reason are correct; Reason is the correct explanation",
+"B": "Assertion and Reason are correct; Reason is not the explanation",
+"C": "Assertion is correct; Reason is incorrect",
+"D": "Assertion is incorrect; Reason is correct"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-17",
+"question_title": "Comparison of Ions",
+"concept": "Molecular orbital theory",
+"question": "Match the species with their magnetic behavior:\n1. O₂⁻ (Superoxide)\n2. O₂²⁻ (Peroxide)",
+"options": {
+"A": "1: Paramagnetic, 2: Diamagnetic",
+"B": "1: Diamagnetic, 2: Paramagnetic",
+"C": "1: Paramagnetic, 2: Paramagnetic",
+"D": "1: Diamagnetic, 2: Diamagnetic"
+},
+"answer": "A",
+"sub_questions": []
+},
+{
+"question_id": "MOT-18",
+"question_title": "Energy Level Hierarchy",
+"concept": "Molecular orbital theory",
+"question": "Which of the following is eliminated as an incorrect energy ordering for C₂?",
+"options": {
+"A": "σ2s < σ*2s",
+"B": "π2px = π2py",
+"C": "σ2pz < π2px",
+"D": "σ1s < σ*1s"
+},
+"answer": "C",
+"sub_questions": []
+},
+{
+"question_id": "MOT-19",
+"question_title": "Bond Order Maxima",
+"concept": "Molecular orbital theory",
+"question": "Which second-period diatomic molecule is correctly identified as having the maximum bond order?",
+"options": {
+"A": "O₂",
+"B": "N₂",
+"C": "F₂",
+"D": "C₂"
+},
+"answer": "B",
+"sub_questions": []
+},
+{
+"question_id": "MOT-20",
+"question_title": "Paramagnetism in Even Electrons",
+"concept": "Molecular orbital theory",
+"question": "Assertion: B₂ and O₂ are both paramagnetic.\nReason: Both molecules have an odd total number of electrons.",
+"options": {
+"A": "Both Assertion and Reason are correct",
+"B": "Assertion is correct but Reason is incorrect",
+"C": "Assertion is incorrect but Reason is correct",
+"D": "Both are incorrect"
+},
+"answer": "B",
+"sub_questions": []
+}
+,
+  {
+    "question_id": "MOT-B2-01",
+    "question_title": "Symmetry and Stability",
+    "concept": "Molecular orbital theory",
+    "question": "Which statement correctly describes the stability of He₂ based on orbital symmetry cancellation?",
+    "options": {
+      "A": "It is stable because bonding orbitals are filled first",
+      "B": "It is unstable because the antibonding effect outweighs the bonding effect",
+      "C": "It does not exist because the number of bonding and antibonding electrons are equal",
+      "D": "It exists only in the excited state where antibonding electrons are removed"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-02",
+    "question_title": "Conditions for Paramagnetism",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: B₂ and O₂ are both paramagnetic species.\nReason: For any molecule to be paramagnetic, it must have an odd total number of electrons.",
+    "options": {
+      "A": "Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-03",
+    "question_title": "Bond Order Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Match the following species with their Bond Order (B.O.) trends:\n1. Bond Order increases\n2. Bond Order decreases",
+    "options": {
+      "A": "1: O₂ → O₂⁺; 2: N₂ → N₂⁺",
+      "B": "1: N₂ → N₂⁺; 2: O₂ → O₂⁺",
+      "C": "1: H₂ → H₂⁺; 2: Li₂ → Li₂⁺",
+      "D": "1: F₂ → F₂⁻; 2: O₂ → O₂⁻"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-04",
+    "question_title": "Bond Order Logic",
+    "concept": "Molecular orbital theory",
+    "question": "Which of the following is an incorrect representation of the Bond Order formula?",
+    "options": {
+      "A": "B.O. = 0.5 × (Nb - Na)",
+      "B": "B.O. = (Nb + Na) / 2",
+      "C": "B.O. = 0 when Nb = Na",
+      "D": "B.O. is negative when Na > Nb"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-05",
+    "question_title": "Stability Proportionality",
+    "concept": "Molecular orbital theory",
+    "question": "Which statement regarding molecular stability is correct?",
+    "options": {
+      "A": "Stability is independent of the number of electrons in antibonding orbitals",
+      "B": "A molecule is stable only if the number of bonding electrons is greater than antibonding electrons",
+      "C": "Stability increases as bond order decreases",
+      "D": "Isoelectronic species always have the exact same stability regardless of nuclear charge"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-06",
+    "question_title": "Symmetry Cancellation Comparison",
+    "concept": "Molecular orbital theory",
+    "question": "Comparing He₂ and Be₂, which property is shared by both based on the LCAO principle?",
+    "options": {
+      "A": "Both have a bond order of 1.0",
+      "B": "Both are paramagnetic",
+      "C": "Both have equal numbers of bonding and antibonding electrons",
+      "D": "Both exist as stable diatomic gases at STP"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-07",
+    "question_title": "Paramagnetism Assertion",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: C₂ is diamagnetic.\nReason: All 12 electrons in C₂ are paired in molecular orbitals.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-08",
+    "question_title": "Bond Length Trends",
+    "concept": "Molecular orbital theory",
+    "question": "Match the oxygen species with the correct bond length order:\n1. O₂⁺\n2. O₂\n3. O₂⁻",
+    "options": {
+      "A": "1 < 2 < 3",
+      "B": "3 < 2 < 1",
+      "C": "2 < 1 < 3",
+      "D": "1 < 3 < 2"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-09",
+    "question_title": "Sign of Stability",
+    "concept": "Molecular orbital theory",
+    "question": "In which transition does the bond order change from a higher value to a lower value?",
+    "options": {
+      "A": "O₂ → O₂⁺",
+      "B": "N₂ → N₂⁺",
+      "C": "F₂⁻ → F₂",
+      "D": "C₂²⁻ → C₂"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-10",
+    "question_title": "Dominance Rule",
+    "concept": "Molecular orbital theory",
+    "question": "What is the primary factor determining the bond order of a homonuclear diatomic molecule?",
+    "options": {
+      "A": "The total number of protons in the nuclei",
+      "B": "The difference between bonding and antibonding electrons",
+      "C": "The sum of all electrons in the valence shell only",
+      "D": "The number of lone pairs on the atoms"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-11",
+    "question_title": "Inversion of Stability",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: N₂⁺ is more stable than N₂⁻.\nReason: Both N₂⁺ and N₂⁻ have the same bond order of 2.5.",
+    "options": {
+      "A": "Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Both are incorrect"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-12",
+    "question_title": "S-P Mixing Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Identify the correct pairing for the energy level of σ2pz orbital relative to π2p orbitals:\n1. Li₂, B₂, C₂, N₂\n2. O₂, F₂",
+    "options": {
+      "A": "1: σ2pz > π2p; 2: σ2pz < π2p",
+      "B": "1: σ2pz < π2p; 2: σ2pz > π2p",
+      "C": "1: σ2pz = π2p; 2: σ2pz > π2p",
+      "D": "1: σ2pz > π2p; 2: σ2pz = π2p"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-13",
+    "question_title": "Directional Bond Order",
+    "concept": "Molecular orbital theory",
+    "question": "Which transition results in an increase in bond length?",
+    "options": {
+      "A": "N₂ → N₂⁺",
+      "B": "O₂ → O₂⁺",
+      "C": "O₂⁻ → O₂",
+      "D": "N₂⁻ → N₂"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-14",
+    "question_title": "Electronic Sign Confusion",
+    "concept": "Molecular orbital theory",
+    "question": "Which of the following statements about the MO diagram of N₂ is incorrect?",
+    "options": {
+      "A": "It has 10 bonding electrons",
+      "B": "It has 4 antibonding electrons",
+      "C": "The bond order is 3.0",
+      "D": "The σ2pz orbital is lower in energy than the π2p orbitals"
+    },
+    "answer": "D",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-15",
+    "question_title": "General Stability Rule",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: A molecule with bond order 0.5 can exist.\nReason: Any molecule with a non-zero bond order is potentially stable under specific conditions.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-16",
+    "question_title": "Isoelectronic Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Match the species with their Bond Order:\n1. N₂\n2. O₂",
+    "options": {
+      "A": "1: 3.0; 2: 2.0",
+      "B": "1: 2.0; 2: 3.0",
+      "C": "1: 2.5; 2: 2.5",
+      "D": "1: 3.0; 2: 1.0"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-17",
+    "question_title": "Orbital Symmetry Identification",
+    "concept": "Molecular orbital theory",
+    "question": "Identify the incorrect statement regarding antibonding molecular orbitals.",
+    "options": {
+      "A": "They are formed by the subtractive overlap of atomic orbitals",
+      "B": "They have a nodal plane between the nuclei",
+      "C": "They are lower in energy than the parent atomic orbitals",
+      "D": "They are denoted by an asterisk (e.g., σ*)"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-18",
+    "question_title": "Bond Order Direction",
+    "concept": "Molecular orbital theory",
+    "question": "In which of the following processes does the bond order decrease while the magnetic behavior changes from paramagnetic to diamagnetic?",
+    "options": {
+      "A": "O₂ → O₂²⁻",
+      "B": "O₂ → O₂⁺",
+      "C": "N₂ → N₂⁺",
+      "D": "B₂ → B₂⁺"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-19",
+    "question_title": "Stability Transition",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: Removing an electron from H₂ to form H₂⁺ decreases stability.\nReason: The bond order decreases from 1.0 to 0.5.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-20",
+    "question_title": "Species Comparison",
+    "concept": "Molecular orbital theory",
+    "question": "Compare the magnetic properties of C₂ and N₂²⁺:\n1. C₂ (12e⁻)\n2. N₂²⁺ (12e⁻)",
+    "options": {
+      "A": "1: Diamagnetic; 2: Diamagnetic",
+      "B": "1: Paramagnetic; 2: Paramagnetic",
+      "C": "1: Diamagnetic; 2: Paramagnetic",
+      "D": "1: Paramagnetic; 2: Diamagnetic"
+    },
+    "answer": "A",
+    "sub_questions": []
+  }
+,
+  {
+    "question_id": "MOT-B2-01",
+    "question_title": "Symmetry and Stability",
+    "concept": "Molecular orbital theory",
+    "question": "Which statement correctly describes the stability of He₂ based on orbital symmetry cancellation?",
+    "options": {
+      "A": "It is stable because bonding orbitals are filled first",
+      "B": "It is unstable because the antibonding effect outweighs the bonding effect",
+      "C": "It does not exist because the number of bonding and antibonding electrons are equal",
+      "D": "It exists only in the excited state where antibonding electrons are removed"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-02",
+    "question_title": "Conditions for Paramagnetism",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: B₂ and O₂ are both paramagnetic species.\nReason: For any molecule to be paramagnetic, it must have an odd total number of electrons.",
+    "options": {
+      "A": "Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-03",
+    "question_title": "Bond Order Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Match the following species with their Bond Order (B.O.) trends:\n1. Bond Order increases\n2. Bond Order decreases",
+    "options": {
+      "A": "1: O₂ → O₂⁺; 2: N₂ → N₂⁺",
+      "B": "1: N₂ → N₂⁺; 2: O₂ → O₂⁺",
+      "C": "1: H₂ → H₂⁺; 2: Li₂ → Li₂⁺",
+      "D": "1: F₂ → F₂⁻; 2: O₂ → O₂⁻"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-04",
+    "question_title": "Bond Order Logic",
+    "concept": "Molecular orbital theory",
+    "question": "Which of the following is an incorrect representation of the Bond Order formula?",
+    "options": {
+      "A": "B.O. = 0.5 × (Nb - Na)",
+      "B": "B.O. = (Nb + Na) / 2",
+      "C": "B.O. = 0 when Nb = Na",
+      "D": "B.O. is negative when Na > Nb"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-05",
+    "question_title": "Stability Proportionality",
+    "concept": "Molecular orbital theory",
+    "question": "Which statement regarding molecular stability is correct?",
+    "options": {
+      "A": "Stability is independent of the number of electrons in antibonding orbitals",
+      "B": "A molecule is stable only if the number of bonding electrons is greater than antibonding electrons",
+      "C": "Stability increases as bond order decreases",
+      "D": "Isoelectronic species always have the exact same stability regardless of nuclear charge"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-06",
+    "question_title": "Symmetry Cancellation Comparison",
+    "concept": "Molecular orbital theory",
+    "question": "Comparing He₂ and Be₂, which property is shared by both based on the LCAO principle?",
+    "options": {
+      "A": "Both have a bond order of 1.0",
+      "B": "Both are paramagnetic",
+      "C": "Both have equal numbers of bonding and antibonding electrons",
+      "D": "Both exist as stable diatomic gases at STP"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-07",
+    "question_title": "Paramagnetism Assertion",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: C₂ is diamagnetic.\nReason: All 12 electrons in C₂ are paired in molecular orbitals.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-08",
+    "question_title": "Bond Length Trends",
+    "concept": "Molecular orbital theory",
+    "question": "Match the oxygen species with the correct bond length order:\n1. O₂⁺\n2. O₂\n3. O₂⁻",
+    "options": {
+      "A": "1 < 2 < 3",
+      "B": "3 < 2 < 1",
+      "C": "2 < 1 < 3",
+      "D": "1 < 3 < 2"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-09",
+    "question_title": "Sign of Stability",
+    "concept": "Molecular orbital theory",
+    "question": "In which transition does the bond order change from a higher value to a lower value?",
+    "options": {
+      "A": "O₂ → O₂⁺",
+      "B": "N₂ → N₂⁺",
+      "C": "F₂⁻ → F₂",
+      "D": "C₂²⁻ → C₂"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-10",
+    "question_title": "Dominance Rule",
+    "concept": "Molecular orbital theory",
+    "question": "What is the primary factor determining the bond order of a homonuclear diatomic molecule?",
+    "options": {
+      "A": "The total number of protons in the nuclei",
+      "B": "The difference between bonding and antibonding electrons",
+      "C": "The sum of all electrons in the valence shell only",
+      "D": "The number of lone pairs on the atoms"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-11",
+    "question_title": "Inversion of Stability",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: N₂⁺ is more stable than N₂⁻.\nReason: Both N₂⁺ and N₂⁻ have the same bond order of 2.5.",
+    "options": {
+      "A": "Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Both are incorrect"
+    },
+    "answer": "B",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-12",
+    "question_title": "S-P Mixing Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Identify the correct pairing for the energy level of σ2pz orbital relative to π2p orbitals:\n1. Li₂, B₂, C₂, N₂\n2. O₂, F₂",
+    "options": {
+      "A": "1: σ2pz > π2p; 2: σ2pz < π2p",
+      "B": "1: σ2pz < π2p; 2: σ2pz > π2p",
+      "C": "1: σ2pz = π2p; 2: σ2pz > π2p",
+      "D": "1: σ2pz > π2p; 2: σ2pz = π2p"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-13",
+    "question_title": "Directional Bond Order",
+    "concept": "Molecular orbital theory",
+    "question": "Which transition results in an increase in bond length?",
+    "options": {
+      "A": "N₂ → N₂⁺",
+      "B": "O₂ → O₂⁺",
+      "C": "O₂⁻ → O₂",
+      "D": "N₂⁻ → N₂"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-14",
+    "question_title": "Electronic Sign Confusion",
+    "concept": "Molecular orbital theory",
+    "question": "Which of the following statements about the MO diagram of N₂ is incorrect?",
+    "options": {
+      "A": "It has 10 bonding electrons",
+      "B": "It has 4 antibonding electrons",
+      "C": "The bond order is 3.0",
+      "D": "The σ2pz orbital is lower in energy than the π2p orbitals"
+    },
+    "answer": "D",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-15",
+    "question_title": "General Stability Rule",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: A molecule with bond order 0.5 can exist.\nReason: Any molecule with a non-zero bond order is potentially stable under specific conditions.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-16",
+    "question_title": "Isoelectronic Matching",
+    "concept": "Molecular orbital theory",
+    "question": "Match the species with their Bond Order:\n1. N₂\n2. O₂",
+    "options": {
+      "A": "1: 3.0; 2: 2.0",
+      "B": "1: 2.0; 2: 3.0",
+      "C": "1: 2.5; 2: 2.5",
+      "D": "1: 3.0; 2: 1.0"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-17",
+    "question_title": "Orbital Symmetry Identification",
+    "concept": "Molecular orbital theory",
+    "question": "Identify the incorrect statement regarding antibonding molecular orbitals.",
+    "options": {
+      "A": "They are formed by the subtractive overlap of atomic orbitals",
+      "B": "They have a nodal plane between the nuclei",
+      "C": "They are lower in energy than the parent atomic orbitals",
+      "D": "They are denoted by an asterisk (e.g., σ*)"
+    },
+    "answer": "C",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-18",
+    "question_title": "Bond Order Direction",
+    "concept": "Molecular orbital theory",
+    "question": "In which of the following processes does the bond order decrease while the magnetic behavior changes from paramagnetic to diamagnetic?",
+    "options": {
+      "A": "O₂ → O₂²⁻",
+      "B": "O₂ → O₂⁺",
+      "C": "N₂ → N₂⁺",
+      "D": "B₂ → B₂⁺"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-19",
+    "question_title": "Stability Transition",
+    "concept": "Molecular orbital theory",
+    "question": "Assertion: Removing an electron from H₂ to form H₂⁺ decreases stability.\nReason: The bond order decreases from 1.0 to 0.5.",
+    "options": {
+      "A": "Both Assertion and Reason are correct; Reason is the correct explanation",
+      "B": "Both Assertion and Reason are correct; Reason is not the explanation",
+      "C": "Assertion is correct; Reason is incorrect",
+      "D": "Assertion is incorrect; Reason is correct"
+    },
+    "answer": "A",
+    "sub_questions": []
+  },
+  {
+    "question_id": "MOT-B2-20",
+    "question_title": "Species Comparison",
+    "concept": "Molecular orbital theory",
+    "question": "Compare the magnetic properties of C₂ and N₂²⁺:\n1. C₂ (12e⁻)\n2. N₂²⁺ (12e⁻)",
+    "options": {
+      "A": "1: Diamagnetic; 2: Diamagnetic",
+      "B": "1: Paramagnetic; 2: Paramagnetic",
+      "C": "1: Diamagnetic; 2: Paramagnetic",
+      "D": "1: Paramagnetic; 2: Diamagnetic"
+    },
+    "answer": "A",
+    "sub_questions": []
+  }
+]

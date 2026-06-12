@@ -1,0 +1,133 @@
+{
+"meta": {
+"concept": "Molecular Orbital Theory (MOT): Bond Order, Magnetism, and Energy Levels",
+"chapter": "Chemical Bonding",
+"syllabus_level": "JEE Main"
+},
+"layer_1_hard_formulas": [
+{
+"id": "F1",
+"formula": "Bond Order (B.O.) = 1/2 [N_b - N_a]",
+"used_for": "Calculating the stability and multiplicity of a bond in a molecule or ion."
+},
+{
+"id": "F2",
+"formula": "Number of Molecular Orbitals = Number of Atomic Orbitals Combined",
+"used_for": "Determining the total orbital count in a MO diagram based on LCAO principle."
+},
+{
+"id": "F3",
+"formula": "Stability ∝ Bond Order",
+"used_for": "Comparing the relative stability of different species (e.g., O2, O2+, O2-)."
+},
+{
+"id": "F4",
+"formula": "Bond Length ∝ 1 / Bond Order",
+"used_for": "Predicting the relative distance between nuclei based on bond multiplicity."
+}
+],
+"layer_2_rule_based_logics": [
+{
+"id": "R1",
+"rule": "Filling Order (≤ 14e⁻): σ1s < σ*1s < σ2s < σ*2s < (π2px = π2py) < σ2pz < (π*2px = π*2py) < σ*2pz",
+"applied_when": "Building MO diagrams for Li2, Be2, B2, C2, N2 and their ions."
+},
+{
+"id": "R2",
+"rule": "Filling Order (> 14e⁻): σ1s < σ*1s < σ2s < σ*2s < σ2pz < (π2px = π2py) < (π*2px = π*2py) < σ*2pz",
+"applied_when": "Building MO diagrams for O2, F2, Ne2 and their ions."
+},
+{
+"id": "R3",
+"rule": "Paramagnetism Condition: Presence of one or more unpaired electrons in molecular orbitals.",
+"applied_when": "Determining if a species is attracted by a magnetic field."
+},
+{
+"id": "R4",
+"rule": "Diamagnetism Condition: All electrons in molecular orbitals are paired.",
+"applied_when": "Determining if a species is weakly repelled by a magnetic field."
+},
+{
+"id": "R5",
+"rule": "Bond Existence: If N_b > N_a (B.O. > 0), the molecule is stable; if N_b ≤ N_a (B.O. ≤ 0), it does not exist.",
+"applied_when": "Explaining why He2 or Be2 (gas phase) do not exist."
+},
+{
+"id": "R6",
+"rule": "Hund's Rule in MO: For degenerate orbitals (π and π*), electrons enter singly with parallel spins before pairing.",
+"applied_when": "Predicting the magnetic behavior of B2 and O2."
+}
+],
+"layer_3_derived_consequences": [
+{
+"id": "C1",
+"consequence": "If an electron is removed from an antibonding orbital, the bond order increases and stability improves.",
+"derived_from": ["F1", "F3"]
+},
+{
+"id": "C2",
+"consequence": "If an electron is removed from a bonding orbital, the bond order decreases and bond length increases.",
+"derived_from": ["F1", "F4"]
+},
+{
+"id": "C3",
+"consequence": "B2 (10e⁻) is paramagnetic due to the filling of degenerate π2px and π2py orbitals with single electrons.",
+"derived_from": ["R1", "R3", "R6"]
+},
+{
+"id": "C4",
+"consequence": "C2 (12e⁻) is diamagnetic because the π2p orbitals are completely filled.",
+"derived_from": ["R1", "R4"]
+},
+{
+"id": "C5",
+"consequence": "O2 (16e⁻) is paramagnetic with two unpaired electrons in π*2p orbitals despite having an even number of electrons.",
+"derived_from": ["R2", "R3", "R6"]
+},
+{
+"id": "C6",
+"consequence": "N2 has the highest bond order (3.0) among diatomic molecules of the second period, making it exceptionally stable.",
+"derived_from": ["F1", "F3", "R1"]
+},
+{
+"id": "C7",
+"consequence": "He2 and Be2 have a bond order of 0, explaining their non-existence as stable diatomic molecules.",
+"derived_from": ["F1", "R5"]
+},
+{
+"id": "C8",
+"consequence": "The bond length order for oxygen species is O2+ < O2 < O2- < O2^2- as bond order decreases from 2.5 to 1.",
+"derived_from": ["F1", "F4"]
+},
+{
+"id": "C9",
+"consequence": "Mixing of 2s and 2p orbitals (s-p mixing) causes the σ2pz orbital to shift higher in energy than π2p for Z ≤ 7.",
+"derived_from": ["R1"]
+},
+{
+"id": "C10",
+"consequence": "The removal of an electron from N2 to form N2+ decreases the B.O. from 3.0 to 2.5, whereas forming O2+ from O2 increases B.O. from 2.0 to 2.5.",
+"derived_from": ["F1", "R1", "R2"]
+},
+{
+"id": "C11",
+"consequence": "Species with the same bond order (e.g., F2 and O2^2-) are called isoelectronic and often share similar bond characteristics.",
+"derived_from": ["F1", "F4"]
+},
+{
+"id": "C12",
+"consequence": "In a MO diagram, the bonding MO is always lower in energy than the parent atomic orbitals, while the antibonding MO is higher.",
+"derived_from": ["F2"]
+},
+{
+"id": "C13",
+"consequence": "N2+ and N2- have the same bond order (2.5), but N2+ is more stable because it has fewer electrons in antibonding orbitals.",
+"derived_from": ["F1", "F3"]
+},
+{
+"id": "C14",
+"consequence": "Superoxide (O2-) and Peroxide (O2^2-) ions are paramagnetic and diamagnetic respectively.",
+"derived_from": ["R2", "R3", "R4", "R6"]
+}
+]
+}

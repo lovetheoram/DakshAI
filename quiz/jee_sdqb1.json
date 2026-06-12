@@ -1,0 +1,1190 @@
+[
+  {
+    "question_id": "86435120688",
+    "question_title": "Box Volume Optimization Problem",
+    "concept": "Simple applications",
+    "question": "A box open from the top is made from a rectangular sheet of dimension a x b by cutting a square of side x from each of the four corners and folding up the flaps. If the volume of the box is maximum, then x is equal to:",
+    "options": {
+      "A": "(a+b + √ab) / 6",
+      "B": "(a+b - √(a^2 + b^2 + ab)) / 12",
+      "C": "(a+b - √(a^2 + b^2 + ab)) / 6",
+      "D": "(a+b + √(a^2 + b^2 - ab)) / 6"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "86435120688-a",
+        "type": "comfort",
+        "concept": "Simple applications",
+        "question": "What is the primary condition for a function f(x) to have a local maximum at a point c?",
+        "options": {
+          "A": "f'(c) = 0 and f''(c) > 0",
+          "B": "f'(c) = 0 and f''(c) < 0",
+          "C": "f'(c) > 0",
+          "D": "f''(c) = 0"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120688-b",
+        "type": "grounding",
+        "concept": "Simple applications",
+        "question": "A rectangular sheet of paper measures 20 cm by 15 cm. If squares of side x cm are cut from each corner, what is the length of the base of the box formed by folding up the flaps?",
+        "options": {
+          "A": "20 - x",
+          "B": "20 - 2x",
+          "C": "15 - x",
+          "D": "15 - 2x"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120688-c",
+        "type": "precursor",
+        "concept": "Simple applications",
+        "question": "For a rectangular sheet of dimension a x b, if squares of side x are cut from each corner and the flaps are folded up, what is the volume V(x) of the resulting open box?",
+        "options": {
+          "A": "(a-x)(b-x)x",
+          "B": "(a-2x)(b-2x)x",
+          "C": "abx",
+          "D": "(a-2x)(b-2x)"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120689",
+    "question_title": "Evaluate Definite Integral by Partial Fractions",
+    "concept": "Definite integrals",
+    "question": "The value of the definite integral ∫[0 to 1] 1 / ((1 + x)(1 + 3x)(3 + x)) dx is:",
+    "options": {
+      "A": "(1/4)ln(2)",
+      "B": "(1/16)ln(3)",
+      "C": "(1/16)ln(16/3)",
+      "D": "(1/16)ln(4)"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "86435120689-a",
+        "type": "comfort",
+        "concept": "Definite integrals",
+        "question": "Which of the following describes the method used to integrate rational functions with distinct linear factors in the denominator?",
+        "options": {
+          "A": "Integration by parts",
+          "B": "Substitution method",
+          "C": "Partial fraction decomposition",
+          "D": "Trigonometric substitution"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120689-b",
+        "type": "grounding",
+        "concept": "Definite integrals",
+        "question": "Find the partial fraction coefficient A for 1 / ((1 + x)(1 + 3x)(3 + x)) when decomposed as A / (1 + x) + B / (1 + 3x) + C / (3 + x).",
+        "options": {
+          "A": "1/4",
+          "B": "-1/4",
+          "C": "1/2",
+          "D": "-1/2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120689-c",
+        "type": "precursor",
+        "concept": "Definite integrals",
+        "question": "After performing partial fraction decomposition on 1 / ((1 + x)(1 + 3x)(3 + x)) as A / (1 + x) + B / (1 + 3x) + C / (3 + x) and integrating, what is the coefficient of ln(1 + 3x) in the indefinite integral?",
+        "options": {
+          "A": "9/16",
+          "B": "3/16",
+          "C": "1/16",
+          "D": "-1/4"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120690",
+    "question_title": "Area Bounded by Parabola and Tangent",
+    "concept": "Area under curves",
+    "question": "The area of the region bounded by the parabola (y - 2)^2 = x + 1, the tangent to it at the point whose ordinate is 3, and the x-axis is:",
+    "options": {
+      "A": "6",
+      "B": "9",
+      "C": "10",
+      "D": "4"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120690-a",
+        "type": "comfort",
+        "concept": "Area under curves",
+        "question": "What is the general formula for the area between two curves x = f(y) and x = g(y) from y = a to y = b, where f(y) is always to the right of g(y) in the interval?",
+        "options": {
+          "A": "∫[a to b] (f(y) - g(y)) dy",
+          "B": "∫[a to b] (g(y) - f(y)) dy",
+          "C": "∫[a to b] (f(y) + g(y)) dy",
+          "D": "∫[a to b] f(y)g(y) dy"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120690-b",
+        "type": "grounding",
+        "concept": "Area under curves",
+        "question": "If a curve is given by x = y^2, what is the value of x when y = 3?",
+        "options": {
+          "A": "3",
+          "B": "6",
+          "C": "9",
+          "D": "12"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120690-c",
+        "type": "precursor",
+        "concept": "Area under curves",
+        "question": "For the given problem, the expressions for x are x_parabola = (y - 2)^2 - 1 and x_tangent = 2y - 6. Simplify the expression for the difference x_parabola - x_tangent.",
+        "options": {
+          "A": "y^2 - 6y + 9",
+          "B": "y^2 + 6y + 9",
+          "C": "-y^2 - 6y - 9",
+          "D": "-y^2 + 6y - 9"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120691",
+    "question_title": "Parabola Family Differential Equation",
+    "concept": "Parabola",
+    "question": "A differential equation representing the family of parabolas with axis parallel to y-axis and whose length of latus rectum is the distance of the point (2, 3) from the line 3x + 4y = 5, is given by:",
+    "options": {
+      "A": "dx/dy = 11/10",
+      "B": "d²y/dx² = 10/11",
+      "C": "d²y/dx² = 11/10",
+      "D": "dx/dy = 10/11"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120691-a",
+        "type": "comfort",
+        "concept": "Parabola",
+        "question": "What is the general equation of a parabola with its axis parallel to the y-axis, with vertex (h, k) and latus rectum length 4a?",
+        "options": {
+          "A": "(y - k)² = 4a(x - h)",
+          "B": "(x - h)² = 4a(y - k)",
+          "C": "x² = 4a y",
+          "D": "y² = 4a x"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120691-b",
+        "type": "grounding",
+        "concept": "Distance of a point from a line",
+        "question": "Calculate the distance of the point (2, 3) from the line 3x + 4y - 5 = 0.",
+        "options": {
+          "A": "12/5",
+          "B": "13/5",
+          "C": "14/5",
+          "D": "15/5"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120691-c",
+        "type": "precursor",
+        "concept": "Parabola",
+        "question": "A parabola has its axis parallel to the y-axis and its length of latus rectum is 13/5. If its equation is (x - h)² = (13/5)(y - k), find the first derivative dy/dx in terms of (x - h).",
+        "options": {
+          "A": "dy/dx = (10/13)(x - h)",
+          "B": "dy/dx = (13/10)(x - h)",
+          "C": "dy/dx = (5/13)(x - h)",
+          "D": "dy/dx = (13/5)(x - h)"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120692",
+    "question_title": "Linear DE Solution Curve",
+    "concept": "Linear differential equations",
+    "question": "If the solution curve of the differential equation (2x - 10y^3)dy + ydx = 0 passes through the points (0, 1) and (2, β), then β is a root of the equation:",
+    "options": {
+      "A": "2y^5 - 2y - 1 = 0",
+      "B": "2y^5 - 2y^2 - 2 = 0",
+      "C": "y^5 - y^2 + 1 = 0",
+      "D": "y^5 + 2y - 2 = 0"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120692-a",
+        "type": "comfort",
+        "concept": "Linear differential equations",
+        "question": "What is the general form of the integrating factor for a linear differential equation of the form dx/dy + P(y)x = Q(y)?",
+        "options": {
+          "A": "e^∫P(y)dy",
+          "B": "e^∫P(x)dx",
+          "C": "∫P(y)dy",
+          "D": "∫P(x)dx"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120692-b",
+        "type": "grounding",
+        "concept": "Linear differential equations",
+        "question": "What is the integrating factor for the differential equation dx/dy + (3/y)x = y^2?",
+        "options": {
+          "A": "y",
+          "B": "y^3",
+          "C": "1/y",
+          "D": "y^2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120692-c",
+        "type": "precursor",
+        "concept": "Linear differential equations",
+        "question": "What is the integrating factor for the differential equation (2x - 10y^3)dy + ydx = 0?",
+        "options": {
+          "A": "y",
+          "B": "y^2",
+          "C": "1/y",
+          "D": "1/y^2"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120693",
+    "question_title": "Triangle Area and Sum of 'a'",
+    "concept": "Area of triangle using determinants",
+    "question": "Let A(a, 0), B(b, 2b + 1) and C(0, b), where b ≠ 0 and |b| ≠ 1. If the area of triangle ABC is 1 sq. unit, then find the sum of all possible values of a.",
+    "options": {
+      "A": "2b / (b + 1)",
+      "B": "-2b / (b + 1)",
+      "C": "2b^2 / (b + 1)",
+      "D": "-2b^2 / (b + 1)"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "86435120693-a",
+        "type": "comfort",
+        "concept": "Area of triangle using determinants",
+        "question": "What is the formula for the area of a triangle with vertices (x1, y1), (x2, y2), and (x3, y3)?",
+        "options": {
+          "A": "1/2 | x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2) |",
+          "B": "1/2 | x1(y2 + y3) + x2(y3 + y1) + x3(y1 + y2) |",
+          "C": "1/2 | x1(y2 - y3) - x2(y3 - y1) - x3(y1 - y2) |",
+          "D": "1/2 | x1(y2 - y3) - x2(y3 - y1) + x3(y1 - y2) |"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120693-b",
+        "type": "grounding",
+        "concept": "Area of triangle using determinants",
+        "question": "What is the area of a triangle with vertices (0, 0), (1, 0), and (0, 1)?",
+        "options": {
+          "A": "0",
+          "B": "1/2",
+          "C": "1",
+          "D": "2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120693-c",
+        "type": "precursor",
+        "concept": "Area of triangle using determinants",
+        "question": "Given points A(a, 0), B(b, 2b + 1), and C(0, b), what is the value of 2 times the signed area of triangle ABC, i.e., x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)?",
+        "options": {
+          "A": "a(b + 1) + b^2",
+          "B": "a(b - 1) + b^2",
+          "C": "a(b + 1) - b^2",
+          "D": "a(b - 1) - b^2"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120694",
+    "question_title": "Parabola: Locus of Perpendicular Tangents",
+    "concept": "Parabola",
+    "question": "If two tangents drawn from a point P to the parabola y^2 = 16(x - 3) are at right angles, then the locus of point P is:",
+    "options": {
+      "A": "x - 1 = 0",
+      "B": "x + 1 = 0",
+      "C": "x + 2 = 0",
+      "D": "x + 3 = 0"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120694-a",
+        "type": "comfort",
+        "concept": "Parabola",
+        "question": "What is the equation of the directrix for the standard parabola y^2 = 4ax?",
+        "options": {
+          "A": "x = a",
+          "B": "x = -a",
+          "C": "y = a",
+          "D": "y = -a"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120694-b",
+        "type": "grounding",
+        "concept": "Parabola",
+        "question": "For the parabola y^2 = 16(x - 3), what is the value of '4a' when written in the standard form Y^2 = 4aX?",
+        "options": {
+          "A": "4",
+          "B": "8",
+          "C": "16",
+          "D": "32"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120694-c",
+        "type": "precursor",
+        "concept": "Parabola",
+        "question": "For the parabola y^2 = 16(x - 3), what is the value of 'a'?",
+        "options": {
+          "A": "3",
+          "B": "4",
+          "C": "8",
+          "D": "16"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120695",
+    "question_title": "Angle between lines from DC",
+    "concept": "Angle between lines",
+    "question": "The angle between the straight lines, whose direction cosines are given by the equations 2l + 2m - n = 0 and mn + nl + lm = 0, is :",
+    "options": {
+      "A": "π/3",
+      "B": "cos^-1(1/9)",
+      "C": "π/2",
+      "D": "cos^-1(1/4)"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "86435120695-a",
+        "type": "comfort",
+        "concept": "Angle between lines",
+        "question": "If the direction cosines of two lines are (l1, m1, n1) and (l2, m2, n2), what is cos θ, where θ is the acute angle between the lines?",
+        "options": {
+          "A": "|l1l2 + m1m2 + n1n2|",
+          "B": "l1m1 + m1n1 + n1l1",
+          "C": "l1/l2 + m1/m2 + n1/n2",
+          "D": "√((l1-l2)^2 + (m1-m2)^2 + (n1-n2)^2)"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120695-b",
+        "type": "grounding",
+        "concept": "Angle between lines",
+        "question": "Find the cosine of the angle between two lines with direction cosines (1/√3, 1/√3, 1/√3) and (1/√2, 0, -1/√2).",
+        "options": {
+          "A": "1/√2",
+          "B": "0",
+          "C": "1/2",
+          "D": "√3/2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120695-c",
+        "type": "precursor",
+        "concept": "Angle between lines",
+        "question": "The direction cosines of two lines are given by 2l + 2m - n = 0 and mn + nl + lm = 0. Which equation correctly expresses the relationship between l and m?",
+        "options": {
+          "A": "(l/m)^2 + 3(l/m) + 2 = 0",
+          "B": "2(l/m)^2 + 5(l/m) + 2 = 0",
+          "C": "(l/m)^2 + (l/m) + 1 = 0",
+          "D": "3(l/m)^2 + 2(l/m) + 1 = 0"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120696",
+    "question_title": "Plane Through Intersection of Planes",
+    "concept": "Coordinates in space",
+    "question": "The equation of the plane passing through the line of intersection of the planes r . (i + j - 3k) + 7 = 0 and r . i + 1 = 0 is:",
+    "options": {
+      "A": "r . (i - 3k) + 6 = 0",
+      "B": "r . (i + 3k) + 6 = 0",
+      "C": "r . (j - 3k) - 6 = 0",
+      "D": "r . (j - 3k) + 6 = 0"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "86435120696-a",
+        "type": "comfort",
+        "concept": "Coordinates in space",
+        "question": "What is the general equation of a plane passing through the line of intersection of two planes P1 = 0 and P2 = 0?",
+        "options": {
+          "A": "P1 + P2 = 0",
+          "B": "P1 - P2 = 0",
+          "C": "P1 + λP2 = 0",
+          "D": "λP1 + P2 = 0"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120696-b",
+        "type": "grounding",
+        "concept": "Coordinates in space",
+        "question": "If a plane is given by x - 2y + 3z - 4 = 0, what is the coefficient of y in its Cartesian equation?",
+        "options": {
+          "A": "1",
+          "B": "-2",
+          "C": "3",
+          "D": "-4"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120696-c",
+        "type": "precursor",
+        "concept": "Coordinates in space",
+        "question": "For the planes P1: r . (i + j - 3k) + 7 = 0 and P2: r . i + 1 = 0, write the general equation of the plane passing through their line of intersection in Cartesian form, grouping terms by x, y, z.",
+        "options": {
+          "A": "x(1+λ) + y - 3z + (7+λ) = 0",
+          "B": "x(1-λ) + y - 3z + (7+λ) = 0",
+          "C": "x(1+λ) + y - 3z + (7-λ) = 0",
+          "D": "x(1+λ) - y + 3z + (7+λ) = 0"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120697",
+    "question_title": "Independent coin tosses, same heads",
+    "concept": "Multiplication theorem of probability",
+    "question": "Each of the persons A and B independently tosses three fair coins. The probability that both of them get the same number of heads is:",
+    "options": {
+      "A": "1/4",
+      "B": "3/8",
+      "C": "5/16",
+      "D": "1/2"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "86435120697-a",
+        "type": "comfort",
+        "concept": "Multiplication theorem of probability",
+        "question": "What is the probability of getting exactly one head when tossing two fair coins?",
+        "options": {
+          "A": "1/4",
+          "B": "1/2",
+          "C": "3/4",
+          "D": "1"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120697-b",
+        "type": "grounding",
+        "concept": "Multiplication theorem of probability",
+        "question": "What is the probability of getting exactly 2 heads when tossing three fair coins?",
+        "options": {
+          "A": "1/8",
+          "B": "3/8",
+          "C": "1/2",
+          "D": "5/8"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120697-c",
+        "type": "precursor",
+        "concept": "Multiplication theorem of probability",
+        "question": "If two persons A and B each toss three fair coins independently, what is the probability that both get exactly one head?",
+        "options": {
+          "A": "1/64",
+          "B": "3/64",
+          "C": "9/64",
+          "D": "1/8"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120698",
+    "question_title": "Boolean Expression Equivalence Simplification",
+    "concept": "Logic gates",
+    "question": "The Boolean expression (p ^ q) => ((r ^ q) ^ p) is equivalent to:",
+    "options": {
+      "A": "(q ^ r) => (p ^ q)",
+      "B": "(p ^ q) => (r ^ q)",
+      "C": "(p ^ q) => (r v q)",
+      "D": "(p ^ r) => (p ^ q)"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120698-a",
+        "type": "comfort",
+        "concept": "Logic gates",
+        "question": "Which Boolean expression is equivalent to p => q?",
+        "options": {
+          "A": "~p ^ q",
+          "B": "p v ~q",
+          "C": "~p v q",
+          "D": "p ^ q"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120698-b",
+        "type": "grounding",
+        "concept": "Logic gates",
+        "question": "Simplify the Boolean expression p v (p ^ q).",
+        "options": {
+          "A": "p ^ q",
+          "B": "p",
+          "C": "q",
+          "D": "p v q"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120698-c",
+        "type": "precursor",
+        "concept": "Logic gates",
+        "question": "Rewrite the given Boolean expression (p ^ q) => ((r ^ q) ^ p) using only ~ (NOT), ^ (AND), and v (OR) operators, removing the => (IMPLICATION) operator.",
+        "options": {
+          "A": "~(p ^ q) v ((r ^ q) ^ p)",
+          "B": "(p ^ q) ^ ~((r ^ q) ^ p)",
+          "C": "~p ^ ~q v ((r ^ q) ^ p)",
+          "D": "(p v q) v ((r ^ q) ^ p)"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120699",
+    "question_title": "Poles Distance Angle Relation",
+    "concept": "Distance between two points",
+    "question": "Two poles, AB of length a metres and CD of length a + b (b ≠ a) metres are erected at the same horizontal level with bases at B and D. If BD = x and tan(angle ACB) = 1/2, then which of the following is true?",
+    "options": {
+      "A": "x^2 + 2(a + 2b)x - b(a + b) = 0",
+      "B": "x^2 - 2ax + a(a + b) = 0",
+      "C": "x^2 - 2ax + b(a + b) = 0",
+      "D": "x^2 + 2(a + 2b)x + a(a + b) = 0"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "86435120699-a",
+        "type": "comfort",
+        "concept": "Distance between two points",
+        "question": "What is the formula for the tangent of the acute angle between two lines with slopes m1 and m2?",
+        "options": {
+          "A": "|(m1 + m2) / (1 + m1 m2)|",
+          "B": "|(m1 - m2) / (1 - m1 m2)|",
+          "C": "|(m1 - m2) / (1 + m1 m2)|",
+          "D": "|(m1 + m2) / (1 - m1 m2)|"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120699-b",
+        "type": "grounding",
+        "concept": "Distance between two points",
+        "question": "Poles AB=2 and CD=3 are erected at points B=(0,0) and D=(4,0) respectively. What is the slope of the line segment CA, if C is the top of pole CD and A is the top of pole AB?",
+        "options": {
+          "A": "1/4",
+          "B": "1/2",
+          "C": "3/4",
+          "D": "-1/4"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120699-c",
+        "type": "precursor",
+        "concept": "Distance between two points",
+        "question": "In the given setup, let the coordinates of the bases be B(0,0) and D(x,0). The top of pole AB is A(0,a) and the top of pole CD is C(x, a+b). Express the tangent of angle ACB in terms of a, b, and x.",
+        "options": {
+          "A": "a / (x^2 + b(a+b))",
+          "B": "x / (x^2 + b(a+b))",
+          "C": "ax / (x^2 + b(a+b))",
+          "D": "b(a+b) / (x^2 + b(a+b))"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120700",
+    "question_title": "Complex Locus Imaginary Sum",
+    "concept": "Argand diagram",
+    "question": "Let z be a complex number satisfying |z - 3| = Re(z). If z1 and z2 are two distinct points on the locus of z such that the line segment joining z1 and z2 has a slope of 6, then the imaginary part of z1 + z2 is equal to:",
+    "options": {
+      "A": "0",
+      "B": "1",
+      "C": "2",
+      "D": "3"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120700-a",
+        "type": "comfort",
+        "concept": "Argand diagram",
+        "question": "If z = x + iy, which geometric shape is represented by the equation |z - a| = x, where a is a real constant?",
+        "options": {
+          "A": "Circle",
+          "B": "Ellipse",
+          "C": "Hyperbola",
+          "D": "Parabola"
+        },
+        "answer": "D"
+      },
+      {
+        "sub_id": "86435120700-b",
+        "type": "grounding",
+        "concept": "Argand diagram",
+        "question": "If z = x + iy, rewrite the equation |z - 3| = Re(z) in terms of x and y, eliminating the absolute value and Re() operators.",
+        "options": {
+          "A": "(x-3)^2 + y^2 = x",
+          "B": "(x-3)^2 + y^2 = x^2",
+          "C": "(x-3) + y^2 = x",
+          "D": "(x-3)^2 + y^2 = Re(z)^2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120700-c",
+        "type": "precursor",
+        "concept": "Argand diagram",
+        "question": "The equation |z - 3| = Re(z) represents a parabola. If z1 = x1 + iy1 and z2 = x2 + iy2 are two distinct points on this parabola, what is y1 + y2 in terms of the slope m of the chord joining z1 and z2?",
+        "options": {
+          "A": "m/6",
+          "B": "6m",
+          "C": "6/m",
+          "D": "m-6"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120701",
+    "question_title": "Subsets with Sum Not Multiple 3",
+    "concept": "Power set",
+    "question": "Let S = {1, 2, 3, 4, 5, 6, 9}. Then the number of elements in the set T = {A ⊆ S : A ≠ φ and the sum of all the elements of A is not a multiple of 3} is",
+    "options": {
+      "A": "47",
+      "B": "80",
+      "C": "127",
+      "D": "128"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120701-a",
+        "type": "comfort",
+        "concept": "Power set",
+        "question": "What is the total number of distinct subsets of the set S = {1, 2, 3, 4, 5, 6, 9}?",
+        "options": {
+          "A": "64",
+          "B": "127",
+          "C": "128",
+          "D": "256"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120701-b",
+        "type": "grounding",
+        "concept": "Power set",
+        "question": "How many non-empty subsets does the set S = {1, 2, 3, 4, 5, 6, 9} have?",
+        "options": {
+          "A": "126",
+          "B": "127",
+          "C": "128",
+          "D": "129"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120701-c",
+        "type": "precursor",
+        "concept": "Power set",
+        "question": "Let S = {1, 2, 3, 4, 5, 6, 9}. What is the number of subsets A ⊆ S (including the empty set) such that the sum of all elements of A is a multiple of 3?",
+        "options": {
+          "A": "47",
+          "B": "48",
+          "C": "49",
+          "D": "50"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120702",
+    "question_title": "Remainder of Binomial Expression",
+    "concept": "Middle term",
+    "question": "Find the remainder when 3 × 7^22 + 2 × 102^44 is divided by 18.",
+    "options": {
+      "A": "0",
+      "B": "3",
+      "C": "6",
+      "D": "9"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120702-a",
+        "type": "comfort",
+        "concept": "Middle term",
+        "question": "Which theorem is often used to find remainders of expressions like (a+b)^n when divided by m?",
+        "options": {
+          "A": "Polynomial Remainder Theorem",
+          "B": "Binomial Theorem",
+          "C": "Fermat's Little Theorem",
+          "D": "Euler's Totient Theorem"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120702-b",
+        "type": "grounding",
+        "concept": "Middle term",
+        "question": "What is the remainder when 7^2 is divided by 18?",
+        "options": {
+          "A": "7",
+          "B": "13",
+          "C": "1",
+          "D": "0"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120702-c",
+        "type": "precursor",
+        "concept": "Middle term",
+        "question": "What is the remainder when 7^22 is divided by 18?",
+        "options": {
+          "A": "1",
+          "B": "7",
+          "C": "13",
+          "D": "17"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120703",
+    "question_title": "Evaluate u and v from integral",
+    "concept": "Integration by parts",
+    "question": "If ∫ (2e^x + 3e^-x) / (4e^x + 7e^-x) dx = ux + v log(4e^x + 7e^-x) + C, where C is a constant of integration, then u + v is equal to",
+    "options": {
+      "A": "1/2",
+      "B": "1/4",
+      "C": "1",
+      "D": "0"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "86435120703-a",
+        "type": "comfort",
+        "concept": "Integration by parts",
+        "question": "What is the integral of f'(x)/f(x) dx?",
+        "options": {
+          "A": "f(x) + C",
+          "B": "log|f(x)| + C",
+          "C": "1/f(x) + C",
+          "D": "f(x)^2 / 2 + C"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120703-b",
+        "type": "grounding",
+        "concept": "Integration by parts",
+        "question": "If ∫ f'(x)/f(x) dx = log|f(x)| + C, what is ∫ (2x) / (x^2 + 1) dx?",
+        "options": {
+          "A": "x^2 + 1 + C",
+          "B": "log(x^2 + 1) + C",
+          "C": "(x^2 + 1)^2 / 2 + C",
+          "D": "2x / (x^2 + 1)^2 + C"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120703-c",
+        "type": "precursor",
+        "concept": "Integration by parts",
+        "question": "If (2e^x + 3e^-x) = A(4e^x + 7e^-x) + B(4e^x - 7e^-x), then find the value of A.",
+        "options": {
+          "A": "13/28",
+          "B": "1/28",
+          "C": "1/2",
+          "D": "1"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120704",
+    "question_title": "Circles, Common Tangent, Centres",
+    "concept": "Circle",
+    "question": "Two circles, each of radius 5 units, touch each other at a point P. If the equation of their common tangent at P is 4x + 3y = 10, and C1(α, β) and C2(γ, δ) are their centres (C1 ≠ C2), then |(α + β)(γ + δ)| is equal to",
+    "options": {
+      "A": "1",
+      "B": "5",
+      "C": "10",
+      "D": "25"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "86435120704-a",
+        "type": "comfort",
+        "concept": "Circle",
+        "question": "What is the formula for the distance from the center (h,k) of a circle to a tangent line Ax + By + C = 0?",
+        "options": {
+          "A": "|Ah + Bk + C| / √(A^2 + B^2)",
+          "B": "Ah + Bk + C / (A + B)",
+          "C": "Ah + Bk + C",
+          "D": "(Ah + Bk + C)^2 / (A^2 + B^2)"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120704-b",
+        "type": "grounding",
+        "concept": "Circle",
+        "question": "For a circle with radius 5 units, whose centre (h,k) is at a distance of 5 from the common tangent 4x + 3y = 10, what is the value of |4h + 3k - 10|?",
+        "options": {
+          "A": "5",
+          "B": "10",
+          "C": "25",
+          "D": "50"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120704-c",
+        "type": "precursor",
+        "concept": "Circle",
+        "question": "Let P(x_P, y_P) be the point of contact between the two circles. If C1(α,β) and C2(γ,δ) are the centres, express (α + β)(γ + δ) in terms of x_P and y_P.",
+        "options": {
+          "A": "(x_P + y_P)^2 - 49",
+          "B": "x_P + y_P",
+          "C": "2x_P + 2y_P",
+          "D": "(x_P - y_P)^2 + 49"
+        },
+        "answer": "A"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120705",
+    "question_title": "Hyperbola Normals Intersection Point",
+    "concept": "Hyperbola",
+    "question": "Let A (secθ, 2tanθ) and B (secφ, 2tanφ) be two points on the hyperbola 2x^2 - y^2 = 2. If θ + φ = π/2 and (α, β) is the point of the intersection of the normals to the hyperbola at A and B, then (2β)^2 is equal to",
+    "options": {
+      "A": "36",
+      "B": "25",
+      "C": "1",
+      "D": "9"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "86435120705-a",
+        "type": "comfort",
+        "concept": "Hyperbola",
+        "question": "What are the values of a^2 and b^2 for the hyperbola 2x^2 - y^2 = 2?",
+        "options": {
+          "A": "a^2=2, b^2=1",
+          "B": "a^2=1, b^2=2",
+          "C": "a^2=1/2, b^2=1",
+          "D": "a^2=1, b^2=-2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120705-b",
+        "type": "grounding",
+        "concept": "Hyperbola",
+        "question": "Given the hyperbola 2x^2 - y^2 = 2, what is the slope of the normal to the hyperbola at any point (x, y) on the curve?",
+        "options": {
+          "A": "2x/y",
+          "B": "-y/(2x)",
+          "C": "y/(2x)",
+          "D": "-2x/y"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120705-c",
+        "type": "precursor",
+        "concept": "Hyperbola",
+        "question": "What is the equation of the normal to the hyperbola 2x^2 - y^2 = 2 at point A (secθ, 2tanθ)?",
+        "options": {
+          "A": "x secθ + y tanθ = 3",
+          "B": "x cosθ + y cotθ = 3",
+          "C": "x tanθ + y secθ = 3",
+          "D": "x cotθ + y cosθ = 3"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120706",
+    "question_title": "Distance from Mirror Image Point",
+    "concept": "Coordinates in space",
+    "question": "Let S be the mirror image of the point Q(1, 3, 4) with respect to the plane 2x - y + z + 3 = 0. Find the distance between S and the point R(-3, 5, 1).",
+    "options": {
+      "A": "1",
+      "B": "2",
+      "C": "3",
+      "D": "4"
+    },
+    "answer": "A",
+    "sub_questions": [
+      {
+        "sub_id": "86435120706-a",
+        "type": "comfort",
+        "concept": "Coordinates in space",
+        "question": "If S(x_s, y_s, z_s) is the mirror image of a point Q(x_q, y_q, z_q) with respect to the plane Ax + By + Cz + D = 0, which of the following relations is correct?",
+        "options": {
+          "A": "(x_s-x_q)/A = (y_s-y_q)/B = (z_s-z_q)/C = -(Ax_q+By_q+Cz_q+D)/(A^2+B^2+C^2)",
+          "B": "(x_s-x_q)/A = (y_s-y_q)/B = (z_s-z_q)/C = -2(Ax_q+By_q+Cz_q+D)/(A^2+B^2+C^2)",
+          "C": "(x_s-x_q)/A = (y_s-y_q)/B = (z_s-z_q)/C = (Ax_q+By_q+Cz_q+D)/(A^2+B^2+C^2)",
+          "D": "(x_s-x_q)/A = (y_s-y_q)/B = (z_s-z_q)/C = 2(Ax_q+By_q+Cz_q+D)/(A^2+B^2+C^2)"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120706-b",
+        "type": "grounding",
+        "concept": "Coordinates in space",
+        "question": "For the point Q(1, 3, 4) and the plane 2x - y + z + 3 = 0, calculate the value of 2x_q - y_q + z_q + 3.",
+        "options": {
+          "A": "4",
+          "B": "5",
+          "C": "6",
+          "D": "7"
+        },
+        "answer": "C"
+      },
+      {
+        "sub_id": "86435120706-c",
+        "type": "precursor",
+        "concept": "Coordinates in space",
+        "question": "Let S(x_s, y_s, z_s) be the mirror image of point Q(1, 3, 4) with respect to the plane 2x - y + z + 3 = 0. What are the coordinates of S?",
+        "options": {
+          "A": "(-1, 4, 3)",
+          "B": "(-3, 5, 2)",
+          "C": "(1, 3, 4)",
+          "D": "(3, 1, 2)"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120707",
+    "question_title": "Conditional Probability from Distribution",
+    "concept": "Probability distribution",
+    "question": "The probability distribution of random variable X is given by:\nX values: 1, 2, 3, 4, 5\nP(X) values: K, 2K, 2K, 3K, K\nLet p = P(1 < X < 4 | X < 3). If 5p = λK, then find the value of λ.",
+    "options": {
+      "A": "10",
+      "B": "15",
+      "C": "20",
+      "D": "30"
+    },
+    "answer": "D",
+    "sub_questions": [
+      {
+        "sub_id": "86435120707-a",
+        "type": "comfort",
+        "concept": "Probability distribution",
+        "question": "For any discrete probability distribution, what is the sum of the probabilities of all possible outcomes?",
+        "options": {
+          "A": "0",
+          "B": "1",
+          "C": "K",
+          "D": "1/K"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120707-b",
+        "type": "grounding",
+        "concept": "Probability distribution",
+        "question": "Given a probability distribution for X: X=1, P(X)=2K; X=2, P(X)=3K. What is the value of K?",
+        "options": {
+          "A": "1/5",
+          "B": "1/2",
+          "C": "1/3",
+          "D": "1"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120707-c",
+        "type": "precursor",
+        "concept": "Probability distribution",
+        "question": "For the given probability distribution: X values: 1, 2, 3, 4, 5 and P(X) values: K, 2K, 2K, 3K, K. If K = 1/9, what is the value of p = P(1 < X < 4 | X < 3)?",
+        "options": {
+          "A": "1/3",
+          "B": "2/3",
+          "C": "1/2",
+          "D": "3/4"
+        },
+        "answer": "B"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120708",
+    "question_title": "Sum of Trigonometric Equation Solutions",
+    "concept": "Trigonometric identities",
+    "question": "Let S be the sum of all solutions (in radians) of the equation sin^4θ + cos^4θ - sinθ cosθ = 0 in the interval [0, 4π]. Then the value of 8S/π is equal to",
+    "options": {
+      "A": "28",
+      "B": "42",
+      "C": "56",
+      "D": "70"
+    },
+    "answer": "C",
+    "sub_questions": [
+      {
+        "sub_id": "86435120708-a",
+        "type": "comfort",
+        "concept": "Trigonometric identities",
+        "question": "Which of the following is an identity for sin^4θ + cos^4θ?",
+        "options": {
+          "A": "1 - 2sin^2θcos^2θ",
+          "B": "1 + 2sin^2θcos^2θ",
+          "C": "1 - sin^2θcos^2θ",
+          "D": "1 + sin^2θcos^2θ"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120708-b",
+        "type": "grounding",
+        "concept": "Trigonometric identities",
+        "question": "What is the smallest positive value of θ for which sin(2θ) = 1?",
+        "options": {
+          "A": "π/4",
+          "B": "π/2",
+          "C": "π",
+          "D": "3π/4"
+        },
+        "answer": "A"
+      },
+      {
+        "sub_id": "86435120708-c",
+        "type": "precursor",
+        "concept": "Trigonometric identities",
+        "question": "Let S be the sum of all solutions (in radians) of the equation sin^4θ + cos^4θ - sinθ cosθ = 0 in the interval [0, 4π]. What is the value of S?",
+        "options": {
+          "A": "3π",
+          "B": "5π",
+          "C": "7π",
+          "D": "9π"
+        },
+        "answer": "C"
+      }
+    ]
+  },
+  {
+    "question_id": "86435120709",
+    "question_title": "Combined Mean and Variance Calculation",
+    "concept": "Variance",
+    "question": "An online exam is attempted by 50 candidates, out of which 20 are boys. The average marks obtained by boys is 12 with a variance 2. The variance of marks obtained by 30 girls is also 2. If the average marks obtained by 30 girls is 12, and µ and σ^2 are the mean and variance of marks of all 50 candidates, then µ + σ^2 is equal to?",
+    "options": {
+      "A": "13",
+      "B": "14",
+      "C": "15",
+      "D": "16"
+    },
+    "answer": "B",
+    "sub_questions": [
+      {
+        "sub_id": "86435120709-a",
+        "type": "comfort",
+        "concept": "Variance",
+        "question": "If X_bar_1 and X_bar_2 are the means of two groups with N1 and N2 observations respectively, what is the formula for the combined mean µ?",
+        "options": {
+          "A": "µ = (N1 + N2) / (X_bar_1 + X_bar_2)",
+          "B": "µ = (N1 * X_bar_1 + N2 * X_bar_2) / (N1 + N2)",
+          "C": "µ = (N1 * X_bar_1 * N2 * X_bar_2) / (N1 + N2)",
+          "D": "µ = (X_bar_1 + X_bar_2) / 2"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120709-b",
+        "type": "grounding",
+        "concept": "Variance",
+        "question": "What is the total sum of marks obtained by the 20 boys if their average marks is 12?",
+        "options": {
+          "A": "200",
+          "B": "240",
+          "C": "280",
+          "D": "300"
+        },
+        "answer": "B"
+      },
+      {
+        "sub_id": "86435120709-c",
+        "type": "precursor",
+        "concept": "Variance",
+        "question": "Given 20 boys with average marks 12 and 30 girls with average marks 12, what is the average marks (µ) of all 50 candidates?",
+        "options": {
+          "A": "11",
+          "B": "12",
+          "C": "13",
+          "D": "14"
+        },
+        "answer": "B"
+      }
+    ]
+  }
+]

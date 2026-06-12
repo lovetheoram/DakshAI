@@ -1,0 +1,477 @@
+{
+  "exam": {
+    "name": "JEE Main",
+    "subjects": [
+      {
+        "name": "Mathematics",
+        "topics": [
+          {
+            "name": "Algebra & Calculus",
+            "subtopics": [
+              {
+                "name": "Sets, Relations and Functions",
+                "concepts": [
+                  {
+                    "name": "Sets, operations, and power set.",
+                    "description": "Sets and their representation; Union, intersection and complement of sets and their algebraic properties; Power set"
+                  },
+                  {
+                    "name": "Relations and functions",
+                    "description": "Relations, type of relations, equivalence relations, functions; one-one, into and onto functions, the composition of functions"
+                  }
+                ]
+              },
+              {
+                "name": "Complex Numbers and Quadratic Equations",
+                "concepts": [
+                  {
+                    "name": "Complex numbers and Argand diagram",
+                    "description": "Complex numbers as ordered pairs of reals, Representation of complex numbers in the form a+ib, Argand diagram, algebra of complex numbers, modulus and argument"
+                  },
+                  {
+                    "name": "Quadratic equations and roots",
+                    "description": "Quadratic equations in real and complex number systems and their solutions; Relations between roots and coefficients, nature of roots, the formation of quadratic equations with given roots"
+                  }
+                ]
+              },
+              {
+                "name": "Matrices and Determinants",
+                "concepts": [
+                  {
+                    "name": "Matrix algebra and determinants",
+                    "description": "Matrices, algebra of matrices, type of matrices, determinants and matrices of order two and three, evaluation of determinants, area of triangles using determinants"
+                  },
+                  {
+                    "name": "Matrix inverse and linear equations",
+                    "description": "Adjoint and inverse of a square matrix; Test of consistency and solution of simultaneous linear equations in two or three variables using matrices"
+                  }
+                ]
+              },
+              {
+                "name": "Permutations, Combinations & Binomial Theorem",
+                "concepts": [
+                  {
+                    "name": "Counting, permutations and combinations",
+                    "description": "The fundamental principle of counting, permutations and combinations; Meaning of P(n,r) and C(n,r). Simple applications"
+                  },
+                  {
+                    "name": "Binomial theorem and applications",
+                    "description": "Binomial theorem for a positive integral index, general term and middle term and simple applications"
+                  }
+                ]
+              },
+              {
+                "name": "Sequence and Series",
+                "concepts": [
+                  {
+                    "name": "Arithmetic and geometric progressions",
+                    "description": "Arithmetic and Geometric progressions, insertion of arithmetic, geometric means between two given numbers, Relation between A.M and G.M"
+                  }
+                ]
+              },
+              {
+                "name": "Limit, Continuity and Differentiability",
+                "concepts": [
+                  {
+                    "name": "Function types and graphs",
+                    "description": "Real-valued functions, algebra of functions (polynomial, rational, trigonometric, logarithmic and exponential functions); inverse functions. Graphs of simple functions"
+                  },
+                  {
+                    "name": "Limits, continuity, differentiation rules",
+                    "description": "Limits, continuity and differentiability. Differentiation of the sum, difference, product and quotient of two functions"
+                  },
+                  {
+                    "name": "Advanced differentiation techniques",
+                    "description": "Differentiation of trigonometric, inverse trigonometric, logarithmic, exponential, composite and implicit functions; derivatives of order upto two"
+                  },
+                  {
+                    "name": "Applications of derivatives",
+                    "description": "Rate of change of quantities, monotonic-Increasing and decreasing functions, Maxima and minima of functions of one variable"
+                  }
+                ]
+              },
+              {
+                "name": "Integral Calculus & Differential Equations",
+                "concepts": [
+                  {
+                    "name": "Integration techniques",
+                    "description": "Integral as an anti-derivative, Fundamental integrals involving algebraic, trigonometric, exponential and logarithmic functions. Integration by substitution, by parts and by partial fractions. Integration using trigonometric identities. Evaluation of simple integrals"
+                  },
+                  {
+                    "name": "Definite integrals and areas",
+                    "description": "The fundamental theorem of calculus, properties of definite integrals. Evaluation of definite integrals, determining areas of the regions bounded by simple curves"
+                  },
+                  {
+                    "name": "Ordinary differential equations",
+                    "description": "Ordinary differential equations, their order and degree, the solution of differential equation by the method of separation of variables, solution of a homogeneous and linear differential equation of the type dy/dx + p(x)y = q(x)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Coordinate Geometry, Vectors, Statistics & Trigonometry",
+            "subtopics": [
+              {
+                "name": "Two-Dimensional Coordinate Geometry",
+                "concepts": [
+                  {
+                    "name": "Coordinate system and lines",
+                    "description": "Cartesian system of rectangular coordinates, distance formula, sections formula, locus and its equation, the slope of a line, parallel and perpendicular lines, intercepts of a line on the co-ordinate axis"
+                  },
+                  {
+                    "name": "Straight line equations and angles",
+                    "description": "Various forms of equations of a line, intersection of lines, angles between two lines, conditions for concurrence of three lines, the distance of a point from a line"
+                  },
+                  {
+                    "name": "Triangle centers",
+                    "description": "Co-ordinate of the centroid, orthocentre and circumcentre of a triangle"
+                  },
+                  {
+                    "name": "Circle and conic sections",
+                    "description": "Circle, conic sections: Standard form of equations of a circle, general equation, radius and centre, equation with endpoints of diameter"
+                  },
+                  {
+                    "name": "Equations of parabola, ellipse and hyperbola",
+                    "description": "Equations of conic sections in standard forms"
+                  }
+                ]
+              },
+              {
+                "name": "Three-Dimensional Geometry and Vector Algebra",
+                "concepts": [
+                  {
+                    "name": "3D coordinates and lines",
+                    "description": "Coordinates of a point in space, distance between points, section formula, direction ratios and cosines, angle between intersecting lines"
+                  },
+                  {
+                    "name": "Line equations and skew lines",
+                    "description": "Equation of a line; Skew lines, shortest distance and its equation"
+                  },
+                  {
+                    "name": "Vectors and operations",
+                    "description": "Vectors and scalars, addition, components in 2D and 3D, scalar and vector products"
+                  }
+                ]
+              },
+              {
+                "name": "Statistics, Probability and Trigonometry",
+                "concepts": [
+                  {
+                    "name": "Dispersion measures",
+                    "description": "Calculation of mean, median, mode, standard deviation, variance, mean deviation for grouped and ungrouped data"
+                  },
+                  {
+                    "name": "Probability",
+                    "description": "Probability of an event, addition and multiplication theorems, Baye's theorem, probability distribution of a random variable"
+                  },
+                  {
+                    "name": "Trigonometric functions and identities",
+                    "description": "Trigonometrical identities and functions, inverse trig functions and their properties"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      
+    {
+      "name": "Physics",
+      "topics": [
+        {
+          "name": "Mechanics",
+          "subtopics": [
+            {
+              "name": "Units, Kinematics and Laws of Motion",
+              "concepts": [
+                {
+                  "name": "Units, dimensions and errors",
+                  "description": "Units of measurements, SI Units, least count, significant figures, Errors, Dimensions of Physics quantities, dimensional analysis and its applications"
+                },
+                {
+                  "name": "Motion in one dimension",
+                  "description": "The frame of reference, motion in a straight line, speed and velocity, uniformly accelerated motion, graphs, relative velocity"
+                },
+                {
+                  "name": "Motion in two dimensions",
+                  "description": "Motion in a plane, projectile motion, uniform circular motion"
+                },
+                {
+                  "name": "Newton’s laws of motion",
+                  "description": "Force, inertia, Newton's Laws, momentum, impulse, conservation of linear momentum, equilibrium of concurrent forces"
+                },
+                {
+                  "name": "Friction and circular motion",
+                  "description": "Static and Kinetic friction, laws of friction, rolling friction, centripetal force and its applications"
+                }
+              ]
+            },
+            {
+              "name": "Work, Energy and Rotational Motion",
+              "concepts": [
+                {
+                  "name": "Work and energy",
+                  "description": "Work done by constant and variable force, kinetic and potential energy, work-energy theorem, power"
+                },
+                {
+                  "name": "Energy conservation and collisions",
+                  "description": "Conservation of mechanical energy, motion in a vertical circle, elastic and inelastic collisions"
+                },
+                {
+                  "name": "Rotational dynamics",
+                  "description": "Centre of mass, torque, angular momentum, conservation of angular momentum"
+                },
+                {
+                  "name": "Moment of inertia",
+                  "description": "Moment of inertia, radius of gyration, parallel and perpendicular axis theorems, rotational motion equations"
+                }
+              ]
+            },
+            {
+              "name": "Gravitation",
+              "concepts": [
+                {
+                  "name": "Gravitational laws",
+                  "description": "Universal law of gravitation, acceleration due to gravity and its variation with altitude and depth"
+                },
+                {
+                  "name": "Planetary motion",
+                  "description": "Kepler's laws of planetary motion, gravitational potential and potential energy"
+                },
+                {
+                  "name": "Satellites and escape velocity",
+                  "description": "Escape velocity, orbital velocity, time period and energy of satellites"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Thermal Physics and Waves",
+          "subtopics": [
+            {
+              "name": "Thermodynamics and Properties of Matter",
+              "concepts": [
+                {
+                  "name": "Elastic properties",
+                  "description": "Stress-strain relationship, Hooke’s law, Young’s modulus, bulk modulus and rigidity modulus"
+                },
+                {
+                  "name": "Fluid mechanics",
+                  "description": "Pressure, Pascal’s law, viscosity, Stoke’s law, Bernoulli’s principle and applications"
+                },
+                {
+                  "name": "Surface tension",
+                  "description": "Surface energy, surface tension, angle of contact, excess pressure, capillary rise"
+                },
+                {
+                  "name": "Heat and calorimetry",
+                  "description": "Heat, temperature, thermal expansion, specific heat, latent heat, heat transfer"
+                },
+                {
+                  "name": "Thermodynamics laws",
+                  "description": "Zeroth, First and Second laws of thermodynamics, isothermal and adiabatic processes"
+                }
+              ]
+            },
+            {
+              "name": "Oscillations and Waves",
+              "concepts": [
+                {
+                  "name": "Kinetic theory of gases",
+                  "description": "Equation of state, RMS speed, degrees of freedom, equipartition of energy, mean free path"
+                },
+                {
+                  "name": "Simple harmonic motion",
+                  "description": "SHM equations, energy, spring systems, simple pendulum"
+                },
+                {
+                  "name": "Wave motion",
+                  "description": "Wave motion, superposition, standing waves, beats, harmonics"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Electromagnetism and Modern Physics",
+          "subtopics": [
+            {
+              "name": "Electrostatics and Current Electricity",
+              "concepts": [
+                {
+                  "name": "Electric charges and fields",
+                  "description": "Coulomb’s law, electric field, electric dipole, field lines"
+                },
+                {
+                  "name": "Gauss’s law",
+                  "description": "Electric flux, Gauss’s law and applications"
+                },
+                {
+                  "name": "Electric potential and capacitors",
+                  "description": "Electric potential, equipotential surfaces, capacitors, dielectrics, energy stored"
+                },
+                {
+                  "name": "Current electricity",
+                  "description": "Ohm’s law, resistivity, drift velocity, Kirchhoff’s laws, Wheatstone bridge"
+                }
+              ]
+            },
+            {
+              "name": "Magnetism, EMI and AC",
+              "concepts": [
+                {
+                  "name": "Magnetic effects of current",
+                  "description": "Biot–Savart law, Ampere’s law, magnetic force"
+                },
+                {
+                  "name": "Electromagnetic induction",
+                  "description": "Faraday’s laws, Lenz’s law, inductance, eddy currents"
+                },
+                {
+                  "name": "Alternating current",
+                  "description": "AC circuits, RMS values, LCR circuits, resonance, transformers"
+                },
+                {
+                  "name": "Electromagnetic waves",
+                  "description": "Displacement current, EM waves, EM spectrum and applications"
+                }
+              ]
+            },
+            {
+              "name": "Optics and Modern Physics",
+              "concepts": [
+                {
+                  "name": "Ray optics",
+                  "description": "Reflection, refraction, mirrors, lenses, optical instruments"
+                },
+                {
+                  "name": "Wave optics",
+                  "description": "Interference, diffraction, polarization, Young’s double slit experiment"
+                },
+                {
+                  "name": "Dual nature and atoms",
+                  "description": "Photoelectric effect, de Broglie waves, Bohr model, atomic spectra"
+                },
+                {
+                  "name": "Nuclear physics and semiconductors",
+                  "description": "Nuclear reactions, binding energy, fission, fusion, semiconductor devices and logic gates"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chemistry",
+      "topics": [
+        {
+          "name": "Physical Chemistry",
+          "subtopics": [
+            {
+              "name": "Basic Concepts and Atomic Structure",
+              "concepts": [
+                {
+                  "name": "Stoichiometry and mole concept",
+                  "description": "Laws of chemical combination, mole concept, empirical and molecular formulae, stoichiometry"
+                },
+                {
+                  "name": "Atomic models",
+                  "description": "Bohr model, photoelectric effect, de Broglie relation, uncertainty principle"
+                },
+                {
+                  "name": "Quantum mechanical model",
+                  "description": "Orbitals, quantum numbers, electronic configuration, Aufbau, Pauli and Hund rules"
+                }
+              ]
+            },
+            {
+              "name": "Chemical Bonding and Thermodynamics",
+              "concepts": [
+                {
+                  "name": "Chemical bonding theories",
+                  "description": "Ionic, covalent bonding, VSEPR, hybridization, MOT, hydrogen bonding"
+                },
+                {
+                  "name": "Thermodynamics",
+                  "description": "First and Second laws, enthalpy, entropy, Gibbs free energy and equilibrium"
+                }
+              ]
+            },
+            {
+              "name": "Equilibrium, Electrochemistry and Kinetics",
+              "concepts": [
+                {
+                  "name": "Chemical and ionic equilibrium",
+                  "description": "Law of equilibrium, Le Chatelier’s principle, pH, buffers, solubility product"
+                },
+                {
+                  "name": "Electrochemistry",
+                  "description": "Electrochemical cells, Nernst equation, electrode potential"
+                },
+                {
+                  "name": "Chemical kinetics",
+                  "description": "Reaction rate, order, rate law, Arrhenius equation"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Inorganic Chemistry",
+          "subtopics": [
+            {
+              "name": "Periodic Table and Coordination Chemistry",
+              "concepts": [
+                {
+                  "name": "Periodic trends",
+                  "description": "Periodic law, trends in atomic size, ionization energy and reactivity"
+                },
+                {
+                  "name": "Coordination compounds",
+                  "description": "Werner’s theory, isomerism, bonding theories, magnetic and colour properties"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Organic Chemistry",
+          "subtopics": [
+            {
+              "name": "General Organic Chemistry",
+              "concepts": [
+                {
+                  "name": "Structural concepts",
+                  "description": "Hybridization, isomerism, nomenclature, reaction mechanisms"
+                },
+                {
+                  "name": "Reaction intermediates",
+                  "description": "Carbocations, free radicals, nucleophiles and electrophiles"
+                }
+              ]
+            },
+            {
+              "name": "Hydrocarbons and Functional Groups",
+              "concepts": [
+                {
+                  "name": "Hydrocarbons",
+                  "description": "Alkanes, alkenes, alkynes and aromatic compounds"
+                },
+                {
+                  "name": "Functional groups",
+                  "description": "Alcohols, aldehydes, ketones, acids, amines and biomolecules"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  
+
+    ]
+  }
+}

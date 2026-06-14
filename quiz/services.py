@@ -393,10 +393,11 @@ class QuizService:
                 if sub_questions:
                     SubQuestion.objects.bulk_create(sub_questions)
 
-                yield f"data: {json.dumps({
+                q_data = json.dumps({
                     'type': 'question',
                     'question': QuestionSerializer(question).data
-                })}\n\n".encode("utf-8")
+                })
+                yield f"data: {q_data}\n\n".encode("utf-8")
 
         except GeneratorExit:
             return  # client disconnected safely
@@ -407,11 +408,12 @@ class QuizService:
         )
         session.questions.set(questions)
 
-        yield f"data: {json.dumps({
+        done_data = json.dumps({
             'type': 'done',
             'session_id': session.id,
             'total_questions': len(questions)
-        })}\n\n".encode("utf-8")
+        })
+        yield f"data: {done_data}\n\n".encode("utf-8")
 
 
 

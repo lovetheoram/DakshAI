@@ -159,3 +159,45 @@ class GrowthOSTests(APITestCase):
         self.assertEqual(data["today_compliance"], 90.0)
         # growth_streak should be 2, because today and yesterday compliance are >= 80%, but day_before is 50%
         self.assertEqual(data["growth_streak"], 2)
+
+    def test_caching_and_invalidation(self):
+        from django.core.cache import cache
+        cache.clear()
+        
+        today = timezone.localdate()
+        # Set up a fake DailyTarget for today
+        DailyTarget.objects.create(user=self.user, date=today, target_growth=1.0, completed_growth=0.9)
+        
+        url_stats = reverse("streak-stats")
+        url_dash = reverse("dashboard")
+        
+        # 1. Fetch first time (cache miss, should populate cache)
+        response1 = self.client.get(url_stats)
+        self.assertEqual(response1.status_code, 200)
+        self.assertEqual(response1.data["today_compliance"], 90.0)
+        
+        # Verify cached value exists
+        cache_key = f"streak_stats_user_{self.user.id}"
+        self.assertIsNotNone(cache.get(cache_key))
+        
+        # Modify the target directly in DB (without calling endpoints)
+        DailyTarget.objects.filter(user=self.user, date=today).update(completed_growth=0.95)
+        
+        # 2. Fetch second time (should hit cache and return old value, 90.0)
+        response2 = self.client.get(url_stats)
+        self.assertEqual(response2.data["today_compliance"], 90.0)
+        
+        # 3. Call a modifying endpoint, e.g., logging revision, which should invalidate cache
+        url_revision = reverse("daily-target-revision")
+        response_rev = self.client.get(url_dash) # access dashboard to cache it too
+        self.assertEqual(response_rev.status_code, 200)
+        
+        self.assertIsNotNone(cache.get(f"dashboard_data_user_{self.user.id}"))
+        
+        # Post revision time (logs 10 mins)
+        response_post = self.client.post(url_revision, {"minutes": 10})
+        self.assertEqual(response_post.status_code, 200)
+        
+        # Cache should now be invalidated/None
+        self.assertIsNone(cache.get(cache_key))
+        self.assertIsNone(cache.get(f"dashboard_data_user_{self.user.id}"))

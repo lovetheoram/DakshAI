@@ -29,11 +29,19 @@ SECRET_KEY = 'django-insecure-odia3xy&=g)5cx_e*-q5qq9$+cycyw!ji)+*^y2ws#gp@=g7yl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'dakshai.onrender.com',  
+    'localhost',      
+    '127.0.0.1',      
+]
 # "https://<social_pythonanywhere_username>.pythonanywhere.com/api/"
 
 # Application definition
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://dakshaii.netlify.app"
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

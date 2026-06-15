@@ -1,9 +1,9 @@
 # registry.py
 
-from .engines.jee_engine import JeeQuestionEngine
-from .engines.placement_engine import PlacementQuestionEngine
+from ..engines.jee_axis_engine import AxisEngine as JeeQuestionEngine
+from ..engines.placement_axis_engine import PlacementAxisEngine as PlacementQuestionEngine
 
 QUESTION_ENGINE_REGISTRY = {
-    "jee": JeeQuestionEngine(),
-    "placement": PlacementQuestionEngine(),
+    "jee": JeeQuestionEngine,
+    "placement": PlacementQuestionEngine,
 }

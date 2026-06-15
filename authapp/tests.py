@@ -96,7 +96,7 @@ class FullAppAPIIntegrationTestCase(APITestCase):
             "username": "newuser",
             "email": "newuser@example.com",
             "password": "password123",
-            "exam_id": self.exam.id
+            "exam_type": self.exam.exam_type
         })
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("user", response.data)

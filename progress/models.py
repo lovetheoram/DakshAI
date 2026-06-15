@@ -71,7 +71,7 @@ class ProgressRecord(models.Model):
     sub_correct = models.IntegerField(default=0)
     sub_total = models.IntegerField(default=0)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     class Meta:
         unique_together = ("user", "concept", "quiz_session")

@@ -6,19 +6,23 @@ from .models import UserProfile
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    exam_id= serializers.IntegerField()
+    exam_type = serializers.CharField()
     class Meta:
         model = User
-        fields = ["username", "email", "password", "exam_id"]
+        fields = ["username", "email", "password", "exam_type"]
 
     def create(self, validated_data):
-        exam_id = validated_data.pop("exam_id")
+        exam_type = validated_data.pop("exam_type")
         user = User.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"],
         )
-        user.profile.selected_exam_id=exam_id
+        exam = Exam.objects.filter(exam_type=exam_type).first()
+        if exam:
+            user.profile.selected_exam = exam
+        else:
+            user.profile.selected_exam = Exam.objects.first()
         user.profile.save()
         return user
 
@@ -63,5 +67,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         return {
             "id": profile.selected_exam.id,
-            "name": profile.selected_exam.name
+            "name": profile.selected_exam.name,
+            "exam_type": profile.selected_exam.exam_type
         }

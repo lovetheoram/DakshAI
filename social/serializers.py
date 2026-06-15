@@ -36,6 +36,8 @@ from authapp.models import UserProfile
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserMiniSerializer(read_only=True)
+    followers_count = serializers.SerializerMethodField()
+    following_count = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -43,7 +45,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "user",
             "bio",
             "avatar",
+            "followers_count",
+            "following_count",
         ]
+
+    def get_followers_count(self, obj):
+        return obj.user.followers.count()
+
+    def get_following_count(self, obj):
+        return obj.user.following.count()
 
 # ---------------------------------------------------------
 # COMMENT SERIALIZER

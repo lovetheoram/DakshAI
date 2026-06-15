@@ -203,7 +203,7 @@ from django.db import transaction
 
 from quiz.models import Question
 
-from engines.placement_axis_engine import (
+from ..engines.placement_axis_engine import (
     PlacementAxisEngine,
     PlacementState
 )

@@ -95,3 +95,16 @@ class Concept(models.Model):
 
     def __str__(self):
         return self.name
+
+
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.core.cache import cache
+
+@receiver([post_save, post_delete], sender=Exam)
+@receiver([post_save, post_delete], sender=Subject)
+@receiver([post_save, post_delete], sender=Topic)
+@receiver([post_save, post_delete], sender=Subtopic)
+@receiver([post_save, post_delete], sender=Concept)
+def clear_syllabus_cache(sender, **kwargs):
+    cache.clear()

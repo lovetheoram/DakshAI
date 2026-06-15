@@ -51,5 +51,4 @@ class ProgressRecordSerializer(serializers.ModelSerializer):
         # Get all quiz answers for this progress record's session
         session = obj.quiz_session
         answers = QuizAnswer.objects.filter(session=session)
-        from .serializers import QuizAnswerReviewSerializer
         return QuizAnswerReviewSerializer(answers, many=True).data

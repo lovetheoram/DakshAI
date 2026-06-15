@@ -210,7 +210,7 @@ from django.db import transaction
 
 from quiz.models import Question
 
-from engines.jee_axis_engine import (
+from ..engines.jee_axis_engine import (
     AxisEngine,
     GenerationState
 )

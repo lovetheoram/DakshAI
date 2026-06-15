@@ -216,68 +216,33 @@ MEDIA_ROOT = BASE_DIR / "media"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 REDIS_URL=os.environ.get("REDIS_URL")
 # Caching Configuration
-# USE_CACHING = os.environ.get('USE_CACHING', 'False').lower() in ('true', '1', 't')
 USE_CACHING = True
 if USE_CACHING:
-    # On Render, use the internal REDIS_URL.
-    # Locally, use REDIS_EXTERNAL_URL if set, otherwise fallback to REDIS_URL.
     if os.environ.get('RENDER'):
+        # On Render server, use the internal REDIS_URL for RedisCache
         REDIS_URL = os.environ.get('REDIS_URL')
-    else:
-        REDIS_URL = os.environ.get('REDIS_EXTERNAL_URL') or os.environ.get('REDIS_URL')
-    
-    # Validate Redis URL format
-    is_valid_redis_url = False
-    if REDIS_URL:
-        for scheme in ("redis://", "rediss://", "unix://"):
-            if REDIS_URL.startswith(scheme):
-                is_valid_redis_url = True
-                break
-                
-        if is_valid_redis_url:
-            try:
-                parsed_redis = urlparse.urlparse(REDIS_URL)
-                redis_host = parsed_redis.hostname
-                # If running locally and hostname is a bare Render internal name (no dots), bypass it
-                if redis_host and "." not in redis_host and not os.environ.get('RENDER'):
-                    is_valid_redis_url = False
-            except Exception:
-                is_valid_redis_url = False
-                
-    if is_valid_redis_url:
-        CACHES = {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-                'LOCATION': REDIS_URL,
-            }
-        }
-    else:
-        # Check if local Redis server is active on 6379
-        local_redis_active = False
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(0.5)
-            s.connect(("127.0.0.1", 6379))
-            s.close()
-            local_redis_active = True
-        except Exception:
-            pass
-            
-        if local_redis_active:
+        if REDIS_URL:
             CACHES = {
                 'default': {
                     'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-                    'LOCATION': 'redis://127.0.0.1:6379',
+                    'LOCATION': REDIS_URL,
                 }
             }
         else:
-            # Fallback to local memory cache for local development/testing when REDIS_URL is not set or invalid
             CACHES = {
                 'default': {
                     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'unique-snowflake',
+                    'LOCATION': 'render-locmem-fallback',
                 }
             }
+    else:
+        # Locally, always use local memory cache (LocMemCache) to avoid slow external connections or timeouts
+        CACHES = {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'local-memory-cache',
+            }
+        }
 else:
     # DummyCache acts as a pass-through (noop) cache
     CACHES = {

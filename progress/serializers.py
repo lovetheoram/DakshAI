@@ -52,3 +52,39 @@ class ProgressRecordSerializer(serializers.ModelSerializer):
         session = obj.quiz_session
         answers = QuizAnswer.objects.filter(session=session)
         return QuizAnswerReviewSerializer(answers, many=True).data
+
+
+from .models import UserGoal, DailyTarget, DailyDiaryEntry
+
+class UserGoalSerializer(serializers.ModelSerializer):
+    exam_name = serializers.CharField(source="exam.name", read_only=True)
+
+    class Meta:
+        model = UserGoal
+        fields = [
+            "id", "user", "exam", "exam_name", "goal_name",
+            "target_date", "available_hours_per_day", "created_at", "updated_at"
+        ]
+        read_only_fields = ["user", "created_at", "updated_at"]
+
+
+class DailyTargetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyTarget
+        fields = [
+            "id", "user", "date", "target_growth", "completed_growth", "is_completed"
+        ]
+        read_only_fields = ["user", "date", "is_completed"]
+
+
+class DailyDiaryEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyDiaryEntry
+        fields = [
+            "id", "user", "date", "concepts_attempted", "concepts_completed",
+            "questions_solved", "questions_correct", "time_spent_seconds",
+            "revision_count", "energy_score", "focus_score", "mood",
+            "knowledge_gain", "accuracy", "daily_growth_percentage"
+        ]
+        read_only_fields = ["user", "date"]
+

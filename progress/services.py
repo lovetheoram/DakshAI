@@ -1,7 +1,10 @@
 from django.utils import timezone
-from .models import ConceptProgress, ProgressRecord, SubtopicProgress
+from django.db import models
+from django.db.models import Sum
+from django.core.cache import cache
+from .models import ConceptProgress, ProgressRecord, SubtopicProgress, UserGoal, DailyTarget, DailyDiaryEntry
 from quiz.models import QuizSession, QuizAnswer
-from syllabus.models import Concept
+from syllabus.models import Concept, Exam
 
 
 class ProgressService:
@@ -21,7 +24,7 @@ class ProgressService:
         """
         Updates ConceptProgress for both exam readiness (main questions)
         and chapter understanding (sub-questions), creates ProgressRecord,
-        and updates SubtopicProgress based on concepts.
+        updates SubtopicProgress based on concepts, and overlay mathematical growth metrics.
         """
         # for simplicity, assume quiz session covers one concept
         concept = session.questions.first().concept
@@ -39,6 +42,9 @@ class ProgressService:
         # compute scores 0..1
         exam_score = main_correct / main_total if main_total else 0
         chapter_score = sub_correct / sub_total if sub_total else 0
+
+        # save old exam readiness to calculate growth delta
+        old_readiness = cp.exam_readiness
 
         # smoothing with alpha
         alpha = 0.35
@@ -62,47 +68,160 @@ class ProgressService:
         )
 
         # update subtopic efficiency
-        print(user,"    .............  ",concept)
         SubtopicProgressService.update_from_concept(user, concept)
+
+        # ----------------------------------------------------
+        # Behavioral Growth OS Mathematical Engine
+        # ----------------------------------------------------
+        today = timezone.localdate()
+        target = ProgressService.generate_daily_target_for_today(user, date=today)
+        diary_entry, _ = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
+
+        # calculate delta growth
+        new_readiness = cp.exam_readiness
+        delta_readiness = max(0.0, new_readiness - old_readiness)
+
+        exam = concept.subtopic.topic.subject.exam
+        total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=exam).count()
+
+        if total_concepts > 0:
+            growth_increment = round((delta_readiness / total_concepts) * 100.0, 4)
+        else:
+            growth_increment = 0.0
+
+        # update diary telemetry
+        if not diary_entry.concepts_attempted:
+            diary_entry.concepts_attempted = []
+        if concept.id not in diary_entry.concepts_attempted:
+            diary_entry.concepts_attempted.append(concept.id)
+
+        if old_readiness < 0.7 and new_readiness >= 0.7:
+            if not diary_entry.concepts_completed:
+                diary_entry.concepts_completed = []
+            if concept.id not in diary_entry.concepts_completed:
+                diary_entry.concepts_completed.append(concept.id)
+
+        diary_entry.questions_solved += (main_total + sub_total)
+        diary_entry.questions_correct += (main_correct + sub_correct)
+        diary_entry.time_spent_seconds += session.duration_seconds or 0
+        if diary_entry.questions_solved > 0:
+            diary_entry.accuracy = round(diary_entry.questions_correct / diary_entry.questions_solved, 4)
+        else:
+            diary_entry.accuracy = 0.0
+
+        # track knowledge gain by subject
+        subject_name = concept.subtopic.topic.subject.name
+        if not diary_entry.knowledge_gain:
+            diary_entry.knowledge_gain = {}
+        diary_entry.knowledge_gain[subject_name] = diary_entry.knowledge_gain.get(subject_name, 0) + 1
+
+        diary_entry.save()
+
+        # Update DailyTarget
+        target.completed_growth = round(target.completed_growth + growth_increment, 4)
+        if target.target_growth > 0:
+            if target.completed_growth >= target.target_growth:
+                target.is_completed = True
+            else:
+                target.is_completed = False
+        else:
+            target.is_completed = True
+        target.save()
+
+        # Sync diary's growth percentage with the completed growth
+        diary_entry.daily_growth_percentage = target.completed_growth
+        diary_entry.save()
+
+        # Invalidate dashboard and streak stats cache
+        cache.delete(f"dashboard_data_user_{user.id}")
+        cache.delete(f"streak_stats_user_{user.id}")
 
         return cp
 
+    @staticmethod
+    def generate_daily_target_for_today(user, date=None):
+        if date is None:
+            date = timezone.localdate()
 
-# class SubtopicProgressService:
+        target, created = DailyTarget.objects.get_or_create(user=user, date=date)
+        if not created:
+            return target
 
-#     @staticmethod
-#     def update_from_concept(user, concept: Concept):
-#         """
-#         Recalculate subtopic efficiency whenever a concept changes.
-#         """
-#         subtopic = concept.subtopic
-#         concept_progresses = ConceptProgress.objects.filter(
-#             user=user,
-#             concept__subtopic=subtopic
-#         )
+        goal = UserGoal.objects.filter(user=user).first()
+        if not goal:
+            # default fallback if no goal is set
+            target.target_growth = 0.83
+            target.save()
+            return target
 
-#         if not concept_progresses.exists():
-#             return None
+        remaining_days = (goal.target_date - date).days
+        if remaining_days <= 0:
+            remaining_days = 1
 
-#         total_weight = 0
-#         weighted_score = 0
-#         for cp in concept_progresses:
-#             weight = 1.0  # can adjust later if concepts have weights
-#             weighted_score += cp.chapter_understanding * weight
-#             total_weight += weight
+        # calculate current readiness across all concepts in the goal's exam
+        total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
+        if total_concepts > 0:
+            progress_sum = ConceptProgress.objects.filter(
+                user=user,
+                concept__subtopic__topic__subject__exam=goal.exam
+            ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
+            current_daksh = (progress_sum / total_concepts) * 100.0
+        else:
+            current_daksh = 0.0
 
-#         raw_efficiency = weighted_score / total_weight if total_weight else 0
+        remaining_growth = max(0.0, 100.0 - current_daksh)
+        required_growth = round(remaining_growth / remaining_days, 4)
 
-#         sp, _ = SubtopicProgress.objects.get_or_create(user=user, subtopic=subtopic)
+        if remaining_growth > 0:
+            target.target_growth = max(0.1, required_growth)
+        else:
+            target.target_growth = 0.0
 
-#         # smoothing
-#         alpha = 0.3
-#         sp.efficiency = round(sp.efficiency * (1 - alpha) + raw_efficiency * alpha, 4)
-#         sp.last_updated = timezone.now()
-#         sp.save()
+        target.save()
+        return target
 
-#         return sp
-    
+    @staticmethod
+    def get_prediction_days(user, date=None, current_daksh=None):
+        if date is None:
+            date = timezone.localdate()
+
+        goal = UserGoal.objects.filter(user=user).first()
+        if not goal:
+            return 0, 0.83
+
+        if current_daksh is None:
+            total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
+            if total_concepts > 0:
+                progress_sum = ConceptProgress.objects.filter(
+                    user=user,
+                    concept__subtopic__topic__subject__exam=goal.exam
+                ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
+                current_daksh = (progress_sum / total_concepts) * 100.0
+            else:
+                current_daksh = 0.0
+
+        remaining_growth = max(0.0, 100.0 - current_daksh)
+
+        # average growth based on last 7 diary entries with growth > 0
+        recent_entries = DailyDiaryEntry.objects.filter(user=user, daily_growth_percentage__gt=0.0).order_by('-date')[:7]
+        growths = [e.daily_growth_percentage for e in recent_entries]
+
+        if growths:
+            avg_growth = sum(growths) / len(growths)
+        else:
+            remaining_days = (goal.target_date - date).days
+            if remaining_days > 0:
+                avg_growth = remaining_growth / remaining_days
+            else:
+                avg_growth = 0.83
+
+        if avg_growth <= 0:
+            avg_growth = 0.83
+
+        predicted_remaining_days = int(round(remaining_growth / avg_growth))
+        return predicted_remaining_days, round(avg_growth, 4)
+
+
 class SubtopicProgressService:
 
     @staticmethod
@@ -163,6 +282,3 @@ class SubtopicProgressService:
         sp.save()
 
         return sp
-
-
-

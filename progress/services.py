@@ -10,6 +10,37 @@ from syllabus.models import Concept, Exam
 class ProgressService:
 
     @staticmethod
+    def get_exam_concept_ids(exam_id):
+        cache_key = f"exam_{exam_id}_concept_ids"
+        concept_ids = cache.get(cache_key)
+        if concept_ids is None:
+            concept_ids = list(Concept.objects.filter(
+                subtopic__topic__subject__exam_id=exam_id
+            ).values_list("id", flat=True))
+            cache.set(cache_key, concept_ids, timeout=86400)
+        return concept_ids
+
+    @staticmethod
+    def get_user_daksh_score(user, exam):
+        cache_key = f"user_{user.id}_exam_{exam.id}_daksh_score"
+        daksh_score = cache.get(cache_key)
+        if daksh_score is None:
+            concept_ids = ProgressService.get_exam_concept_ids(exam.id)
+            total_concepts = len(concept_ids)
+            if total_concepts > 0:
+                progress_sum = ConceptProgress.objects.filter(
+                    user=user,
+                    concept_id__in=concept_ids
+                ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
+                daksh_score = round((progress_sum / total_concepts) * 100.0, 4)
+            else:
+                daksh_score = 0.0
+            cache.set(cache_key, daksh_score, timeout=None)
+        else:
+            daksh_score = float(daksh_score)
+        return daksh_score
+
+    @staticmethod
     def get_or_create_concept_progress(user, concept):
         cp, _ = ConceptProgress.objects.get_or_create(user=user, concept=concept)
         return cp
@@ -82,7 +113,8 @@ class ProgressService:
         delta_readiness = max(0.0, new_readiness - old_readiness)
 
         exam = concept.subtopic.topic.subject.exam
-        total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=exam).count()
+        concept_ids = ProgressService.get_exam_concept_ids(exam.id)
+        total_concepts = len(concept_ids)
 
         if total_concepts > 0:
             growth_increment = round((delta_readiness / total_concepts) * 100.0, 4)
@@ -132,6 +164,13 @@ class ProgressService:
         diary_entry.daily_growth_percentage = target.completed_growth
         diary_entry.save()
 
+        # Increment cached daksh score in-memory
+        daksh_cache_key = f"user_{user.id}_exam_{exam.id}_daksh_score"
+        current_daksh = cache.get(daksh_cache_key)
+        if current_daksh is not None:
+            new_daksh = round(min(100.0, float(current_daksh) + growth_increment), 4)
+            cache.set(daksh_cache_key, new_daksh, timeout=None)
+
         # Invalidate dashboard and streak stats cache
         cache.delete(f"dashboard_data_user_{user.id}")
         cache.delete(f"streak_stats_user_{user.id}")
@@ -159,15 +198,7 @@ class ProgressService:
             remaining_days = 1
 
         # calculate current readiness across all concepts in the goal's exam
-        total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
-        if total_concepts > 0:
-            progress_sum = ConceptProgress.objects.filter(
-                user=user,
-                concept__subtopic__topic__subject__exam=goal.exam
-            ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
-            current_daksh = (progress_sum / total_concepts) * 100.0
-        else:
-            current_daksh = 0.0
+        current_daksh = ProgressService.get_user_daksh_score(user, goal.exam)
 
         remaining_growth = max(0.0, 100.0 - current_daksh)
         required_growth = round(remaining_growth / remaining_days, 4)
@@ -190,15 +221,7 @@ class ProgressService:
             return 0, 0.83
 
         if current_daksh is None:
-            total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
-            if total_concepts > 0:
-                progress_sum = ConceptProgress.objects.filter(
-                    user=user,
-                    concept__subtopic__topic__subject__exam=goal.exam
-                ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
-                current_daksh = (progress_sum / total_concepts) * 100.0
-            else:
-                current_daksh = 0.0
+            current_daksh = ProgressService.get_user_daksh_score(user, goal.exam)
 
         remaining_growth = max(0.0, 100.0 - current_daksh)
 

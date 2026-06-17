@@ -1,4 +1,5 @@
-from django.test import TestCase, override_settings
+from rest_framework.test import APITestCase
+from django.test import override_settings
 from django.urls import reverse
 from unittest.mock import patch
 from django.contrib.auth import get_user_model
@@ -8,7 +9,7 @@ from syllabus.models import Exam
 
 User = get_user_model()
 
-class SyllabusCachingTestCase(TestCase):
+class SyllabusCachingTestCase(APITestCase):
     def setUp(self):
         # Create a sample exam for testing
         self.exam = Exam.objects.create(name="JEE Main", exam_type="jee", description="JEE description")
@@ -30,7 +31,7 @@ class SyllabusCachingTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         
         # Verify it attempted to fetch from cache and then store in cache
-        mock_get.assert_called_with("syllabus_tree_anon_exam_all")
+        mock_get.assert_called_with("syllabus_tree_exam_all")
         mock_set.assert_called_once()
         
         # Mock a cache hit for the second request
@@ -66,7 +67,7 @@ class SyllabusCachingTestCase(TestCase):
     def test_authenticated_request_uses_static_cache_but_overlays_progress(self):
         # Create user
         user = User.objects.create_user(username="testuser", password="password123")
-        self.client.force_login(user)
+        self.client.force_authenticate(user)
 
         # Create progress components
         from syllabus.models import Subject, Topic, Subtopic, Concept
@@ -100,15 +101,7 @@ class SyllabusCachingTestCase(TestCase):
                         "subtopics": [{
                             "id": subtopic.id,
                             "name": subtopic.name,
-                            "concepts": [{
-                                "id": concept.id,
-                                "name": concept.name,
-                                "description": concept.description,
-                                "ai_meta": {},
-                                "mastery": [0.0, 0.0],
-                                "raw_mastry": [0.0, 0.0],
-                                "last_practiced": None
-                            }]
+                            "concepts_count": 1
                         }]
                     }]
                 }]
@@ -119,13 +112,23 @@ class SyllabusCachingTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
 
             # Authenticated request SHOULD fetch static structure from cache
-            mock_get.assert_called_with("syllabus_tree_anon_exam_all")
+            mock_get.assert_called_with("syllabus_tree_exam_all")
             # Authenticated request should NOT write back to cache if already cached
             mock_set.assert_not_called()
             
-            # The response should have the ConceptProgress metrics overlaid!
+            # The response should NOT have nested concepts
             exam_data = response.data["exams"][0]
-            concept_data = exam_data["subjects"][0]["topics"][0]["subtopics"][0]["concepts"][0]
+            subtopic_data = exam_data["subjects"][0]["topics"][0]["subtopics"][0]
+            self.assertEqual(subtopic_data["id"], subtopic.id)
+            self.assertNotIn("concepts", subtopic_data)
+            self.assertEqual(subtopic_data["concepts_count"], 1)
+
+            # Now, test fetching concepts for this subtopic dynamically
+            concepts_url = reverse("subtopic-concepts", kwargs={"subtopic_id": subtopic.id})
+            concepts_response = self.client.get(concepts_url)
+            self.assertEqual(concepts_response.status_code, 200)
+            
+            concept_data = concepts_response.data[0]
             self.assertEqual(concept_data["id"], concept.id)
             self.assertNotEqual(concept_data["mastery"], [0.0, 0.0])
             self.assertEqual(concept_data["raw_mastry"], [0.8, 0.9])
@@ -134,7 +137,7 @@ class SyllabusCachingTestCase(TestCase):
     @override_settings(USE_CACHING=True)
     def test_authenticated_request_cache_miss_sets_static_cache(self):
         user = User.objects.create_user(username="testuser", password="password123")
-        self.client.force_login(user)
+        self.client.force_authenticate(user)
         
         with patch("django.core.cache.cache.get") as mock_get, patch("django.core.cache.cache.set") as mock_set:
             mock_get.return_value = None  # Cache miss
@@ -143,7 +146,7 @@ class SyllabusCachingTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
             
             # It should query the cache, miss, and then set the static cache key
-            mock_get.assert_called_with("syllabus_tree_anon_exam_all")
+            mock_get.assert_called_with("syllabus_tree_exam_all")
             mock_set.assert_called_once()
 
     @override_settings(USE_CACHING=True)

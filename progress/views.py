@@ -71,6 +71,9 @@ class SubtopicProgressAPI(APIView):
 def invalidate_growth_cache(user):
     cache.delete(f"dashboard_data_user_{user.id}")
     cache.delete(f"streak_stats_user_{user.id}")
+    goal = UserGoal.objects.filter(user=user).first()
+    if goal:
+        cache.delete(f"user_{user.id}_exam_{goal.exam_id}_daksh_score")
 
 
 class UserGoalAPI(APIView):
@@ -246,16 +249,7 @@ class StreakStatsAPI(APIView):
         # Overall Daksh Score & Prediction
         goal = UserGoal.objects.filter(user=user).first()
         if goal:
-            total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
-            if total_concepts > 0:
-                from django.db.models import Sum
-                progress_sum = ConceptProgress.objects.filter(
-                    user=user,
-                    concept__subtopic__topic__subject__exam=goal.exam
-                ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
-                daksh_score = round((progress_sum / total_concepts) * 100.0, 2)
-            else:
-                daksh_score = 0.0
+            daksh_score = ProgressService.get_user_daksh_score(user, goal.exam)
         else:
             daksh_score = 0.0
 
@@ -267,7 +261,7 @@ class StreakStatsAPI(APIView):
         
         targets = DailyTarget.objects.filter(
             user=user,
-            date__gte=today - timezone.timedelta(days=366)
+            date__gte=today - timezone.timedelta(days=30)
         )
         targets_dict = {t.date: t for t in targets}
 
@@ -308,7 +302,7 @@ class StreakStatsAPI(APIView):
         start_check_from = today if ratio_today >= 0.8 else today - timezone.timedelta(days=1)
 
         check_date = start_check_from
-        for _ in range(365):
+        for _ in range(30):
             t = targets_dict.get(check_date)
             if t:
                 ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
@@ -319,6 +313,27 @@ class StreakStatsAPI(APIView):
                     break
             else:
                 break
+
+        # If streak reached the 30-day boundary, query fallback on-demand for older targets
+        if streak == 30:
+            older_targets = DailyTarget.objects.filter(
+                user=user,
+                date__lt=today - timezone.timedelta(days=30),
+                date__gte=today - timezone.timedelta(days=366)
+            )
+            for t in older_targets:
+                targets_dict[t.date] = t
+            for _ in range(335):
+                t = targets_dict.get(check_date)
+                if t:
+                    ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
+                    if ratio >= 0.8:
+                        streak += 1
+                        check_date -= timezone.timedelta(days=1)
+                    else:
+                        break
+                else:
+                    break
 
         response_data = {
             "daksh_score": daksh_score,
@@ -356,16 +371,7 @@ class DashboardAPI(APIView):
 
         target = ProgressService.generate_daily_target_for_today(user, date=today)
         
-        total_concepts = Concept.objects.filter(subtopic__topic__subject__exam=goal.exam).count()
-        if total_concepts > 0:
-            from django.db.models import Sum
-            progress_sum = ConceptProgress.objects.filter(
-                user=user,
-                concept__subtopic__topic__subject__exam=goal.exam
-            ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
-            daksh_score = round((progress_sum / total_concepts) * 100.0, 2)
-        else:
-            daksh_score = 0.0
+        daksh_score = ProgressService.get_user_daksh_score(user, goal.exam)
 
         predicted_remaining_days, avg_growth = ProgressService.get_prediction_days(user, date=today, current_daksh=daksh_score)
 
@@ -377,7 +383,7 @@ class DashboardAPI(APIView):
         # Fetch targets in a single query to avoid N+1 queries in loops
         targets = DailyTarget.objects.filter(
             user=user,
-            date__gte=today - timezone.timedelta(days=366)
+            date__gte=today - timezone.timedelta(days=30)
         )
         targets_dict = {t.date: t for t in targets}
 
@@ -407,7 +413,7 @@ class DashboardAPI(APIView):
         ratio_today = (t_today.completed_growth / t_today.target_growth) if (t_today and t_today.target_growth > 0) else 0.0
         start_check_from = today if ratio_today >= 0.8 else today - timezone.timedelta(days=1)
         check_date = start_check_from
-        for _ in range(365):
+        for _ in range(30):
             t = targets_dict.get(check_date)
             if t:
                 ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
@@ -418,6 +424,27 @@ class DashboardAPI(APIView):
                     break
             else:
                 break
+
+        # If streak reached the 30-day boundary, query fallback on-demand for older targets
+        if streak == 30:
+            older_targets = DailyTarget.objects.filter(
+                user=user,
+                date__lt=today - timezone.timedelta(days=30),
+                date__gte=today - timezone.timedelta(days=366)
+            )
+            for t in older_targets:
+                targets_dict[t.date] = t
+            for _ in range(335):
+                t = targets_dict.get(check_date)
+                if t:
+                    ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
+                    if ratio >= 0.8:
+                        streak += 1
+                        check_date -= timezone.timedelta(days=1)
+                    else:
+                        break
+                else:
+                    break
 
         streak_stats = {
             "daksh_score": daksh_score,

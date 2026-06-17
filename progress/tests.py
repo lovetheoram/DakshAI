@@ -169,7 +169,7 @@ class GrowthOSTests(APITestCase):
         DailyTarget.objects.create(user=self.user, date=today, target_growth=1.0, completed_growth=0.9)
         
         url_stats = reverse("streak-stats")
-        url_dash = reverse("dashboard")
+        url_dash = reverse("progress-dashboard")
         
         # 1. Fetch first time (cache miss, should populate cache)
         response1 = self.client.get(url_stats)

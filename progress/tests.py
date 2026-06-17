@@ -165,6 +165,14 @@ class GrowthOSTests(APITestCase):
         cache.clear()
         
         today = timezone.localdate()
+        # Setup goal to enable dashboard caching
+        UserGoal.objects.create(
+            user=self.user,
+            exam=self.exam,
+            goal_name="Become Ready",
+            target_date=today + timezone.timedelta(days=10),
+            available_hours_per_day=3.0
+        )
         # Set up a fake DailyTarget for today
         DailyTarget.objects.create(user=self.user, date=today, target_growth=1.0, completed_growth=0.9)
         

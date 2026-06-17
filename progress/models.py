@@ -131,3 +131,17 @@ class DailyDiaryEntry(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.date} - Energy: {self.energy_score}"
+
+
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.core.cache import cache
+
+@receiver([post_save, post_delete], sender=ConceptProgress)
+def clear_daksh_score_cache(sender, instance, **kwargs):
+    try:
+        exam_id = instance.concept.subtopic.topic.subject.exam_id
+        cache_key = f"user_{instance.user_id}_exam_{exam_id}_daksh_score"
+        cache.delete(cache_key)
+    except Exception:
+        pass

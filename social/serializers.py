@@ -19,6 +19,9 @@ class UserMiniSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         if not request or not request.user or request.user.is_anonymous:
             return False
+        following_ids = self.context.get("following_ids")
+        if following_ids is not None:
+            return obj.id in following_ids
         return request.user.following.filter(following_id=obj.id).exists()
 
     def get_is_self(self, obj):

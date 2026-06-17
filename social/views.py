@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-from .models import Post, Comment, Like, Follow, Notification, Message
+from .models import Post, Comment, Like, Follow, Notification, Message, Conversation
 from .serializers import (
     PostSerializer,
     PostCreateSerializer,
@@ -49,17 +49,18 @@ class PostAPI(APIView):
         """
         Returns all posts or filtered by concept.
         Optional query param: ?concept_id=<id>
+        Optional query param: ?matchmaking=true (surfaces weak concepts matched with expert peers)
         """
         concept_id = request.query_params.get("concept_id")
+        matchmaking = request.query_params.get("matchmaking")
 
-        qs = Post.objects.all().select_related("user", "concept").annotate(
+        qs = Post.objects.all().select_related("user", "concept").prefetch_related("comments__user").annotate(
             likes_count=Count("likes"),
             is_liked=Exists(
                 Like.objects.filter(
-                post=OuterRef("pk"),
-                user=request.user
-            )
-
+                    post=OuterRef("pk"),
+                    user=request.user
+                )
             )
         )
 
@@ -67,7 +68,34 @@ class PostAPI(APIView):
             qs = qs.filter(concept_id=concept_id)
 
         posts = qs.order_by("-created_at")
-        data = PostSerializer(posts, many=True, context={"request": request}).data
+
+        if matchmaking == "true":
+            # 1. Fetch current user's low mastery concepts (readiness < 0.5)
+            from progress.models import ConceptProgress
+            weak_concept_ids = list(ConceptProgress.objects.filter(
+                user=request.user,
+                exam_readiness__lt=0.5
+            ).values_list("concept_id", flat=True))
+
+            if weak_concept_ids:
+                # 2. Identify peer users who have high mastery in these weak concepts (readiness >= 0.8)
+                strong_peer_user_ids = list(ConceptProgress.objects.filter(
+                    concept_id__in=weak_concept_ids,
+                    exam_readiness__gte=0.8
+                ).values_list("user_id", flat=True))
+
+                # 3. Annotate posts that match weak concepts AND are authored by strong peers
+                from django.db.models import Case, When, Value, IntegerField
+                posts = qs.annotate(
+                    is_match=Case(
+                        When(concept_id__in=weak_concept_ids, user_id__in=strong_peer_user_ids, then=Value(1)),
+                        default=Value(0),
+                        output_field=IntegerField()
+                    )
+                ).order_by("-is_match", "-created_at")
+
+        following_ids = set(request.user.following.values_list("following_id", flat=True))
+        data = PostSerializer(posts, many=True, context={"request": request, "following_ids": following_ids}).data
 
         return Response({"posts": data}, status=status.HTTP_200_OK)
 
@@ -102,11 +130,12 @@ class SinglePostAPI(APIView):
         Get a single post by ID
         """
         post = get_object_or_404(
-            Post.objects.select_related("user", "concept"),
+            Post.objects.select_related("user", "concept").prefetch_related("comments__user"),
             id=post_id
         )
+        following_ids = set(request.user.following.values_list("following_id", flat=True))
         return Response(
-            PostSerializer(post, context={"request": request}).data,
+            PostSerializer(post, context={"request": request, "following_ids": following_ids}).data,
             status=status.HTTP_200_OK,
         )
 
@@ -144,8 +173,19 @@ class CommentListAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, post_id):
-        comments = Comment.objects.filter(post_id=post_id).order_by("-created_at")
-        return Response({"post": post_id, "comments": CommentSerializer(comments, many=True,context={"request": request}).data}, status=status.HTTP_200_OK)
+        comments = Comment.objects.filter(post_id=post_id).select_related("user").order_by("-created_at")
+        following_ids = set(request.user.following.values_list("following_id", flat=True))
+        return Response(
+            {
+                "post": post_id,
+                "comments": CommentSerializer(
+                    comments,
+                    many=True,
+                    context={"request": request, "following_ids": following_ids}
+                ).data
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 # ==========================================================
@@ -249,6 +289,12 @@ class MessageAPI(APIView):
         receiver = get_object_or_404(User, id=user_id)
         msg = Message.objects.create(sender=request.user, receiver=receiver, text=request.data.get("text", ""))
 
+        # Create or update Conversation record to maintain the last message link
+        user1, user2 = (request.user, receiver) if request.user.id < receiver.id else (receiver, request.user)
+        convo, _ = Conversation.objects.get_or_create(user1=user1, user2=user2)
+        convo.last_message = msg
+        convo.save()
+
         create_notification(user=receiver, triggered_by=request.user, type="message", message=f"New message from {request.user.username}")
 
         return Response({"message": "Message sent", "data": MessageSerializer(msg,context={"request": request}).data}, status=status.HTTP_201_CREATED)
@@ -271,22 +317,20 @@ class InboxAPI(APIView):
 
     def get(self, request):
         """
-        Return the latest message for each conversation (other participant).
-        This implementation is DB-agnostic: it walks messages ordered by -created_at
-        and picks the first message seen per conversation partner.
+        Return the latest message for each conversation (other participant) using the Conversation model.
+        Optimized to be database-level O(1) query per request rather than walking O(N) messages in python.
         """
-        msgs = Message.objects.filter(Q(sender=request.user) | Q(receiver=request.user)).order_by("-created_at")
-        seen = {}
-        latest_per_convo = []
+        user = request.user
+        convos = Conversation.objects.filter(
+            Q(user1=user) | Q(user2=user)
+        ).select_related(
+            "user1", "user2", "last_message", "last_message__sender", "last_message__receiver"
+        ).order_by("-updated_at")
 
-        for m in msgs:
-            # other participant (the user that is not request.user)
-            other = m.receiver if m.sender_id == request.user.id else m.sender
-            if other and other.id not in seen:
-                seen[other.id] = True
-                latest_per_convo.append(m)
+        latest_messages = [c.last_message for c in convos if c.last_message]
+        data = MessageSerializer(latest_messages, many=True, context={"request": request}).data
 
-        return Response({"inbox": MessageSerializer(latest_per_convo, many=True,context={"request": request}).data}, status=status.HTTP_200_OK)
+        return Response({"inbox": data}, status=status.HTTP_200_OK)
 
 
 # ==========================================================
@@ -305,6 +349,10 @@ class SuggestedUsersAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        following_ids = Follow.objects.filter(follower=request.user).values_list("following_id", flat=True)
+        following_ids_qs = Follow.objects.filter(follower=request.user).values_list("following_id", flat=True)
+        following_ids = set(following_ids_qs)
         suggestions = User.objects.exclude(id__in=following_ids).exclude(id=request.user.id)[:10]
-        return Response({"suggestions": UserMiniSerializer(suggestions, many=True).data}, status=status.HTTP_200_OK)
+        return Response(
+            {"suggestions": UserMiniSerializer(suggestions, many=True, context={"request": request, "following_ids": following_ids}).data},
+            status=status.HTTP_200_OK
+        )

@@ -237,12 +237,11 @@ if USE_CACHING:
                 }
             }
         else:
-            CACHES = {
-                'default': {
-                    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'render-locmem-fallback',
-                }
-            }
+            from django.core.exceptions import ImproperlyConfigured
+            raise ImproperlyConfigured(
+                "Production environments (on Render) must configure a valid REDIS_URL "
+                "for cache consistency across multiple worker processes."
+            )
     else:
         # Locally, always use local memory cache (LocMemCache) to avoid slow external connections or timeouts
         CACHES = {

@@ -211,6 +211,36 @@ class DailyTargetShareAPI(APIView):
         target = ProgressService.generate_daily_target_for_today(request.user, date=today)
         diary, _ = DailyDiaryEntry.objects.get_or_create(user=request.user, date=today)
 
+        # Get overall streak & Daksh score stats to include on the card
+        goal = UserGoal.objects.filter(user=request.user).first()
+        daksh_score = ProgressService.get_user_daksh_score(request.user, goal.exam) if goal else 0.0
+
+        # Retrieve streak statistics (cached or calculated)
+        cache_key = f"streak_stats_user_{request.user.id}"
+        cached_stats = cache.get(cache_key)
+        if cached_stats:
+            streak = cached_stats.get("growth_streak", 0)
+        else:
+            # Simple fallback: retrieve streak stats directly
+            targets = DailyTarget.objects.filter(user=request.user, date__gte=today - timezone.timedelta(days=30))
+            targets_dict = {t.date: t for t in targets}
+            streak = 0
+            t_today = targets_dict.get(today)
+            ratio_today = (t_today.completed_growth / t_today.target_growth) if (t_today and t_today.target_growth > 0) else 0.0
+            start_check_from = today if ratio_today >= 0.8 else today - timezone.timedelta(days=1)
+            check_date = start_check_from
+            for _ in range(30):
+                t = targets_dict.get(check_date)
+                if t:
+                    ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
+                    if ratio >= 0.8:
+                        streak += 1
+                        check_date -= timezone.timedelta(days=1)
+                    else:
+                        break
+                else:
+                    break
+
         ratio = (target.completed_growth / target.target_growth * 100.0) if target.target_growth > 0 else 100.0
         content = (
             f"🚀 Growth Quota Update!\n"
@@ -220,17 +250,30 @@ class DailyTargetShareAPI(APIView):
             f"Consistency: Measuring growth one percent at a time!"
         )
 
+        post_metadata = {
+            "completed_growth": float(target.completed_growth),
+            "target_growth": float(target.target_growth),
+            "questions_solved": int(diary.questions_solved),
+            "accuracy": float(diary.accuracy),
+            "energy_score": int(diary.energy_score),
+            "focus_score": int(diary.focus_score),
+            "streak": int(streak),
+            "daksh_score": float(daksh_score)
+        }
+
         from social.models import Post
         post = Post.objects.create(
             user=request.user,
-            post_type="text",
-            content=content
+            post_type="progress",
+            content=content,
+            post_metadata=post_metadata
         )
         invalidate_growth_cache(request.user)
         return Response({
             "detail": "Successfully shared growth progress to feed",
             "post_id": post.id,
-            "post_content": content
+            "post_content": content,
+            "post_metadata": post_metadata
         })
 
 

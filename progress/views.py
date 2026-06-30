@@ -418,7 +418,7 @@ class StreakStatsAPI(APIView):
         return Response(response_data)
 
 
-class DashboardAPI(APIView):
+class BrainEngineAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -550,6 +550,38 @@ class DashboardAPI(APIView):
             "total_active_days": total_active_days
         }
 
+        # ── Mission Day ──────────────────────────────────────────────────
+        mission_day = (today - goal.created_at.date()).days + 1
+
+        # ── Prediction Engine (Ahead / Behind / On Track) ─────────────────
+        days_remaining = (goal.target_date - today).days
+        if days_remaining > 0:
+            required_daily = round((100.0 - daksh_score) / days_remaining, 4)
+        else:
+            required_daily = round(100.0 - daksh_score, 4)
+
+        avg_actual = avg_growth  # from get_prediction_days
+        gap = avg_actual - required_daily
+
+        if abs(gap) < 0.02:  # within 2% — on track
+            pred_status = "on_track"
+            pred_days_delta = 0
+        elif gap > 0:
+            pred_status = "ahead"
+            # days saved = gap * days_remaining / required_daily
+            pred_days_delta = int(round((gap / required_daily) * days_remaining)) if required_daily > 0 else 0
+        else:
+            pred_status = "behind"
+            pred_days_delta = int(round((abs(gap) / required_daily) * days_remaining)) if required_daily > 0 else 0
+
+        prediction = {
+            "status": pred_status,
+            "days_delta": pred_days_delta,
+            "required_daily": required_daily,
+            "actual_daily": round(avg_actual, 4),
+            "need_extra": round(max(0.0, required_daily - avg_actual), 4),
+        }
+
         # Calculate yesterday's growth
         yesterday_date = today - timezone.timedelta(days=1)
         yesterday_target = targets_dict.get(yesterday_date)
@@ -565,40 +597,76 @@ class DashboardAPI(APIView):
                 past_7_growths.append(0.0)
         week_avg_growth = round(sum(past_7_growths) / 7.0, 4)
 
-        # Calculate brain stats
-        concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
-        progress_records = ConceptProgress.objects.filter(user=user, concept_id__in=concept_ids)
-        total_raw_readiness = 0.0
-        total_decayed_readiness = 0.0
-        for cp in progress_records:
-            total_raw_readiness += cp.exam_readiness
-            decayed_exam, _ = cp.get_mastery()
-            total_decayed_readiness += decayed_exam
-        
-        if total_raw_readiness > 0:
-            memory_score = min(100.0, round((total_decayed_readiness / total_raw_readiness) * 100.0, 2))
-        else:
-            memory_score = 100.0
-
+        # ── Brain State (5 psychological dimensions) ──────────────────────
         diary_entries = DailyDiaryEntry.objects.filter(user=user)
+        diary_entries_7d = [d for d in diary_entries if (today - d.date).days < 7]
+        targets_7d = [t for d, t in targets_dict.items() if (today - d).days < 7]
+        recent_records = list(
+            ProgressRecord.objects.filter(user=user).order_by("-created_at")[:10]
+        )
+
+        # Compute retention (memory decay ratio)
+        all_cp = ConceptProgress.objects.filter(
+            user=user, concept_id__in=ProgressService.get_exam_concept_ids(goal.exam.id)
+        )
+        total_raw = sum(cp.exam_readiness for cp in all_cp)
+        total_decayed = sum(cp.get_mastery()[0] for cp in all_cp)
+        memory_score = min(100.0, round((total_decayed / total_raw) * 100.0, 2)) if total_raw > 0 else 100.0
+
+        # Accuracy from diary
         solved_entries = [d for d in diary_entries if d.questions_solved > 0]
-        if solved_entries:
-            accuracy_score = round((sum(d.accuracy for d in solved_entries) / len(solved_entries)) * 100.0, 2)
-        else:
-            accuracy_score = 0.0
+        accuracy_score = round(
+            (sum(d.accuracy for d in solved_entries) / len(solved_entries)) * 100.0, 2
+        ) if solved_entries else 0.0
 
-        if diary_entries.exists():
-            focus_score = round(sum(d.focus_score for d in diary_entries) / len(diary_entries), 2)
-        else:
-            focus_score = 50.0
+        # Focus from diary
+        all_focus = [d.focus_score for d in diary_entries]
+        focus_score = round(sum(all_focus) / len(all_focus), 2) if all_focus else 50.0
 
+        # 5 cognitive dimensions
+        knowledge_score = daksh_score
+        retention_score = memory_score
+        confidence_score = ProgressService.compute_confidence(user, recent_records=recent_records)
+        momentum_score = ProgressService.compute_momentum(week_compliance, diary_entries_7d, targets_7d)
+        discipline_score = ProgressService.compute_discipline(streak, month_compliance)
+
+        brain_state = {
+            "knowledge": knowledge_score,
+            "retention": retention_score,
+            "confidence": confidence_score,
+            "momentum": momentum_score,
+            "discipline": discipline_score,
+        }
+
+        # brain_stats — backward-compat alias (kept until all frontend migrated)
         brain_stats = {
-            "knowledge": daksh_score,
-            "memory": memory_score,
+            "knowledge": knowledge_score,
+            "memory": retention_score,
             "accuracy": accuracy_score,
             "consistency": week_compliance,
             "focus": focus_score,
         }
+
+        # ── Decay Alerts (top 2 concepts slipping below 70% of raw) ──────
+        decay_alerts = []
+        concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
+        progress_records = ConceptProgress.objects.filter(
+            user=user, concept_id__in=concept_ids
+        ).select_related("concept", "concept__subtopic")
+        for cp in progress_records:
+            raw = cp.exam_readiness
+            if raw < 0.25:  # skip concepts barely started
+                continue
+            decayed, _ = cp.get_mastery()
+            if decayed < raw * 0.70:  # dropped more than 30%
+                retention_pct = round(decayed / raw * 100, 1) if raw > 0 else 0.0
+                decay_alerts.append({
+                    "concept_id": cp.concept_id,
+                    "concept_name": cp.concept.name,
+                    "retention_pct": retention_pct,
+                    "subtopic_name": cp.concept.subtopic.name,
+                })
+        decay_alerts = sorted(decay_alerts, key=lambda x: x["retention_pct"])[:2]
 
         entries = DailyDiaryEntry.objects.filter(user=user).order_by("-date")[:30]
         diary_data = DailyDiaryEntrySerializer(entries, many=True).data
@@ -685,15 +753,20 @@ class DashboardAPI(APIView):
             achievements.append({"emoji": "🏆", "label": "Half Ready", "unlocked": False})
 
         response_data = {
+            "brain_engine_version": "2.0",
+            "mission_day": mission_day,
             "goal": UserGoalSerializer(goal).data,
             "target": DailyTargetSerializer(target).data,
             "streak_stats": streak_stats,
+            "prediction": prediction,
+            "brain_state": brain_state,
+            "brain_stats": brain_stats,        # backward-compat alias
+            "decay_alerts": decay_alerts,
             "diary": diary_data,
             "today_growth": target.completed_growth,
             "target_growth": target.target_growth,
             "yesterday_growth": yesterday_growth,
             "week_avg_growth": week_avg_growth,
-            "brain_stats": brain_stats,
             "overall_score": daksh_score,
             "weekly_data": weekly_data,
             "best_day": best_day,
@@ -701,6 +774,6 @@ class DashboardAPI(APIView):
             "recent_concepts": recent_concepts,
             "achievements": achievements
         }
-        
-        cache.set(cache_key, response_data, timeout=3600) # Cache for 1 hour
+
+        cache.set(cache_key, response_data, timeout=3600)
         return Response(response_data)

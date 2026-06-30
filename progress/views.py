@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.utils import timezone
+import datetime
 from .models import ConceptProgress, ProgressRecord, SubtopicProgress, UserGoal, DailyTarget, DailyDiaryEntry
 from .serializers import (
     ConceptProgressSerializer, ProgressRecordSerializer, SubtopicProgressSerializer,
@@ -378,6 +379,28 @@ class StreakStatsAPI(APIView):
                 else:
                     break
 
+        # Calculate longest streak and total active days
+        all_targets = DailyTarget.objects.filter(user=user).order_by('date')
+        longest_streak = 0
+        current_run = 0
+        total_active_days = 0
+        prev_date = None
+        for t in all_targets:
+            if t.completed_growth > 0:
+                total_active_days += 1
+                
+            ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
+            if ratio >= 0.8:
+                if prev_date is None or (t.date - prev_date).days == 1:
+                    current_run += 1
+                else:
+                    current_run = 1
+                prev_date = t.date
+                longest_streak = max(longest_streak, current_run)
+            else:
+                current_run = 0
+                prev_date = None
+
         response_data = {
             "daksh_score": daksh_score,
             "predicted_remaining_days": predicted_remaining_days,
@@ -385,7 +408,10 @@ class StreakStatsAPI(APIView):
             "today_compliance": today_compliance,
             "week_compliance": week_compliance,
             "month_compliance": month_compliance,
-            "growth_streak": streak
+            "growth_streak": streak,
+            "current_streak": streak,
+            "longest_streak": longest_streak,
+            "total_active_days": total_active_days
         }
         
         cache.set(cache_key, response_data, timeout=3600) # Cache for 1 hour
@@ -489,6 +515,28 @@ class DashboardAPI(APIView):
                 else:
                     break
 
+        # Calculate longest streak and total active days
+        all_targets = DailyTarget.objects.filter(user=user).order_by('date')
+        longest_streak = 0
+        current_run = 0
+        total_active_days = 0
+        prev_date = None
+        for t in all_targets:
+            if t.completed_growth > 0:
+                total_active_days += 1
+                
+            ratio = (t.completed_growth / t.target_growth) if t.target_growth > 0 else 1.0
+            if ratio >= 0.8:
+                if prev_date is None or (t.date - prev_date).days == 1:
+                    current_run += 1
+                else:
+                    current_run = 1
+                prev_date = t.date
+                longest_streak = max(longest_streak, current_run)
+            else:
+                current_run = 0
+                prev_date = None
+
         streak_stats = {
             "daksh_score": daksh_score,
             "predicted_remaining_days": predicted_remaining_days,
@@ -496,17 +544,162 @@ class DashboardAPI(APIView):
             "today_compliance": today_compliance,
             "week_compliance": week_compliance,
             "month_compliance": month_compliance,
-            "growth_streak": streak
+            "growth_streak": streak,
+            "current_streak": streak,
+            "longest_streak": longest_streak,
+            "total_active_days": total_active_days
+        }
+
+        # Calculate yesterday's growth
+        yesterday_date = today - timezone.timedelta(days=1)
+        yesterday_target = targets_dict.get(yesterday_date)
+        yesterday_growth = yesterday_target.completed_growth if yesterday_target else 0.0
+
+        # Calculate weekly average growth
+        past_7_growths = []
+        for d in past_7_days:
+            t = targets_dict.get(d)
+            if t:
+                past_7_growths.append(t.completed_growth)
+            else:
+                past_7_growths.append(0.0)
+        week_avg_growth = round(sum(past_7_growths) / 7.0, 4)
+
+        # Calculate brain stats
+        concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
+        progress_records = ConceptProgress.objects.filter(user=user, concept_id__in=concept_ids)
+        total_raw_readiness = 0.0
+        total_decayed_readiness = 0.0
+        for cp in progress_records:
+            total_raw_readiness += cp.exam_readiness
+            decayed_exam, _ = cp.get_mastery()
+            total_decayed_readiness += decayed_exam
+        
+        if total_raw_readiness > 0:
+            memory_score = min(100.0, round((total_decayed_readiness / total_raw_readiness) * 100.0, 2))
+        else:
+            memory_score = 100.0
+
+        diary_entries = DailyDiaryEntry.objects.filter(user=user)
+        solved_entries = [d for d in diary_entries if d.questions_solved > 0]
+        if solved_entries:
+            accuracy_score = round((sum(d.accuracy for d in solved_entries) / len(solved_entries)) * 100.0, 2)
+        else:
+            accuracy_score = 0.0
+
+        if diary_entries.exists():
+            focus_score = round(sum(d.focus_score for d in diary_entries) / len(diary_entries), 2)
+        else:
+            focus_score = 50.0
+
+        brain_stats = {
+            "knowledge": daksh_score,
+            "memory": memory_score,
+            "accuracy": accuracy_score,
+            "consistency": week_compliance,
+            "focus": focus_score,
         }
 
         entries = DailyDiaryEntry.objects.filter(user=user).order_by("-date")[:30]
         diary_data = DailyDiaryEntrySerializer(entries, many=True).data
 
+        # -------------------------------------------------------------------
+        # Weekly data for the bar chart (Mon–Sun of current week)
+        # -------------------------------------------------------------------
+        DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"]
+        # Find Monday of the current week
+        today_weekday = today.weekday()  # 0=Mon, 6=Sun
+        week_start = today - datetime.timedelta(days=today_weekday)
+        weekly_data = []
+        best_day = None
+        best_day_val = -1.0
+        for i, label in enumerate(DAY_LABELS):
+            day_date = week_start + datetime.timedelta(days=i)
+            t = targets_dict.get(day_date)
+            val = round(t.completed_growth, 4) if t else 0.0
+            weekly_data.append({"day": label, "value": val, "date": str(day_date)})
+            if val > best_day_val:
+                best_day_val = val
+                best_day = day_date.strftime("%A")  # e.g. "Monday"
+
+        # -------------------------------------------------------------------
+        # Last active concept & recent concepts (from ProgressRecord history)
+        # -------------------------------------------------------------------
+        recent_records = (
+            ProgressRecord.objects
+            .filter(user=user, concept__subtopic__topic__subject__exam=goal.exam)
+            .select_related("concept", "concept__subtopic")
+            .order_by("-created_at")
+        )
+
+        seen_concepts = {}
+        for rec in recent_records:
+            cid = rec.concept.id
+            if cid not in seen_concepts:
+                cp_obj = ConceptProgress.objects.filter(user=user, concept=rec.concept).first()
+                mastery = 0.0
+                if cp_obj:
+                    exam_m, chap_m = cp_obj.get_mastery()
+                    mastery = round((exam_m + chap_m) / 2 * 100, 2)
+                seen_concepts[cid] = {
+                    "id": cid,
+                    "name": rec.concept.name,
+                    "mastery": mastery,
+                    "subtopic_name": rec.concept.subtopic.name,
+                    "last_practiced": rec.created_at.isoformat()
+                }
+            if len(seen_concepts) >= 5:
+                break
+
+        concept_list = list(seen_concepts.values())
+        last_active_concept = concept_list[0] if concept_list else None
+        recent_concepts = concept_list[1:5] if len(concept_list) > 1 else []
+
+        # -------------------------------------------------------------------
+        # Dynamic achievements from real data
+        # -------------------------------------------------------------------
+        total_questions_solved = sum(d.questions_solved for d in diary_entries)
+        avg_accuracy = brain_stats["accuracy"]
+        achievements = []
+        if streak >= 3:
+            achievements.append({"emoji": "🔥", "label": f"{streak}d Streak", "unlocked": True})
+        else:
+            achievements.append({"emoji": "🔥", "label": "3d Streak", "unlocked": False})
+        if total_questions_solved >= 100:
+            achievements.append({"emoji": "🧠", "label": "100 Questions", "unlocked": True})
+        elif total_questions_solved >= 50:
+            achievements.append({"emoji": "🧠", "label": "50 Questions", "unlocked": True})
+        else:
+            achievements.append({"emoji": "🧠", "label": "100 Questions", "unlocked": False})
+        if avg_accuracy >= 80:
+            achievements.append({"emoji": "🎯", "label": "90% Accuracy", "unlocked": True})
+        else:
+            achievements.append({"emoji": "🎯", "label": "90% Accuracy", "unlocked": False})
+        if week_compliance >= 80:
+            achievements.append({"emoji": "⚡", "label": "Week On Fire", "unlocked": True})
+        else:
+            achievements.append({"emoji": "⚡", "label": "Week On Fire", "unlocked": False})
+        if daksh_score >= 50:
+            achievements.append({"emoji": "🏆", "label": "Half Ready", "unlocked": True})
+        else:
+            achievements.append({"emoji": "🏆", "label": "Half Ready", "unlocked": False})
+
         response_data = {
             "goal": UserGoalSerializer(goal).data,
             "target": DailyTargetSerializer(target).data,
             "streak_stats": streak_stats,
-            "diary": diary_data
+            "diary": diary_data,
+            "today_growth": target.completed_growth,
+            "target_growth": target.target_growth,
+            "yesterday_growth": yesterday_growth,
+            "week_avg_growth": week_avg_growth,
+            "brain_stats": brain_stats,
+            "overall_score": daksh_score,
+            "weekly_data": weekly_data,
+            "best_day": best_day,
+            "last_active_concept": last_active_concept,
+            "recent_concepts": recent_concepts,
+            "achievements": achievements
         }
         
         cache.set(cache_key, response_data, timeout=3600) # Cache for 1 hour

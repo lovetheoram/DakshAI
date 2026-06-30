@@ -58,14 +58,20 @@ from .models import UserGoal, DailyTarget, DailyDiaryEntry
 
 class UserGoalSerializer(serializers.ModelSerializer):
     exam_name = serializers.CharField(source="exam.name", read_only=True)
+    progress = serializers.SerializerMethodField()
 
     class Meta:
         model = UserGoal
         fields = [
             "id", "user", "exam", "exam_name", "goal_name",
-            "target_date", "available_hours_per_day", "created_at", "updated_at"
+            "target_date", "available_hours_per_day", "created_at", "updated_at",
+            "progress"
         ]
         read_only_fields = ["user", "created_at", "updated_at"]
+
+    def get_progress(self, obj):
+        from .services import ProgressService
+        return ProgressService.get_user_daksh_score(obj.user, obj.exam)
 
 
 class DailyTargetSerializer(serializers.ModelSerializer):

@@ -209,3 +209,45 @@ class GrowthOSTests(APITestCase):
         # Cache should now be invalidated/None
         self.assertIsNone(cache.get(cache_key))
         self.assertIsNone(cache.get(f"dashboard_data_user_{self.user.id}"))
+
+    def test_dashboard_new_fields(self):
+        today = timezone.localdate()
+        yesterday = today - timezone.timedelta(days=1)
+        
+        # Setup goal
+        UserGoal.objects.create(
+            user=self.user,
+            exam=self.exam,
+            goal_name="Become Ready",
+            target_date=today + timezone.timedelta(days=10),
+            available_hours_per_day=3.0
+        )
+        
+        # Set up today's target
+        DailyTarget.objects.create(user=self.user, date=today, target_growth=1.0, completed_growth=0.45)
+        # Set up yesterday's target
+        DailyTarget.objects.create(user=self.user, date=yesterday, target_growth=1.0, completed_growth=0.30)
+        
+        url_dash = reverse("progress-dashboard")
+        response = self.client.get(url_dash)
+        self.assertEqual(response.status_code, 200)
+        
+        data = response.data
+        self.assertIn("today_growth", data)
+        self.assertIn("target_growth", data)
+        self.assertIn("yesterday_growth", data)
+        self.assertIn("week_avg_growth", data)
+        self.assertIn("brain_stats", data)
+        
+        self.assertEqual(data["today_growth"], 0.45)
+        self.assertEqual(data["target_growth"], 1.0)
+        self.assertEqual(data["yesterday_growth"], 0.30)
+        
+        # Brain stats
+        stats = data["brain_stats"]
+        self.assertIn("knowledge", stats)
+        self.assertIn("memory", stats)
+        self.assertIn("accuracy", stats)
+        self.assertIn("consistency", stats)
+        self.assertIn("focus", stats)
+

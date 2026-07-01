@@ -244,6 +244,82 @@ class ProgressService:
         predicted_remaining_days = int(round(remaining_growth / avg_growth))
         return predicted_remaining_days, round(avg_growth, 4)
 
+    @staticmethod
+    def compute_confidence(user, recent_records=None):
+        """
+        Confidence = weighted accuracy trend over recent quiz sessions.
+        Recent sessions are weighted 3×, oldest 1×, intermediate 2×.
+        New users with < 3 sessions default to 50 (neutral).
+        """
+        if recent_records is None:
+            recent_records = list(
+                ProgressRecord.objects.filter(user=user)
+                .order_by("-created_at")[:10]
+            )
+        if len(recent_records) < 3:
+            return 50.0
+
+        # Assign weights: newest = 3, then 2, then 1 for the rest
+        weighted_sum = 0.0
+        total_weight = 0.0
+        for i, rec in enumerate(recent_records):
+            weight = 3.0 if i == 0 else (2.0 if i == 1 else 1.0)
+            accuracy = (rec.correct_count / (rec.correct_count + rec.wrong_count)
+                        if (rec.correct_count + rec.wrong_count) > 0 else 0.0)
+            weighted_sum += accuracy * weight
+            total_weight += weight
+
+        return round((weighted_sum / total_weight) * 100.0, 2) if total_weight > 0 else 50.0
+
+    @staticmethod
+    def compute_momentum(week_compliance, diary_entries_7d, targets_7d):
+        """
+        Momentum = composite of 5 behavioral signals over the past 7 days.
+          - 7d compliance rate:       30%
+          - avg focus score:          20%
+          - growth velocity:          20%  (days where completed_growth > 0)
+          - revision frequency:       15%  (days with revision_count > 0)
+          - session completion rate:  15%  (days with questions_solved > 0)
+        All sub-scores are 0-100; result is 0-100.
+        """
+        # 7d compliance (already computed, 0-100)
+        compliance_score = min(100.0, week_compliance)
+
+        # Avg focus from diary
+        focus_scores = [d.focus_score for d in diary_entries_7d]
+        avg_focus = (sum(focus_scores) / len(focus_scores)) if focus_scores else 50.0
+
+        # Growth velocity: % of 7 days where any growth occurred
+        active_growth_days = sum(1 for t in targets_7d if t.completed_growth > 0)
+        growth_velocity = (active_growth_days / 7.0) * 100.0
+
+        # Revision frequency: % of 7 days where revision logged
+        revision_days = sum(1 for d in diary_entries_7d if d.revision_count > 0)
+        revision_score = (revision_days / 7.0) * 100.0
+
+        # Session completion: % of 7 days where questions solved
+        session_days = sum(1 for d in diary_entries_7d if d.questions_solved > 0)
+        session_score = (session_days / 7.0) * 100.0
+
+        momentum = (
+            compliance_score  * 0.30 +
+            avg_focus         * 0.20 +
+            growth_velocity   * 0.20 +
+            revision_score    * 0.15 +
+            session_score     * 0.15
+        )
+        return round(momentum, 2)
+
+    @staticmethod
+    def compute_discipline(current_streak, month_compliance):
+        """
+        Discipline = streak commitment (70%) + monthly consistency (30%).
+        Streak is normalized against a 30-day benchmark.
+        """
+        streak_score = min(1.0, current_streak / 30.0) * 100.0
+        discipline = streak_score * 0.70 + month_compliance * 0.30
+        return round(discipline, 2)
+
 
 class SubtopicProgressService:
 

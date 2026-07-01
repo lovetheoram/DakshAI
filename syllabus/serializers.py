@@ -59,11 +59,16 @@ class ConceptSerializer(serializers.ModelSerializer):
         return cp.last_practiced if cp else None
 
 class SubtopicSerializer(serializers.ModelSerializer):
-    concepts = ConceptSerializer(many=True, read_only=True)
+    concepts_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Subtopic
-        fields = ["id", "name", "concepts"]
+        fields = ["id", "name", "concepts_count"]
+
+    def get_concepts_count(self, obj):
+        if hasattr(obj, "_prefetched_objects_cache") and "concepts" in obj._prefetched_objects_cache:
+            return len(obj.concepts.all())
+        return obj.concepts.count()
 
 
 class TopicSerializer(serializers.ModelSerializer):

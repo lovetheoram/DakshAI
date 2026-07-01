@@ -29,11 +29,19 @@ SECRET_KEY = 'django-insecure-odia3xy&=g)5cx_e*-q5qq9$+cycyw!ji)+*^y2ws#gp@=g7yl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'dakshai.onrender.com',  
+    'localhost',      
+    '127.0.0.1',      
+]
 # "https://<social_pythonanywhere_username>.pythonanywhere.com/api/"
 
 # Application definition
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://dakshaii.netlify.app"
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -88,10 +96,56 @@ WSGI_APPLICATION = 'nimides.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 import urllib.parse as urlparse
+import socket
 
-DATABASE_URL = "postgresql://neondb_owner:npg_gDjnGB0Ixpl9@ep-restless-heart-aoa7o7dd-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DATABASE_URL = os.environ.get('DATABASE_URL')
 tmp_url = urlparse.urlparse(DATABASE_URL)
 query_params = urlparse.parse_qs(tmp_url.query)
+
+db_host = tmp_url.hostname
+db_options = {key: val[0] for key, val in query_params.items()}
+
+if db_host:
+    try:
+        socket.gethostbyname(db_host)
+    except socket.gaierror:
+        import struct
+        def dns_resolve_8888(hostname):
+            packet = struct.pack(">HHHHHH", 0x1234, 0x0100, 1, 0, 0, 0)
+            for part in hostname.split('.'):
+                part_bytes = part.encode('ascii')
+                packet += struct.pack("B", len(part_bytes)) + part_bytes
+            packet += struct.pack("B", 0)
+            packet += struct.pack(">HH", 1, 1)
+            try:
+                sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                sock.settimeout(2.0)
+                sock.sendto(packet, ("8.8.8.8", 53))
+                data, _ = sock.recvfrom(512)
+                num_answers = struct.unpack(">H", data[6:8])[0]
+                offset = 12 + (len(packet) - 12)
+                for _ in range(num_answers):
+                    if (data[offset] & 0xc0) == 0xc0:
+                        offset += 2
+                    else:
+                        while data[offset] != 0:
+                            offset += 1 + data[offset]
+                        offset += 1
+                    type_, class_, ttl, rdlen = struct.unpack(">HHIH", data[offset:offset+10])
+                    offset += 10
+                    if type_ == 1 and rdlen == 4:
+                        return socket.inet_ntoa(data[offset:offset+4])
+                    offset += rdlen
+            except Exception:
+                pass
+            return None
+
+        resolved_ip = dns_resolve_8888(db_host)
+        if resolved_ip:
+            db_host = resolved_ip
+            if "neon.tech" in (tmp_url.hostname or ""):
+                endpoint_id = tmp_url.hostname.split('.')[0]
+                db_options['options'] = f"endpoint={endpoint_id}"
 
 DATABASES = {
     'default': {
@@ -99,11 +153,11 @@ DATABASES = {
         'NAME': tmp_url.path[1:],
         'USER': tmp_url.username,
         'PASSWORD': tmp_url.password,
-        'HOST': tmp_url.hostname,
+        'HOST': db_host,
         'PORT': tmp_url.port or '',
-        'OPTIONS': {key: val[0] for key, val in query_params.items()},
+        'OPTIONS': db_options,
         'DISABLE_SERVER_SIDE_CURSORS': True,
-        'CONN_MAX_AGE':60,
+        'CONN_MAX_AGE': 60,
     }
 }
 
@@ -170,23 +224,30 @@ MEDIA_ROOT = BASE_DIR / "media"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 REDIS_URL=os.environ.get("REDIS_URL")
 # Caching Configuration
-# USE_CACHING = os.environ.get('USE_CACHING', 'False').lower() in ('true', '1', 't')
-USE_CACHING=False
+USE_CACHING = True
 if USE_CACHING:
-    REDIS_URL = os.environ.get('REDIS_URL')
-    if REDIS_URL:
-        CACHES = {
-            'default': {
-                'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-                'LOCATION': REDIS_URL,
+    if os.environ.get('RENDER'):
+        # On Render server, use the internal REDIS_URL for RedisCache
+        REDIS_URL = os.environ.get('REDIS_URL')
+        if REDIS_URL:
+            CACHES = {
+                'default': {
+                    'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+                    'LOCATION': REDIS_URL,
+                }
             }
-        }
+        else:
+            from django.core.exceptions import ImproperlyConfigured
+            raise ImproperlyConfigured(
+                "Production environments (on Render) must configure a valid REDIS_URL "
+                "for cache consistency across multiple worker processes."
+            )
     else:
-        # Fallback to local memory cache for local development/testing when REDIS_URL is not set
+        # Locally, always use local memory cache (LocMemCache) to avoid slow external connections or timeouts
         CACHES = {
             'default': {
                 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'unique-snowflake',
+                'LOCATION': 'local-memory-cache',
             }
         }
 else:
@@ -196,6 +257,10 @@ else:
             'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
+
+# Print current active database and cache settings on startup/reload
+print(f"--> [DATABASE] ENGINE: {DATABASES['default']['ENGINE']} | HOST: {DATABASES['default']['HOST']}")
+print(f"--> [CACHE] BACKEND: {CACHES['default']['BACKEND']} | LOCATION: {CACHES['default'].get('LOCATION', 'None')}")
 
 
 # Stop-Process -Name "python" -Force

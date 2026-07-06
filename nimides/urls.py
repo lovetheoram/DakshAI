@@ -3,8 +3,10 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from nimides.views import health_check
 
 urlpatterns = [
+    path('api/health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path("api/syllabus/", include("syllabus.urls")),
     path("api/admin/", include("admin.urls")),
@@ -13,3 +15,4 @@ urlpatterns = [
     path("api/social/", include("social.urls")),
     path("auth/", include("authapp.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

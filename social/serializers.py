@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
-from .models import Post, Comment,  Follow, Notification, Message
+from .models import Post, Comment, Follow, Notification, Message, ActiveSession, MentorshipTicket, ReputationPoint
 
 
 # ---------------------------------------------------------
@@ -227,3 +227,41 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ["id", "sender", "receiver", "text", "created_at"]
+
+
+# ---------------------------------------------------------
+# ACTIVE SESSION SERIALIZER
+# ---------------------------------------------------------
+class ActiveSessionSerializer(serializers.ModelSerializer):
+    user = UserMiniSerializer(read_only=True)
+    concept_name = serializers.CharField(source="concept.name", read_only=True)
+    concept_id = serializers.IntegerField(source="concept.id", read_only=True)
+
+    class Meta:
+        model = ActiveSession
+        fields = ["id", "user", "concept_id", "concept_name", "status", "last_action_at"]
+
+
+# ---------------------------------------------------------
+# MENTORSHIP TICKET SERIALIZER
+# ---------------------------------------------------------
+class MentorshipTicketSerializer(serializers.ModelSerializer):
+    apprentice = UserMiniSerializer(read_only=True)
+    mentor = UserMiniSerializer(read_only=True)
+    concept_name = serializers.CharField(source="concept.name", read_only=True)
+    concept_id = serializers.IntegerField(source="concept.id", read_only=True)
+
+    class Meta:
+        model = MentorshipTicket
+        fields = ["id", "apprentice", "mentor", "concept_id", "concept_name", "status", "created_at"]
+
+
+# ---------------------------------------------------------
+# REPUTATION POINT SERIALIZER
+# ---------------------------------------------------------
+class ReputationPointSerializer(serializers.ModelSerializer):
+    user = UserMiniSerializer(read_only=True)
+
+    class Meta:
+        model = ReputationPoint
+        fields = ["id", "user", "points", "reason", "created_at"]

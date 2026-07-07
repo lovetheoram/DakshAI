@@ -1,0 +1,18 @@
+name: Keep Render Backend Awake
+
+on:
+  schedule:
+    # Runs at the 30th minute of every hour from 4:30 AM UTC (10:00 AM IST)
+    # to 4:30 PM UTC (10:00 PM IST) daily.
+    # 04:30 UTC = 10:00 AM IST
+    # 16:30 UTC = 10:00 PM IST
+    - cron: '30 4-16 * * *'
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+jobs:
+  ping_health_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API Endpoint
+        run: |
+          curl -s -f -I https://dakshai.onrender.com/api/health/ || exit 1

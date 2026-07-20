@@ -19,13 +19,26 @@ class Post(models.Model):
         ("doc", "Document"),
         ("mixed", "Mixed"),
         ("progress", "Progress Update"),
+        ("milestone", "Learning Milestone"),
+        ("project", "Project Showcase"),
+        ("help", "Help Request"),
+        ("discovery", "Discovery"),
+        ("opportunity", "Opportunity"),
+        ("discussion", "Discussion"),
+        ("story", "Student Story"),
+        ("experiment", "Experiment"),
+        ("failure", "Failure & Lesson"),
+        ("idea", "Idea"),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    post_type = models.CharField(max_length=10, choices=POST_TYPES, default="text", db_index=True)
+    post_type = models.CharField(max_length=20, choices=POST_TYPES, default="text", db_index=True)
     content = models.TextField(blank=True)
     media = models.JSONField(default=list, blank=True)  # [{"type": "image/video/doc", "url": "..."}]
     concept = models.ForeignKey(Concept, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts", db_index=True)
+    grade_level = models.IntegerField(null=True, blank=True, db_index=True)
+    relevance_score = models.IntegerField(default=0, db_index=True)
+    domain_tag = models.CharField(max_length=50, blank=True, default="General", db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     post_metadata = models.JSONField(default=dict, blank=True)
 

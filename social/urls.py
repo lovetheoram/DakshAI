@@ -19,9 +19,15 @@ from .views import (
     SessionPingAPI,
     MentorshipTicketAPI,
     MentorshipActionAPI,
+    ConceptSparksAPI,
+    ProgressInsightsAPI,
 )
 
 urlpatterns = [
+    # Concept Sparks & Insights (Deterministic Recommendations)
+    path("concept-sparks/", ConceptSparksAPI.as_view(), name="concept-sparks-query"),
+    path("concept-sparks/<int:concept_id>/", ConceptSparksAPI.as_view(), name="concept-sparks"),
+    path("insights/", ProgressInsightsAPI.as_view(), name="progress-insights"),
 
     # ======================================================
     # POSTS

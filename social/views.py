@@ -562,3 +562,99 @@ class MentorshipActionAPI(APIView):
 
         return Response({"detail": "Invalid action"}, status=400)
 
+
+# ==========================================================
+# DETERMINISTIC RECOMMENDATIONS & CONCEPT SPARKS
+# ==========================================================
+class ConceptSparksAPI(APIView):
+    """
+    Deterministic 'Beyond Your Chapter' contextual spark engine.
+    Fetches real-world projects, discussions, and opportunities linked to a concept.
+    Zero external AI dependency.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, concept_id=None):
+        if not concept_id:
+            concept_id = request.query_params.get("concept_id")
+
+        sparks_qs = Post.objects.all().select_related("user", "concept").prefetch_related("comments__user").annotate(
+            likes_count=Count("likes"),
+            is_liked=Exists(
+                Like.objects.filter(
+                    post=OuterRef("pk"),
+                    user=request.user
+                )
+            )
+        )
+
+        if concept_id:
+            sparks_qs = sparks_qs.filter(concept_id=concept_id)
+
+        sparks = sparks_qs.order_by("-relevance_score", "-created_at")[:10]
+        serialized_sparks = PostSerializer(sparks, many=True, context={"request": request}).data
+
+        # Sample opportunities (deterministic fallback/retrieval)
+        opportunities = [
+            {
+                "id": 1,
+                "title": "National Math & Science Olympiad 2026",
+                "category": "Olympiad",
+                "deadline": "Registration closes in 12 days",
+                "tag": "Mathematics & Physics"
+            },
+            {
+                "id": 2,
+                "title": "Global Student Robotics Hackathon",
+                "category": "Competition",
+                "deadline": "Open to Class 8-12",
+                "tag": "Hardware & Code"
+            }
+        ]
+
+        return Response({
+            "concept_id": concept_id,
+            "sparks": serialized_sparks,
+            "opportunities": opportunities,
+            "total_sparks": sparks.count()
+        })
+
+
+class ProgressInsightsAPI(APIView):
+    """
+    Deterministic Study Velocity & Growth Insights.
+    Calculates progress metrics without any generative AI API calls.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        from progress.models import ConceptProgress, StudyLog
+        from django.db.models import Avg
+
+        user_progress = ConceptProgress.objects.filter(user=request.user)
+        total_concepts = user_progress.count()
+        mastered_concepts = user_progress.filter(exam_readiness__gte=0.8).count()
+        avg_readiness = user_progress.aggregate(Avg("exam_readiness"))["exam_readiness__avg"] or 0.0
+
+        logs = StudyLog.objects.filter(user=request.user)
+        total_minutes = sum(log.duration_minutes for log in logs)
+
+        # Deterministic velocity calculation
+        velocity_text = f"You have mastered {mastered_concepts} of {total_concepts} topics with {int(avg_readiness * 100)}% readiness score."
+        if avg_readiness >= 0.7:
+            insight_hint = "High concept retention rate! Focus on tackling level-3 challenge problems and PYQs."
+        elif avg_readiness >= 0.4:
+            insight_hint = "Steady momentum! Review your incorrect quiz attempts in Newton's Laws and Vectors to unlock mastery."
+        else:
+            insight_hint = "Starting strong! Practice short 5-minute active retrieval sessions every day to build long-term retention."
+
+        return Response({
+            "total_concepts": total_concepts,
+            "mastered_concepts": mastered_concepts,
+            "avg_readiness_percentage": round(avg_readiness * 100, 1),
+            "total_study_minutes": total_minutes,
+            "velocity_text": velocity_text,
+            "insight_hint": insight_hint,
+        })
+
+

@@ -15,9 +15,19 @@ from .views import (
     InboxAPI,
     UserProfileAPI,
     SuggestedUsersAPI,
+    LobbyAPI,
+    SessionPingAPI,
+    MentorshipTicketAPI,
+    MentorshipActionAPI,
+    ConceptSparksAPI,
+    ProgressInsightsAPI,
 )
 
 urlpatterns = [
+    # Concept Sparks & Insights (Deterministic Recommendations)
+    path("concept-sparks/", ConceptSparksAPI.as_view(), name="concept-sparks-query"),
+    path("concept-sparks/<int:concept_id>/", ConceptSparksAPI.as_view(), name="concept-sparks"),
+    path("insights/", ProgressInsightsAPI.as_view(), name="progress-insights"),
 
     # ======================================================
     # POSTS
@@ -66,4 +76,12 @@ urlpatterns = [
     # ======================================================
     path("users/<int:user_id>/profile/", UserProfileAPI.as_view(), name="user-profile"),
     path("users/suggested/", SuggestedUsersAPI.as_view(), name="suggested-users"),
+
+    # ======================================================
+    # MULTIPLAYER LEARNING WORLD (DakshAI Social v4)
+    # ======================================================
+    path("lobby/", LobbyAPI.as_view(), name="multiplayer-lobby"),
+    path("session/ping/", SessionPingAPI.as_view(), name="session-ping"),
+    path("exchange/tickets/", MentorshipTicketAPI.as_view(), name="mentorship-tickets"),
+    path("exchange/tickets/<int:ticket_id>/action/", MentorshipActionAPI.as_view(), name="mentorship-ticket-action"),
 ]

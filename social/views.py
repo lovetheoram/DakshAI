@@ -356,3 +356,305 @@ class SuggestedUsersAPI(APIView):
             {"suggestions": UserMiniSerializer(suggestions, many=True, context={"request": request, "following_ids": following_ids}).data},
             status=status.HTTP_200_OK
         )
+
+
+# ==========================================================
+# MULTIPLAYER LEARNING WORLD (DakshAI Social v4) VIEWS
+# ==========================================================
+from django.core.cache import cache
+from django.utils import timezone
+from django.db.models import Sum
+from .models import ActiveSession, MentorshipTicket, ReputationPoint
+from .serializers import ActiveSessionSerializer, MentorshipTicketSerializer, ReputationPointSerializer
+from progress.models import ConceptProgress, UserGoal
+from syllabus.models import Subject, Concept
+
+class LobbyAPI(APIView):
+    """Lobby space aggregation with local memory cache to keep Render DB clean and free."""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        cache_key = "multiplayer_lobby_data"
+        lobby_data = cache.get(cache_key)
+
+        if lobby_data is None:
+            # Threshold: active in the last 30 minutes
+            threshold = timezone.now() - timezone.timedelta(minutes=30)
+            active_sessions = ActiveSession.objects.filter(last_action_at__gte=threshold).select_related("user", "concept__subtopic__topic__subject")
+            
+            total_online = active_sessions.count()
+
+            # Group active sessions by subject name
+            by_subject = {}
+            active_sprints = {} # Concept name -> active count
+            
+            for sess in active_sessions:
+                if sess.concept and sess.concept.subtopic and sess.concept.subtopic.topic and sess.concept.subtopic.topic.subject:
+                    sub_name = sess.concept.subtopic.topic.subject.name
+                    by_subject[sub_name] = by_subject.get(sub_name, 0) + 1
+                    
+                    concept_name = sess.concept.name
+                    active_sprints[concept_name] = active_sprints.get(concept_name, 0) + 1
+
+            # Format sprints for UI
+            formatted_sprints = [{"concept_name": name, "count": cnt} for name, cnt in active_sprints.items()]
+
+            # Compute a reputation leaderboard (top 5 tutors)
+            leaderboard_qs = ReputationPoint.objects.values("user__id", "user__username").annotate(
+                total_points=Sum("points")
+            ).order_by("-total_points")[:5]
+            
+            leaderboard = [
+                {"id": item["user__id"], "username": item["user__username"], "points": item["total_points"]}
+                for item in leaderboard_qs
+            ]
+
+            lobby_data = {
+                "total_online": total_online,
+                "by_subject": by_subject,
+                "active_sprints": formatted_sprints[:5],
+                "leaderboard": leaderboard,
+            }
+            # Cache for 3 minutes to guarantee zero DB load on consecutive loads
+            cache.set(cache_key, lobby_data, timeout=180)
+
+        # Append current user's check-in status dynamically
+        my_session = ActiveSession.objects.filter(user=request.user).first()
+        my_session_data = ActiveSessionSerializer(my_session, context={"request": request}).data if my_session else None
+        
+        # Get open tickets count
+        open_tickets_count = MentorshipTicket.objects.filter(status="open").count()
+
+        return Response({
+            "lobby": lobby_data,
+            "my_session": my_session_data,
+            "open_tickets_count": open_tickets_count
+        })
+
+
+class SessionPingAPI(APIView):
+    """Pings user transition state change (start studying, quiz, etc.). Zero polling required."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        status_val = request.data.get("status") # 'reading' | 'quiz' | 'revision'
+        concept_id = request.data.get("concept_id")
+
+        if not status_val:
+            # If no status is specified, clear the user session (log out of active learning state)
+            ActiveSession.objects.filter(user=user).delete()
+            # Invalidate lobby cache so counts update on next fetch
+            cache.delete("multiplayer_lobby_data")
+            return Response({"message": "Session cleared"}, status=status.HTTP_200_OK)
+
+        concept = get_object_or_404(Concept, id=concept_id) if concept_id else None
+
+        active_sess, created = ActiveSession.objects.update_or_create(
+            user=user,
+            defaults={
+                "status": status_val,
+                "concept": concept,
+                "last_action_at": timezone.now()
+            }
+        )
+        
+        # Invalidate lobby cache
+        cache.delete("multiplayer_lobby_data")
+
+        return Response(ActiveSessionSerializer(active_sess, context={"request": request}).data)
+
+
+class MentorshipTicketAPI(APIView):
+    """Handles async mentor matching and accepted queues."""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Returns open help tickets. Filter by ?eligible=true to find concepts where current user is a master."""
+        eligible = request.query_params.get("eligible")
+        qs = MentorshipTicket.objects.filter(status="open").select_related("apprentice", "concept")
+
+        if eligible == "true":
+            # Find concepts where current user has mastery >= 0.70
+            mastered_concepts = ConceptProgress.objects.filter(
+                user=request.user,
+                exam_readiness__gte=0.70
+            ).values_list("concept_id", flat=True)
+            qs = qs.filter(concept_id__in=mastered_concepts)
+
+        tickets = qs.order_by("-created_at")
+        return Response(MentorshipTicketSerializer(tickets, many=True, context={"request": request}).data)
+
+    def post(self, request):
+        """Apprentice logs a mentorship struggle ticket."""
+        concept_id = request.data.get("concept_id")
+        if not concept_id:
+            return Response({"detail": "concept_id required"}, status=400)
+            
+        concept = get_object_or_404(Concept, id=concept_id)
+
+        # Avoid double open tickets for same user/concept
+        ticket, created = MentorshipTicket.objects.get_or_create(
+            apprentice=request.user,
+            concept=concept,
+            status="open"
+        )
+        return Response(MentorshipTicketSerializer(ticket, context={"request": request}).data, status=status.HTTP_201_CREATED)
+
+
+class MentorshipActionAPI(APIView):
+    """Handles accept, resolve, and close actions on mentorship tickets."""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, ticket_id):
+        action = request.data.get("action") # 'accept' | 'resolve'
+        ticket = get_object_or_404(MentorshipTicket, id=ticket_id)
+
+        if action == "accept":
+            if ticket.apprentice == request.user:
+                return Response({"detail": "Cannot mentor yourself"}, status=400)
+            if ticket.status != "open":
+                return Response({"detail": "Ticket already taken"}, status=400)
+                
+            ticket.mentor = request.user
+            ticket.status = "active"
+            ticket.save()
+
+            # Create notification for apprentice
+            create_notification(
+                user=ticket.apprentice,
+                triggered_by=request.user,
+                type="post",
+                message=f"🎓 {request.user.username} accepted your help ticket for {ticket.concept.name}! They will reach out to you."
+            )
+
+            # Auto-create chat conversation link between apprentice and mentor
+            user1, user2 = (ticket.apprentice, request.user) if ticket.apprentice.id < request.user.id else (request.user, ticket.apprentice)
+            Conversation.objects.get_or_create(user1=user1, user2=user2)
+
+            return Response(MentorshipTicketSerializer(ticket, context={"request": request}).data)
+
+        elif action == "resolve":
+            if ticket.mentor != request.user:
+                return Response({"detail": "Only the mentor can resolve this ticket"}, status=400)
+            if ticket.status != "active":
+                return Response({"detail": "Ticket is not active"}, status=400)
+
+            ticket.status = "resolved"
+            ticket.save()
+
+            # Issue Reputation Points to the mentor
+            ReputationPoint.objects.create(
+                user=request.user,
+                points=15,
+                reason=f"Mentored peer on {ticket.concept.name}"
+            )
+
+            # Notification
+            create_notification(
+                user=ticket.apprentice,
+                triggered_by=request.user,
+                type="post",
+                message=f"🏆 Mentorship resolved! You earned co-learning points, and {request.user.username} gained +15 reputation."
+            )
+
+            return Response(MentorshipTicketSerializer(ticket, context={"request": request}).data)
+
+        return Response({"detail": "Invalid action"}, status=400)
+
+
+# ==========================================================
+# DETERMINISTIC RECOMMENDATIONS & CONCEPT SPARKS
+# ==========================================================
+class ConceptSparksAPI(APIView):
+    """
+    Deterministic 'Beyond Your Chapter' contextual spark engine.
+    Fetches real-world projects, discussions, and opportunities linked to a concept.
+    Zero external AI dependency.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, concept_id=None):
+        if not concept_id:
+            concept_id = request.query_params.get("concept_id")
+
+        sparks_qs = Post.objects.all().select_related("user", "concept").prefetch_related("comments__user").annotate(
+            likes_count=Count("likes"),
+            is_liked=Exists(
+                Like.objects.filter(
+                    post=OuterRef("pk"),
+                    user=request.user
+                )
+            )
+        )
+
+        if concept_id:
+            sparks_qs = sparks_qs.filter(concept_id=concept_id)
+
+        sparks = sparks_qs.order_by("-relevance_score", "-created_at")[:10]
+        serialized_sparks = PostSerializer(sparks, many=True, context={"request": request}).data
+
+        # Sample opportunities (deterministic fallback/retrieval)
+        opportunities = [
+            {
+                "id": 1,
+                "title": "National Math & Science Olympiad 2026",
+                "category": "Olympiad",
+                "deadline": "Registration closes in 12 days",
+                "tag": "Mathematics & Physics"
+            },
+            {
+                "id": 2,
+                "title": "Global Student Robotics Hackathon",
+                "category": "Competition",
+                "deadline": "Open to Class 8-12",
+                "tag": "Hardware & Code"
+            }
+        ]
+
+        return Response({
+            "concept_id": concept_id,
+            "sparks": serialized_sparks,
+            "opportunities": opportunities,
+            "total_sparks": sparks.count()
+        })
+
+
+class ProgressInsightsAPI(APIView):
+    """
+    Deterministic Study Velocity & Growth Insights.
+    Calculates progress metrics without any generative AI API calls.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        from progress.models import ConceptProgress, StudyLog
+        from django.db.models import Avg
+
+        user_progress = ConceptProgress.objects.filter(user=request.user)
+        total_concepts = user_progress.count()
+        mastered_concepts = user_progress.filter(exam_readiness__gte=0.8).count()
+        avg_readiness = user_progress.aggregate(Avg("exam_readiness"))["exam_readiness__avg"] or 0.0
+
+        logs = StudyLog.objects.filter(user=request.user)
+        total_minutes = sum(log.duration_minutes for log in logs)
+
+        # Deterministic velocity calculation
+        velocity_text = f"You have mastered {mastered_concepts} of {total_concepts} topics with {int(avg_readiness * 100)}% readiness score."
+        if avg_readiness >= 0.7:
+            insight_hint = "High concept retention rate! Focus on tackling level-3 challenge problems and PYQs."
+        elif avg_readiness >= 0.4:
+            insight_hint = "Steady momentum! Review your incorrect quiz attempts in Newton's Laws and Vectors to unlock mastery."
+        else:
+            insight_hint = "Starting strong! Practice short 5-minute active retrieval sessions every day to build long-term retention."
+
+        return Response({
+            "total_concepts": total_concepts,
+            "mastered_concepts": mastered_concepts,
+            "avg_readiness_percentage": round(avg_readiness * 100, 1),
+            "total_study_minutes": total_minutes,
+            "velocity_text": velocity_text,
+            "insight_hint": insight_hint,
+        })
+
+

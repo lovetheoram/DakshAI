@@ -752,8 +752,20 @@ class BrainEngineAPI(APIView):
         else:
             achievements.append({"emoji": "🏆", "label": "Half Ready", "unlocked": False})
 
+        # ── Human-language metrics for the Living OS frontend ─────────
+        concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
+        total_concepts = len(concept_ids)
+        
+        concepts_mastered_count = ConceptProgress.objects.filter(
+            user=user, concept_id__in=concept_ids, exam_readiness__gte=0.5
+        ).count()
+        active_days_this_week = sum(1 for t in targets_7d if t.completed_growth > 0)
+
+        # Total questions solved (all time) for achievement progress
+        total_questions_solved = sum(d.questions_solved for d in diary_entries)
+
         response_data = {
-            "brain_engine_version": "2.0",
+            "brain_engine_version": "3.0",
             "mission_day": mission_day,
             "goal": UserGoalSerializer(goal).data,
             "target": DailyTargetSerializer(target).data,
@@ -772,8 +784,59 @@ class BrainEngineAPI(APIView):
             "best_day": best_day,
             "last_active_concept": last_active_concept,
             "recent_concepts": recent_concepts,
-            "achievements": achievements
+            "achievements": achievements,
+            # v3 Living OS fields
+            "concepts_mastered_count": concepts_mastered_count,
+            "total_concepts_in_exam": total_concepts,
+            "active_days_this_week": active_days_this_week,
+            "total_questions_solved": total_questions_solved,
         }
 
         cache.set(cache_key, response_data, timeout=3600)
         return Response(response_data)
+
+
+class GalaxyAPI(APIView):
+    """Lightweight endpoint returning subtopic-level progress for the Knowledge Galaxy."""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        goal = UserGoal.objects.filter(user=user).first()
+        if not goal:
+            return Response({"subjects": [], "total_concepts": 0, "mastered_count": 0})
+
+        subjects_data = []
+        subjects = goal.exam.subjects.prefetch_related(
+            "topics__subtopics"
+        ).all()
+
+        for subject in subjects:
+            subtopics_data = []
+            for topic in subject.topics.all():
+                for st in topic.subtopics.all():
+                    sp = SubtopicProgress.objects.filter(
+                        user=user, subtopic=st
+                    ).first()
+                    subtopics_data.append({
+                        "id": st.id,
+                        "name": st.name,
+                        "efficiency": round(sp.efficiency, 2) if sp else 0.0,
+                    })
+            subjects_data.append({
+                "name": subject.name,
+                "subtopics": subtopics_data,
+            })
+
+        concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
+        mastered_count = ConceptProgress.objects.filter(
+            user=user,
+            concept_id__in=concept_ids,
+            exam_readiness__gte=0.5
+        ).count()
+
+        return Response({
+            "subjects": subjects_data,
+            "total_concepts": len(concept_ids),
+            "mastered_count": mastered_count,
+        })

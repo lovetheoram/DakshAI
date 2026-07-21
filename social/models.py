@@ -19,13 +19,26 @@ class Post(models.Model):
         ("doc", "Document"),
         ("mixed", "Mixed"),
         ("progress", "Progress Update"),
+        ("milestone", "Learning Milestone"),
+        ("project", "Project Showcase"),
+        ("help", "Help Request"),
+        ("discovery", "Discovery"),
+        ("opportunity", "Opportunity"),
+        ("discussion", "Discussion"),
+        ("story", "Student Story"),
+        ("experiment", "Experiment"),
+        ("failure", "Failure & Lesson"),
+        ("idea", "Idea"),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    post_type = models.CharField(max_length=10, choices=POST_TYPES, default="text", db_index=True)
+    post_type = models.CharField(max_length=20, choices=POST_TYPES, default="text", db_index=True)
     content = models.TextField(blank=True)
     media = models.JSONField(default=list, blank=True)  # [{"type": "image/video/doc", "url": "..."}]
     concept = models.ForeignKey(Concept, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts", db_index=True)
+    grade_level = models.IntegerField(null=True, blank=True, db_index=True)
+    relevance_score = models.IntegerField(default=0, db_index=True)
+    domain_tag = models.CharField(max_length=50, blank=True, default="General", db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     post_metadata = models.JSONField(default=dict, blank=True)
 
@@ -135,3 +148,53 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.sender.username} → {self.receiver.username}"
+
+
+# ==========================================================
+# ACTIVE SESSION (Cost-efficient Presence status)
+# ==========================================================
+class ActiveSession(models.Model):
+    STATUS_CHOICES = (
+        ("reading", "Reading notes"),
+        ("quiz", "Solving Quiz"),
+        ("revision", "Revising concept"),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="active_session")
+    concept = models.ForeignKey(Concept, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
+    last_action_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.user.username}: {self.status}"
+
+
+# ==========================================================
+# MENTORSHIP TICKET (Help Queue)
+# ==========================================================
+class MentorshipTicket(models.Model):
+    STATUS_CHOICES = (
+        ("open", "Open"),
+        ("active", "Active Match"),
+        ("resolved", "Resolved"),
+    )
+    apprentice = models.ForeignKey(User, on_delete=models.CASCADE, related_name="apprentice_tickets")
+    mentor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="mentor_tickets")
+    concept = models.ForeignKey(Concept, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="open")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Ticket {self.id}: {self.concept.name} ({self.status})"
+
+
+# ==========================================================
+# REPUTATION POINT (Tutor status ledger)
+# ==========================================================
+class ReputationPoint(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reputation")
+    points = models.IntegerField()
+    reason = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}: +{self.points} pts ({self.reason})"

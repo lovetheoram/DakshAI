@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
-from .models import Post, Comment,  Follow, Notification, Message
+from .models import Post, Comment, Follow, Notification, Message, ActiveSession, MentorshipTicket, ReputationPoint
 
 
 # ---------------------------------------------------------
@@ -95,6 +95,9 @@ class PostSerializer(serializers.ModelSerializer):
             "media",
             "concept_id",
             "concept_name",
+            "grade_level",
+            "relevance_score",
+            "domain_tag",
             "created_at",
             "comments",
             "likes_count",
@@ -133,6 +136,9 @@ class PostCreateSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
+    post_type = serializers.CharField(required=False, allow_blank=True)
+    grade_level = serializers.CharField(required=False, allow_blank=True)
+    domain_tag = serializers.CharField(required=False, allow_blank=True)
 
     # Media inputs
     images = serializers.ListField(
@@ -153,7 +159,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["content", "concept", "images", "videos", "documents"]
+        fields = ["content", "concept", "post_type", "grade_level", "domain_tag", "images", "videos", "documents"]
 
     def create(self, validated_data):
         user = self.context["request"].user
@@ -162,6 +168,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
         images = validated_data.pop("images", [])
         videos = validated_data.pop("videos", [])
         documents = validated_data.pop("documents", [])
+        custom_post_type = validated_data.pop("post_type", None)
 
         # Store images in media/posts/
         for img in images:
@@ -179,8 +186,10 @@ class PostCreateSerializer(serializers.ModelSerializer):
             saved_path = default_storage.save(path, doc)
             media_list.append({"type": "doc", "url": f"/media/{saved_path}"})
 
-        # Determine post_type automatically
-        if not media_list:
+        # Determine post_type: use custom_post_type if provided, else fallback to auto
+        if custom_post_type:
+            post_type = custom_post_type
+        elif not media_list:
             post_type = "text"
         else:
             types = {m["type"] for m in media_list}
@@ -227,3 +236,41 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ["id", "sender", "receiver", "text", "created_at"]
+
+
+# ---------------------------------------------------------
+# ACTIVE SESSION SERIALIZER
+# ---------------------------------------------------------
+class ActiveSessionSerializer(serializers.ModelSerializer):
+    user = UserMiniSerializer(read_only=True)
+    concept_name = serializers.CharField(source="concept.name", read_only=True)
+    concept_id = serializers.IntegerField(source="concept.id", read_only=True)
+
+    class Meta:
+        model = ActiveSession
+        fields = ["id", "user", "concept_id", "concept_name", "status", "last_action_at"]
+
+
+# ---------------------------------------------------------
+# MENTORSHIP TICKET SERIALIZER
+# ---------------------------------------------------------
+class MentorshipTicketSerializer(serializers.ModelSerializer):
+    apprentice = UserMiniSerializer(read_only=True)
+    mentor = UserMiniSerializer(read_only=True)
+    concept_name = serializers.CharField(source="concept.name", read_only=True)
+    concept_id = serializers.IntegerField(source="concept.id", read_only=True)
+
+    class Meta:
+        model = MentorshipTicket
+        fields = ["id", "apprentice", "mentor", "concept_id", "concept_name", "status", "created_at"]
+
+
+# ---------------------------------------------------------
+# REPUTATION POINT SERIALIZER
+# ---------------------------------------------------------
+class ReputationPointSerializer(serializers.ModelSerializer):
+    user = UserMiniSerializer(read_only=True)
+
+    class Meta:
+        model = ReputationPoint
+        fields = ["id", "user", "points", "reason", "created_at"]

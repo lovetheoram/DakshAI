@@ -3,7 +3,7 @@ from .views import (
     ConceptProgressAPI, ConceptHistoryAPI, SubtopicProgressAPI,
     UserGoalAPI, DailyTargetAPI, DailyTargetRevisionAPI,
     DailyDiaryAPI, DailyDiaryEnergyAPI, DailyTargetShareAPI, StreakStatsAPI,
-    BrainEngineAPI
+    BrainEngineAPI, GalaxyAPI
 )
 
 urlpatterns = [
@@ -18,4 +18,5 @@ urlpatterns = [
     path("diary/", DailyDiaryAPI.as_view(), name="daily-diary"),
     path("diary/energy/", DailyDiaryEnergyAPI.as_view(), name="daily-diary-energy"),
     path("streak/", StreakStatsAPI.as_view(), name="streak-stats"),
+    path("galaxy/", GalaxyAPI.as_view(), name="galaxy"),
 ]

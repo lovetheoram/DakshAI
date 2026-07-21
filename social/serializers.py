@@ -136,6 +136,9 @@ class PostCreateSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
+    post_type = serializers.CharField(required=False, allow_blank=True)
+    grade_level = serializers.CharField(required=False, allow_blank=True)
+    domain_tag = serializers.CharField(required=False, allow_blank=True)
 
     # Media inputs
     images = serializers.ListField(
@@ -156,7 +159,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["content", "concept", "images", "videos", "documents"]
+        fields = ["content", "concept", "post_type", "grade_level", "domain_tag", "images", "videos", "documents"]
 
     def create(self, validated_data):
         user = self.context["request"].user
@@ -165,6 +168,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
         images = validated_data.pop("images", [])
         videos = validated_data.pop("videos", [])
         documents = validated_data.pop("documents", [])
+        custom_post_type = validated_data.pop("post_type", None)
 
         # Store images in media/posts/
         for img in images:
@@ -182,8 +186,10 @@ class PostCreateSerializer(serializers.ModelSerializer):
             saved_path = default_storage.save(path, doc)
             media_list.append({"type": "doc", "url": f"/media/{saved_path}"})
 
-        # Determine post_type automatically
-        if not media_list:
+        # Determine post_type: use custom_post_type if provided, else fallback to auto
+        if custom_post_type:
+            post_type = custom_post_type
+        elif not media_list:
             post_type = "text"
         else:
             types = {m["type"] for m in media_list}

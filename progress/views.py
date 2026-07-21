@@ -19,7 +19,11 @@ class ConceptProgressAPI(APIView):
     def get(self, request, concept_id):
         concept = Concept.objects.get(id=concept_id)
         cp = ProgressService.get_or_create_concept_progress(request.user, concept)
-        return Response(ConceptProgressSerializer(cp).data)
+        data = ConceptProgressSerializer(cp).data
+        records = ProgressRecord.objects.filter(user=request.user, concept=concept)
+        data["total_questions_solved"] = sum(r.main_total + r.sub_total for r in records)
+        data["total_attempts"] = records.count()
+        return Response(data)
 
 
 class ConceptHistoryAPI(APIView):

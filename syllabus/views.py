@@ -72,3 +72,35 @@ class ConceptListAPI(APIView):
         )
         data = ConceptMiniSerializer(qs, many=True).data
         return Response(data)
+
+
+class ConceptDetailAPI(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, concept_id):
+        try:
+            concept = Concept.objects.select_related(
+                "subtopic__topic__subject"
+            ).get(id=concept_id)
+        except Concept.DoesNotExist:
+            return Response({"detail": "Concept not found"}, status=404)
+
+        progress_record = None
+        if request.user and not request.user.is_anonymous:
+            progress_record = ConceptProgress.objects.filter(
+                user=request.user, concept=concept
+            ).first()
+
+        serializer = ConceptSerializer(
+            concept,
+            context={
+                "user": request.user,
+                "progress_dict": {concept.id: progress_record} if progress_record else {},
+            },
+        )
+        data = serializer.data
+        data["subtopic_id"] = concept.subtopic.id
+        data["subtopic_name"] = concept.subtopic.name
+        data["topic_name"] = concept.subtopic.topic.name
+        data["subject_name"] = concept.subtopic.topic.subject.name
+        return Response(data)

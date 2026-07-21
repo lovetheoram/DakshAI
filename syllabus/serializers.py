@@ -108,6 +108,8 @@ class ConceptMiniSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "description",
+            "ai_meta",
             "subject_id",
             "subject_name",
             "topic_id",

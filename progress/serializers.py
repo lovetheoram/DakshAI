@@ -6,10 +6,29 @@ class ConceptProgressSerializer(serializers.ModelSerializer):
     exam_readiness = serializers.FloatField(read_only=True)
     chapter_understanding = serializers.FloatField(read_only=True)
     last_practiced = serializers.DateTimeField(read_only=True)
+    mastery = serializers.SerializerMethodField()
+    raw_mastery = serializers.SerializerMethodField()
 
     class Meta:
         model = ConceptProgress
-        fields = ["user", "concept", "exam_readiness", "chapter_understanding", "last_practiced"]
+        fields = [
+            "user",
+            "concept",
+            "exam_readiness",
+            "chapter_understanding",
+            "mastery",
+            "raw_mastery",
+            "last_practiced",
+        ]
+
+    def get_mastery(self, obj):
+        return obj.get_mastery() if obj else [0.0, 0.0]
+
+    def get_raw_mastery(self, obj):
+        return [
+            round(obj.exam_readiness, 4),
+            round(obj.chapter_understanding, 4),
+        ] if obj else [0.0, 0.0]
 
 
 class SubtopicProgressSerializer(serializers.ModelSerializer):

@@ -14,5 +14,6 @@ urlpatterns = [
     path("api/progress/", include("progress.urls")),
     path("api/social/", include("social.urls")),
     path("auth/", include("authapp.urls")),
+    path("api/behavior/", include("behavior.urls")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

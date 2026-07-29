@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'progress',
     'quiz',
     'corsheaders',
+    'behavior',
 ]
 
 MIDDLEWARE = [

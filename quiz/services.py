@@ -18,6 +18,12 @@ import uuid, random
 from langchain_google_genai import ChatGoogleGenerativeAI
 import json
 
+# Behavioral event tracking (import guarded to avoid circular imports at startup)
+try:
+    from behavior.services.event_processor import EventProcessor as _EventProcessor
+except Exception:
+    _EventProcessor = None
+
 
 def build_single_question_prompt(concept):
     return f"""
@@ -466,6 +472,36 @@ class QuizService:
         session.save()
 
         ProgressService.update_progress_with_session(user, session)
+
+        # ── Fire behavioral events ────────────────────────────────────────
+        if _EventProcessor:
+            concept = session.questions.first().concept if session.questions.exists() else None
+            concept_name = concept.name if concept else ""
+            concept_id   = concept.id   if concept else None
+            score_pct    = round(session.score * 100, 1)
+
+            if session.score >= 0.60:
+                _EventProcessor.log(user, "QUIZ_PASSED", {
+                    "concept_id":   concept_id,
+                    "concept_name": concept_name,
+                    "score":        score_pct,
+                })
+            else:
+                # Count previous failures on this concept to distinguish REPEAT
+                from behavior.models import UserBehaviorEvent
+                prior_fails = UserBehaviorEvent.objects.filter(
+                    user=user,
+                    event_type__in=["QUIZ_FAILED", "QUIZ_FAILED_REPEAT"],
+                    metadata__concept_id=concept_id
+                ).count()
+                evt = "QUIZ_FAILED_REPEAT" if prior_fails >= 2 else "QUIZ_FAILED"
+                _EventProcessor.log(user, evt, {
+                    "concept_id":    concept_id,
+                    "concept_name":  concept_name,
+                    "score":         score_pct,
+                    "attempt_count": prior_fails + 1,
+                })
+
         return session
 
 

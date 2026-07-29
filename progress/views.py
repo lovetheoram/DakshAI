@@ -12,6 +12,12 @@ from .serializers import (
 from .services import ProgressService
 from syllabus.models import Concept, Subtopic, Exam
 
+# Behavioral event tracking
+try:
+    from behavior.services.event_processor import EventProcessor as _EventProcessor
+except Exception:
+    _EventProcessor = None
+
 
 class ConceptProgressAPI(APIView):
     permission_classes = [IsAuthenticated]
@@ -122,6 +128,13 @@ class UserGoalAPI(APIView):
 
         invalidate_growth_cache(user)
 
+        # Fire behavioral event
+        if _EventProcessor:
+            _EventProcessor.log(user, "GOAL_SET", {
+                "exam_name": exam.name,
+                "target_date": str(target_date),
+            })
+
         return Response(UserGoalSerializer(goal).data)
 
 
@@ -204,6 +217,14 @@ class DailyDiaryEnergyAPI(APIView):
         diary.save()
 
         invalidate_growth_cache(request.user)
+
+        # Fire behavioral event
+        if _EventProcessor:
+            _EventProcessor.log(request.user, "ENERGY_REPORTED", {
+                "energy": int(energy_score) if energy_score is not None else None,
+                "focus":  int(focus_score)  if focus_score  is not None else None,
+                "mood":   mood,
+            })
 
         return Response(DailyDiaryEntrySerializer(diary).data)
 

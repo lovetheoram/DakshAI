@@ -93,6 +93,7 @@ class UserMindProfile(models.Model):
 # =============================================================
 class CatalystMessage(models.Model):
     TRIGGER_CHOICES = [
+        # ── Phase 4 — state-based triggers (unchanged) ──────────────────────
         ("FIRST_LOGIN",          "First Login"),
         ("RETURN_AFTER_BREAK",   "Return After Break"),
         ("GOAL_SET",             "Goal Just Set"),
@@ -107,20 +108,41 @@ class CatalystMessage(models.Model):
         ("THRIVING",             "User Thriving"),
         ("AT_RISK",              "User At Risk"),
         ("GENERIC_INSIGHT",      "Generic Insight"),
+        # ── Phase 5 — OIDPI action-type triggers (new) ───────────────────────
+        ("CURIOSITY_PROMPT",     "Curiosity — Ask before Notes"),
+        ("DIRECT_CHALLENGE",     "Challenge — Skip to Test"),
+        ("ENCOURAGEMENT",        "Encourage — Fear Area Support"),
+        ("CELEBRATION",          "Celebrate — Milestone"),
+        ("FOCUSED_EXPLAIN",      "Explain — Repeated Failure"),
+        ("REFLECTION_PROMPT",    "Reflect — Long Session / Drift"),
+        ("PREDICTION_NARRATIVE", "Predict — Growth Story"),
+        ("IDENTITY_ARRIVAL",     "Identity — Mood Arrival Ritual"),
     ]
 
-    trigger    = models.CharField(max_length=30, choices=TRIGGER_CHOICES, db_index=True)
-    title      = models.CharField(max_length=120)   # short headline, e.g. "Signal received."
-    body       = models.TextField()                  # the actual Daksh message (may contain {placeholders})
-    cta_text   = models.CharField(max_length=60, blank=True)   # e.g. "Begin Mission"
-    cta_action = models.CharField(max_length=100, blank=True)  # e.g. "navigate:/learn"
-    weight     = models.IntegerField(default=1)     # higher = shown more often
+    # Tone maps to InterventionEngine's adaptive tone selector
+    TONE_CHOICES = [
+        ("mentor",     "Mentor — warm, patient, no pressure"),
+        ("challenger", "Challenger — direct, sharp, playful"),
+        ("companion",  "Companion — curious, gentle, exploratory"),
+        ("any",        "Any — tone-agnostic, works for all"),
+    ]
+
+    trigger     = models.CharField(max_length=30, choices=TRIGGER_CHOICES, db_index=True)
+    tone        = models.CharField(max_length=12, choices=TONE_CHOICES, default="any", db_index=True)
+    title       = models.CharField(max_length=120)   # short headline, e.g. "Signal received."
+    body        = models.TextField()                  # Daksh message — may contain {placeholders}
+    cta_text    = models.CharField(max_length=60, blank=True)   # e.g. "Begin Mission"
+    cta_action  = models.CharField(max_length=100, blank=True)  # e.g. "navigate:/learn"
+    weight      = models.IntegerField(default=1)      # higher = shown more often
 
     class Meta:
         ordering = ["-weight"]
+        indexes = [
+            models.Index(fields=["trigger", "tone"]),
+        ]
 
     def __str__(self):
-        return f"[{self.trigger}] {self.title}"
+        return f"[{self.trigger}][{self.tone}] {self.title}"
 
 
 # =============================================================

@@ -3,10 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import UserBehaviorEvent, UserMindProfile
+from .models import UserBehaviorEvent, UserMindProfile, CatalystMessage
 from .serializers import UserBehaviorEventSerializer, UserMindProfileSerializer
 from .services.event_processor import EventProcessor
 from .services.catalyst_engine import CatalystEngine
+
+import random
 
 
 class BehaviorEventAPI(APIView):
@@ -43,6 +45,67 @@ class CatalystAPI(APIView):
     def get(self, request):
         data = CatalystEngine.get_catalyst_for_user(request.user)
         return Response(data)
+
+
+class InterventionAPI(APIView):
+    """
+    GET /api/behavior/catalyst/intervention/?trigger=CURIOSITY_PROMPT&tone=mentor
+
+    Phase 5 endpoint: returns a tone-matched CatalystMessage for a given action trigger.
+    Called by the frontend OIDPI loop after PriorityEngine selects a winner.
+
+    Lookup priority:
+      1. Exact trigger + tone match
+      2. trigger + tone='any'
+      3. trigger only (any tone)
+      4. GENERIC_INSIGHT fallback
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        trigger = request.query_params.get("trigger", "")
+        tone    = request.query_params.get("tone", "any")
+
+        if not trigger:
+            return Response({"detail": "trigger param required"}, status=400)
+
+        # Priority 1: exact match
+        msgs = list(CatalystMessage.objects.filter(trigger=trigger, tone=tone))
+
+        # Priority 2: any-tone variant of the same trigger
+        if not msgs:
+            msgs = list(CatalystMessage.objects.filter(trigger=trigger, tone="any"))
+
+        # Priority 3: any message for this trigger
+        if not msgs:
+            msgs = list(CatalystMessage.objects.filter(trigger=trigger))
+
+        # Priority 4: generic fallback
+        if not msgs:
+            msgs = list(CatalystMessage.objects.filter(trigger="GENERIC_INSIGHT"))
+
+        if not msgs:
+            return Response({
+                "trigger": trigger,
+                "tone": tone,
+                "title": "Observation.",
+                "body": "Consistency beats intensity. One focused session builds more knowledge than five exhausting ones.",
+                "cta_text": "Begin Session",
+                "cta_action": "navigate:/learn",
+            })
+
+        # Weighted random selection
+        weights = [m.weight for m in msgs]
+        msg = random.choices(msgs, weights=weights, k=1)[0]
+
+        return Response({
+            "trigger": trigger,
+            "tone": tone,
+            "title": msg.title,
+            "body": msg.body,
+            "cta_text": msg.cta_text,
+            "cta_action": msg.cta_action,
+        })
 
 
 class MindProfileAPI(APIView):

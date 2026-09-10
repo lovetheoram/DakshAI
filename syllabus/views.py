@@ -103,4 +103,27 @@ class ConceptDetailAPI(APIView):
         data["subtopic_name"] = concept.subtopic.name
         data["topic_name"] = concept.subtopic.topic.name
         data["subject_name"] = concept.subtopic.topic.subject.name
-        return Response(data)
+        return Response(data)
+
+
+class ConceptPYQListView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, concept_id):
+        try:
+            concept = Concept.objects.prefetch_related("pyqs").get(id=concept_id)
+        except Concept.DoesNotExist:
+            return Response({"detail": "Concept not found"}, status=404)
+
+        from .serializers import PYQSerializer
+        pyqs_data = PYQSerializer(concept.pyqs.all(), many=True).data
+
+        return Response({
+            "concept_id": concept.id,
+            "concept_name": concept.name,
+            "description": concept.description,
+            "ai_meta": concept.ai_meta,
+            "pyqs_count": len(pyqs_data),
+            "pyqs": pyqs_data
+        })
+

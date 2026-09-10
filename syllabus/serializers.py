@@ -1,11 +1,34 @@
 from rest_framework import serializers
-from .models import Exam, Subject, Topic, Subtopic, Concept
+from .models import Exam, Subject, Topic, Subtopic, Concept, PYQ
 from progress.models import ConceptProgress
+
+
+class PYQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PYQ
+        fields = [
+            "id",
+            "question_text",
+            "options",
+            "correct_answer",
+            "explanation",
+            "exam_source",
+            "exam_year",
+            "source_book",
+            "source_page",
+            "source_question_number",
+            "experiential_summary",
+            "extraction_confidence",
+            "needs_review",
+            "order",
+        ]
+
 
 class ConceptSerializer(serializers.ModelSerializer):
     mastery = serializers.SerializerMethodField()
     raw_mastry = serializers.SerializerMethodField()
     last_practiced = serializers.SerializerMethodField()
+    pyqs = PYQSerializer(many=True, read_only=True)
 
     class Meta:
         model = Concept
@@ -17,6 +40,7 @@ class ConceptSerializer(serializers.ModelSerializer):
             "mastery",
             "raw_mastry",
             "last_practiced",
+            "pyqs",
         ]
 
     def get_mastery(self, obj):

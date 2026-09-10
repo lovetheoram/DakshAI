@@ -8,7 +8,7 @@ class Exam(models.Model):
         ("jee", "JEE Main"),
         ("neet", "NEET"),
         ("placement", "Placement Preparation"),
-        
+        ("pcs", "State PCS (BPSC, UPPCS, etc.)"),
     ]
 
     name = models.CharField(max_length=255, unique=True)
@@ -97,6 +97,46 @@ class Concept(models.Model):
         return self.name
 
 
+class PYQ(models.Model):
+    concept = models.ForeignKey(
+        Concept,
+        on_delete=models.CASCADE,
+        related_name="pyqs"
+    )
+    question_text = models.TextField()
+    options = models.JSONField(default=list)
+    correct_answer = models.CharField(max_length=255)
+    explanation = models.TextField()
+
+    # Exam source tracking
+    exam_source = models.CharField(max_length=255)
+    exam_year = models.IntegerField(null=True, blank=True)
+
+    # Traceability & Provenance
+    source_book = models.CharField(max_length=255, blank=True, default="Ghatnachakra Indian History 2025")
+    source_page = models.IntegerField(null=True, blank=True)
+    source_question_number = models.CharField(max_length=100, blank=True)
+
+    # Structured "Alive Experience" Summary (keys: trend, pattern, trap, memory_hook)
+    experiential_summary = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Structured dict with keys: trend, pattern, trap, memory_hook"
+    )
+
+    extraction_confidence = models.FloatField(null=True, blank=True, default=1.0)
+    needs_review = models.BooleanField(default=False)
+    content_hash = models.CharField(max_length=32, unique=True, null=True, blank=True)
+
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+
+    def __str__(self):
+        return f"[{self.exam_source}] {self.question_text[:50]}..."
+
+
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.core.cache import cache
@@ -106,5 +146,7 @@ from django.core.cache import cache
 @receiver([post_save, post_delete], sender=Topic)
 @receiver([post_save, post_delete], sender=Subtopic)
 @receiver([post_save, post_delete], sender=Concept)
+@receiver([post_save, post_delete], sender=PYQ)
 def clear_syllabus_cache(sender, **kwargs):
     cache.clear()
+

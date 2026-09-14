@@ -97,19 +97,13 @@ def load_pcs_syllabus(json_path=None):
             c_name = concept_data.get("concept_name", chapter_name)
             c_desc = concept_data.get("concept_description", "")
 
-            ai_meta = {
-                "start_page": chapter.get("start_page"),
-                "end_page": chapter.get("end_page"),
-                "extracted_source": "Ghatnachakra Indian History 2025"
-            }
-
             concept, _ = Concept.objects.get_or_create(
                 subtopic=subtopic,
                 name=c_name,
                 defaults={
                     "description": c_desc,
                     "order": c_idx,
-                    "ai_meta": ai_meta
+                    "ai_meta": {}
                 }
             )
 

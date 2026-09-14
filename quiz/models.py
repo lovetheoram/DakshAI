@@ -39,13 +39,26 @@ class Question(BaseQuestion):
 
     SOURCE_CHOICES = [('PYQS', 'Past Question'), ('NEW', 'AI Generated')]
     source = models.CharField(max_length=10, choices=SOURCE_CHOICES, default='PYQS')
+
+    MODE_CHOICES = [
+        ('LLM', 'LLM Question Generation'),
+        ('FULL_EXAM', 'Full Exam Simulation'),
+        ('PYQS', 'Past Year Questions')
+    ]
+    mode = models.CharField(
+        max_length=20,
+        choices=MODE_CHOICES,
+        default='PYQS'
+    )
+
     class Meta:
         indexes = [
             models.Index(fields=["concept", "source"]),
+            models.Index(fields=["concept", "mode"]),
         ]
 
     def __str__(self):
-        return f"{self.header}"
+        return f"{self.header} ({self.mode})"
 
 
 class SubQuestion(BaseQuestion):
@@ -81,8 +94,19 @@ class QuizSession(models.Model):
     completed_at = models.DateTimeField(null=True, blank=True)
     duration_seconds = models.IntegerField(null=True, blank=True)
 
+    MODE_CHOICES = [
+        ('LLM', 'LLM Question Generation'),
+        ('FULL_EXAM', 'Full Exam Simulation'),
+        ('PYQS', 'Past Year Questions')
+    ]
+    mode = models.CharField(
+        max_length=20,
+        choices=MODE_CHOICES,
+        default='PYQS'
+    )
+
     def __str__(self):
-        return f"QuizSession {self.id} - {self.user}"
+        return f"QuizSession {self.id} - {self.user} ({self.mode})"
 
 
 class QuizAnswer(models.Model):
@@ -116,4 +140,3 @@ class QuizAnswer(models.Model):
                 name="unique_answer_per_item"
             )
         ]
-

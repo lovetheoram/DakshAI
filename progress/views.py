@@ -147,6 +147,21 @@ class DailyTargetAPI(APIView):
         return Response(DailyTargetSerializer(target).data)
 
 
+class DailyStudyCheckInAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        today = timezone.localdate()
+        target = ProgressService.generate_daily_target_for_today(request.user, date=today)
+        target.study_checked_in = True
+        target.calculate_completion()
+        target.save()
+
+        invalidate_growth_cache(request.user)
+
+        return Response(DailyTargetSerializer(target).data)
+
+
 class DailyTargetRevisionAPI(APIView):
     permission_classes = [IsAuthenticated]
 

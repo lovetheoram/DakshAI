@@ -1,24 +1,17 @@
-
-
 import json
 import uuid
+import random
 from django.conf import settings
 from django.db import transaction
+from django.utils import timezone
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from .models import Question, SubQuestion, QuizSession,QuizAnswer
+from .models import Question, SubQuestion, QuizSession, QuizAnswer
 from .serializers import QuestionSerializer
-from django.utils import timezone
-from django.db import transaction
-from django.utils import timezone
-from .models import QuizSession, QuizAnswer, Question, SubQuestion
 from syllabus.models import Concept
 from progress.services import ProgressService
-import uuid, random
-from langchain_google_genai import ChatGoogleGenerativeAI
-import json
 
-# Behavioral event tracking (import guarded to avoid circular imports at startup)
+# Behavioral event tracking
 try:
     from behavior.services.event_processor import EventProcessor as _EventProcessor
 except Exception:
@@ -29,7 +22,7 @@ def build_single_question_prompt(concept):
     return f"""
 You are an API, not a chatbot.
 
-Generate EXACTLY ONE exam-grade JEE MCQ.
+Generate EXACTLY ONE exam-grade MCQ.
 Output ONLY valid JSON.
 No markdown. No explanations. Stop after output.
 
@@ -40,27 +33,7 @@ JSON FORMAT:
   "question": "",
   "options": {{ "A":"", "B":"", "C":"", "D":"" }},
   "answer": "A",
-  "explanation": "",
-  "sub_questions": [
-    {{
-      "type": "comfort",
-      "question": "",
-      "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-      "answer": "A"
-    }},
-    {{
-      "type": "grounding",
-      "question": "",
-      "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-      "answer": "A"
-    }},
-    {{
-      "type": "precursor",
-      "question": "",
-      "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-      "answer": "A"
-    }}
-  ]
+  "explanation": ""
 }}
 
 ABSOLUTE RULES:
@@ -87,246 +60,30 @@ class QuizService:
 
         session = QuizSession.objects.create(
             user=user,
-            total_questions=len(questions)
+            total_questions=len(questions),
+            mode="PYQS"
         )
         session.questions.set(questions)
 
         return session, questions
-    
 
+    @staticmethod
+    @transaction.atomic
+    def start_full_exam_quiz(user, concept, num):
+        questions = list(
+            Question.objects
+            .filter(concept=concept)
+            .prefetch_related("sub_questions")[:num]
+        )
 
+        session = QuizSession.objects.create(
+            user=user,
+            total_questions=len(questions),
+            mode="FULL_EXAM"
+        )
+        session.questions.set(questions)
 
-    
-
-    # @staticmethod
-    # def generate_ai_questions_stream(concept, num):
-    #     llm = ChatGoogleGenerativeAI(
-    #         model="gemini-2.5-flash",
-    #         temperature=0.3,
-    #         api_key=settings.GEMINI_API_KEY
-    #     )
-
-        
-    #     # prompt = f"""
-    #     #     You are generating exam-grade MCQs.
-
-    #     #     Generate EXACTLY {num} MCQs as a JSON ARRAY.
-    #     #     Output MUST be valid JSON. No markdown. No extra text.
-
-    #     #     HARD RULES:
-    #     #     - Use ONLY standard math symbols: π √ / ^ ( )
-    #     #     - DO NOT use LaTeX, \\frac, \\sqrt, or words like "pi", "root"
-    #     #     - All math must be human-readable plain text
-    #     #     Example: π/6√3 , (x^2 + 1)/(x - 1)
-
-    #     #     - Each question must test ONE clear concept
-    #     #     - Difficulty: JEE Main → JEE Advanced 
-    #     #     - No vague or opinion-based questions
-    #     #     - Exactly ONE correct option
-
-    #     #     JSON FORMAT (STRICT):
-
-    #     #     [
-    #     #     {{
-    #     #         "header": "",
-    #     #         "question_title": "",
-    #     #         "question": "",
-    #     #         "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #     #         "answer": "A",
-    #     #         "explanation": "",
-    #     #         "sub_questions": [
-    #     #         {{
-    #     #             "type": "comfort",
-    #     #             "question": "",
-    #     #             "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #     #             "answer": "A"
-    #     #         }}
-    #     #         ]
-    #     #     }}
-    #     #     ]
-
-    #     #     CONTENT RULES:
-    #     #     - Options must be clean, complete, readable
-    #     #     - No broken symbols, no line breaks inside options
-            
-
-    #     #     CONCEPT:
-    #     #     {concept.name}
-
-    #     #     CONTEXT:
-    #     #     {concept.description or "N/A"}
-    #     #     """
-    #     prompt = f"""
-    #         You are generating exam-grade JEE MCQs with learning scaffolding.
-
-    #         Generate EXACTLY {num} MCQs as a JSON ARRAY.
-    #         Output MUST be valid JSON ONLY. No markdown. No extra text.
-
-    #         ABSOLUTE MATH RULES:
-    #         - Use ONLY these symbols: π √ / ^ ( )
-    #         - DO NOT use LaTeX, backslashes, or words like pi, sqrt, power
-    #         - All math must be plain readable text
-    #         Examples: π/6√3 , (x^2+1)/(x-1)
-
-    #         QUESTION RULES:
-    #         - One clear concept per question
-    #         - Difficulty: JEE Main → JEE Advanced
-    #         - Exactly ONE correct option
-    #         - Options must be clean, complete, readable
-    #         - No broken symbols or line breaks inside options
-
-    #         SCAFFOLDING RULE (MANDATORY):
-    #         Each question MUST include EXACTLY 3 sub-questions:
-
-    #         (A) comfort:
-    #         - No calculation
-    #         - Recall formula / identity / definition
-
-    #         (B) grounding:
-    #         - ONE simple numeric operation
-    #         - Same concept
-    #         - No new formulas
-
-    #         (C) precursor:
-    #         - Compute the SAME intermediate result used in the final step
-    #         - Do NOT compute the final answer
-    #         - After this, only ONE obvious step remains
-
-    #         If (C) is solved, the main question must feel obvious.
-
-    #         STRICT JSON FORMAT:
-
-    #         [
-    #         {{
-    #             "header": "",
-    #             "question_title": "",
-    #             "question": "",
-    #             "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #             "answer": "A",
-    #             "explanation": "",
-    #             "sub_questions": [
-    #             {{
-    #                 "type": "comfort",
-    #                 "question": "",
-    #                 "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #                 "answer": "A"
-    #             }},
-    #             {{
-    #                 "type": "grounding",
-    #                 "question": "",
-    #                 "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #                 "answer": "A"
-    #             }},
-    #             {{
-    #                 "type": "precursor",
-    #                 "question": "",
-    #                 "options": {{ "A":"", "B":"", "C":"", "D":"" }},
-    #                 "answer": "A"
-    #             }}
-    #             ]
-    #         }}
-    #         ]
-
-    #         CONCEPT:
-    #         {concept.name}
-
-    #         CONTEXT:
-    #         {concept.description or "N/A"}
-    #         """
-
-    #     full_text = ""
-
-    #     for chunk in llm.stream(prompt):
-    #         text = getattr(chunk, "content", "")
-    #         if text:
-    #             full_text += text
-    #             yield {
-    #                 "type": "chunk",
-    #                 "text": text
-    #             }
-
-    #     # FINAL EVENT
-    #     yield {
-    #         "type": "complete",
-    #         "full_text": full_text
-    #     }
-
-    
-
-    
-    # @staticmethod
-    # def start_ai_quiz_stream(user, concept, num):
-    #     collected_text = ""
-
-    #     for event in QuizService.generate_ai_questions_stream(concept, num):
-    #         if event["type"] == "chunk":
-    #             collected_text += event["text"]
-    #             yield f"data: {json.dumps(event)}\n\n".encode("utf-8")
-
-    #     # Parse AI JSON
-    #     try:
-    #         collected_text = collected_text.replace("```json", "").replace("```", "").strip()
-    #         ai_questions = json.loads(collected_text)
-    #     except Exception:
-    #         yield f"data: {json.dumps({'type': 'error','message':'Invalid JSON'})}\n\n".encode("utf-8")
-    #         return
-
-    #     questions = []
-
-    #     for q in ai_questions:
-    #         print(q)
-    #         question = Question.objects.create(
-    #             qid=f"AI-{uuid.uuid4().hex[:8]}",
-    #             header=q.get("header", ""),
-    #             question_title=q.get("question_title", ""),
-    #             concept=concept,
-    #             question=q.get("question", ""),
-    #             option_a=q["options"].get("A", ""),
-    #             option_b=q["options"].get("B", ""),
-    #             option_c=q["options"].get("C", ""),
-    #             option_d=q["options"].get("D", ""),
-    #             correct_option=q.get("answer", "A"),
-    #             explanation=q.get("explanation", ""),
-    #             source="NEW"
-    #         )
-
-    #         questions.append(question)
-
-        
-    #         sub_questions = q.get("sub_questions", [])
-
-    #         if isinstance(sub_questions, list):
-    #             for sq in sub_questions:
-    #                 sq_options = sq.get("options", {})
-
-    #                 SubQuestion.objects.create(
-    #                     parent=question,
-    #                     concept=concept,
-    #                     type=sq.get("type"),  # comfort / grounding / precursor
-    #                     question=sq.get("question", ""),
-    #                     option_a=sq_options.get("A", ""),
-    #                     option_b=sq_options.get("B", ""),
-    #                     option_c=sq_options.get("C", ""),
-    #                     option_d=sq_options.get("D", ""),
-    #                     correct_option=sq.get("answer", "A")
-    #                 )
-
-    #         question.refresh_from_db()
-
-    #         yield f"data: {json.dumps({
-    #             'type': 'question',
-    #             'question': QuestionSerializer(question).data
-    #         })}\n\n".encode("utf-8")
-
-    #     session = QuizSession.objects.create(user=user, total_questions=len(questions))
-    #     session.questions.set(questions)
-
-    #     yield f"data: {json.dumps({
-    #         'type': 'done',
-    #         'session_id': session.id,
-    #         'total_questions': len(questions)
-    #     })}\n\n".encode("utf-8")
-
+        return session, questions
 
     @staticmethod
     def generate_ai_questions_stream(concept, num):
@@ -338,7 +95,6 @@ class QuizService:
 
         for _ in range(num):
             prompt = build_single_question_prompt(concept)
-
             buffer = ""
 
             for chunk in llm.stream(prompt):
@@ -347,16 +103,14 @@ class QuizService:
                     continue
 
                 buffer += text
+                cleaned = buffer.replace("```json", "").replace("```", "").strip()
 
                 try:
-                    question_json = json.loads(buffer)
+                    question_json = json.loads(cleaned)
+                    yield question_json
+                    break
                 except Exception:
-                    continue  # JSON not complete yet
-
-                yield question_json
-                break  # move to next question
-
-
+                    continue
 
     @staticmethod
     def start_ai_quiz_stream(user, concept, num):
@@ -364,40 +118,25 @@ class QuizService:
 
         try:
             for q in QuizService.generate_ai_questions_stream(concept, num):
+                opts = q.get("options") if isinstance(q.get("options"), dict) else {}
 
                 question = Question.objects.create(
                     qid=f"AI-{uuid.uuid4().hex[:8]}",
-                    header=q.get("header", ""),
-                    question_title=q.get("question_title", ""),
+                    header=q.get("header", f"{concept.name} Practice"),
+                    question_title=q.get("question_title", "AI Practice"),
                     question=q.get("question", ""),
-                    option_a=q["options"].get("A", ""),
-                    option_b=q["options"].get("B", ""),
-                    option_c=q["options"].get("C", ""),
-                    option_d=q["options"].get("D", ""),
+                    option_a=opts.get("A", ""),
+                    option_b=opts.get("B", ""),
+                    option_c=opts.get("C", ""),
+                    option_d=opts.get("D", ""),
                     correct_option=q.get("answer", "A"),
                     explanation=q.get("explanation", ""),
                     concept=concept,
-                    source="NEW"
+                    source="NEW",
+                    mode="LLM"
                 )
 
                 questions.append(question)
-
-                sub_questions = []
-                for sq in q.get("sub_questions", []):
-                    sub_questions.append(SubQuestion(
-                        parent=question,
-                        concept=concept,
-                        type=sq.get("type"),
-                        question=sq.get("question", ""),
-                        option_a=sq["options"].get("A", ""),
-                        option_b=sq["options"].get("B", ""),
-                        option_c=sq["options"].get("C", ""),
-                        option_d=sq["options"].get("D", ""),
-                        correct_option=sq.get("answer", "A")
-                    ))
-
-                if sub_questions:
-                    SubQuestion.objects.bulk_create(sub_questions)
 
                 q_data = json.dumps({
                     'type': 'question',
@@ -406,11 +145,16 @@ class QuizService:
                 yield f"data: {q_data}\n\n".encode("utf-8")
 
         except GeneratorExit:
-            return  # client disconnected safely
+            return
+        except Exception as err:
+            err_data = json.dumps({'type': 'error', 'message': str(err)})
+            yield f"data: {err_data}\n\n".encode("utf-8")
+            return
 
         session = QuizSession.objects.create(
             user=user,
-            total_questions=len(questions)
+            total_questions=len(questions),
+            mode="LLM"
         )
         session.questions.set(questions)
 
@@ -420,8 +164,6 @@ class QuizService:
             'total_questions': len(questions)
         })
         yield f"data: {done_data}\n\n".encode("utf-8")
-
-
 
     @staticmethod
     @transaction.atomic
@@ -440,9 +182,12 @@ class QuizService:
         answered = set()
 
         for ans in answers_payload:
-            q = session.questions.get(qid=ans["question_id"])
-            sq = None
+            q_id = ans.get("question_id")
+            q = session.questions.filter(qid=q_id).first()
+            if not q:
+                continue
 
+            sq = None
             if ans.get("sub_question_type"):
                 sq = SubQuestion.objects.filter(
                     parent=q,
@@ -466,14 +211,13 @@ class QuizService:
                 is_correct=is_correct
             )
 
-        session.score = correct_main / session.total_questions
+        session.score = correct_main / session.total_questions if session.total_questions > 0 else 0.0
         session.completed_at = timezone.now()
         session.duration_seconds = duration_seconds
         session.save()
 
         ProgressService.update_progress_with_session(user, session)
 
-        # ── Fire behavioral events ────────────────────────────────────────
         if _EventProcessor:
             concept = session.questions.first().concept if session.questions.exists() else None
             concept_name = concept.name if concept else ""
@@ -487,7 +231,6 @@ class QuizService:
                     "score":        score_pct,
                 })
             else:
-                # Count previous failures on this concept to distinguish REPEAT
                 from behavior.models import UserBehaviorEvent
                 prior_fails = UserBehaviorEvent.objects.filter(
                     user=user,
@@ -503,8 +246,3 @@ class QuizService:
                 })
 
         return session
-
-
-
-
- 

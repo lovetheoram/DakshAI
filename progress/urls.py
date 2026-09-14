@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     ConceptProgressAPI, ConceptHistoryAPI, SubtopicProgressAPI,
-    UserGoalAPI, DailyTargetAPI, DailyTargetRevisionAPI,
+    UserGoalAPI, DailyTargetAPI, DailyStudyCheckInAPI, DailyTargetRevisionAPI,
     DailyDiaryAPI, DailyDiaryEnergyAPI, DailyTargetShareAPI, StreakStatsAPI,
     BrainEngineAPI, GalaxyAPI
 )
@@ -13,6 +13,7 @@ urlpatterns = [
     path("goal/", UserGoalAPI.as_view(), name="user-goal"),
     path("dashboard/", BrainEngineAPI.as_view(), name="brain-engine"),
     path("daily-target/", DailyTargetAPI.as_view(), name="daily-target"),
+    path("checkin/", DailyStudyCheckInAPI.as_view(), name="daily-checkin"),
     path("daily-target/revision/", DailyTargetRevisionAPI.as_view(), name="daily-target-revision"),
     path("daily-target/share/", DailyTargetShareAPI.as_view(), name="daily-target-share"),
     path("diary/", DailyDiaryAPI.as_view(), name="daily-diary"),

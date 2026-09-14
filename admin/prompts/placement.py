@@ -226,7 +226,7 @@ def build_question_prompt(
         batch_size = 20
 
         question_ids = [
-            f"{concept.name.upper()}-{existing_count+i+1}"
+            f"C{concept.id}-Q{existing_count+i+1}"
             for i in range(batch_size)
         ]
 

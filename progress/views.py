@@ -650,7 +650,7 @@ class BrainEngineAPI(APIView):
             user=user, concept_id__in=ProgressService.get_exam_concept_ids(goal.exam.id)
         )
         total_raw = sum(cp.readiness for cp in all_cp)
-        total_decayed = sum(cp.get_mastery()[0] for cp in all_cp)
+        total_decayed = sum(cp.get_mastery() for cp in all_cp)
         memory_score = min(100.0, round((total_decayed / total_raw) * 100.0, 2)) if total_raw > 0 else 100.0
 
         # Accuracy from diary
@@ -697,7 +697,7 @@ class BrainEngineAPI(APIView):
             raw = cp.readiness
             if raw < 0.25:  # skip concepts barely started
                 continue
-            decayed, _ = cp.get_mastery()
+            decayed = cp.get_mastery()
             if decayed < raw * 0.70:  # dropped more than 30%
                 retention_pct = round(decayed / raw * 100, 1) if raw > 0 else 0.0
                 decay_alerts.append({
@@ -747,8 +747,7 @@ class BrainEngineAPI(APIView):
                 cp_obj = ConceptProgress.objects.filter(user=user, concept=rec.concept).first()
                 mastery = 0.0
                 if cp_obj:
-                    exam_m, chap_m = cp_obj.get_mastery()
-                    mastery = round((exam_m + chap_m) / 2 * 100, 2)
+                    mastery = round(cp_obj.get_mastery() * 100, 2)
                 seen_concepts[cid] = {
                     "id": cid,
                     "name": rec.concept.name,

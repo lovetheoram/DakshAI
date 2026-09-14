@@ -74,14 +74,14 @@ class PostAPI(APIView):
             from progress.models import ConceptProgress
             weak_concept_ids = list(ConceptProgress.objects.filter(
                 user=request.user,
-                exam_readiness__lt=0.5
+                readiness__lt=0.5
             ).values_list("concept_id", flat=True))
 
             if weak_concept_ids:
                 # 2. Identify peer users who have high mastery in these weak concepts (readiness >= 0.8)
                 strong_peer_user_ids = list(ConceptProgress.objects.filter(
                     concept_id__in=weak_concept_ids,
-                    exam_readiness__gte=0.8
+                    readiness__gte=0.8
                 ).values_list("user_id", flat=True))
 
                 # 3. Annotate posts that match weak concepts AND are authored by strong peers
@@ -633,8 +633,8 @@ class ProgressInsightsAPI(APIView):
 
         user_progress = ConceptProgress.objects.filter(user=request.user)
         total_concepts = user_progress.count()
-        mastered_concepts = user_progress.filter(exam_readiness__gte=0.8).count()
-        avg_readiness = user_progress.aggregate(Avg("exam_readiness"))["exam_readiness__avg"] or 0.0
+        mastered_concepts = user_progress.filter(readiness__gte=0.8).count()
+        avg_readiness = user_progress.aggregate(Avg("readiness"))["readiness__avg"] or 0.0
 
         logs = StudyLog.objects.filter(user=request.user)
         total_minutes = sum(log.duration_minutes for log in logs)

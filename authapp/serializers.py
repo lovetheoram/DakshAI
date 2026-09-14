@@ -19,11 +19,29 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
         )
         exam = Exam.objects.filter(exam_type=exam_type).first()
+        if not exam:
+            exam = Exam.objects.first()
         if exam:
             user.profile.selected_exam = exam
-        else:
-            user.profile.selected_exam = Exam.objects.first()
-        user.profile.save()
+            user.profile.save()
+
+            # Auto-create default UserGoal so new users are NOT prompted for exam twice
+            try:
+                from progress.models import UserGoal
+                import datetime
+                target_date = datetime.date.today() + datetime.timedelta(days=180)
+                UserGoal.objects.get_or_create(
+                    user=user,
+                    exam=exam,
+                    defaults={
+                        "goal_name": f"Crack {exam.name}",
+                        "target_date": target_date,
+                        "available_hours_per_day": 2.0,
+                    }
+                )
+            except Exception as e:
+                print("Failed auto-creating goal on register:", e)
+
         return user
 
 

@@ -36,6 +36,15 @@ class GenerateConceptQuestions(APIView):
     def post(self, request):
 
         concept_id = request.data.get("concept_id")
+        try:
+            concept = Concept.objects.get(id=concept_id)
+        except Concept.DoesNotExist:
+            return Response({"error": "Concept not found"}, status=404)
+
+        if not concept.ai_meta or concept.ai_meta == {}:
+            return Response({
+                "error": "No metadata found. Please generate concept metadata first."
+            }, status=400)
 
         Thread(
             target=generate_questions_task,

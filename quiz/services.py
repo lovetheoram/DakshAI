@@ -58,32 +58,82 @@ class QuizService:
             .prefetch_related("sub_questions")[:num]
         )
 
+        if len(questions) < num:
+            from syllabus.models import PYQ
+            pyqs = PYQ.objects.filter(concept=concept)[:num]
+            for p_idx, pyq in enumerate(pyqs):
+                opts = pyq.options if isinstance(pyq.options, list) else []
+                q_id = f"PYQ-C{concept.id}-{pyq.id}"
+                q_obj, _ = Question.objects.get_or_create(
+                    qid=q_id,
+                    defaults={
+                        "concept": concept,
+                        "question_title": f"{pyq.exam_source or 'State PCS'} PYQ",
+                        "question": pyq.question_text,
+                        "option_a": opts[0] if len(opts) > 0 else "Statement 1",
+                        "option_b": opts[1] if len(opts) > 1 else "Statement 2",
+                        "option_c": opts[2] if len(opts) > 2 else "Statement 3",
+                        "option_d": opts[3] if len(opts) > 3 else "Statement 4",
+                        "correct_option": pyq.correct_answer or "A",
+                        "explanation": pyq.explanation or "Ghatnachakra verified past year solution.",
+                        "mode": "PYQS",
+                        "source": "PYQS",
+                    }
+                )
+                if q_obj not in questions:
+                    questions.append(q_obj)
+
         session = QuizSession.objects.create(
             user=user,
-            total_questions=len(questions),
+            total_questions=len(questions[:num]),
             mode="PYQS"
         )
-        session.questions.set(questions)
+        session.questions.set(questions[:num])
 
-        return session, questions
+        return session, questions[:num]
 
     @staticmethod
     @transaction.atomic
     def start_full_exam_quiz(user, concept, num):
         questions = list(
             Question.objects
-            .filter(concept=concept)
+            .filter(concept=concept, source="PYQS")
             .prefetch_related("sub_questions")[:num]
         )
 
+        if len(questions) < num:
+            from syllabus.models import PYQ
+            pyqs = PYQ.objects.filter(concept=concept)[:num]
+            for p_idx, pyq in enumerate(pyqs):
+                opts = pyq.options if isinstance(pyq.options, list) else []
+                q_id = f"PYQ-C{concept.id}-{pyq.id}"
+                q_obj, _ = Question.objects.get_or_create(
+                    qid=q_id,
+                    defaults={
+                        "concept": concept,
+                        "question_title": f"{pyq.exam_source or 'State PCS'} PYQ",
+                        "question": pyq.question_text,
+                        "option_a": opts[0] if len(opts) > 0 else "Statement 1",
+                        "option_b": opts[1] if len(opts) > 1 else "Statement 2",
+                        "option_c": opts[2] if len(opts) > 2 else "Statement 3",
+                        "option_d": opts[3] if len(opts) > 3 else "Statement 4",
+                        "correct_option": pyq.correct_answer or "A",
+                        "explanation": pyq.explanation or "Ghatnachakra verified past year solution.",
+                        "mode": "PYQS",
+                        "source": "PYQS",
+                    }
+                )
+                if q_obj not in questions:
+                    questions.append(q_obj)
+
         session = QuizSession.objects.create(
             user=user,
-            total_questions=len(questions),
+            total_questions=len(questions[:num]),
             mode="FULL_EXAM"
         )
-        session.questions.set(questions)
+        session.questions.set(questions[:num])
 
-        return session, questions
+        return session, questions[:num]
 
     @staticmethod
     def generate_ai_questions_stream(concept, num):

@@ -649,7 +649,7 @@ class BrainEngineAPI(APIView):
         all_cp = ConceptProgress.objects.filter(
             user=user, concept_id__in=ProgressService.get_exam_concept_ids(goal.exam.id)
         )
-        total_raw = sum(cp.exam_readiness for cp in all_cp)
+        total_raw = sum(cp.readiness for cp in all_cp)
         total_decayed = sum(cp.get_mastery()[0] for cp in all_cp)
         memory_score = min(100.0, round((total_decayed / total_raw) * 100.0, 2)) if total_raw > 0 else 100.0
 
@@ -694,7 +694,7 @@ class BrainEngineAPI(APIView):
             user=user, concept_id__in=concept_ids
         ).select_related("concept", "concept__subtopic")
         for cp in progress_records:
-            raw = cp.exam_readiness
+            raw = cp.readiness
             if raw < 0.25:  # skip concepts barely started
                 continue
             decayed, _ = cp.get_mastery()
@@ -797,7 +797,7 @@ class BrainEngineAPI(APIView):
         total_concepts = len(concept_ids)
         
         concepts_mastered_count = ConceptProgress.objects.filter(
-            user=user, concept_id__in=concept_ids, exam_readiness__gte=0.5
+            user=user, concept_id__in=concept_ids, readiness__gte=0.5
         ).count()
         active_days_this_week = sum(1 for t in targets_7d if t.completed_growth > 0)
 
@@ -872,7 +872,7 @@ class GalaxyAPI(APIView):
         mastered_count = ConceptProgress.objects.filter(
             user=user,
             concept_id__in=concept_ids,
-            exam_readiness__gte=0.5
+            readiness__gte=0.5
         ).count()
 
         return Response({

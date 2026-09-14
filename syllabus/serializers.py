@@ -46,29 +46,26 @@ class ConceptSerializer(serializers.ModelSerializer):
     def get_mastery(self, obj):
         user = self.context.get("user")
         if not user or user.is_anonymous:
-            return [0.0, 0.0]
+            return 0.0
 
         progress_dict = self.context.get("progress_dict")
         if progress_dict is not None:
             cp = progress_dict.get(obj.id)
         else:
             cp = ConceptProgress.objects.filter(user=user, concept=obj).first()
-        return cp.get_mastery() if cp else [0.0, 0.0]
+        return cp.get_mastery() if cp else 0.0
 
     def get_raw_mastry(self, obj):
         user = self.context.get("user")
         if not user or user.is_anonymous:
-            return [0.0, 0.0]
+            return 0.0
 
         progress_dict = self.context.get("progress_dict")
         if progress_dict is not None:
             cp = progress_dict.get(obj.id)
         else:
             cp = ConceptProgress.objects.filter(user=user, concept=obj).first()
-        return [
-            round(cp.exam_readiness, 4),
-            round(cp.chapter_understanding, 4),
-        ] if cp else [0.0, 0.0]
+        return round(cp.readiness, 4) if cp else 0.0
 
     def get_last_practiced(self, obj):
         user = self.context.get("user")

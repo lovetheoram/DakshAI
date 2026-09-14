@@ -132,18 +132,13 @@ def load_jee_syllabus():
                 # -------------------------
                 for c_index, concept_data in enumerate(subtopic_data.get("concepts", [])):
 
-                    ai_meta = {
-                        "estimated_time": concept_data.get("estimated_time"),
-                        "resources": concept_data.get("resources"),
-                    }
-
                     Concept.objects.get_or_create(
                         subtopic=subtopic,
                         name=concept_data["name"],
                         defaults={
                             "description": concept_data.get("description", ""),
                             "order": c_index,
-                            "ai_meta": ai_meta,
+                            "ai_meta": {},
                         }
                     )
 

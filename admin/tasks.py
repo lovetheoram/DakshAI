@@ -10,9 +10,7 @@ def generate_meta_task(concept_id, chapter):
         ).get(id=concept_id)
         exam_type = concept.subtopic.topic.subject.exam.exam_type
 
-        placeholder = {'estimated_time': None, 'resources': None}
-
-        if concept.ai_meta == placeholder or not concept.ai_meta:
+        if not concept.ai_meta or concept.ai_meta == {}:
             meta_json = generate_formula_meta(
                 concept.name,
                 concept.description,
@@ -42,18 +40,24 @@ def generate_questions_task(concept_id):
             exam_type=exam_type
         )
 
-        for item in questions_json:
-            Question.objects.get_or_create(
-                qid=item["question_id"],
+        for idx, item in enumerate(questions_json):
+            qid = item.get("question_id") or f"C{concept.id}-Q{idx+1}"
+            if not qid.startswith(f"C{concept.id}-"):
+                qid = f"C{concept.id}-{qid}"
+
+            Question.objects.update_or_create(
+                qid=qid,
                 defaults={
-                    "question_title": item["question_title"],
+                    "question_title": item.get("question_title", "Concept Practice"),
                     "concept": concept,
-                    "question": item["question"],
-                    "option_a": item["options"]["A"],
-                    "option_b": item["options"]["B"],
-                    "option_c": item["options"]["C"],
-                    "option_d": item["options"]["D"],
-                    "correct_option": item["answer"],
+                    "question": item.get("question", ""),
+                    "option_a": item.get("options", {}).get("A", ""),
+                    "option_b": item.get("options", {}).get("B", ""),
+                    "option_c": item.get("options", {}).get("C", ""),
+                    "option_d": item.get("options", {}).get("D", ""),
+                    "correct_option": item.get("answer", "A"),
+                    "mode": "LLM",
+                    "source": "LLM",
                 }
             )
 

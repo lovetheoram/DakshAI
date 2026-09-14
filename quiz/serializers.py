@@ -17,6 +17,7 @@ class SubQuestionSerializer(serializers.ModelSerializer):
             "option_b",
             "option_c",
             "option_d",
+            "correct_option",
         ]
 
 
@@ -34,7 +35,10 @@ class QuestionSerializer(serializers.ModelSerializer):
             "option_b",
             "option_c",
             "option_d",
+            "correct_option",
+            "explanation",
             "source",
+            "mode",
             "sub_questions",
         ]
 
@@ -54,14 +58,12 @@ class QuizAnswerInSerializer(serializers.Serializer):
 
 # ---------------- ANSWER REVIEW ----------------
 
-from rest_framework import serializers
-from .models import QuizAnswer, Question, SubQuestion
-
 class QuizAnswerReviewSerializer(serializers.ModelSerializer):
     question_id = serializers.SerializerMethodField()
     sub_question_type = serializers.SerializerMethodField()
     correct_option = serializers.SerializerMethodField()
     question_text = serializers.SerializerMethodField()
+    explanation = serializers.SerializerMethodField()
     options = serializers.SerializerMethodField()
 
     class Meta:
@@ -73,6 +75,7 @@ class QuizAnswerReviewSerializer(serializers.ModelSerializer):
             "correct_option",
             "is_correct",
             "question_text",
+            "explanation",
             "options",
         ]
 
@@ -97,6 +100,11 @@ class QuizAnswerReviewSerializer(serializers.ModelSerializer):
         if obj.sub_question:
             return obj.sub_question.question
         return obj.question.question
+
+    def get_explanation(self, obj):
+        if obj.question:
+            return obj.question.explanation
+        return ""
 
     def get_options(self, obj):
         if obj.sub_question:

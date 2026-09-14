@@ -3,32 +3,22 @@ from .models import ConceptProgress, ProgressRecord, SubtopicProgress
 from quiz.models import QuizAnswer
 from quiz.serializers import QuizAnswerReviewSerializer
 class ConceptProgressSerializer(serializers.ModelSerializer):
-    exam_readiness = serializers.FloatField(read_only=True)
-    chapter_understanding = serializers.FloatField(read_only=True)
+    readiness = serializers.FloatField(read_only=True)
     last_practiced = serializers.DateTimeField(read_only=True)
     mastery = serializers.SerializerMethodField()
-    raw_mastery = serializers.SerializerMethodField()
 
     class Meta:
         model = ConceptProgress
         fields = [
             "user",
             "concept",
-            "exam_readiness",
-            "chapter_understanding",
+            "readiness",
             "mastery",
-            "raw_mastery",
             "last_practiced",
         ]
 
     def get_mastery(self, obj):
-        return obj.get_mastery() if obj else [0.0, 0.0]
-
-    def get_raw_mastery(self, obj):
-        return [
-            round(obj.exam_readiness, 4),
-            round(obj.chapter_understanding, 4),
-        ] if obj else [0.0, 0.0]
+        return obj.get_mastery() if obj else 0.0
 
 
 class SubtopicProgressSerializer(serializers.ModelSerializer):
@@ -94,12 +84,16 @@ class UserGoalSerializer(serializers.ModelSerializer):
 
 
 class DailyTargetSerializer(serializers.ModelSerializer):
+    completion_percentage = serializers.ReadOnlyField()
+
     class Meta:
         model = DailyTarget
         fields = [
-            "id", "user", "date", "target_growth", "completed_growth", "is_completed"
+            "id", "user", "date", "study_checked_in", "completed_correct_questions",
+            "target_correct_questions", "completion_percentage", "target_growth",
+            "completed_growth", "is_completed"
         ]
-        read_only_fields = ["user", "date", "is_completed"]
+        read_only_fields = ["user", "date", "is_completed", "completion_percentage"]
 
 
 class DailyDiaryEntrySerializer(serializers.ModelSerializer):

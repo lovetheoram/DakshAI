@@ -8,9 +8,8 @@ class ConceptProgress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name="progress")
 
-    # separate metrics
-    exam_readiness = models.FloatField(default=0.0)         # main questions
-    chapter_understanding = models.FloatField(default=0.0) # sub-questions
+    # Single unified Concept Readiness metric (built by LLM & PYQ practice)
+    readiness = models.FloatField(default=0.0)
 
     last_practiced = models.DateTimeField(null=True, blank=True)
 
@@ -19,19 +18,17 @@ class ConceptProgress(models.Model):
 
     def get_mastery(self, decay_rate=0.02):
         """
-        Compute decayed mastery for both exam readiness and chapter understanding.
-        Returns tuple (exam, understanding)
+        Compute decayed concept mastery (0.0 to 1.0) based on time elapsed since last practice.
         """
         if self.last_practiced is None:
-            return self.exam_readiness, self.chapter_understanding
+            return self.readiness
 
         days = (timezone.now() - self.last_practiced).days
         if days <= 0:
-            return self.exam_readiness, self.chapter_understanding
+            return self.readiness
 
-        exam = self.exam_readiness * ((1 - decay_rate) ** days)
-        chapter = self.chapter_understanding * ((1 - decay_rate) ** days)
-        return round(exam, 4), round(chapter, 4)
+        mastery = self.readiness * ((1 - decay_rate) ** days)
+        return round(mastery, 4)
 
 
 class SubtopicProgress(models.Model):
@@ -99,15 +96,34 @@ class UserGoal(models.Model):
 class DailyTarget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
-    target_growth = models.FloatField(default=0.83)  # in percentage, e.g. 0.83 for 0.83%
-    completed_growth = models.FloatField(default=0.0)  # in percentage, e.g. 0.35 for 0.35%
+    
+    # 50/50 Dual Criteria for Daily Completion
+    study_checked_in = models.BooleanField(default=False)
+    completed_correct_questions = models.IntegerField(default=0)
+    target_correct_questions = models.IntegerField(default=20)
+    
+    target_growth = models.FloatField(default=100.0)  # Total 100%
+    completed_growth = models.FloatField(default=0.0)  # In percentage (0..100)
     is_completed = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("user", "date")
 
+    @property
+    def completion_percentage(self):
+        checkin_score = 50.0 if self.study_checked_in else 0.0
+        questions_score = min(50.0, (self.completed_correct_questions / self.target_correct_questions) * 50.0) if self.target_correct_questions > 0 else 50.0
+        return round(checkin_score + questions_score, 1)
+
+    def calculate_completion(self):
+        pct = self.completion_percentage
+        self.completed_growth = pct
+        self.is_completed = (pct >= 100.0)
+        return pct
+
     def __str__(self):
-        return f"{self.user.username} - {self.date} - Growth: {self.completed_growth}/{self.target_growth}%"
+        return f"{self.user.username} - {self.date} - Progress: {self.completion_percentage}%"
+
 
 
 class DailyDiaryEntry(models.Model):

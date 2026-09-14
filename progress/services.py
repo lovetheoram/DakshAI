@@ -31,7 +31,7 @@ class ProgressService:
                 progress_sum = ConceptProgress.objects.filter(
                     user=user,
                     concept_id__in=concept_ids
-                ).aggregate(total=Sum('exam_readiness'))['total'] or 0.0
+                ).aggregate(total=Sum('readiness'))['total'] or 0.0
                 daksh_score = round((progress_sum / total_concepts) * 100.0, 4)
             else:
                 daksh_score = 0.0
@@ -53,12 +53,14 @@ class ProgressService:
     @staticmethod
     def update_progress_with_session(user, session: QuizSession):
         """
-        Updates ConceptProgress for both exam readiness (main questions)
-        and chapter understanding (sub-questions), creates ProgressRecord,
-        updates SubtopicProgress based on concepts, and overlay mathematical growth metrics.
+        Updates ConceptProgress for single unified readiness metric, creates ProgressRecord,
+        updates SubtopicProgress based on concepts, and updates daily target progress.
         """
-        # for simplicity, assume quiz session covers one concept
-        concept = session.questions.first().concept
+        # fetch first question and concept safely
+        first_q = session.questions.first()
+        if not first_q:
+            return None
+        concept = first_q.concept
         cp = ProgressService.get_or_create_concept_progress(user, concept)
 
         # fetch all answers for this session
@@ -70,17 +72,17 @@ class ProgressService:
         sub_correct = sum(1 for a in answers if a.sub_question_id is not None and a.is_correct)
         sub_total = sum(1 for a in answers if a.sub_question_id is not None)
 
-        # compute scores 0..1
-        exam_score = main_correct / main_total if main_total else 0
-        chapter_score = sub_correct / sub_total if sub_total else 0
+        # compute unified session score (0..1)
+        tot_correct = main_correct + sub_correct
+        tot_questions = main_total + sub_total
+        session_score = tot_correct / tot_questions if tot_questions else 0.0
 
-        # save old exam readiness to calculate growth delta
-        old_readiness = cp.exam_readiness
+        # save old readiness to calculate growth delta
+        old_readiness = cp.readiness
 
-        # smoothing with alpha
+        # smoothing with alpha = 0.35
         alpha = 0.35
-        cp.exam_readiness = round(cp.exam_readiness * (1 - alpha) + exam_score * alpha, 4)
-        cp.chapter_understanding = round(cp.chapter_understanding * (1 - alpha) + chapter_score * alpha, 4)
+        cp.readiness = round(cp.readiness * (1 - alpha) + session_score * alpha, 4)
         cp.last_practiced = timezone.now()
         cp.save()
 
@@ -102,14 +104,14 @@ class ProgressService:
         SubtopicProgressService.update_from_concept(user, concept)
 
         # ----------------------------------------------------
-        # Behavioral Growth OS Mathematical Engine
+        # Daily Growth Engine
         # ----------------------------------------------------
         today = timezone.localdate()
         target = ProgressService.generate_daily_target_for_today(user, date=today)
         diary_entry, _ = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
 
         # calculate delta growth
-        new_readiness = cp.exam_readiness
+        new_readiness = cp.readiness
         delta_readiness = max(0.0, new_readiness - old_readiness)
 
         exam = concept.subtopic.topic.subject.exam
@@ -149,15 +151,9 @@ class ProgressService:
 
         diary_entry.save()
 
-        # Update DailyTarget
-        target.completed_growth = round(target.completed_growth + growth_increment, 4)
-        if target.target_growth > 0:
-            if target.completed_growth >= target.target_growth:
-                target.is_completed = True
-            else:
-                target.is_completed = False
-        else:
-            target.is_completed = True
+        # Update DailyTarget using 50/50 Dual Criteria
+        target.completed_correct_questions += (main_correct + sub_correct)
+        target.calculate_completion()
         target.save()
 
         # Sync diary's growth percentage with the completed growth
@@ -345,17 +341,10 @@ class SubtopicProgressService:
             weight = 1.0
 
             # -------- RAW (from DB) --------
-            raw_avg = (
-                cp.exam_readiness +
-                cp.chapter_understanding
-            ) / 2
+            raw_avg = cp.readiness
 
             # -------- MASTERY (time-decayed) --------
-            mastery_exam, mastery_chapter = cp.get_mastery()
-            mastery_avg = (
-                mastery_exam +
-                mastery_chapter
-            ) / 2
+            mastery_avg = cp.get_mastery()
 
             raw_sum += raw_avg * weight
             mastery_sum += mastery_avg * weight

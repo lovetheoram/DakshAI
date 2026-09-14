@@ -160,14 +160,9 @@ class ProgressService:
         diary_entry.daily_growth_percentage = target.completed_growth
         diary_entry.save()
 
-        # Increment cached daksh score in-memory
+        # Invalidate cached daksh score and dashboard telemetry to force real-time recalculation
         daksh_cache_key = f"user_{user.id}_exam_{exam.id}_daksh_score"
-        current_daksh = cache.get(daksh_cache_key)
-        if current_daksh is not None:
-            new_daksh = round(min(100.0, float(current_daksh) + growth_increment), 4)
-            cache.set(daksh_cache_key, new_daksh, timeout=None)
-
-        # Invalidate dashboard and streak stats cache
+        cache.delete(daksh_cache_key)
         cache.delete(f"dashboard_data_user_{user.id}")
         cache.delete(f"streak_stats_user_{user.id}")
 

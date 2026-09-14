@@ -31,14 +31,23 @@ def generate_questions_task(concept_id):
         ).get(id=concept_id)
         exam_type = concept.subtopic.topic.subject.exam.exam_type
 
-        if not concept.ai_meta:
-            return
+        if not concept.ai_meta or concept.ai_meta == {}:
+            chapter = concept.subtopic.topic.name if concept.subtopic and concept.subtopic.topic else "General"
+            meta_json = generate_formula_meta(
+                concept.name,
+                concept.description,
+                chapter,
+                exam_type=exam_type
+            )
+            concept.ai_meta = meta_json
+            concept.save(update_fields=["ai_meta"])
 
-        questions_json = generate_questions_from_meta(
-            concept.ai_meta,
-            concept,
-            exam_type=exam_type
-        )
+        if concept.ai_meta:
+            questions_json = generate_questions_from_meta(
+                concept.ai_meta,
+                concept,
+                exam_type=exam_type
+            )
 
         for idx, item in enumerate(questions_json):
             qid = item.get("question_id") or f"C{concept.id}-Q{idx+1}"

@@ -85,15 +85,27 @@ class UserGoalSerializer(serializers.ModelSerializer):
 
 class DailyTargetSerializer(serializers.ModelSerializer):
     completion_percentage = serializers.ReadOnlyField()
+    checked_in_today = serializers.BooleanField(source="study_checked_in", read_only=True)
+    checkin_growth = serializers.SerializerMethodField()
+    questions_growth = serializers.SerializerMethodField()
 
     class Meta:
         model = DailyTarget
         fields = [
-            "id", "user", "date", "study_checked_in", "completed_correct_questions",
-            "target_correct_questions", "completion_percentage", "target_growth",
-            "completed_growth", "is_completed"
+            "id", "user", "date", "study_checked_in", "checked_in_today",
+            "completed_correct_questions", "target_correct_questions",
+            "checkin_growth", "questions_growth",
+            "completion_percentage", "target_growth", "completed_growth", "is_completed"
         ]
         read_only_fields = ["user", "date", "is_completed", "completion_percentage"]
+
+    def get_checkin_growth(self, obj):
+        return 50.0 if obj.study_checked_in else 0.0
+
+    def get_questions_growth(self, obj):
+        if obj.target_correct_questions <= 0:
+            return 50.0
+        return round(min(50.0, (obj.completed_correct_questions / obj.target_correct_questions) * 50.0), 1)
 
 
 class DailyDiaryEntrySerializer(serializers.ModelSerializer):

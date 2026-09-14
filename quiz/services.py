@@ -52,12 +52,14 @@ class QuizService:
     @staticmethod
     @transaction.atomic
     def start_pyqs_quiz(user, concept, num):
+        # 1. Fetch any existing questions attached to this concept (PYQ or LLM generated)
         questions = list(
             Question.objects
-            .filter(concept=concept, source="PYQS")
+            .filter(concept=concept)
             .prefetch_related("sub_questions")[:num]
         )
 
+        # 2. Fallback to PYQ model if questions count is insufficient
         if len(questions) < num:
             from syllabus.models import PYQ
             pyqs = PYQ.objects.filter(concept=concept)[:num]
@@ -68,20 +70,53 @@ class QuizService:
                     qid=q_id,
                     defaults={
                         "concept": concept,
-                        "question_title": f"{pyq.exam_source or 'State PCS'} PYQ",
+                        "question_title": f"{pyq.exam_source or 'Exam'} PYQ",
                         "question": pyq.question_text,
-                        "option_a": opts[0] if len(opts) > 0 else "Statement 1",
-                        "option_b": opts[1] if len(opts) > 1 else "Statement 2",
-                        "option_c": opts[2] if len(opts) > 2 else "Statement 3",
-                        "option_d": opts[3] if len(opts) > 3 else "Statement 4",
+                        "option_a": opts[0] if len(opts) > 0 else "Option A",
+                        "option_b": opts[1] if len(opts) > 1 else "Option B",
+                        "option_c": opts[2] if len(opts) > 2 else "Option C",
+                        "option_d": opts[3] if len(opts) > 3 else "Option D",
                         "correct_option": pyq.correct_answer or "A",
-                        "explanation": pyq.explanation or "Ghatnachakra verified past year solution.",
+                        "explanation": pyq.explanation or "Verified past year solution.",
                         "mode": "PYQS",
                         "source": "PYQS",
                     }
                 )
                 if q_obj not in questions:
                     questions.append(q_obj)
+
+        # 3. Fallback to auto-generating practice questions if no questions exist for this concept
+        if not questions:
+            try:
+                from admin.tasks import generate_questions_task
+                generate_questions_task(concept.id)
+                questions = list(
+                    Question.objects
+                    .filter(concept=concept)
+                    .prefetch_related("sub_questions")[:num]
+                )
+            except Exception as e:
+                print("Auto question generation fallback error:", e)
+
+        # 4. Ultimate fallback to prevent empty quiz sessions
+        if not questions:
+            fallback_q, _ = Question.objects.get_or_create(
+                qid=f"FALLBACK-C{concept.id}-1",
+                defaults={
+                    "concept": concept,
+                    "question_title": f"{concept.name} Practice",
+                    "question": f"Which of the following statements correctly applies to {concept.name}?",
+                    "option_a": f"It represents the fundamental rule governing {concept.name}.",
+                    "option_b": f"It contradicts the principle of {concept.name}.",
+                    "option_c": "It is completely unrelated to physical law.",
+                    "option_d": "None of the above.",
+                    "correct_option": "A",
+                    "explanation": f"Option A correctly states the core concept of {concept.name}.",
+                    "mode": "CONCEPT",
+                    "source": "FALLBACK"
+                }
+            )
+            questions.append(fallback_q)
 
         session = QuizSession.objects.create(
             user=user,
@@ -97,7 +132,7 @@ class QuizService:
     def start_full_exam_quiz(user, concept, num):
         questions = list(
             Question.objects
-            .filter(concept=concept, source="PYQS")
+            .filter(concept=concept)
             .prefetch_related("sub_questions")[:num]
         )
 
@@ -111,20 +146,51 @@ class QuizService:
                     qid=q_id,
                     defaults={
                         "concept": concept,
-                        "question_title": f"{pyq.exam_source or 'State PCS'} PYQ",
+                        "question_title": f"{pyq.exam_source or 'Exam'} PYQ",
                         "question": pyq.question_text,
-                        "option_a": opts[0] if len(opts) > 0 else "Statement 1",
-                        "option_b": opts[1] if len(opts) > 1 else "Statement 2",
-                        "option_c": opts[2] if len(opts) > 2 else "Statement 3",
-                        "option_d": opts[3] if len(opts) > 3 else "Statement 4",
+                        "option_a": opts[0] if len(opts) > 0 else "Option A",
+                        "option_b": opts[1] if len(opts) > 1 else "Option B",
+                        "option_c": opts[2] if len(opts) > 2 else "Option C",
+                        "option_d": opts[3] if len(opts) > 3 else "Option D",
                         "correct_option": pyq.correct_answer or "A",
-                        "explanation": pyq.explanation or "Ghatnachakra verified past year solution.",
+                        "explanation": pyq.explanation or "Verified past year solution.",
                         "mode": "PYQS",
                         "source": "PYQS",
                     }
                 )
                 if q_obj not in questions:
                     questions.append(q_obj)
+
+        if not questions:
+            try:
+                from admin.tasks import generate_questions_task
+                generate_questions_task(concept.id)
+                questions = list(
+                    Question.objects
+                    .filter(concept=concept)
+                    .prefetch_related("sub_questions")[:num]
+                )
+            except Exception as e:
+                print("Auto question generation fallback error:", e)
+
+        if not questions:
+            fallback_q, _ = Question.objects.get_or_create(
+                qid=f"FALLBACK-C{concept.id}-1",
+                defaults={
+                    "concept": concept,
+                    "question_title": f"{concept.name} Exam Practice",
+                    "question": f"Which of the following statements correctly applies to {concept.name}?",
+                    "option_a": f"It represents the fundamental rule governing {concept.name}.",
+                    "option_b": f"It contradicts the principle of {concept.name}.",
+                    "option_c": "It is completely unrelated to physical law.",
+                    "option_d": "None of the above.",
+                    "correct_option": "A",
+                    "explanation": f"Option A correctly states the core concept of {concept.name}.",
+                    "mode": "CONCEPT",
+                    "source": "FALLBACK"
+                }
+            )
+            questions.append(fallback_q)
 
         session = QuizSession.objects.create(
             user=user,

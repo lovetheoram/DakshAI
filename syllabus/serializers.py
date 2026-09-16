@@ -29,6 +29,8 @@ class ConceptSerializer(serializers.ModelSerializer):
     raw_mastry = serializers.SerializerMethodField()
     last_practiced = serializers.SerializerMethodField()
     pyqs = PYQSerializer(many=True, read_only=True)
+    questions = serializers.SerializerMethodField()
+    questions_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Concept
@@ -41,7 +43,18 @@ class ConceptSerializer(serializers.ModelSerializer):
             "raw_mastry",
             "last_practiced",
             "pyqs",
+            "questions",
+            "questions_count",
         ]
+
+    def get_questions(self, obj):
+        from quiz.serializers import QuestionSerializer
+        return QuestionSerializer(obj.questions.all()[:20], many=True).data
+
+    def get_questions_count(self, obj):
+        pyq_c = len(obj.pyqs.all()) if hasattr(obj, "_prefetched_objects_cache") and "pyqs" in obj._prefetched_objects_cache else obj.pyqs.count()
+        q_c = len(obj.questions.all()) if hasattr(obj, "_prefetched_objects_cache") and "questions" in obj._prefetched_objects_cache else obj.questions.count()
+        return pyq_c + q_c
 
     def get_mastery(self, obj):
         user = self.context.get("user")
@@ -108,12 +121,19 @@ class SubjectSerializer(serializers.ModelSerializer):
         fields = ["id", "name",  "topics"]
 
 
+class ExamBranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exam
+        fields = ["id", "name", "code", "description", "exam_type"]
+
+
 class ExamSerializer(serializers.ModelSerializer):
     subjects = SubjectSerializer(many=True, read_only=True)
+    branches = ExamBranchSerializer(many=True, read_only=True)
 
     class Meta:
         model = Exam
-        fields = ["id", "name", "exam_type", "subjects"]
+        fields = ["id", "name", "code", "description", "exam_type", "parent_exam", "branches", "subjects"]
 
 
 class ConceptMiniSerializer(serializers.ModelSerializer):

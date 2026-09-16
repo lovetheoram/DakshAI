@@ -1,0 +1,1391 @@
+{
+  "exam": {
+    "code": "pcs",
+    "name": "State Provincial Civil Services",
+    "description": "Normalized common syllabus for BPSC, UPPSC and WBPSC/WBCS with state-specific overlays.",
+    "version": "2026",
+    "subjects": [
+      {
+        "code": "history_culture",
+        "name": "History & Culture",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Ancient India",
+            "subtopics": [
+              {
+                "name": "Sources and Prehistory",
+                "concepts": [
+                  "Sources of Ancient Indian History",
+                  "Prehistoric Cultures",
+                  "Stone Age",
+                  "Chalcolithic Cultures",
+                  "Megalithic Culture"
+                ]
+              },
+              {
+                "name": "Indus Valley Civilization",
+                "concepts": [
+                  "Origin and Chronology",
+                  "Geographical Extent",
+                  "Major Harappan Sites",
+                  "Urban Planning",
+                  "Economy and Trade",
+                  "Society and Religion",
+                  "Art and Script",
+                  "Decline and Legacy"
+                ]
+              },
+              {
+                "name": "Vedic Civilization",
+                "concepts": [
+                  "Early Vedic Society",
+                  "Later Vedic Society",
+                  "Political Organization",
+                  "Economy",
+                  "Religion and Philosophy",
+                  "Vedic Literature"
+                ]
+              },
+              {
+                "name": "Mahajanapadas and Religious Movements",
+                "concepts": [
+                  "Sixteen Mahajanapadas",
+                  "Rise of Magadha",
+                  "Buddhism",
+                  "Jainism",
+                  "Other Philosophical Traditions"
+                ]
+              },
+              {
+                "name": "Mauryan Empire",
+                "concepts": [
+                  "Rise of Mauryas",
+                  "Chandragupta Maurya",
+                  "Ashoka and Dhamma",
+                  "Mauryan Administration",
+                  "Mauryan Economy",
+                  "Mauryan Art and Architecture",
+                  "Decline of Mauryan Empire"
+                ]
+              },
+              {
+                "name": "Post-Mauryan India",
+                "concepts": [
+                  "Indo-Greeks",
+                  "Shakas and Parthians",
+                  "Kushanas",
+                  "Satavahanas",
+                  "Sangam Age",
+                  "Trade and Cultural Developments"
+                ]
+              },
+              {
+                "name": "Gupta and Post-Gupta Period",
+                "concepts": [
+                  "Gupta Rulers",
+                  "Gupta Administration and Economy",
+                  "Science and Technology",
+                  "Literature and Art",
+                  "Harsha and Early Medieval Transition"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Medieval India",
+            "subtopics": [
+              {
+                "name": "Early Medieval India",
+                "concepts": [
+                  "Regional Kingdoms",
+                  "Palas",
+                  "Pratiharas",
+                  "Rashtrakutas",
+                  "Chalukyas",
+                  "Pallavas",
+                  "Cholas",
+                  "Rajput States"
+                ]
+              },
+              {
+                "name": "Delhi Sultanate",
+                "concepts": [
+                  "Establishment of Delhi Sultanate",
+                  "Major Dynasties",
+                  "Important Rulers",
+                  "Administration",
+                  "Economy and Society",
+                  "Architecture and Culture"
+                ]
+              },
+              {
+                "name": "Mughal and Regional Powers",
+                "concepts": [
+                  "Establishment of Mughal Empire",
+                  "Major Mughal Rulers",
+                  "Mughal Administration",
+                  "Revenue and Mansabdari",
+                  "Economy and Society",
+                  "Mughal Art and Architecture",
+                  "Decline of Mughal Empire",
+                  "Marathas",
+                  "Sikh Power",
+                  "Other Regional States"
+                ]
+              },
+              {
+                "name": "Bhakti and Sufi Movements",
+                "concepts": [
+                  "Bhakti Tradition",
+                  "Major Bhakti Saints",
+                  "Sufi Traditions",
+                  "Major Sufi Orders",
+                  "Social and Cultural Impact"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Modern India",
+            "subtopics": [
+              {
+                "name": "Advent and Expansion of Europeans",
+                "concepts": [
+                  "European Trading Companies",
+                  "British Expansion",
+                  "Carnatic Wars",
+                  "Anglo-Mysore Wars",
+                  "Anglo-Maratha Wars",
+                  "Anglo-Sikh Wars"
+                ]
+              },
+              {
+                "name": "British Administration",
+                "concepts": [
+                  "Constitutional Development under British Rule",
+                  "Land Revenue Systems",
+                  "Administrative Reforms",
+                  "Economic Policies",
+                  "Education and Social Policies"
+                ]
+              },
+              {
+                "name": "Economic Impact of Colonialism",
+                "concepts": [
+                  "Drain of Wealth",
+                  "Deindustrialization",
+                  "Commercialization of Agriculture",
+                  "Railways and Infrastructure",
+                  "Famines and Poverty"
+                ]
+              },
+              {
+                "name": "Social and Religious Reform",
+                "concepts": [
+                  "Major Reform Movements",
+                  "Caste Reform",
+                  "Women's Reform",
+                  "Educational Reform",
+                  "Socio-Religious Organizations"
+                ]
+              },
+              {
+                "name": "Revolt of 1857",
+                "concepts": [
+                  "Causes of Revolt",
+                  "Major Centres and Leaders",
+                  "Bihar and Uttar Pradesh in the Revolt",
+                  "Nature of the Revolt",
+                  "Consequences of the Revolt"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Indian National Movement",
+            "subtopics": [
+              {
+                "name": "Early Nationalism",
+                "concepts": [
+                  "Formation of Indian National Congress",
+                  "Moderate Phase",
+                  "Extremist Phase",
+                  "Swadeshi Movement",
+                  "Home Rule Movement"
+                ]
+              },
+              {
+                "name": "Gandhian Movement",
+                "concepts": [
+                  "Gandhi's Political Methods",
+                  "Champaran Kheda and Ahmedabad Movements",
+                  "Non-Cooperation Movement",
+                  "Civil Disobedience Movement",
+                  "Quit India Movement"
+                ]
+              },
+              {
+                "name": "Revolutionary and Alternative Movements",
+                "concepts": [
+                  "Revolutionary Organizations",
+                  "Bhagat Singh and HSRA",
+                  "Bengal Revolutionary Movement",
+                  "Subhas Chandra Bose and INA",
+                  "Peasant and Tribal Movements"
+                ]
+              },
+              {
+                "name": "Constitutional and Political Developments",
+                "concepts": [
+                  "Constitutional Reforms",
+                  "Government of India Act 1935",
+                  "Cripps Mission",
+                  "Cabinet Mission",
+                  "Partition",
+                  "Independence"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Art and Culture",
+            "subtopics": [
+              {
+                "name": "Architecture",
+                "concepts": [
+                  "Buddhist Architecture",
+                  "Temple Architecture",
+                  "Indo-Islamic Architecture",
+                  "Mughal Architecture",
+                  "Colonial Architecture"
+                ]
+              },
+              {
+                "name": "Visual Arts",
+                "concepts": [
+                  "Sculpture",
+                  "Classical Painting",
+                  "Folk and Tribal Arts"
+                ]
+              },
+              {
+                "name": "Performing Arts",
+                "concepts": [
+                  "Classical Dance",
+                  "Classical Music",
+                  "Folk Music and Dance",
+                  "Theatre and Puppetry"
+                ]
+              },
+              {
+                "name": "Literature and Cultural Heritage",
+                "concepts": [
+                  "Ancient Literature",
+                  "Medieval Literature",
+                  "Modern Indian Literature",
+                  "Cultural Heritage"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "geography",
+        "name": "Geography",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Physical Geography",
+            "subtopics": [
+              {
+                "name": "Earth and Geomorphology",
+                "concepts": [
+                  "Interior of Earth",
+                  "Plate Tectonics",
+                  "Earthquakes and Volcanoes",
+                  "Rocks and Landforms",
+                  "Geomorphic Processes"
+                ]
+              },
+              {
+                "name": "Climatology",
+                "concepts": [
+                  "Atmosphere",
+                  "Temperature and Pressure",
+                  "Winds and Air Masses",
+                  "Cyclones",
+                  "Monsoon",
+                  "Climate Variability"
+                ]
+              },
+              {
+                "name": "Oceanography",
+                "concepts": [
+                  "Ocean Relief",
+                  "Ocean Currents",
+                  "Waves and Tides",
+                  "Marine Resources"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Indian Geography",
+            "subtopics": [
+              {
+                "name": "Physical Features",
+                "concepts": [
+                  "Himalayas",
+                  "Northern Plains",
+                  "Peninsular Plateau",
+                  "Coastal Plains",
+                  "Indian Islands"
+                ]
+              },
+              {
+                "name": "Climate and Drainage",
+                "concepts": [
+                  "Indian Monsoon",
+                  "River Systems",
+                  "Floods and Droughts",
+                  "Climate Change in India"
+                ]
+              },
+              {
+                "name": "Natural Resources",
+                "concepts": [
+                  "Soils",
+                  "Forest Resources",
+                  "Mineral Resources",
+                  "Energy Resources"
+                ]
+              },
+              {
+                "name": "Agriculture",
+                "concepts": [
+                  "Cropping Patterns",
+                  "Major Crops",
+                  "Irrigation",
+                  "Agricultural Regions",
+                  "Agricultural Challenges"
+                ]
+              },
+              {
+                "name": "Economic and Human Geography",
+                "concepts": [
+                  "Industries",
+                  "Transport",
+                  "Infrastructure",
+                  "Population",
+                  "Urbanization",
+                  "Regional Development"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "polity_governance",
+        "name": "Indian Polity and Governance",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Constitution",
+            "subtopics": [
+              {
+                "name": "Constitutional Framework",
+                "concepts": [
+                  "Historical Background",
+                  "Constituent Assembly",
+                  "Preamble",
+                  "Salient Features",
+                  "Constitutional Amendments"
+                ]
+              },
+              {
+                "name": "Rights and Principles",
+                "concepts": [
+                  "Fundamental Rights",
+                  "Directive Principles of State Policy",
+                  "Fundamental Duties",
+                  "Constitutional Remedies"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Union Government",
+            "subtopics": [
+              {
+                "name": "Executive",
+                "concepts": [
+                  "President",
+                  "Vice-President",
+                  "Prime Minister",
+                  "Council of Ministers"
+                ]
+              },
+              {
+                "name": "Legislature",
+                "concepts": [
+                  "Parliament",
+                  "Legislative Procedure",
+                  "Budget and Parliamentary Finance",
+                  "Parliamentary Committees"
+                ]
+              },
+              {
+                "name": "Judiciary",
+                "concepts": [
+                  "Supreme Court",
+                  "High Courts",
+                  "Judicial Review",
+                  "Public Interest Litigation",
+                  "Tribunals"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Federal and State Government",
+            "subtopics": [
+              {
+                "name": "Federalism",
+                "concepts": [
+                  "Centre-State Relations",
+                  "Inter-State Relations",
+                  "Emergency Provisions",
+                  "Fiscal Federalism"
+                ]
+              },
+              {
+                "name": "State Government",
+                "concepts": [
+                  "Governor",
+                  "Chief Minister and Council of Ministers",
+                  "State Legislature",
+                  "State Judiciary"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Local Government and Governance",
+            "subtopics": [
+              {
+                "name": "Local Government",
+                "concepts": [
+                  "Panchayati Raj",
+                  "Urban Local Government",
+                  "State Election Commission",
+                  "State Finance Commission"
+                ]
+              },
+              {
+                "name": "Governance",
+                "concepts": [
+                  "Transparency and Accountability",
+                  "Right to Information",
+                  "Citizen Charter",
+                  "E-Governance",
+                  "Public Service Delivery",
+                  "Social Audit"
+                ]
+              },
+              {
+                "name": "Constitutional and Statutory Institutions",
+                "concepts": [
+                  "Election Commission",
+                  "Union Public Service Commission",
+                  "State Public Service Commissions",
+                  "Comptroller and Auditor General",
+                  "Finance Commission",
+                  "Constitutional Commissions",
+                  "Regulatory and Statutory Bodies"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "economy",
+        "name": "Indian Economy",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Basic and Macroeconomy",
+            "subtopics": [
+              {
+                "name": "National Economy",
+                "concepts": [
+                  "National Income",
+                  "GDP and GVA",
+                  "Economic Growth",
+                  "Economic Development",
+                  "Inflation",
+                  "Unemployment",
+                  "Poverty and Inequality"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Money Banking and Finance",
+            "subtopics": [
+              {
+                "name": "Monetary System",
+                "concepts": [
+                  "Reserve Bank of India",
+                  "Monetary Policy",
+                  "Money Supply",
+                  "Interest Rates",
+                  "Banking System",
+                  "Financial Inclusion",
+                  "Digital Payments"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Public Finance",
+            "subtopics": [
+              {
+                "name": "Government Finance",
+                "concepts": [
+                  "Union Budget",
+                  "Taxation",
+                  "Goods and Services Tax",
+                  "Fiscal Policy",
+                  "Fiscal Deficit",
+                  "Public Debt"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Development Economy",
+            "subtopics": [
+              {
+                "name": "Inclusive Development",
+                "concepts": [
+                  "Inclusive Growth",
+                  "Human Development",
+                  "Demographic Dividend",
+                  "Social Sector",
+                  "Sustainable Development"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Agriculture and Rural Economy",
+            "subtopics": [
+              {
+                "name": "Agricultural Economy",
+                "concepts": [
+                  "Agricultural Policies",
+                  "Minimum Support Price",
+                  "Public Procurement",
+                  "Food Security",
+                  "Agricultural Markets",
+                  "Rural Development"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Industry and Infrastructure",
+            "subtopics": [
+              {
+                "name": "Industrial Economy",
+                "concepts": [
+                  "Industrial Policy",
+                  "MSMEs",
+                  "Infrastructure",
+                  "Investment",
+                  "Digital Economy"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "External Sector",
+            "subtopics": [
+              {
+                "name": "International Economy",
+                "concepts": [
+                  "Balance of Payments",
+                  "Exchange Rate",
+                  "Foreign Trade",
+                  "Foreign Direct Investment",
+                  "International Economic Institutions"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "society",
+        "name": "Society and Social Development",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Indian Society",
+            "subtopics": [
+              {
+                "name": "Social Structure",
+                "concepts": [
+                  "Social Diversity",
+                  "Caste and Class",
+                  "Tribes",
+                  "Family and Marriage",
+                  "Religion and Pluralism",
+                  "Urbanization",
+                  "Migration"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Social Issues and Welfare",
+            "subtopics": [
+              {
+                "name": "Social Development",
+                "concepts": [
+                  "Women and Gender",
+                  "Children",
+                  "Youth",
+                  "Elderly",
+                  "Persons with Disabilities",
+                  "Education",
+                  "Health",
+                  "Poverty",
+                  "Social Justice",
+                  "Vulnerable Groups"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "environment_disaster",
+        "name": "Environment and Disaster Management",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Ecology and Biodiversity",
+            "subtopics": [
+              {
+                "name": "Ecological Systems",
+                "concepts": [
+                  "Ecosystem",
+                  "Food Chain and Food Web",
+                  "Energy Flow",
+                  "Biogeochemical Cycles",
+                  "Ecological Succession"
+                ]
+              },
+              {
+                "name": "Biodiversity",
+                "concepts": [
+                  "Genetic Species and Ecosystem Diversity",
+                  "Endemic and Threatened Species",
+                  "Biodiversity Hotspots",
+                  "Biodiversity Conservation"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Environmental Issues",
+            "subtopics": [
+              {
+                "name": "Environmental Change",
+                "concepts": [
+                  "Air Pollution",
+                  "Water Pollution",
+                  "Soil Pollution",
+                  "Waste Management",
+                  "Climate Change",
+                  "Global Warming",
+                  "Sustainable Development"
+                ]
+              },
+              {
+                "name": "Environmental Governance",
+                "concepts": [
+                  "Environmental Laws and Institutions",
+                  "Protected Areas",
+                  "International Environmental Agreements"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Disaster Management",
+            "subtopics": [
+              {
+                "name": "Disaster Risk",
+                "concepts": [
+                  "Hazard and Vulnerability",
+                  "Risk and Resilience",
+                  "Disaster Management Cycle"
+                ]
+              },
+              {
+                "name": "Major Disasters",
+                "concepts": [
+                  "Floods",
+                  "Droughts",
+                  "Cyclones",
+                  "Earthquakes",
+                  "Landslides",
+                  "Tsunamis",
+                  "Heatwaves",
+                  "Industrial and Human-Made Disasters"
+                ]
+              },
+              {
+                "name": "Disaster Institutions",
+                "concepts": [
+                  "Disaster Preparedness",
+                  "Disaster Response",
+                  "National Disaster Management Authority",
+                  "State Disaster Management Authorities",
+                  "National Disaster Response Force"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "science_technology",
+        "name": "General Science and Technology",
+        "scope": "common",
+        "topics": [
+          {
+            "name": "Basic Science",
+            "subtopics": [
+              {
+                "name": "Physics in Daily Life",
+                "concepts": [
+                  "Motion Force and Energy",
+                  "Heat and Temperature",
+                  "Electricity and Magnetism",
+                  "Light and Sound",
+                  "Nuclear Science"
+                ]
+              },
+              {
+                "name": "Chemistry in Daily Life",
+                "concepts": [
+                  "Matter and Materials",
+                  "Chemical Reactions",
+                  "Acids Bases and Salts",
+                  "Metals and Non-Metals",
+                  "Fuels and Energy",
+                  "Environmental Chemistry"
+                ]
+              },
+              {
+                "name": "Biology and Health",
+                "concepts": [
+                  "Cell and Genetics",
+                  "Human Body",
+                  "Nutrition",
+                  "Diseases",
+                  "Immunity and Vaccination",
+                  "Microorganisms",
+                  "Biotechnology Basics"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Emerging Technology",
+            "subtopics": [
+              {
+                "name": "Modern Technologies",
+                "concepts": [
+                  "Space Technology",
+                  "Defence Technology",
+                  "Information Technology",
+                  "Artificial Intelligence",
+                  "Cybersecurity",
+                  "Semiconductors",
+                  "Biotechnology",
+                  "Nanotechnology",
+                  "Quantum Technology"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "ethics",
+        "name": "Ethics and Integrity",
+        "scope": "mains_specific",
+        "topics": [
+          {
+            "name": "Ethics and Human Values",
+            "subtopics": [
+              {
+                "name": "Foundations",
+                "concepts": [
+                  "Ethics and Morality",
+                  "Human Values",
+                  "Attitude",
+                  "Emotional Intelligence",
+                  "Moral Thinkers"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Civil Service Ethics",
+            "subtopics": [
+              {
+                "name": "Public Service Values",
+                "concepts": [
+                  "Integrity",
+                  "Impartiality",
+                  "Objectivity",
+                  "Empathy and Compassion",
+                  "Commitment to Public Service"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Probity in Governance",
+            "subtopics": [
+              {
+                "name": "Ethical Governance",
+                "concepts": [
+                  "Accountability",
+                  "Transparency",
+                  "Corruption",
+                  "Public Funds",
+                  "Code of Ethics",
+                  "Code of Conduct"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Ethical Decision Making",
+            "subtopics": [
+              {
+                "name": "Applied Ethics",
+                "concepts": [
+                  "Ethical Dilemmas",
+                  "Case Study Analysis"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "internal_security",
+        "name": "Internal Security",
+        "scope": "mains_specific",
+        "topics": [
+          {
+            "name": "Security Challenges",
+            "subtopics": [
+              {
+                "name": "Internal Security",
+                "concepts": [
+                  "Terrorism",
+                  "Insurgency and Extremism",
+                  "Organized Crime",
+                  "Cybersecurity",
+                  "Money Laundering",
+                  "Border Security"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "aptitude_reasoning",
+        "name": "Aptitude and Reasoning",
+        "scope": "prelims_specific",
+        "topics": [
+          {
+            "name": "Quantitative Aptitude",
+            "subtopics": [
+              {
+                "name": "Arithmetic",
+                "concepts": [
+                  "Number System",
+                  "Percentage",
+                  "Ratio and Proportion",
+                  "Average",
+                  "Profit and Loss",
+                  "Simple and Compound Interest",
+                  "Time and Work",
+                  "Time Speed and Distance",
+                  "Data Interpretation"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Reasoning",
+            "subtopics": [
+              {
+                "name": "Logical and Analytical Reasoning",
+                "concepts": [
+                  "Logical Reasoning",
+                  "Analytical Reasoning",
+                  "Problem Solving",
+                  "Decision Making",
+                  "Data Sufficiency"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Comprehension",
+            "subtopics": [
+              {
+                "name": "Reading Comprehension",
+                "concepts": [
+                  "Reading Comprehension",
+                  "Basic Communication Skills"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "language_writing",
+        "name": "Language and Writing",
+        "scope": "mains_specific",
+        "topics": [
+          {
+            "name": "General Hindi",
+            "subtopics": [
+              {
+                "name": "Hindi Language",
+                "concepts": [
+                  "Hindi Grammar",
+                  "Hindi Vocabulary",
+                  "Hindi Comprehension",
+                  "Precis Writing"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "English",
+            "subtopics": [
+              {
+                "name": "English Language",
+                "concepts": [
+                  "English Grammar",
+                  "English Vocabulary",
+                  "English Comprehension",
+                  "Precis Writing"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Essay",
+            "subtopics": [
+              {
+                "name": "Essay Writing",
+                "concepts": [
+                  "Social Issues",
+                  "Political and Governance Issues",
+                  "Economic Issues",
+                  "Science and Technology",
+                  "Environment",
+                  "State-Specific Issues"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "current_affairs",
+        "name": "Current Affairs",
+        "scope": "dynamic",
+        "topics": [
+          {
+            "name": "Current Events",
+            "subtopics": [
+              {
+                "name": "National and International",
+                "concepts": [
+                  "National Current Affairs",
+                  "International Current Affairs",
+                  "Government Policies and Schemes",
+                  "Economy and Business",
+                  "Science and Technology",
+                  "Environment",
+                  "Defence and Security",
+                  "Reports and Indices",
+                  "Important Appointments",
+                  "Awards and Honours",
+                  "Sports"
+                ]
+              },
+              {
+                "name": "State Current Affairs",
+                "concepts": [
+                  "Bihar Current Affairs",
+                  "Uttar Pradesh Current Affairs",
+                  "West Bengal Current Affairs"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "bihar_special",
+        "name": "Bihar Special",
+        "scope": "bihar",
+        "topics": [
+          {
+            "name": "History and Culture of Bihar",
+            "subtopics": [
+              {
+                "name": "History",
+                "concepts": [
+                  "Ancient Bihar",
+                  "Magadha",
+                  "Mauryan Heritage",
+                  "Buddhism and Jainism in Bihar",
+                  "Nalanda and Vikramshila",
+                  "Medieval Bihar",
+                  "Bihar in the Revolt of 1857",
+                  "Champaran Satyagraha",
+                  "Bihar in the National Movement",
+                  "Major Leaders of Bihar"
+                ]
+              },
+              {
+                "name": "Culture",
+                "concepts": [
+                  "Bihar Literature and Languages",
+                  "Folk Arts",
+                  "Folk Music and Dance",
+                  "Festivals and Traditions",
+                  "Cultural Heritage"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Geography and Environment of Bihar",
+            "subtopics": [
+              {
+                "name": "Physical and Economic Geography",
+                "concepts": [
+                  "Physical Divisions",
+                  "River Systems",
+                  "Climate and Soils",
+                  "Agriculture",
+                  "Natural Resources",
+                  "Population and Migration"
+                ]
+              },
+              {
+                "name": "Environment and Disasters",
+                "concepts": [
+                  "Floods",
+                  "Drought",
+                  "Biodiversity",
+                  "Protected Areas",
+                  "Environmental Issues"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Economy and Development of Bihar",
+            "subtopics": [
+              {
+                "name": "State Economy",
+                "concepts": [
+                  "Bihar Economy",
+                  "Agriculture and Rural Economy",
+                  "Industry and Infrastructure",
+                  "Human Development",
+                  "Poverty and Employment",
+                  "Migration",
+                  "State Finance and Budget",
+                  "Development Programmes"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Governance of Bihar",
+            "subtopics": [
+              {
+                "name": "State Government and Institutions",
+                "concepts": [
+                  "Bihar State Government",
+                  "Bihar Legislature",
+                  "Bihar Judiciary",
+                  "Bihar Public Service Commission",
+                  "Panchayati Raj",
+                  "Urban Local Government",
+                  "State Institutions"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "uttar_pradesh_special",
+        "name": "Uttar Pradesh Special",
+        "scope": "uttar_pradesh",
+        "topics": [
+          {
+            "name": "History Culture and Heritage of Uttar Pradesh",
+            "subtopics": [
+              {
+                "name": "History",
+                "concepts": [
+                  "Ancient Uttar Pradesh",
+                  "Buddhism and Jainism in Uttar Pradesh",
+                  "Medieval Uttar Pradesh",
+                  "Awadh",
+                  "Revolt of 1857 in Uttar Pradesh",
+                  "Freedom Movement in Uttar Pradesh"
+                ]
+              },
+              {
+                "name": "Culture and Heritage",
+                "concepts": [
+                  "Art and Architecture",
+                  "Literature and Languages",
+                  "Folk Arts",
+                  "Folk Music and Dance",
+                  "Historical and Archaeological Heritage"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Society and Governance of Uttar Pradesh",
+            "subtopics": [
+              {
+                "name": "Society",
+                "concepts": [
+                  "Social Structure",
+                  "Rural and Urban Issues",
+                  "Tribes and Vulnerable Groups",
+                  "Social Development"
+                ]
+              },
+              {
+                "name": "Governance",
+                "concepts": [
+                  "Uttar Pradesh Political System",
+                  "State Administration",
+                  "Uttar Pradesh Legislature",
+                  "Allahabad High Court",
+                  "Uttar Pradesh Public Service Commission",
+                  "Panchayati Raj",
+                  "Urban Local Bodies",
+                  "Governance and Public Policy"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Geography and Environment of Uttar Pradesh",
+            "subtopics": [
+              {
+                "name": "Geography",
+                "concepts": [
+                  "Physical Geography",
+                  "River Systems",
+                  "Climate and Soils",
+                  "Agriculture and Irrigation",
+                  "Natural Resources",
+                  "Population and Urbanization"
+                ]
+              },
+              {
+                "name": "Environment",
+                "concepts": [
+                  "Forests and Wildlife",
+                  "National Parks and Wildlife Sanctuaries",
+                  "Environmental Issues",
+                  "Disaster Management"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Economy and Development of Uttar Pradesh",
+            "subtopics": [
+              {
+                "name": "State Economy",
+                "concepts": [
+                  "Uttar Pradesh Economy",
+                  "Agriculture",
+                  "Industry and MSMEs",
+                  "Infrastructure",
+                  "Energy",
+                  "Investment and Industrial Development",
+                  "Human Development",
+                  "State Finance and Budget",
+                  "Government Programmes",
+                  "One District One Product"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Science and Technology in Uttar Pradesh",
+            "subtopics": [
+              {
+                "name": "State Science and Technology",
+                "concepts": [
+                  "Science and Technology Initiatives in Uttar Pradesh",
+                  "Technology Applications in Governance and Development"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "west_bengal_special",
+        "name": "West Bengal Special",
+        "scope": "west_bengal",
+        "topics": [
+          {
+            "name": "History and Culture of West Bengal",
+            "subtopics": [
+              {
+                "name": "History",
+                "concepts": [
+                  "Ancient Bengal",
+                  "Pala and Sena Period",
+                  "Bengal Sultanate",
+                  "Mughal and Nawabi Bengal",
+                  "British Bengal",
+                  "Bengal Renaissance",
+                  "Swadeshi Movement in Bengal",
+                  "Revolutionary Movement in Bengal",
+                  "Partition and Post-Independence Bengal"
+                ]
+              },
+              {
+                "name": "Culture",
+                "concepts": [
+                  "Bengali Literature",
+                  "Bengali Languages and Dialects",
+                  "Folk Arts",
+                  "Baul Tradition",
+                  "Folk Music and Dance",
+                  "Theatre and Cinema",
+                  "Festivals and Traditions",
+                  "Architectural Heritage"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Geography and Environment of West Bengal",
+            "subtopics": [
+              {
+                "name": "Geography",
+                "concepts": [
+                  "Physical Regions",
+                  "Himalayan Region",
+                  "Terai and Dooars",
+                  "Gangetic Plains",
+                  "Rarh Region",
+                  "Delta and Sundarbans",
+                  "River Systems",
+                  "Climate and Soils",
+                  "Agriculture",
+                  "Natural Resources"
+                ]
+              },
+              {
+                "name": "Environment and Disasters",
+                "concepts": [
+                  "Biodiversity",
+                  "Protected Areas",
+                  "Sundarbans Ecosystem",
+                  "Cyclones and Floods",
+                  "Environmental Issues"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Economy and Development of West Bengal",
+            "subtopics": [
+              {
+                "name": "State Economy",
+                "concepts": [
+                  "West Bengal Economy",
+                  "Agriculture",
+                  "Tea Economy",
+                  "Jute Economy",
+                  "Industry",
+                  "Ports and Trade",
+                  "Infrastructure",
+                  "Population and Urbanization",
+                  "Development Issues"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Society and Governance of West Bengal",
+            "subtopics": [
+              {
+                "name": "Society",
+                "concepts": [
+                  "Social and Cultural Diversity",
+                  "Tribal Communities",
+                  "Urban and Rural Society",
+                  "Social Development"
+                ]
+              },
+              {
+                "name": "Governance",
+                "concepts": [
+                  "West Bengal State Government",
+                  "West Bengal Legislature",
+                  "Calcutta High Court",
+                  "West Bengal Public Service Commission",
+                  "Panchayati Raj",
+                  "Urban Local Government",
+                  "State Development Programmes"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

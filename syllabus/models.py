@@ -8,10 +8,11 @@ class Exam(models.Model):
         ("jee", "JEE Main"),
         ("neet", "NEET"),
         ("placement", "Placement Preparation"),
-        ("pcs", "State PCS (BPSC, UPPCS, etc.)"),
+        ("pcs", "State PCS"),
     ]
 
     name = models.CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=50, blank=True, null=True, help_text="Short identifier/code like BPSC, UPPSC, WBPSC, JEE_MAIN")
     description = models.TextField(blank=True)
     exam_type = models.CharField(
         max_length=50,
@@ -19,8 +20,18 @@ class Exam(models.Model):
         default="jee",
         help_text="Determines which prompt module is used for AI generation"
     )
+    parent_exam = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='branches'
+    )
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
+        if self.parent_exam:
+            return f"{self.name} ({self.parent_exam.name})"
         return self.name
 
 

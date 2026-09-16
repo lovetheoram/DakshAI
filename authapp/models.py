@@ -12,6 +12,7 @@ class UserProfile(models.Model):
     )
     bio = models.TextField(blank=True)
     avatar = models.URLField(blank=True)
+    pcs_section = models.CharField(max_length=50, default="BPSC", blank=True)
 
     def __str__(self):
         return self.user.username

@@ -7,15 +7,20 @@ from .models import UserProfile
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     exam_type = serializers.CharField()
+    pcs_section = serializers.CharField(required=False, default="BPSC")
+
     class Meta:
         model = User
-        fields = ["username", "email", "password", "exam_type"]
+        fields = ["username", "email", "password", "exam_type", "pcs_section"]
 
     def create(self, validated_data):
         exam_type = validated_data.pop("exam_type")
+        pcs_section = validated_data.pop("pcs_section", "BPSC") or "BPSC"
+        clean_username = validated_data["username"].strip().lower()
+
         user = User.objects.create_user(
-            username=validated_data["username"],
-            email=validated_data["email"],
+            username=clean_username,
+            email=validated_data["email"].strip().lower(),
             password=validated_data["password"],
         )
         exam = Exam.objects.filter(exam_type=exam_type).first()
@@ -23,6 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             exam = Exam.objects.first()
         if exam:
             user.profile.selected_exam = exam
+            user.profile.pcs_section = pcs_section
             user.profile.save()
 
             # Auto-create default UserGoal so new users are NOT prompted for exam twice
@@ -50,23 +56,25 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
     def validate(self, data):
-        user = authenticate(
-            username=data.get("username"), password=data.get("password")
-        )
+        raw_username = data.get("username", "").strip().lower()
+        password = data.get("password", "")
+
+        # Lookup user case-insensitively
+        try:
+            target_user = User.objects.get(username__iexact=raw_username)
+            user = authenticate(username=target_user.username, password=password)
+        except User.DoesNotExist:
+            user = None
+
         if not user:
             raise serializers.ValidationError("Invalid credentials")
         data["user"] = user
         return data
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ["id", "username", "email"]
-
 class UserSerializer(serializers.ModelSerializer):
-
     selected_exam = serializers.SerializerMethodField()
+    pcs_section = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -74,8 +82,13 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "username",
             "email",
-            "selected_exam"
+            "selected_exam",
+            "pcs_section"
         ]
+
+    def get_pcs_section(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.pcs_section if profile else "BPSC"
 
     def get_selected_exam(self, obj):
         profile = getattr(obj, "profile", None)

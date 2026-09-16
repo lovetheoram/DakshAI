@@ -10,28 +10,56 @@ class SyllabusTreeView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        is_anonymous = request.user is None or request.user.is_anonymous
-        exam_id = request.query_params.get("exam_id")
+        is_anonymous = not hasattr(request, "user") or request.user is None or getattr(request.user, "is_anonymous", True)
+        params = getattr(request, "query_params", getattr(request, "GET", {}))
+        exam_id = params.get("exam_id")
+        pcs_section = params.get("pcs_section")
         
         # Resolve which exam_id is being fetched.
-        # If exam_id is not specified in query params and user is logged in, filter by their profile selected_exam.
         resolved_exam_id = exam_id
         if not resolved_exam_id and not is_anonymous:
             profile = getattr(request.user, "profile", None)
-            if profile and profile.selected_exam:
-                resolved_exam_id = str(profile.selected_exam.id)
+            if profile:
+                if profile.selected_exam:
+                    resolved_exam_id = str(profile.selected_exam.id)
+                if not pcs_section and profile.pcs_section:
+                    pcs_section = profile.pcs_section
 
-        # Retrieve the static, progress-free syllabus tree from the cache
-        cache_key = f"syllabus_tree_exam_{resolved_exam_id or 'all'}"
+        cache_key = f"syllabus_tree_exam_{resolved_exam_id or 'all'}_pcs_{pcs_section or 'default'}"
         static_data = cache.get(cache_key)
 
         if static_data is None:
-            # We do not prefetch concepts as they are fetched dynamically per subtopic now
-            exams = Exam.objects.prefetch_related("subjects__topics__subtopics").all()
+            from .serializers import SubjectSerializer
             if resolved_exam_id:
-                exams = exams.filter(id=resolved_exam_id)
-            static_data = ExamSerializer(exams, many=True).data
-            cache.set(cache_key, static_data, timeout=86400) # cache for 24 hours
+                try:
+                    target_exam = Exam.objects.prefetch_related("branches").get(id=resolved_exam_id)
+                except Exam.DoesNotExist:
+                    return Response({"exams": []})
+
+                if target_exam.parent_exam:
+                    parent_exam = target_exam.parent_exam
+                    parent_subjects = list(parent_exam.subjects.prefetch_related("topics__subtopics").all())
+                    child_subjects = list(target_exam.subjects.prefetch_related("topics__subtopics").all())
+                    all_subjects = parent_subjects + child_subjects
+
+                    exam_data = ExamSerializer(target_exam).data
+                    exam_data["subjects"] = SubjectSerializer(all_subjects, many=True).data
+                    static_data = [exam_data]
+                else:
+                    all_subjects = list(target_exam.subjects.prefetch_related("topics__subtopics").all())
+                    if pcs_section:
+                        branch_exam = target_exam.branches.filter(code__iexact=pcs_section).first()
+                        if branch_exam:
+                            all_subjects += list(branch_exam.subjects.prefetch_related("topics__subtopics").all())
+                    
+                    exam_data = ExamSerializer(target_exam).data
+                    exam_data["subjects"] = SubjectSerializer(all_subjects, many=True).data
+                    static_data = [exam_data]
+            else:
+                exams = Exam.objects.filter(parent_exam__isnull=True).prefetch_related("branches", "subjects__topics__subtopics")
+                static_data = ExamSerializer(exams, many=True).data
+
+            cache.set(cache_key, static_data, timeout=86400)
 
         return Response({"exams": static_data})
 
@@ -81,7 +109,7 @@ class ConceptDetailAPI(APIView):
         try:
             concept = Concept.objects.select_related(
                 "subtopic__topic__subject"
-            ).get(id=concept_id)
+            ).prefetch_related("pyqs", "questions").get(id=concept_id)
         except Concept.DoesNotExist:
             return Response({"detail": "Concept not found"}, status=404)
 

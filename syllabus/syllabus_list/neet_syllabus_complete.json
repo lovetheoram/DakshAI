@@ -1,0 +1,810 @@
+{
+  "exam": {
+    "name": "NEET",
+    "exam_type": "neet",
+    "description": "Official National Eligibility cum Entrance Test (NEET UG) 2026 Syllabus approved by the National Medical Commission (NMC).",
+    "subjects": [
+      {
+        "name": "Physics",
+        "topics": [
+          {
+            "name": "Physics and Measurement",
+            "subtopics": [
+              {
+                "name": "Units, Dimensions & Error Analysis",
+                "concepts": [
+                  {
+                    "name": "Units of Measurement & SI System",
+                    "description": "Units of measurements, System of Units, SI Units, fundamental and derived units, least count, significant figures."
+                  },
+                  {
+                    "name": "Significant Figures & Errors in Measurement",
+                    "description": "Least count, significant figures, errors in measurements, absolute error, relative error, percentage error."
+                  },
+                  {
+                    "name": "Dimensional Analysis & Applications",
+                    "description": "Dimensions of physical quantities, dimensional analysis and its applications in checking homogeneity and deriving formulas."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Kinematics",
+            "subtopics": [
+              {
+                "name": "Motion in 1D & 2D (Vectors & Projectiles)",
+                "concepts": [
+                  {
+                    "name": "Motion in a Straight Line & Kinematic Graphs",
+                    "description": "Frame of reference, motion in a straight line, position-time graph, speed and velocity, uniform and non-uniform motion, average speed and instantaneous velocity, uniformly accelerated motion, velocity-time and position-time graphs, kinematic equations."
+                  },
+                  {
+                    "name": "Scalars, Vectors & Vector Operations",
+                    "description": "Scalars and vectors, vector addition and subtraction, scalar (dot) and vector (cross) products, unit vector, resolution of a vector."
+                  },
+                  {
+                    "name": "Relative Velocity & Projectile Motion",
+                    "description": "Relative velocity in 1D and 2D, motion in a plane, projectile motion trajectory, time of flight, horizontal range, maximum height, uniform circular motion."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Laws of Motion",
+            "subtopics": [
+              {
+                "name": "Newtonian Mechanics & Friction",
+                "concepts": [
+                  {
+                    "name": "Newton’s Laws of Motion & Momentum",
+                    "description": "Force and inertia, Newton’s first law of motion, momentum, Newton’s second law, impulse, Newton’s third law. Law of conservation of linear momentum and applications. Equilibrium of concurrent forces."
+                  },
+                  {
+                    "name": "Static, Kinetic & Rolling Friction",
+                    "description": "Static and kinetic friction, laws of friction, rolling friction, coefficient of friction, motion on rough horizontal and inclined planes."
+                  },
+                  {
+                    "name": "Dynamics of Circular Motion & Banked Roads",
+                    "description": "Dynamics of uniform circular motion: centripetal force and applications: vehicle on a level circular road, vehicle on a banked road."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Work, Energy, and Power",
+            "subtopics": [
+              {
+                "name": "Work-Energy Theorem & Collisions",
+                "concepts": [
+                  {
+                    "name": "Work-Energy Theorem & Spring Potential",
+                    "description": "Work done by constant and variable force, kinetic and potential energy, work-energy theorem, power, potential energy of spring, conservation of mechanical energy, conservative/non-conservative forces, motion in vertical circle."
+                  },
+                  {
+                    "name": "Elastic & Inelastic Collisions",
+                    "description": "Elastic and inelastic collisions in one and two dimensions, coefficient of restitution."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Rotational Motion",
+            "subtopics": [
+              {
+                "name": "Center of Mass & Rigid Body Dynamics",
+                "concepts": [
+                  {
+                    "name": "Center of Mass & Torque",
+                    "description": "Center of mass of two-particle system and rigid body. Basic concepts of rotational motion, moment of force, torque, angular momentum and conservation."
+                  },
+                  {
+                    "name": "Moment of Inertia & Axis Theorems",
+                    "description": "Moment of inertia, radius of gyration, moments of inertia for simple geometrical objects, parallel and perpendicular axes theorems, rigid body rotation equations, linear vs rotational motion."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Gravitation",
+            "subtopics": [
+              {
+                "name": "Gravitational Field & Satellites",
+                "concepts": [
+                  {
+                    "name": "Universal Gravitation & Acceleration due to Gravity",
+                    "description": "Universal law of gravitation, variation of g with altitude and depth, Kepler’s laws of planetary motion."
+                  },
+                  {
+                    "name": "Gravitational Potential & Satellite Motion",
+                    "description": "Gravitational potential energy, gravitational potential, escape velocity, orbital velocity, time period and total energy of satellite."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Properties of Solids and Liquids",
+            "subtopics": [
+              {
+                "name": "Elasticity, Fluids & Heat Transfer",
+                "concepts": [
+                  {
+                    "name": "Elasticity & Hooke’s Law",
+                    "description": "Elastic behavior, stress-strain relationship, Hooke’s law, Young’s modulus, bulk modulus, modulus of rigidity."
+                  },
+                  {
+                    "name": "Fluid Statics, Viscosity & Bernoulli’s Principle",
+                    "description": "Fluid column pressure, Pascal’s law, viscosity, Stokes’ law, terminal velocity, streamline/turbulent flow, critical velocity, Bernoulli’s principle."
+                  },
+                  {
+                    "name": "Surface Tension & Calorimetry",
+                    "description": "Surface energy, surface tension, angle of contact, excess pressure, capillary rise. Heat, temperature, thermal expansion, specific heat capacity, calorimetry, latent heat, conduction, convection, radiation."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Thermodynamics",
+            "subtopics": [
+              {
+                "name": "Thermal Equilibrium & Thermodynamic Laws",
+                "concepts": [
+                  {
+                    "name": "Zeroth & First Laws of Thermodynamics",
+                    "description": "Thermal equilibrium, zeroth law, temperature concept, heat, work, internal energy, first law, isothermal and adiabatic processes."
+                  },
+                  {
+                    "name": "Second Law of Thermodynamics",
+                    "description": "Second law of thermodynamics, reversible and irreversible processes."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Kinetic Theory of Gases",
+            "subtopics": [
+              {
+                "name": "Ideal Gas Laws & Molecular Kinetics",
+                "concepts": [
+                  {
+                    "name": "Ideal Gas State & RMS Speed",
+                    "description": "Equation of state of perfect gas, compression work, kinetic theory assumptions, pressure concept, RMS speed of gas molecules."
+                  },
+                  {
+                    "name": "Degrees of Freedom & Mean Free Path",
+                    "description": "Degrees of freedom, law of equipartition of energy, specific heat capacities of gases, mean free path, Avogadro’s number."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Oscillations and Waves",
+            "subtopics": [
+              {
+                "name": "SHM, Pendulum & Wave Superposition",
+                "concepts": [
+                  {
+                    "name": "Simple Harmonic Motion (SHM)",
+                    "description": "Periodic motion, time period, frequency, displacement, SHM equation, phase, spring oscillations, kinetic and potential energy, simple pendulum derivation."
+                  },
+                  {
+                    "name": "Wave Motion, Standing Waves & Beats",
+                    "description": "Transverse and longitudinal waves, speed of travelling wave, progressive wave equation, superposition principle, standing waves in strings/organ pipes, beats."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Electrostatics",
+            "subtopics": [
+              {
+                "name": "Coulomb’s Law, Field & Capacitance",
+                "concepts": [
+                  {
+                    "name": "Electric Charge & Field Dipole",
+                    "description": "Charge conservation, Coulomb’s law, superposition principle, continuous charge distribution, electric field lines, electric dipole torque in uniform field."
+                  },
+                  {
+                    "name": "Gauss’s Law Applications",
+                    "description": "Electric flux, Gauss’s law and applications (infinite wire, plane sheet, thin spherical shell)."
+                  },
+                  {
+                    "name": "Electric Potential & Capacitors",
+                    "description": "Electric potential and potential difference, equipotential surfaces, potential energy, dielectrics, parallel plate capacitor, series/parallel combinations, energy stored."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Current Electricity",
+            "subtopics": [
+              {
+                "name": "Ohm’s Law, Resistance & Circuit Rules",
+                "concepts": [
+                  {
+                    "name": "Drift Velocity & Resistance Trends",
+                    "description": "Electric current, drift velocity, mobility, Ohm’s law, V-I characteristics, electrical energy and power, resistivity, conductivity, temperature dependence."
+                  },
+                  {
+                    "name": "Cell EMF & Kirchhoff’s Bridge Circuits",
+                    "description": "Internal resistance, cell EMF and combinations, Kirchhoff’s laws and applications, Wheatstone bridge, Metre Bridge."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Magnetic Effects of Current and Magnetism",
+            "subtopics": [
+              {
+                "name": "Biot-Savart Law, Ampere’s Law & Magnetism",
+                "concepts": [
+                  {
+                    "name": "Biot-Savart & Ampere’s Law Applications",
+                    "description": "Biot-Savart law (circular loop), Ampere’s law (straight wire, solenoid), Lorentz force, force on current-carrying conductor, force between parallel wires."
+                  },
+                  {
+                    "name": "Galvanometer & Magnetic Substances",
+                    "description": "Torque on magnetic dipole, moving coil galvanometer sensitivity and ammeter/voltmeter conversion. Bar magnet dipole moment, field lines, Para-, Dia-, and Ferromagnetic materials, temperature effects."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Electromagnetic Induction and Alternating Currents",
+            "subtopics": [
+              {
+                "name": "Faraday’s Induction & LCR Circuits",
+                "concepts": [
+                  {
+                    "name": "Faraday’s Law & Self/Mutual Inductance",
+                    "description": "Electromagnetic induction, Faraday’s law, induced EMF, Lenz’s law, eddy currents, self and mutual inductance."
+                  },
+                  {
+                    "name": "AC Circuits, Resonance & Transformers",
+                    "description": "Alternating currents, peak/RMS values, reactance, impedance, LCR series circuit resonance, power in AC circuits, wattless current, AC generator and transformer."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Electromagnetic Waves",
+            "subtopics": [
+              {
+                "name": "EM Wave Characteristics & Spectrum",
+                "concepts": [
+                  {
+                    "name": "Displacement Current & EM Spectrum",
+                    "description": "Displacement current, electromagnetic waves transverse nature, EM spectrum (radio, micro, IR, visible, UV, X-rays, gamma) applications."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Optics",
+            "subtopics": [
+              {
+                "name": "Ray Optics & Wave Optics (Huygens, YDSE)",
+                "concepts": [
+                  {
+                    "name": "Reflection, Refraction & Optical Instruments",
+                    "description": "Reflection, spherical mirrors, mirror formula, refraction, Snell’s law, total internal reflection, thin lens formula, lens maker formula, magnification, power, prism dispersion, microscope, telescope."
+                  },
+                  {
+                    "name": "Wave Optics, YDSE & Polarization",
+                    "description": "Wavefronts, Huygens’ principle, interference, Young’s double-slit experiment fringe width, single slit diffraction, Brewster’s law polarization."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Dual Nature of Matter and Radiation",
+            "subtopics": [
+              {
+                "name": "Photoelectric Effect & Matter Waves",
+                "concepts": [
+                  {
+                    "name": "Photoelectric Effect & de Broglie Wavelength",
+                    "description": "Photoelectric effect, Hertz/Lenard observations, Einstein’s photoelectric equation, de Broglie relation for matter waves."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Atoms and Nuclei",
+            "subtopics": [
+              {
+                "name": "Bohr Atom Model & Nuclear Physics",
+                "concepts": [
+                  {
+                    "name": "Alpha Scattering & Bohr Hydrogen Model",
+                    "description": "Rutherford scattering experiment, Bohr model postulates, energy levels, hydrogen spectral series."
+                  },
+                  {
+                    "name": "Mass Defect & Nuclear Fission/Fusion",
+                    "description": "Atomic nucleus size, mass defect, binding energy per nucleon curve, nuclear fission and fusion."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Electronic Devices",
+            "subtopics": [
+              {
+                "name": "Semiconductor Diodes & Logic Gates",
+                "concepts": [
+                  {
+                    "name": "Semiconductor Diodes & Rectifiers",
+                    "description": "Semiconductors, p-n junction diode forward/reverse characteristics, diode rectifier, LED, photodiode, solar cell, Zener diode as voltage regulator."
+                  },
+                  {
+                    "name": "Logic Gates (AND, OR, NOT, NAND, NOR)",
+                    "description": "Logic gates (OR, AND, NOT, NAND, NOR) truth tables and digital operations."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Physics Experimental Skills",
+            "subtopics": [
+              {
+                "name": "NMC Practical Physics Experiments",
+                "concepts": [
+                  {
+                    "name": "Vernier Calipers, Screw Gauge & Pendulum",
+                    "description": "Vernier calipers diameter/depth measurements, screw gauge wire thickness, simple pendulum energy dissipation, metre scale moments."
+                  },
+                  {
+                    "name": "Young’s Modulus, Viscosity & Optics Experiments",
+                    "description": "Young’s modulus, surface tension capillary rise, terminal velocity viscosity, speed of sound resonance tube, specific heat capacity, metre bridge resistivity, Ohm’s law, galvanometer deflection, focal length of mirrors/lenses, prism deviation, diode I-V curves."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Chemistry",
+        "topics": [
+          {
+            "name": "Physical Chemistry: Basic Concepts & Atomic Structure",
+            "subtopics": [
+              {
+                "name": "Mole Concept & Quantum Atomic Model",
+                "concepts": [
+                  {
+                    "name": "Dalton’s Theory, Mole Concept & Stoichiometry",
+                    "description": "Matter nature, Dalton’s atomic theory, atomic and molecular masses, mole concept, molar mass, percentage composition, empirical and molecular formula, chemical stoichiometry."
+                  },
+                  {
+                    "name": "Bohr Model, Quantum Numbers & Electronic Configuration",
+                    "description": "Electromagnetic radiation, photoelectric effect, hydrogen spectrum, Bohr model postulates and radius/energy derivations. De Broglie relation, Heisenberg uncertainty principle, quantum numbers (n, l, m, s), orbital shapes (s, p, d), Aufbau principle, Pauli exclusion principle, Hund’s rule, electronic configuration of elements."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Physical Chemistry: Chemical Bonding & Thermodynamics",
+            "subtopics": [
+              {
+                "name": "VSEPR, Hybridization & Thermochemistry",
+                "concepts": [
+                  {
+                    "name": "Ionic, Covalent & VSEPR Bonding Models",
+                    "description": "Kossel-Lewis approach, ionic bond lattice enthalpy, electronegativity, Fajan’s rule, dipole moment, VSEPR theory and molecular shapes."
+                  },
+                  {
+                    "name": "Valence Bond, Hybridization & MO Theory",
+                    "description": "Valence Bond Theory, hybridization (s, p, d), resonance, Molecular Orbital Theory (LCAO, sigma/pi bonds, bond order, magnetic properties of homonuclear diatomic molecules), hydrogen bonding."
+                  },
+                  {
+                    "name": "First & Second Laws of Thermodynamics",
+                    "description": "Thermodynamic systems, processes, state functions, first law, work, heat, internal energy, enthalpy, heat capacity, Hess’s law, bond dissociation/formation enthalpies, second law, entropy (S), Gibbs free energy (G), spontaneity criterion."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Physical Chemistry: Solutions & Chemical/Ionic Equilibrium",
+            "subtopics": [
+              {
+                "name": "Raoult’s Law, Colligative Properties & Equilibrium",
+                "concepts": [
+                  {
+                    "name": "Concentration Units, Raoult’s Law & Colligative Properties",
+                    "description": "Concentration expressions (molarity, molality, mole fraction, mass percent), Raoult’s law, ideal and non-ideal solutions, colligative properties (relative lowering of vapor pressure, elevation of boiling point, depression of freezing point, osmotic pressure), van’t Hoff factor."
+                  },
+                  {
+                    "name": "Chemical Equilibrium & Le Chatelier’s Principle",
+                    "description": "Dynamic physical and chemical equilibrium, Henry’s law, law of mass action, Kc and Kp constants, delta G relation, Le Chatelier’s principle factors."
+                  },
+                  {
+                    "name": "Ionic Equilibrium, pH & Buffer Solutions",
+                    "description": "Arrhenius, Bronsted-Lowry, and Lewis acid-base theories, ionization constants, water dissociation, pH scale, common ion effect, salt hydrolysis, solubility product (Ksp), buffer solutions."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Physical Chemistry: Electrochemistry & Chemical Kinetics",
+            "subtopics": [
+              {
+                "name": "Redox, Conductance, Nernst Equation & Rate Laws",
+                "concepts": [
+                  {
+                    "name": "Redox Reactions & Electrolytic Conductance",
+                    "description": "Oxidation number rules, balancing redox reactions, electrolytic conductance, molar conductivity concentration dependence, Kohlrausch’s law."
+                  },
+                  {
+                    "name": "Galvanic Cells, Nernst Equation & Fuel Cells",
+                    "description": "Galvanic and electrolytic cells, electrode potential, standard hydrogen electrode, Nernst equation, Gibbs free energy and cell EMF, dry cell, lead storage battery, fuel cells."
+                  },
+                  {
+                    "name": "Reaction Rates, Integrated Rate Equations & Arrhenius Theory",
+                    "description": "Reaction rates, rate law, order and molecularity, integrated rate equations for zero and first order reactions, half-lives, activation energy, Arrhenius equation, collision theory."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Inorganic Chemistry: Periodicity & Block Elements",
+            "subtopics": [
+              {
+                "name": "Periodic Trends, p-Block, d-Block & f-Block",
+                "concepts": [
+                  {
+                    "name": "Modern Periodic Table & Periodic Trends",
+                    "description": "Modern periodic law, s, p, d, f blocks, periodic trends: atomic/ionic radii, ionization enthalpy, electron gain enthalpy, valence, oxidation states."
+                  },
+                  {
+                    "name": "p-Block Elements (Group 13 to 18)",
+                    "description": "Group 13 to 18 general electronic configuration, physical/chemical property trends, anomalous properties of first element in each group."
+                  },
+                  {
+                    "name": "d- and f-Block Transition Elements & Compounds",
+                    "description": "First-row transition series properties: oxidation states, color, catalytic behavior, magnetism, alloys. Preparation, properties of K2Cr2O7 and KMnO4. Lanthanoids (lanthanoid contraction) and Actinoids electronic configuration."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Inorganic Chemistry: Coordination Compounds",
+            "subtopics": [
+              {
+                "name": "Werner’s Theory, IUPAC & Crystal Field Theory",
+                "concepts": [
+                  {
+                    "name": "Werner’s Theory, Ligands & IUPAC Nomenclature",
+                    "description": "Werner’s theory, ligands, coordination number, denticity, chelation, IUPAC nomenclature of mononuclear coordination compounds."
+                  },
+                  {
+                    "name": "Isomerism, VBT & Crystal Field Splitting (CFT)",
+                    "description": "Structural and stereoisomerism in coordination complexes. Valence Bond Theory and Crystal Field Theory, d-orbital splitting, color, magnetic properties, biological applications."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Organic Chemistry: Purification, GOC & Hydrocarbons",
+            "subtopics": [
+              {
+                "name": "Organic Purification, Reaction Mechanisms & Hydrocarbons",
+                "concepts": [
+                  {
+                    "name": "Purification Methods & Qualitative/Quantitative Analysis",
+                    "description": "Crystallization, sublimation, distillation, differential extraction, chromatography. Qualitative detection of N, S, P, halogens (Lassaigne test). Quantitative estimation of C, H, N, S, P, halogens, empirical formula calculations."
+                  },
+                  {
+                    "name": "General Organic Chemistry (GOC) & Electronic Displacement",
+                    "description": "Hybridization of carbon, functional group classification, IUPAC nomenclature, homolytic/heterolytic cleavage, carbocations, carbanions, free radicals, electrophiles, nucleophiles. Inductive effect, electromeric effect, resonance, hyperconjugation."
+                  },
+                  {
+                    "name": "Alkanes, Alkenes, Alkynes & Aromatic Hydrocarbons",
+                    "description": "Alkanes halogenation mechanism, Newman projections. Alkenes geometrical isomerism, electrophilic addition (Markovnikov & peroxide effect), ozonolysis. Alkynes acidity, addition reactions. Benzene electrophilic aromatic substitution (nitration, halogenation, Friedel-Crafts)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Organic Chemistry: Functional Groups (Halogens, Oxygen, Nitrogen)",
+            "subtopics": [
+              {
+                "name": "Haloalkanes, Alcohols, Carbonyls & Amines",
+                "concepts": [
+                  {
+                    "name": "Haloalkanes & Haloarenes (SN1/SN2)",
+                    "description": "Preparation methods, C-X bond nature, SN1 and SN2 substitution mechanisms. Environmental effects of chloroform, iodoform, freons, DDT."
+                  },
+                  {
+                    "name": "Alcohols, Phenols & Ethers",
+                    "description": "Primary/secondary/tertiary alcohol distinction (Lucas test), dehydration mechanism. Phenol acidity, electrophilic substitutions, Reimer-Tiemann and Kolbe reactions. Williamson ether synthesis."
+                  },
+                  {
+                    "name": "Aldehydes, Ketones & Carboxylic Acids",
+                    "description": "Nucleophilic addition to carbonyl group, Grignard additions, Clemmensen and Wolff-Kishner reductions, Aldol condensation, Cannizzaro reaction, haloform test, acid strength."
+                  },
+                  {
+                    "name": "Amines & Diazonium Salts",
+                    "description": "Primary, secondary, tertiary amines preparation, basicity order. Diazonium salts preparation and synthetic applications in organic chemistry."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Organic Chemistry: Biomolecules & Practical Chemistry",
+            "subtopics": [
+              {
+                "name": "Biomolecules & Practical Organic/Inorganic Chemistry",
+                "concepts": [
+                  {
+                    "name": "Carbohydrates, Proteins, Vitamins & Nucleic Acids",
+                    "description": "Glucose/fructose structures, disaccharides (sucrose, lactose, maltose), amino acids, peptide bond, protein primary/secondary/tertiary structures, denaturation, enzymes, vitamins, DNA/RNA chemical structures."
+                  },
+                  {
+                    "name": "Practical Chemistry Principles (Salt Analysis & Titrations)",
+                    "description": "Functional group detection (alcoholic, phenolic, aldehyde, ketone, carboxyl, amino). Organic/inorganic preparations (Mohr’s salt, potash alum, acetanilide). Titrations (KMnO4 vs oxalic acid/Mohr salt). Qualitative salt analysis of cations and anions."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Biology",
+        "topics": [
+          {
+            "name": "Diversity in Living World",
+            "subtopics": [
+              {
+                "name": "Taxonomy, Five Kingdoms & Plant/Animal Classification",
+                "concepts": [
+                  {
+                    "name": "Biodiversity, Taxonomy & Binomial Nomenclature",
+                    "description": "What is living, biodiversity, taxonomy, systematics, species concept, taxonomic hierarchy, binomial nomenclature."
+                  },
+                  {
+                    "name": "Five Kingdom System (Monera, Protista, Fungi, Viruses)",
+                    "description": "Five kingdom classification (Whittaker), salient features of Monera, Protista, Fungi, Lichens, Viruses, Viroids."
+                  },
+                  {
+                    "name": "Plant Kingdom Classification (Algae to Angiosperms)",
+                    "description": "Salient features and classification of Algae, Bryophytes, Pteridophytes, Gymnosperms, Angiosperms with examples."
+                  },
+                  {
+                    "name": "Animal Kingdom Classification (Non-Chordates & Chordates)",
+                    "description": "Salient features and classification of non-chordate phyla and chordate classes with examples."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Structural Organisation in Animals and Plants",
+            "subtopics": [
+              {
+                "name": "Plant Morphology, Plant Families & Animal Anatomy (Frog)",
+                "concepts": [
+                  {
+                    "name": "Plant Morphology, Anatomy & Plant Families",
+                    "description": "Morphology and anatomy of root, stem, leaf, inflorescence (cymose/racemose), flower, fruit, seed. Plant families: Malvaceae, Cruciferae, Leguminosae, Compositae, Gramineae."
+                  },
+                  {
+                    "name": "Animal Tissues & Anatomy of Frog",
+                    "description": "Animal tissue types. Morphology, anatomy, and system functions (digestive, circulatory, respiratory, nervous, reproductive) of Frog."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Cell Structure and Function",
+            "subtopics": [
+              {
+                "name": "Cell Organelles, Biomolecules & Cell Division",
+                "concepts": [
+                  {
+                    "name": "Cell Theory & Organelle Structure",
+                    "description": "Cell theory, prokaryotic vs eukaryotic cells, cell membrane, cell wall, endomembrane system (ER, Golgi, lysosomes, vacuoles), mitochondria, ribosomes, plastids, cytoskeleton, cilia, flagella, centrioles, nucleus, chromatin."
+                  },
+                  {
+                    "name": "Biomolecules & Enzyme Kinetics",
+                    "description": "Proteins, carbohydrates, lipids, nucleic acids structures and functions. Enzyme classification, properties, mechanism of action."
+                  },
+                  {
+                    "name": "Cell Cycle, Mitosis & Meiosis",
+                    "description": "Cell cycle phases, mitosis, meiosis stages and evolutionary significance."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Plant Physiology",
+            "subtopics": [
+              {
+                "name": "Photosynthesis, Respiration & Plant Growth Regulators",
+                "concepts": [
+                  {
+                    "name": "Photosynthesis (Light Phase, C3/C4 Pathways)",
+                    "description": "Site of photosynthesis, pigments, light reaction, cyclic/non-cyclic photophosphorylation, chemiosmotic hypothesis, C3 Calvin cycle, C4 Hatch-Slack pathway, photorespiration."
+                  },
+                  {
+                    "name": "Cellular Respiration & Energy Relations",
+                    "description": "Glycolysis, fermentation, TCA cycle, electron transport system (ETS), ATP yield, amphibolic pathways, respiratory quotient (RQ)."
+                  },
+                  {
+                    "name": "Plant Growth Regulators & Development",
+                    "description": "Seed germination, plant growth phases, differentiation, dedifferentiation, redifferentiation. Auxin, gibberellin, cytokinin, ethylene, ABA functions."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Human Physiology",
+            "subtopics": [
+              {
+                "name": "Respiration, Circulation, Excretion, Locomotion & Neural/Endocrine Controls",
+                "concepts": [
+                  {
+                    "name": "Breathing, Gas Exchange & Respiratory Volumes",
+                    "description": "Human respiratory system, breathing mechanism, gas transport (O2-hemoglobin dissociation), respiratory volumes, asthma, emphysema."
+                  },
+                  {
+                    "name": "Blood Composition, Heart & Cardiac Cycle",
+                    "description": "Blood composition, groups, clotting, lymph. Heart anatomy, cardiac cycle, ECG, double circulation, hypertension, CAD."
+                  },
+                  {
+                    "name": "Excretory System, Urine Formation & Dialysis",
+                    "description": "Ammonotelism/ureotelism/uricotelism, nephron structure, urine formation, RAAS/ADH regulation, uraemia, renal failure, dialysis."
+                  },
+                  {
+                    "name": "Locomotion, Muscle Contraction & Skeletal Disorders",
+                    "description": "Ciliary/flagellar/muscular movement, actin/myosin muscle contraction mechanism, joints, myasthenia gravis, osteoporosis, gout."
+                  },
+                  {
+                    "name": "Neural Impulse Conduction & Central Nervous System",
+                    "description": "Neuron structure, nerve impulse action potential generation and synaptic transmission, CNS, PNS, ANS."
+                  },
+                  {
+                    "name": "Endocrine Glands, Hormones & Metabolic Disorders",
+                    "description": "Hypothalamus, pituitary, thyroid, adrenal, pancreas, gonads hormones, hormone action mechanism, dwarfism, cretinism, diabetes, Addison’s disease."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Reproduction",
+            "subtopics": [
+              {
+                "name": "Plant & Human Reproduction & Reproductive Health",
+                "concepts": [
+                  {
+                    "name": "Sexual Reproduction in Flowering Plants",
+                    "description": "Gametophyte development, pollination, outbreeding, pollen-pistil interaction, double fertilization, endosperm/embryo development, apomixis, polyembryony."
+                  },
+                  {
+                    "name": "Human Reproductive Systems & Embryogenesis",
+                    "description": "Male/female reproductive systems, spermatogenesis, oogenesis, menstrual cycle, fertilization, blastocyst implantation, pregnancy, placenta, lactation."
+                  },
+                  {
+                    "name": "Reproductive Health, Contraception & ART (IVF, ZIFT)",
+                    "description": "STD prevention, birth control methods, contraception, MTP, amniocentesis, infertility ART (IVF, ZIFT, GIFT)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Genetics and Evolution",
+            "subtopics": [
+              {
+                "name": "Mendelism, DNA Molecular Basis & Evolutionary Theories",
+                "concepts": [
+                  {
+                    "name": "Mendelian Genetics, Linkage & Genetic Disorders",
+                    "description": "Mendelian laws, incomplete dominance, codominance, blood groups, linkage, sex determination, hemophilia, color blindness, thalassemia, Down/Turner/Klinefelter syndromes."
+                  },
+                  {
+                    "name": "Molecular Basis of Inheritance (DNA, Transcription, Translation, Lac Operon)",
+                    "description": "DNA/RNA structure, replication, Central Dogma, transcription, genetic code, translation, Lac Operon regulation, HGP, DNA fingerprinting."
+                  },
+                  {
+                    "name": "Evolution, Darwinism & Hardy-Weinberg Law",
+                    "description": "Origin of life, biological evolution evidence, Darwinism, natural selection, gene flow, genetic drift, Hardy-Weinberg principle, adaptive radiation, human evolution."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Biology and Human Welfare",
+            "subtopics": [
+              {
+                "name": "Human Health, Diseases & Microbes",
+                "concepts": [
+                  {
+                    "name": "Pathogens, Human Diseases & Immunology",
+                    "description": "Malaria, filariasis, typhoid, pneumonia, amoebiasis, ringworm, dengue, chikungunya. Immunity, vaccines, HIV/AIDS, cancer, drug abuse."
+                  },
+                  {
+                    "name": "Microbes in Food Processing, Sewage & Biofertilizers",
+                    "description": "Microbes in household food processing, industrial production, sewage treatment, biogas energy, biocontrol agents, biofertilizers."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Biotechnology and Its Applications",
+            "subtopics": [
+              {
+                "name": "rDNA Technology, Insulin, Bt Crops & Biosafety",
+                "concepts": [
+                  {
+                    "name": "Recombinant DNA Technology Principles & Tools",
+                    "description": "Genetic engineering tools: restriction enzymes, vectors, competent host, PCR, rDNA technology steps."
+                  },
+                  {
+                    "name": "Biotech Applications in Health, Agriculture & Biosafety",
+                    "description": "Human insulin, gene therapy, GM Bt crops, transgenic animals, biosafety issues, biopiracy, patents."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Ecology and Environment",
+            "subtopics": [
+              {
+                "name": "Organisms, Ecosystem Pyramids & Biodiversity Conservation",
+                "concepts": [
+                  {
+                    "name": "Population Interactions & Growth Attributes",
+                    "description": "Organism-environment interactions: mutualism, competition, predation, parasitism. Birth/death rates, age distribution."
+                  },
+                  {
+                    "name": "Ecosystem Energy Flow & Pyramids",
+                    "description": "Ecosystem productivity, decomposition, energy flow, pyramids of number, biomass, energy."
+                  },
+                  {
+                    "name": "Biodiversity Loss, Hotspots & Conservation (Red Data Book)",
+                    "description": "Biodiversity patterns, importance, loss causes, conservation (in-situ, ex-situ), hotspots, Red Data Book, sanctuaries, sacred groves."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

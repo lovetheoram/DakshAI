@@ -24,6 +24,25 @@ class PYQSerializer(serializers.ModelSerializer):
         ]
 
 
+class ConceptListSerializer(serializers.ModelSerializer):
+    mastery = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Concept
+        fields = ["id", "name", "description", "mastery"]
+
+    def get_mastery(self, obj):
+        user = self.context.get("user")
+        if not user or user.is_anonymous:
+            return 0.0
+        progress_dict = self.context.get("progress_dict")
+        if progress_dict is not None:
+            cp = progress_dict.get(obj.id)
+        else:
+            cp = ConceptProgress.objects.filter(user=user, concept=obj).first()
+        return cp.get_mastery() if cp else 0.0
+
+
 class ConceptSerializer(serializers.ModelSerializer):
     mastery = serializers.SerializerMethodField()
     raw_mastry = serializers.SerializerMethodField()

@@ -1,5 +1,12 @@
 from django.urls import path
-from .views import SyllabusTreeView, ConceptListAPI, SubtopicConceptsView, ConceptDetailAPI, ConceptPYQListView
+from .views import (
+    SyllabusTreeView,
+    ConceptListAPI,
+    SubtopicConceptsView,
+    ConceptDetailAPI,
+    ConceptPYQListView,
+    VocalLearningScenesView,
+)
 
 urlpatterns = [
     path("tree/", SyllabusTreeView.as_view(), name="syllabus-tree"),
@@ -7,5 +14,5 @@ urlpatterns = [
     path("concept/<int:concept_id>/", ConceptDetailAPI.as_view(), name="concept-detail"),
     path("concept/<int:concept_id>/pyqs/", ConceptPYQListView.as_view(), name="concept-pyqs"),
     path("subtopic/<int:subtopic_id>/concepts/", SubtopicConceptsView.as_view(), name="subtopic-concepts"),
+    path("vocal-scenes/", VocalLearningScenesView.as_view(), name="vocal-scenes"),
 ]
-

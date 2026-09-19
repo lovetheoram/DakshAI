@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
+from django.db import IntegrityError, models
 from django.db.models import Q
 
 from .models import Post, Comment, Like, Follow, Notification, Message, Conversation
@@ -40,21 +40,30 @@ from django.shortcuts import get_object_or_404
 from .models import Post
 from .serializers import PostSerializer, PostCreateSerializer
 
-from django.db.models import Count, Exists, OuterRef
+from django.db.models import Count, Exists, OuterRef, Q
 
 class PostAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         """
-        Returns all posts or filtered by concept.
-        Optional query param: ?concept_id=<id>
-        Optional query param: ?matchmaking=true (surfaces weak concepts matched with expert peers)
+        Returns posts filtered by scope (my_world | wider_world), concept_id, content_type, etc.
+        Query params:
+        - scope: "my_world" | "wider_world"
+        - concept_id: <id>
+        - content_type: "learning" | "strategy" | "general" | "project" | "discovery"
+        - page: <int> (default 1)
+        - page_size: <int> (default 10)
         """
+        scope = request.query_params.get("scope")
         concept_id = request.query_params.get("concept_id")
-        matchmaking = request.query_params.get("matchmaking")
+        content_type = request.query_params.get("content_type")
+        page = int(request.query_params.get("page", 1))
+        page_size = int(request.query_params.get("page_size", 10))
 
-        qs = Post.objects.all().select_related("user", "concept").prefetch_related("comments__user").annotate(
+        following_ids = set(request.user.following.values_list("following_id", flat=True))
+
+        qs = Post.objects.all().select_related("user", "concept", "concept__subtopic", "concept__subtopic__topic", "concept__subtopic__topic__subject").prefetch_related("comments__user", "likes").annotate(
             likes_count=Count("likes"),
             is_liked=Exists(
                 Like.objects.filter(
@@ -67,37 +76,62 @@ class PostAPI(APIView):
         if concept_id:
             qs = qs.filter(concept_id=concept_id)
 
-        posts = qs.order_by("-created_at")
+        if content_type:
+            qs = qs.filter(content_type=content_type)
 
-        if matchmaking == "true":
-            # 1. Fetch current user's low mastery concepts (readiness < 0.5)
-            from progress.models import ConceptProgress
-            weak_concept_ids = list(ConceptProgress.objects.filter(
-                user=request.user,
-                readiness__lt=0.5
-            ).values_list("concept_id", flat=True))
+        if scope == "my_world":
+            # 1. Fetch user's active goal/exam track
+            from progress.models import UserGoal
+            active_goal = UserGoal.objects.filter(user=request.user).order_by("-updated_at").first()
 
-            if weak_concept_ids:
-                # 2. Identify peer users who have high mastery in these weak concepts (readiness >= 0.8)
-                strong_peer_user_ids = list(ConceptProgress.objects.filter(
-                    concept_id__in=weak_concept_ids,
-                    readiness__gte=0.8
-                ).values_list("user_id", flat=True))
+            if active_goal and active_goal.exam:
+                user_exam = active_goal.exam
+                exam_name = user_exam.name
+                exam_type = user_exam.exam_type
 
-                # 3. Annotate posts that match weak concepts AND are authored by strong peers
-                from django.db.models import Case, When, Value, IntegerField
-                posts = qs.annotate(
-                    is_match=Case(
-                        When(concept_id__in=weak_concept_ids, user_id__in=strong_peer_user_ids, then=Value(1)),
-                        default=Value(0),
-                        output_field=IntegerField()
-                    )
-                ).order_by("-is_match", "-created_at")
+                # Base query: posts by self, followed users, or matching exam track
+                exam_q = (
+                    Q(concept__subtopic__topic__subject__exam=user_exam) |
+                    Q(concept__subtopic__topic__subject__exam__exam_type=exam_type) |
+                    Q(domain_tag__icontains=exam_name) |
+                    Q(domain_tag__icontains=exam_type)
+                )
 
-        following_ids = set(request.user.following.values_list("following_id", flat=True))
+                my_world_q = Q(user=request.user) | Q(user__in=following_ids) | exam_q
+                qs = qs.filter(my_world_q)
+
+                # Strict Exam Separation: Exclude concept posts from other exam types
+                qs = qs.exclude(
+                    Q(concept__isnull=False) &
+                    ~Q(concept__subtopic__topic__subject__exam__exam_type=exam_type) &
+                    ~Q(user=request.user) &
+                    ~Q(user__in=following_ids)
+                )
+            else:
+                # If no goal is set, show self and followed users
+                my_world_q = Q(user=request.user) | Q(user__in=following_ids)
+                qs = qs.filter(my_world_q)
+        elif scope == "wider_world":
+            # Wider world feed: General community posts across the platform (excluding concept-specific notes)
+            qs = qs.filter(concept__isnull=True)
+
+        posts_qs = qs.order_by("-created_at")
+
+        # Pagination calculation
+        start_idx = (page - 1) * page_size
+        end_idx = start_idx + page_size + 1
+        page_items = list(posts_qs[start_idx:end_idx])
+
+        has_more = len(page_items) > page_size
+        posts = page_items[:page_size]
+
         data = PostSerializer(posts, many=True, context={"request": request, "following_ids": following_ids}).data
 
-        return Response({"posts": data}, status=status.HTTP_200_OK)
+        return Response({
+            "posts": data,
+            "has_more": has_more,
+            "page": page,
+        }, status=status.HTTP_200_OK)
 
     def post(self, request):
         """
@@ -450,14 +484,22 @@ class SessionPingAPI(APIView):
 
         concept = get_object_or_404(Concept, id=concept_id) if concept_id else None
 
-        active_sess, created = ActiveSession.objects.update_or_create(
-            user=user,
-            defaults={
-                "status": status_val,
-                "concept": concept,
-                "last_action_at": timezone.now()
-            }
-        )
+        try:
+            active_sess, created = ActiveSession.objects.update_or_create(
+                user=user,
+                defaults={
+                    "status": status_val,
+                    "concept": concept,
+                    "last_action_at": timezone.now()
+                }
+            )
+        except IntegrityError:
+            ActiveSession.objects.filter(user=user).update(
+                status=status_val,
+                concept=concept,
+                last_action_at=timezone.now()
+            )
+            active_sess = ActiveSession.objects.get(user=user)
         
         # Invalidate lobby cache
         cache.delete("multiplayer_lobby_data")

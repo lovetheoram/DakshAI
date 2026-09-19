@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 from .models import Post, Comment, Follow, Notification, Message, ActiveSession, MentorshipTicket, ReputationPoint
+from syllabus.models import Concept
 
 
 # ---------------------------------------------------------
@@ -82,6 +83,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     concept_id = serializers.IntegerField(source="concept.id", read_only=True)
     concept_name = serializers.CharField(source="concept.name", read_only=True)
+    subtopic_name = serializers.CharField(source="concept.subtopic.name", read_only=True, default="")
+    topic_name = serializers.CharField(source="concept.subtopic.topic.name", read_only=True, default="")
+    subject_name = serializers.CharField(source="concept.subtopic.topic.subject.name", read_only=True, default="")
 
     media = serializers.SerializerMethodField()
 
@@ -90,15 +94,21 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "user",
+            "source",
+            "content_type",
             "post_type",
             "content",
             "media",
             "concept_id",
             "concept_name",
+            "subtopic_name",
+            "topic_name",
+            "subject_name",
             "grade_level",
             "relevance_score",
             "domain_tag",
             "created_at",
+            "post_metadata",
             "comments",
             "likes_count",
             "is_liked",
@@ -126,16 +136,14 @@ class PostSerializer(serializers.ModelSerializer):
         return result
 
 
-from rest_framework import serializers
-from .models import Post
-from syllabus.models import Concept
-
 class PostCreateSerializer(serializers.ModelSerializer):
     concept = serializers.PrimaryKeyRelatedField(
         queryset=Concept.objects.all(),
         required=False,
         allow_null=True
     )
+    source = serializers.CharField(required=False, default="world")
+    content_type = serializers.CharField(required=False, default="general")
     post_type = serializers.CharField(required=False, allow_blank=True)
     grade_level = serializers.CharField(required=False, allow_blank=True)
     domain_tag = serializers.CharField(required=False, allow_blank=True)
@@ -159,7 +167,7 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["content", "concept", "post_type", "grade_level", "domain_tag", "images", "videos", "documents"]
+        fields = ["content", "concept", "source", "content_type", "post_type", "grade_level", "domain_tag", "post_metadata", "images", "videos", "documents"]
 
     def create(self, validated_data):
         user = self.context["request"].user
@@ -172,8 +180,8 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
         # Store images in media/posts/
         for img in images:
-            path = f"posts/{img.name}"  # Folder inside MEDIA_ROOT
-            saved_path = default_storage.save(path, img)  # Actually saves file
+            path = f"posts/{img.name}"
+            saved_path = default_storage.save(path, img)
             media_list.append({"type": "image", "url": f"/media/{saved_path}"})
 
         # Videos are URLs
@@ -186,7 +194,23 @@ class PostCreateSerializer(serializers.ModelSerializer):
             saved_path = default_storage.save(path, doc)
             media_list.append({"type": "doc", "url": f"/media/{saved_path}"})
 
-        # Determine post_type: use custom_post_type if provided, else fallback to auto
+        concept = validated_data.get("concept")
+        if concept and not validated_data.get("domain_tag"):
+            try:
+                exam = concept.subtopic.topic.subject.exam
+                validated_data["domain_tag"] = exam.name
+            except Exception:
+                pass
+
+        if not validated_data.get("domain_tag"):
+            try:
+                from progress.models import UserGoal
+                active_goal = UserGoal.objects.filter(user=user).order_by("-updated_at").first()
+                if active_goal and active_goal.exam:
+                    validated_data["domain_tag"] = active_goal.exam.name
+            except Exception:
+                pass
+
         if custom_post_type:
             post_type = custom_post_type
         elif not media_list:

@@ -12,38 +12,42 @@ from django.contrib.auth.models import User
 from syllabus.models import Concept
 
 class Post(models.Model):
-    POST_TYPES = (
-        ("text", "Text"),
-        ("image", "Image"),
-        ("video", "Video"),
-        ("doc", "Document"),
-        ("mixed", "Mixed"),
-        ("progress", "Progress Update"),
-        ("milestone", "Learning Milestone"),
+    SOURCE_CHOICES = (
+        ("concept", "Concept Page"),
+        ("quiz", "Quiz Result"),
+        ("world", "World Page"),
+    )
+
+    CONTENT_TYPES = (
+        ("learning", "Learning Insight"),
+        ("strategy", "Quiz Strategy"),
+        ("general", "General Reflection"),
         ("project", "Project Showcase"),
-        ("help", "Help Request"),
+        ("question", "Question / Help"),
         ("discovery", "Discovery"),
         ("opportunity", "Opportunity"),
-        ("discussion", "Discussion"),
-        ("story", "Student Story"),
-        ("experiment", "Experiment"),
-        ("failure", "Failure & Lesson"),
-        ("idea", "Idea"),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    post_type = models.CharField(max_length=20, choices=POST_TYPES, default="text", db_index=True)
+    source = models.CharField(max_length=20, choices=SOURCE_CHOICES, default="world", db_index=True)
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPES, default="general", db_index=True)
+    post_type = models.CharField(max_length=20, default="text", db_index=True)
     content = models.TextField(blank=True)
     media = models.JSONField(default=list, blank=True)  # [{"type": "image/video/doc", "url": "..."}]
     concept = models.ForeignKey(Concept, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts", db_index=True)
     grade_level = models.IntegerField(null=True, blank=True, db_index=True)
     relevance_score = models.IntegerField(default=0, db_index=True)
-    domain_tag = models.CharField(max_length=50, blank=True, default="General", db_index=True)
+    domain_tag = models.CharField(max_length=50, blank=True, default="", db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     post_metadata = models.JSONField(default=dict, blank=True)
 
     class Meta:
         ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["source", "created_at"]),
+            models.Index(fields=["content_type", "created_at"]),
+            models.Index(fields=["domain_tag", "created_at"]),
+        ]
 
 # ==========================================================
 # COMMENT

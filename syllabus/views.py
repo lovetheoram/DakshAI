@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .models import Exam, Subtopic, Concept
-from .serializers import ExamSerializer, ConceptSerializer
+from .serializers import ExamSerializer, ConceptSerializer, ConceptListSerializer
 from progress.models import ConceptProgress
 
 class SyllabusTreeView(APIView):
@@ -73,7 +73,7 @@ class SubtopicConceptsView(APIView):
         except Subtopic.DoesNotExist:
             return Response({"detail": "Subtopic not found"}, status=404)
 
-        concepts = subtopic.concepts.all()
+        concepts = subtopic.concepts.prefetch_related("pyqs", "questions").all()
 
         # Build progress dict for the current user if logged in
         progress_dict = {}
@@ -81,7 +81,7 @@ class SubtopicConceptsView(APIView):
             progress_records = ConceptProgress.objects.filter(user=request.user, concept__in=concepts)
             progress_dict = {cp.concept_id: cp for cp in progress_records}
 
-        serializer = ConceptSerializer(
+        serializer = ConceptListSerializer(
             concepts,
             many=True,
             context={"user": request.user, "progress_dict": progress_dict}
@@ -154,4 +154,31 @@ class ConceptPYQListView(APIView):
             "pyqs_count": len(pyqs_data),
             "pyqs": pyqs_data
         })
+
+
+import os
+import json
+from .story_cheatsheet_engine import generate_vocal_learning_content
+
+class VocalLearningScenesView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        subject = request.query_params.get("subject", "AI Engineering")
+        saved_file = os.path.join(os.path.dirname(__file__), "syllabus_list", "ai_engineering_vocal_scenes.json")
+        if os.path.exists(saved_file):
+            with open(saved_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return Response(data)
+        
+        pdf_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "docs", "AI_Engineering", "1787211765131.pdf")
+        data = generate_vocal_learning_content(pdf_path, subject)
+        return Response(data)
+
+    def post(self, request):
+        text_content = request.data.get("text_content", "")
+        subject_name = request.data.get("subject_name", "General")
+        data = generate_vocal_learning_content(text_content, subject_name)
+        return Response(data)
+
 

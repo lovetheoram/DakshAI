@@ -11,25 +11,38 @@ from syllabus.models import Concept
 class UserMiniSerializer(serializers.ModelSerializer):
     is_following = serializers.SerializerMethodField()
     is_self = serializers.SerializerMethodField()
+    connection_status = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ["id", "username", "is_following", "is_self"]
+        fields = ["id", "username", "is_following", "is_self", "connection_status"]
 
-    def get_is_following(self, obj):
+    def get_connection_status(self, obj):
         request = self.context.get("request")
         if not request or not request.user or request.user.is_anonymous:
-            return False
-        following_ids = self.context.get("following_ids")
-        if following_ids is not None:
-            return obj.id in following_ids
-        return request.user.following.filter(following_id=obj.id).exists()
+            return "none"
+        if request.user.id == obj.id:
+            return "self"
+        
+        outgoing = Follow.objects.filter(follower=request.user, following=obj).first()
+        incoming = Follow.objects.filter(follower=obj, following=request.user).first()
+
+        if (outgoing and outgoing.status == "accepted") or (incoming and incoming.status == "accepted"):
+            return "accepted"
+        if incoming and incoming.status == "pending":
+            return "incoming_pending"
+        if outgoing and outgoing.status == "pending":
+            return "pending"
+        return "none"
+
+    def get_is_following(self, obj):
+        return self.get_connection_status(obj) == "accepted"
 
     def get_is_self(self, obj):
         request = self.context.get("request")
         if not request or not request.user or request.user.is_anonymous:
             return False
-        return request.user == obj
+        return request.user.id == obj.id
 
 # ---------------------------------------------------------
 # USER PROFILE SERIALIZER (for profile page & suggestions)
@@ -42,6 +55,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     user = UserMiniSerializer(read_only=True)
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
+    exam_name = serializers.CharField(source="selected_exam.name", read_only=True, default="")
+    exam_type = serializers.CharField(source="selected_exam.exam_type", read_only=True, default="")
+    connection_status = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
+    is_self = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
@@ -49,8 +67,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "user",
             "bio",
             "avatar",
+            "exam_name",
+            "exam_type",
             "followers_count",
             "following_count",
+            "connection_status",
+            "is_following",
+            "is_self",
         ]
 
     def get_followers_count(self, obj):
@@ -58,6 +81,33 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_following_count(self, obj):
         return obj.user.following.count()
+
+    def get_connection_status(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user or request.user.is_anonymous:
+            return "none"
+        if request.user.id == obj.user.id:
+            return "self"
+        
+        outgoing = Follow.objects.filter(follower=request.user, following=obj.user).first()
+        incoming = Follow.objects.filter(follower=obj.user, following=request.user).first()
+
+        if (outgoing and outgoing.status == "accepted") or (incoming and incoming.status == "accepted"):
+            return "accepted"
+        if incoming and incoming.status == "pending":
+            return "incoming_pending"
+        if outgoing and outgoing.status == "pending":
+            return "pending"
+        return "none"
+
+    def get_is_following(self, obj):
+        return self.get_connection_status(obj) == "accepted"
+
+    def get_is_self(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user or request.user.is_anonymous:
+            return False
+        return request.user.id == obj.user.id
 
 # ---------------------------------------------------------
 # COMMENT SERIALIZER
@@ -204,10 +254,11 @@ class PostCreateSerializer(serializers.ModelSerializer):
 
         if not validated_data.get("domain_tag"):
             try:
-                from progress.models import UserGoal
-                active_goal = UserGoal.objects.filter(user=user).order_by("-updated_at").first()
-                if active_goal and active_goal.exam:
-                    validated_data["domain_tag"] = active_goal.exam.name
+                prof = getattr(user, "profile", None)
+                if not prof:
+                    prof = UserProfile.objects.filter(user=user).first()
+                if prof and prof.selected_exam:
+                    validated_data["domain_tag"] = prof.selected_exam.name
             except Exception:
                 pass
 

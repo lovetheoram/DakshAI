@@ -6,6 +6,8 @@ from .views import (
     CommentListAPI,
     LikeAPI,
     FollowAPI,
+    AcceptConnectionAPI,
+    ConnectionListAPI,
     FollowersListAPI,
     FollowingListAPI,
     NotificationAPI,
@@ -54,6 +56,8 @@ urlpatterns = [
     # DELETE → unfollow
     # ======================================================
     path("users/<int:user_id>/follow/", FollowAPI.as_view(), name="user-follow"),
+    path("users/<int:user_id>/accept-connection/", AcceptConnectionAPI.as_view(), name="accept-connection"),
+    path("connections/", ConnectionListAPI.as_view(), name="connections-list"),
 
     path("users/<int:user_id>/followers/", FollowersListAPI.as_view(), name="followers-list"),
     path("users/<int:user_id>/following/", FollowingListAPI.as_view(), name="following-list"),

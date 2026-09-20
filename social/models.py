@@ -81,15 +81,21 @@ class Like(models.Model):
 # FOLLOW
 # ==========================================================
 class Follow(models.Model):
+    STATUS_CHOICES = (
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+    )
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="accepted", db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ("follower", "following")
 
     def __str__(self):
-        return f"{self.follower.username} → {self.following.username}"
+        return f"{self.follower.username} → {self.following.username} ({self.status})"
 
 
 # ==========================================================

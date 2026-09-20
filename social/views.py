@@ -6,6 +6,8 @@ from django.shortcuts import get_object_or_404
 from django.db import IntegrityError, models
 from django.db.models import Q
 
+from django.contrib.auth.models import User
+from authapp.models import UserProfile
 from .models import Post, Comment, Like, Follow, Notification, Message, Conversation
 from .serializers import (
     PostSerializer,
@@ -55,6 +57,7 @@ class PostAPI(APIView):
         - page: <int> (default 1)
         - page_size: <int> (default 10)
         """
+        target_user_id = request.query_params.get("user_id")
         scope = request.query_params.get("scope")
         concept_id = request.query_params.get("concept_id")
         content_type = request.query_params.get("content_type")
@@ -73,6 +76,9 @@ class PostAPI(APIView):
             )
         )
 
+        if target_user_id:
+            qs = qs.filter(user_id=target_user_id)
+
         if concept_id:
             qs = qs.filter(concept_id=concept_id)
 
@@ -80,37 +86,39 @@ class PostAPI(APIView):
             qs = qs.filter(content_type=content_type)
 
         if scope == "my_world":
-            # 1. Fetch user's active goal/exam track
-            from progress.models import UserGoal
-            active_goal = UserGoal.objects.filter(user=request.user).order_by("-updated_at").first()
+            # 1. Resolve user's permanent exam track from UserProfile (selected at signup)
+            prof = getattr(request.user, "profile", None)
+            if not prof:
+                prof = UserProfile.objects.filter(user=request.user).first()
+            user_exam = prof.selected_exam if prof else None
 
-            if active_goal and active_goal.exam:
-                user_exam = active_goal.exam
+            if user_exam:
                 exam_name = user_exam.name
-                exam_type = user_exam.exam_type
+                exam_type = getattr(user_exam, "exam_type", "")
 
-                # Base query: posts by self, followed users, or matching exam track
-                exam_q = (
-                    Q(concept__subtopic__topic__subject__exam=user_exam) |
-                    Q(concept__subtopic__topic__subject__exam__exam_type=exam_type) |
-                    Q(domain_tag__icontains=exam_name) |
-                    Q(domain_tag__icontains=exam_type)
+                # Find peers whose UserProfile matches user_exam or exam_type
+                same_exam_user_ids = set(
+                    UserProfile.objects.filter(
+                        Q(selected_exam=user_exam) | Q(selected_exam__exam_type=exam_type)
+                    ).values_list("user_id", flat=True)
                 )
+                same_exam_user_ids.add(request.user.id)
 
-                my_world_q = Q(user=request.user) | Q(user__in=following_ids) | exam_q
-                qs = qs.filter(my_world_q)
+                # Posts created ONLY by users of the same exam track
+                qs = qs.filter(user_id__in=same_exam_user_ids)
 
-                # Strict Exam Separation: Exclude concept posts from other exam types
-                qs = qs.exclude(
-                    Q(concept__isnull=False) &
-                    ~Q(concept__subtopic__topic__subject__exam__exam_type=exam_type) &
-                    ~Q(user=request.user) &
-                    ~Q(user__in=following_ids)
+                # Exclude any post that is explicitly tagged for a different exam domain
+                domain_filter = (
+                    Q(domain_tag__isnull=True)
+                    | Q(domain_tag="")
+                    | Q(domain_tag__iexact=exam_name)
+                    | Q(domain_tag__iexact=exam_type)
+                    | Q(concept__subtopic__topic__subject__exam=user_exam)
+                    | Q(concept__subtopic__topic__subject__exam__exam_type=exam_type)
                 )
+                qs = qs.filter(domain_filter)
             else:
-                # If no goal is set, show self and followed users
-                my_world_q = Q(user=request.user) | Q(user__in=following_ids)
-                qs = qs.filter(my_world_q)
+                qs = qs.filter(user=request.user)
         elif scope == "wider_world":
             # Wider world feed: General community posts across the platform (excluding concept-specific notes)
             qs = qs.filter(concept__isnull=True)
@@ -255,24 +263,112 @@ class FollowAPI(APIView):
 
     def post(self, request, user_id):
         if request.user.id == user_id:
-            return Response({"detail": "Cannot follow yourself"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Cannot connect with yourself"}, status=status.HTTP_400_BAD_REQUEST)
 
         user_obj = get_object_or_404(User, id=user_id)
-        follow, created = Follow.objects.get_or_create(follower=request.user, following=user_obj)
+        
+        follow, created = Follow.objects.get_or_create(
+            follower=request.user,
+            following=user_obj,
+            defaults={"status": "pending"}
+        )
+        if not created and follow.status != "accepted":
+            follow.status = "pending"
+            follow.save()
 
-        if created:
+        try:
             create_notification(
-                user=follow.following,
+                user=user_obj,
                 triggered_by=request.user,
                 type="follow",
-                message=f"{request.user.username} started following you",
+                message=f"{request.user.username} sent you a connection request",
             )
+        except Exception as err:
+            print("Notification creation error (ignored):", err)
 
-        return Response({"status": True, "following": True}, status=status.HTTP_201_CREATED)
+        return Response({"status": True, "connection_status": follow.status}, status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id):
-        Follow.objects.filter(follower=request.user, following_id=user_id).delete()
-        return Response({"status": True, "following": False}, status=status.HTTP_200_OK)
+        Follow.objects.filter(
+            Q(follower=request.user, following_id=user_id) | Q(follower_id=user_id, following=request.user)
+        ).update(status="rejected")
+        return Response({"status": True, "connection_status": "rejected"}, status=status.HTTP_200_OK)
+
+
+class AcceptConnectionAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, user_id):
+        user_obj = get_object_or_404(User, id=user_id)
+        action = request.data.get("action", "accept")  # "accept" | "reject"
+
+        if action == "accept":
+            # Update incoming request to accepted
+            Follow.objects.filter(follower=user_obj, following=request.user).update(status="accepted")
+            # Reciprocal connection record
+            Follow.objects.update_or_create(
+                follower=request.user,
+                following=user_obj,
+                defaults={"status": "accepted"}
+            )
+
+            try:
+                create_notification(
+                    user=user_obj,
+                    triggered_by=request.user,
+                    type="follow",
+                    message=f"{request.user.username} accepted your connection request!",
+                )
+            except Exception:
+                pass
+
+            return Response({"status": True, "connection_status": "accepted"}, status=status.HTTP_200_OK)
+
+        elif action == "reject":
+            Follow.objects.filter(
+                Q(follower=user_obj, following=request.user) | Q(follower=request.user, following=user_obj)
+            ).update(status="rejected")
+            return Response({"status": True, "connection_status": "rejected"}, status=status.HTTP_200_OK)
+
+        return Response({"detail": "Invalid action"}, status=400)
+
+
+class ConnectionListAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        
+        # Incoming pending requests (others requesting current user)
+        incoming_pending = Follow.objects.filter(following=user, status="pending").select_related("follower")
+        
+        # Outgoing pending requests (current user requesting others)
+        outgoing_pending = Follow.objects.filter(follower=user, status="pending").select_related("following")
+
+        # Accepted connections
+        accepted_followers = Follow.objects.filter(following=user, status="accepted").select_related("follower")
+        accepted_following = Follow.objects.filter(follower=user, status="accepted").select_related("following")
+
+        # Rejected connections
+        rejected_followers = Follow.objects.filter(following=user, status="rejected").select_related("follower")
+
+        incoming_data = [UserMiniSerializer(f.follower, context={"request": request}).data for f in incoming_pending]
+        outgoing_data = [UserMiniSerializer(f.following, context={"request": request}).data for f in outgoing_pending]
+        
+        accepted_users = {}
+        for f in accepted_followers:
+            accepted_users[f.follower.id] = UserMiniSerializer(f.follower, context={"request": request}).data
+        for f in accepted_following:
+            accepted_users[f.following.id] = UserMiniSerializer(f.following, context={"request": request}).data
+            
+        rejected_data = [UserMiniSerializer(f.follower, context={"request": request}).data for f in rejected_followers]
+
+        return Response({
+            "incoming_pending": incoming_data,
+            "outgoing_pending": outgoing_data,
+            "accepted": list(accepted_users.values()),
+            "rejected": rejected_data,
+        }, status=status.HTTP_200_OK)
 
 
 class FollowersListAPI(APIView):
@@ -321,6 +417,15 @@ class MessageAPI(APIView):
 
     def post(self, request, user_id):
         receiver = get_object_or_404(User, id=user_id)
+
+        # Connection Check: Enforce connection before allowing direct messaging
+        is_connected = Follow.objects.filter(follower=request.user, following=receiver).exists()
+        if not is_connected:
+            return Response(
+                {"detail": "You must connect with this learner before sending messages."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         msg = Message.objects.create(sender=request.user, receiver=receiver, text=request.data.get("text", ""))
 
         # Create or update Conversation record to maintain the last message link
@@ -338,6 +443,14 @@ class ConversationAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
+        # Connection Check: Enforce connection before displaying chat history
+        is_connected = Follow.objects.filter(follower=request.user, following_id=user_id).exists()
+        if not is_connected:
+            return Response(
+                {"detail": "Connection required to view chat.", "is_connected": False},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         # order by created_at ascending (oldest -> newest)
         messages = Message.objects.filter(
             Q(sender=request.user, receiver_id=user_id) | Q(sender_id=user_id, receiver=request.user)
@@ -375,7 +488,8 @@ class UserProfileAPI(APIView):
 
     def get(self, request, user_id):
         user_obj = get_object_or_404(User, id=user_id)
-        data = UserProfileSerializer(user_obj.profile, context={"request": request}).data
+        profile, _ = UserProfile.objects.get_or_create(user=user_obj)
+        data = UserProfileSerializer(profile, context={"request": request}).data
         return Response(data, status=status.HTTP_200_OK)
 
 

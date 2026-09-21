@@ -42,15 +42,22 @@ class UserProfileSerializer(serializers.ModelSerializer):
     user = UserMiniSerializer(read_only=True)
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
+    is_following = serializers.SerializerMethodField()
+    is_self = serializers.SerializerMethodField()
+    is_private = serializers.SerializerMethodField()
 
     class Meta:
         model = UserProfile
         fields = [
+            "id",
             "user",
             "bio",
             "avatar",
             "followers_count",
             "following_count",
+            "is_following",
+            "is_self",
+            "is_private",
         ]
 
     def get_followers_count(self, obj):
@@ -58,6 +65,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def get_following_count(self, obj):
         return obj.user.following.count()
+
+    def get_is_following(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user or request.user.is_anonymous:
+            return False
+        return Follow.objects.filter(follower=request.user, following=obj.user).exists()
+
+    def get_is_self(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user or request.user.is_anonymous:
+            return False
+        return request.user == obj.user
+
+    def get_is_private(self, obj):
+        return getattr(obj, "is_private", False)
 
 # ---------------------------------------------------------
 # COMMENT SERIALIZER

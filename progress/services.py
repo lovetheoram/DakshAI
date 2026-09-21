@@ -1,13 +1,27 @@
 from django.utils import timezone
-from django.db import models
-from django.db.models import Sum
+from django.db import models, transaction
+from django.db.models import Sum, Avg
 from django.core.cache import cache
 from .models import ConceptProgress, ProgressRecord, SubtopicProgress, UserGoal, DailyTarget, DailyDiaryEntry
 from quiz.models import QuizSession, QuizAnswer
 from syllabus.models import Concept, Exam
 
 
+# ── Domain constant ──────────────────────────────────────────────────────────
+# Exponential moving average smoothing factor for concept readiness.
+# readiness_new = readiness_old × (1 - α) + session_score × α
+# 0.35 means ~35% weight on new evidence, ~65% on historical.
+# Retained because it is the single authoritative readiness update formula
+# used in update_progress_with_session.
+READINESS_ALPHA = 0.35
+
+# Minimum number of calendar days with evidence to compute trajectory.
+MIN_EVIDENCE_DAYS = 3
+
+
 class ProgressService:
+
+    # ── Exam concept IDs (cached) ────────────────────────────────────────────
 
     @staticmethod
     def get_exam_concept_ids(exam_id):
@@ -20,6 +34,13 @@ class ProgressService:
             cache.set(cache_key, concept_ids, timeout=86400)
         return concept_ids
 
+    # ── Daksh Score ──────────────────────────────────────────────────────────
+    # Definition: percentage of complete exam syllabus represented by current
+    # concept readiness.
+    #   daksh_score = Σ(readiness of user's concepts) / total_concepts × 100
+    # Missing progress rows count as 0 readiness.
+    # Zero concepts in exam → None (unavailable).
+
     @staticmethod
     def get_user_daksh_score(user, exam):
         cache_key = f"user_{user.id}_exam_{exam.id}_daksh_score"
@@ -27,140 +48,128 @@ class ProgressService:
         if daksh_score is None:
             concept_ids = ProgressService.get_exam_concept_ids(exam.id)
             total_concepts = len(concept_ids)
-            if total_concepts > 0:
-                progress_sum = ConceptProgress.objects.filter(
-                    user=user,
-                    concept_id__in=concept_ids
-                ).aggregate(total=Sum('readiness'))['total'] or 0.0
-                daksh_score = round((progress_sum / total_concepts) * 100.0, 4)
-            else:
-                daksh_score = 0.0
+            if total_concepts == 0:
+                return None  # No denominator → unavailable
+            progress_sum = ConceptProgress.objects.filter(
+                user=user,
+                concept_id__in=concept_ids
+            ).aggregate(total=Sum('readiness'))['total'] or 0.0
+            daksh_score = round((progress_sum / total_concepts) * 100.0, 4)
             cache.set(cache_key, daksh_score, timeout=None)
         else:
             daksh_score = float(daksh_score)
         return daksh_score
+
+    # ── Get active goal ──────────────────────────────────────────────────────
+
+    @staticmethod
+    def get_active_goal(user):
+        """Return the single active UserGoal, or None."""
+        return UserGoal.objects.filter(user=user, is_active=True).first()
+
+    # ── Concept progress helper ──────────────────────────────────────────────
 
     @staticmethod
     def get_or_create_concept_progress(user, concept):
         cp, _ = ConceptProgress.objects.get_or_create(user=user, concept=concept)
         return cp
 
-    @staticmethod
-    def get_or_create_subtopic_progress(user, subtopic):
-        sp, _ = SubtopicProgress.objects.get_or_create(user=user, subtopic=subtopic)
-        return sp
+    # ── Quiz session → progress update ───────────────────────────────────────
+    # THE ONLY PLACE that writes ConceptProgress.readiness.
 
     @staticmethod
     def update_progress_with_session(user, session: QuizSession):
         """
-        Updates ConceptProgress for single unified readiness metric, creates ProgressRecord,
-        updates SubtopicProgress based on concepts, and updates daily target progress.
+        Updates ConceptProgress readiness via EMA, creates ProgressRecord,
+        updates SubtopicProgress, and accumulates daily diary evidence.
+        Atomic: all-or-nothing.
         """
-        # fetch first question and concept safely
         first_q = session.questions.first()
         if not first_q:
             return None
+
         concept = first_q.concept
-        cp = ProgressService.get_or_create_concept_progress(user, concept)
 
-        # fetch all answers for this session
-        answers = QuizAnswer.objects.filter(session=session).select_related("question", "sub_question")
+        with transaction.atomic():
+            cp = ProgressService.get_or_create_concept_progress(user, concept)
 
-        main_correct = sum(1 for a in answers if a.question_id is not None and a.is_correct)
-        main_total = sum(1 for a in answers if a.question_id is not None)
+            # Fetch all answers for this session
+            answers = QuizAnswer.objects.filter(session=session).select_related("question", "sub_question")
 
-        sub_correct = sum(1 for a in answers if a.sub_question_id is not None and a.is_correct)
-        sub_total = sum(1 for a in answers if a.sub_question_id is not None)
+            main_correct = sum(1 for a in answers if a.question_id is not None and a.is_correct)
+            main_total = sum(1 for a in answers if a.question_id is not None)
+            sub_correct = sum(1 for a in answers if a.sub_question_id is not None and a.is_correct)
+            sub_total = sum(1 for a in answers if a.sub_question_id is not None)
 
-        # compute unified session score (0..1)
-        tot_correct = main_correct + sub_correct
-        tot_questions = main_total + sub_total
-        session_score = tot_correct / tot_questions if tot_questions else 0.0
+            # Unified session score (0..1)
+            tot_correct = main_correct + sub_correct
+            tot_questions = main_total + sub_total
+            session_score = tot_correct / tot_questions if tot_questions else 0.0
 
-        # save old readiness to calculate growth delta
-        old_readiness = cp.readiness
+            # ── Readiness update (EMA) ──
+            old_readiness = cp.readiness
+            cp.readiness = round(cp.readiness * (1 - READINESS_ALPHA) + session_score * READINESS_ALPHA, 4)
+            cp.last_practiced = timezone.now()
+            cp.save()
 
-        # smoothing with alpha = 0.35
-        alpha = 0.35
-        cp.readiness = round(cp.readiness * (1 - alpha) + session_score * alpha, 4)
-        cp.last_practiced = timezone.now()
-        cp.save()
+            # ── Readiness delta (SIGNED) ──
+            new_readiness = cp.readiness
+            delta_readiness = new_readiness - old_readiness  # signed, can be negative
 
-        # create ProgressRecord
-        ProgressRecord.objects.create(
-            user=user,
-            concept=concept,
-            quiz_session=session,
-            score=session.score,
-            correct_count=main_correct + sub_correct,
-            wrong_count=(main_total - main_correct) + (sub_total - sub_correct),
-            main_correct=main_correct,
-            main_total=main_total,
-            sub_correct=sub_correct,
-            sub_total=sub_total
-        )
+            # ── ProgressRecord ──
+            ProgressRecord.objects.create(
+                user=user,
+                concept=concept,
+                quiz_session=session,
+                score=session.score,
+                correct_count=main_correct + sub_correct,
+                wrong_count=(main_total - main_correct) + (sub_total - sub_correct),
+                main_correct=main_correct,
+                main_total=main_total,
+                sub_correct=sub_correct,
+                sub_total=sub_total
+            )
 
-        # update subtopic efficiency
-        SubtopicProgressService.update_from_concept(user, concept)
+            # ── SubtopicProgress ──
+            SubtopicProgressService.update_from_concept(user, concept)
 
-        # ----------------------------------------------------
-        # Daily Growth Engine
-        # ----------------------------------------------------
-        today = timezone.localdate()
-        target = ProgressService.generate_daily_target_for_today(user, date=today)
-        diary_entry, _ = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
+            # ── Daily diary evidence ──
+            today = timezone.localdate()
+            diary_entry, _ = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
 
-        # calculate delta growth
-        new_readiness = cp.readiness
-        delta_readiness = max(0.0, new_readiness - old_readiness)
+            # Convert concept-level delta to exam-level percentage points
+            exam = concept.subtopic.topic.subject.exam
+            concept_ids = ProgressService.get_exam_concept_ids(exam.id)
+            total_concepts = len(concept_ids)
 
-        exam = concept.subtopic.topic.subject.exam
-        concept_ids = ProgressService.get_exam_concept_ids(exam.id)
-        total_concepts = len(concept_ids)
+            if total_concepts > 0:
+                growth_increment = round((delta_readiness / total_concepts) * 100.0, 4)
+            else:
+                growth_increment = 0.0
 
-        if total_concepts > 0:
-            growth_increment = round((delta_readiness / total_concepts) * 100.0, 4)
-        else:
-            growth_increment = 0.0
+            # Concepts attempted
+            if not diary_entry.concepts_attempted:
+                diary_entry.concepts_attempted = []
+            if concept.id not in diary_entry.concepts_attempted:
+                diary_entry.concepts_attempted.append(concept.id)
 
-        # update diary telemetry
-        if not diary_entry.concepts_attempted:
-            diary_entry.concepts_attempted = []
-        if concept.id not in diary_entry.concepts_attempted:
-            diary_entry.concepts_attempted.append(concept.id)
+            # Concepts completed (readiness crosses 0.7 threshold)
+            if old_readiness < 0.7 and new_readiness >= 0.7:
+                if not diary_entry.concepts_completed:
+                    diary_entry.concepts_completed = []
+                if concept.id not in diary_entry.concepts_completed:
+                    diary_entry.concepts_completed.append(concept.id)
 
-        if old_readiness < 0.7 and new_readiness >= 0.7:
-            if not diary_entry.concepts_completed:
-                diary_entry.concepts_completed = []
-            if concept.id not in diary_entry.concepts_completed:
-                diary_entry.concepts_completed.append(concept.id)
+            # Accumulate evidence
+            diary_entry.questions_solved += (main_total + sub_total)
+            diary_entry.questions_correct += (main_correct + sub_correct)
+            diary_entry.time_spent_seconds += session.duration_seconds or 0
 
-        diary_entry.questions_solved += (main_total + sub_total)
-        diary_entry.questions_correct += (main_correct + sub_correct)
-        diary_entry.time_spent_seconds += session.duration_seconds or 0
-        if diary_entry.questions_solved > 0:
-            diary_entry.accuracy = round(diary_entry.questions_correct / diary_entry.questions_solved, 4)
-        else:
-            diary_entry.accuracy = 0.0
+            # Accumulate signed readiness delta
+            diary_entry.readiness_delta = round(diary_entry.readiness_delta + growth_increment, 4)
+            diary_entry.save()
 
-        # track knowledge gain by subject
-        subject_name = concept.subtopic.topic.subject.name
-        if not diary_entry.knowledge_gain:
-            diary_entry.knowledge_gain = {}
-        diary_entry.knowledge_gain[subject_name] = diary_entry.knowledge_gain.get(subject_name, 0) + 1
-
-        diary_entry.save()
-
-        # Update DailyTarget using 50/50 Dual Criteria
-        target.completed_correct_questions += (main_correct + sub_correct)
-        target.calculate_completion()
-        target.save()
-
-        # Sync diary's growth percentage with the completed growth
-        diary_entry.daily_growth_percentage = target.completed_growth
-        diary_entry.save()
-
-        # Invalidate cached daksh score and dashboard telemetry to force real-time recalculation
+        # ── Cache invalidation (outside transaction) ──
         daksh_cache_key = f"user_{user.id}_exam_{exam.id}_daksh_score"
         cache.delete(daksh_cache_key)
         cache.delete(f"dashboard_data_user_{user.id}")
@@ -168,8 +177,15 @@ class ProgressService:
 
         return cp
 
+    # ── Daily target generation ──────────────────────────────────────────────
+
     @staticmethod
     def generate_daily_target_for_today(user, date=None):
+        """
+        Generate or retrieve today's DailyTarget.
+        required_readiness_per_day = remaining_readiness / remaining_days
+        Units: readiness percentage-points / calendar day
+        """
         if date is None:
             date = timezone.localdate()
 
@@ -177,139 +193,305 @@ class ProgressService:
         if not created:
             return target
 
-        goal = UserGoal.objects.filter(user=user).first()
+        goal = ProgressService.get_active_goal(user)
         if not goal:
-            # default fallback if no goal is set
-            target.target_growth = 0.83
+            target.required_readiness_per_day = 0.0
             target.save()
             return target
 
+        daksh_score = ProgressService.get_user_daksh_score(user, goal.exam)
+        if daksh_score is None:
+            target.required_readiness_per_day = 0.0
+            target.save()
+            return target
+
+        remaining_readiness = max(0.0, 100.0 - daksh_score)
         remaining_days = (goal.target_date - date).days
+
         if remaining_days <= 0:
-            remaining_days = 1
-
-        # calculate current readiness across all concepts in the goal's exam
-        current_daksh = ProgressService.get_user_daksh_score(user, goal.exam)
-
-        remaining_growth = max(0.0, 100.0 - current_daksh)
-        required_growth = round(remaining_growth / remaining_days, 4)
-
-        if remaining_growth > 0:
-            target.target_growth = max(0.1, required_growth)
+            # Target date has passed or is today — all remaining readiness needed now
+            target.required_readiness_per_day = remaining_readiness
+        elif remaining_readiness <= 0:
+            # Already at 100% — nothing required
+            target.required_readiness_per_day = 0.0
         else:
-            target.target_growth = 0.0
+            target.required_readiness_per_day = round(remaining_readiness / remaining_days, 4)
 
         target.save()
         return target
 
+    # ── Presence & Visit Streak ──────────────────────────────────────────────
+
     @staticmethod
-    def get_prediction_days(user, date=None, current_daksh=None):
+    def record_presence(user):
+        """
+        Record that the user opened DakshAI today.
+        Idempotent: multiple calls on the same day do not create duplicates
+        and do not overwrite the first opened_at timestamp.
+        """
+        today = timezone.localdate()
+        diary, created = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
+        if diary.opened_at is None:
+            diary.opened_at = timezone.now()
+            diary.save(update_fields=["opened_at"])
+        return diary
+
+    @staticmethod
+    def get_visit_streak(user, today=None):
+        """
+        Count consecutive calendar days (up to and including today)
+        where the user opened the app (opened_at IS NOT NULL).
+
+        If today has not been opened yet, the streak continues from yesterday
+        (but today doesn't count).
+        """
+        if today is None:
+            today = timezone.localdate()
+
+        # Fetch recent diary entries with presence, ordered by date descending
+        entries = (
+            DailyDiaryEntry.objects.filter(user=user, opened_at__isnull=False)
+            .order_by("-date")
+            .values_list("date", flat=True)[:366]
+        )
+        dates_set = set(entries)
+
+        if not dates_set:
+            return 0
+
+        # Start from today if opened, otherwise from yesterday
+        check_date = today if today in dates_set else today - timezone.timedelta(days=1)
+
+        streak = 0
+        while check_date in dates_set:
+            streak += 1
+            check_date -= timezone.timedelta(days=1)
+
+        return streak
+
+    @staticmethod
+    def get_practice_streak(user, today=None):
+        """
+        Count consecutive calendar days (up to and including today)
+        where the user solved practice questions (questions_solved > 0).
+
+        If today has not had practice yet, the streak continues from yesterday
+        (so the user still has today to keep their streak alive).
+        """
+        if today is None:
+            today = timezone.localdate()
+
+        entries = (
+            DailyDiaryEntry.objects.filter(user=user, questions_solved__gt=0)
+            .order_by("-date")
+            .values_list("date", flat=True)[:366]
+        )
+        dates_set = set(entries)
+
+        if not dates_set:
+            return 0
+
+        check_date = today if today in dates_set else today - timezone.timedelta(days=1)
+
+        streak = 0
+        while check_date in dates_set:
+            streak += 1
+            check_date -= timezone.timedelta(days=1)
+
+        return streak
+
+    # ── Revision time logging (no fake growth) ───────────────────────────────
+
+    @staticmethod
+    def log_revision_time(user, minutes):
+        """
+        Log revision time to daily diary without creating any readiness change.
+        """
+        today = timezone.localdate()
+        diary, _ = DailyDiaryEntry.objects.get_or_create(user=user, date=today)
+        diary.time_spent_seconds += minutes * 60
+        diary.save(update_fields=["time_spent_seconds"])
+        return diary
+
+    # ── Authoritative Trajectory ─────────────────────────────────────────────
+
+    @staticmethod
+    def get_authoritative_trajectory(user, date=None):
+        """
+        Single Authoritative Trajectory & Prediction Service.
+
+        required_daily: remaining_readiness / remaining_days
+        actual_daily:   total net readiness movement / elapsed calendar days
+                        (from first evidence date, NOT active-days-only)
+
+        Both in units: readiness percentage-points / calendar day
+
+        Gating: minimum MIN_EVIDENCE_DAYS calendar days with evidence required.
+        """
         if date is None:
             date = timezone.localdate()
 
-        goal = UserGoal.objects.filter(user=user).first()
+        units = {
+            "daksh_score": "% current readiness",
+            "required_daily": "readiness percentage-points / day",
+            "actual_daily": "readiness percentage-points / day",
+            "days_delta": "calendar days",
+        }
+
+        unavailable_base = {
+            "daksh_score": None,
+            "required_daily": None,
+            "actual_daily": None,
+            "status": "UNAVAILABLE",
+            "status_reason": None,
+            "days_delta": None,
+            "projected_completion_date": None,
+            "has_sufficient_history": False,
+            "target_date": None,
+            "days_remaining": None,
+            "units": units,
+        }
+
+        goal = ProgressService.get_active_goal(user)
         if not goal:
-            return 0, 0.83
+            return {**unavailable_base, "status_reason": "NO_GOAL"}
 
-        if current_daksh is None:
-            current_daksh = ProgressService.get_user_daksh_score(user, goal.exam)
+        daksh_score = ProgressService.get_user_daksh_score(user, goal.exam)
+        if daksh_score is None:
+            return {
+                **unavailable_base,
+                "daksh_score": None,
+                "status_reason": "NO_EXAM_CONCEPTS",
+                "target_date": str(goal.target_date),
+            }
 
-        remaining_growth = max(0.0, 100.0 - current_daksh)
+        remaining_readiness = max(0.0, 100.0 - daksh_score)
+        days_remaining = (goal.target_date - date).days
 
-        # average growth based on last 7 diary entries with growth > 0
-        recent_entries = DailyDiaryEntry.objects.filter(user=user, daily_growth_percentage__gt=0.0).order_by('-date')[:7]
-        growths = [e.daily_growth_percentage for e in recent_entries]
+        # ── Edge case: already at 100% ──
+        if remaining_readiness <= 0:
+            return {
+                "daksh_score": daksh_score,
+                "required_daily": 0.0,
+                "actual_daily": None,
+                "status": "COMPLETE",
+                "status_reason": "TARGET_REACHED",
+                "days_delta": None,
+                "projected_completion_date": None,
+                "has_sufficient_history": True,
+                "target_date": str(goal.target_date),
+                "days_remaining": days_remaining,
+                "units": units,
+            }
 
-        if growths:
-            avg_growth = sum(growths) / len(growths)
-        else:
-            remaining_days = (goal.target_date - date).days
-            if remaining_days > 0:
-                avg_growth = remaining_growth / remaining_days
-            else:
-                avg_growth = 0.83
+        # ── Edge case: target date passed ──
+        if days_remaining <= 0:
+            return {
+                "daksh_score": daksh_score,
+                "required_daily": remaining_readiness,  # all remaining today
+                "actual_daily": None,
+                "status": "UNAVAILABLE",
+                "status_reason": "TARGET_DATE_PASSED",
+                "days_delta": None,
+                "projected_completion_date": None,
+                "has_sufficient_history": False,
+                "target_date": str(goal.target_date),
+                "days_remaining": days_remaining,
+                "units": units,
+            }
 
-        if avg_growth <= 0:
-            avg_growth = 0.83
+        required_daily = round(remaining_readiness / days_remaining, 4)
 
-        predicted_remaining_days = int(round(remaining_growth / avg_growth))
-        return predicted_remaining_days, round(avg_growth, 4)
-
-    @staticmethod
-    def compute_confidence(user, recent_records=None):
-        """
-        Confidence = weighted accuracy trend over recent quiz sessions.
-        Recent sessions are weighted 3×, oldest 1×, intermediate 2×.
-        New users with < 3 sessions default to 50 (neutral).
-        """
-        if recent_records is None:
-            recent_records = list(
-                ProgressRecord.objects.filter(user=user)
-                .order_by("-created_at")[:10]
-            )
-        if len(recent_records) < 3:
-            return 50.0
-
-        # Assign weights: newest = 3, then 2, then 1 for the rest
-        weighted_sum = 0.0
-        total_weight = 0.0
-        for i, rec in enumerate(recent_records):
-            weight = 3.0 if i == 0 else (2.0 if i == 1 else 1.0)
-            accuracy = (rec.correct_count / (rec.correct_count + rec.wrong_count)
-                        if (rec.correct_count + rec.wrong_count) > 0 else 0.0)
-            weighted_sum += accuracy * weight
-            total_weight += weight
-
-        return round((weighted_sum / total_weight) * 100.0, 2) if total_weight > 0 else 50.0
-
-    @staticmethod
-    def compute_momentum(week_compliance, diary_entries_7d, targets_7d):
-        """
-        Momentum = composite of 5 behavioral signals over the past 7 days.
-          - 7d compliance rate:       30%
-          - avg focus score:          20%
-          - growth velocity:          20%  (days where completed_growth > 0)
-          - revision frequency:       15%  (days with revision_count > 0)
-          - session completion rate:  15%  (days with questions_solved > 0)
-        All sub-scores are 0-100; result is 0-100.
-        """
-        # 7d compliance (already computed, 0-100)
-        compliance_score = min(100.0, week_compliance)
-
-        # Avg focus from diary
-        focus_scores = [d.focus_score for d in diary_entries_7d]
-        avg_focus = (sum(focus_scores) / len(focus_scores)) if focus_scores else 50.0
-
-        # Growth velocity: % of 7 days where any growth occurred
-        active_growth_days = sum(1 for t in targets_7d if t.completed_growth > 0)
-        growth_velocity = (active_growth_days / 7.0) * 100.0
-
-        # Revision frequency: % of 7 days where revision logged
-        revision_days = sum(1 for d in diary_entries_7d if d.revision_count > 0)
-        revision_score = (revision_days / 7.0) * 100.0
-
-        # Session completion: % of 7 days where questions solved
-        session_days = sum(1 for d in diary_entries_7d if d.questions_solved > 0)
-        session_score = (session_days / 7.0) * 100.0
-
-        momentum = (
-            compliance_score  * 0.30 +
-            avg_focus         * 0.20 +
-            growth_velocity   * 0.20 +
-            revision_score    * 0.15 +
-            session_score     * 0.15
+        # ── Actual pace: calendar-day-based ──
+        # Find entries with real evidence (readiness_delta != 0 or questions_solved > 0)
+        evidence_entries = list(
+            DailyDiaryEntry.objects.filter(
+                user=user,
+                date__lte=date,
+            ).filter(
+                models.Q(questions_solved__gt=0) | models.Q(readiness_delta__gt=0) | models.Q(readiness_delta__lt=0)
+            ).order_by("date")
+            .values_list("date", "readiness_delta")
         )
-        return round(momentum, 2)
 
-    @staticmethod
-    def compute_discipline(current_streak, month_compliance):
-        """
-        Discipline = streak commitment (70%) + monthly consistency (30%).
-        Streak is normalized against a 30-day benchmark.
-        """
-        streak_score = min(1.0, current_streak / 30.0) * 100.0
-        discipline = streak_score * 0.70 + month_compliance * 0.30
-        return round(discipline, 2)
+        if len(evidence_entries) < MIN_EVIDENCE_DAYS:
+            return {
+                "daksh_score": daksh_score,
+                "required_daily": required_daily,
+                "actual_daily": None,
+                "status": "UNAVAILABLE",
+                "status_reason": "INSUFFICIENT_EVIDENCE",
+                "days_delta": None,
+                "projected_completion_date": None,
+                "has_sufficient_history": False,
+                "target_date": str(goal.target_date),
+                "days_remaining": days_remaining,
+                "units": units,
+            }
+
+        # Calendar-day pace: total net movement / elapsed calendar days
+        first_evidence_date = evidence_entries[0][0]
+        elapsed_calendar_days = (date - first_evidence_date).days
+        if elapsed_calendar_days <= 0:
+            elapsed_calendar_days = 1  # same day edge case
+
+        total_net_movement = sum(delta for _, delta in evidence_entries)
+        # If legacy diary entries didn't have readiness_delta populated,
+        # but user has real verified readiness in daksh_score, use daksh_score
+        if total_net_movement <= 0 and daksh_score is not None and daksh_score > 0:
+            total_net_movement = daksh_score
+
+        actual_daily = round(total_net_movement / elapsed_calendar_days, 4)
+
+        if actual_daily <= 0:
+            return {
+                "daksh_score": daksh_score,
+                "required_daily": required_daily,
+                "actual_daily": actual_daily,
+                "status": "BEHIND" if required_daily > 0 else "ON_TRACK",
+                "status_reason": "ZERO_OR_NEGATIVE_PACE",
+                "days_delta": None,
+                "projected_completion_date": None,
+                "has_sufficient_history": True,
+                "target_date": str(goal.target_date),
+                "days_remaining": days_remaining,
+                "units": units,
+            }
+
+        # ── Projection ──
+        projected_days_needed = int(round(remaining_readiness / actual_daily))
+        # Protect against unrealistic overflow dates (> 3 years / 1095 days)
+        if projected_days_needed > 1095:
+            projected_date_obj = None
+            days_delta = None
+            status = "BEHIND"
+        else:
+            projected_date_obj = str(date + timezone.timedelta(days=projected_days_needed))
+            gap = actual_daily - required_daily
+            tolerance = 0.05 * required_daily if required_daily > 0 else 0.01
+            if abs(gap) < tolerance:
+                status = "ON_TRACK"
+                days_delta = 0
+            elif gap > 0:
+                status = "AHEAD"
+                days_delta = max(0, days_remaining - projected_days_needed)
+            else:
+                status = "BEHIND"
+                days_delta = max(0, projected_days_needed - days_remaining)
+
+        return {
+            "daksh_score": daksh_score,
+            "required_daily": required_daily,
+            "actual_daily": actual_daily,
+            "status": status,
+            "status_reason": "VALID_TRAJECTORY",
+            "days_delta": days_delta,
+            "projected_completion_date": projected_date_obj,
+            "has_sufficient_history": True,
+            "target_date": str(goal.target_date),
+            "days_remaining": days_remaining,
+            "units": units,
+        }
 
 
 class SubtopicProgressService:
@@ -317,50 +499,25 @@ class SubtopicProgressService:
     @staticmethod
     def update_from_concept(user, concept: Concept):
         """
-        Recalculate subtopic efficiency whenever a concept changes.
+        Recalculate subtopic efficiency as direct average of concept readiness.
+        No secondary smoothing.
         """
         subtopic = concept.subtopic
-        concept_progresses = ConceptProgress.objects.filter(
+
+        result = ConceptProgress.objects.filter(
             user=user,
             concept__subtopic=subtopic
-        )
+        ).aggregate(avg_readiness=Avg("readiness"))
 
-        if not concept_progresses.exists():
+        avg_readiness = result["avg_readiness"]
+        if avg_readiness is None:
             return None
-
-        raw_sum = 0.0
-        mastery_sum = 0.0
-        total_weight = 0.0
-
-        for cp in concept_progresses:
-            weight = 1.0
-
-            # -------- RAW (from DB) --------
-            raw_avg = cp.readiness
-
-            # -------- MASTERY (time-decayed) --------
-            mastery_avg = cp.get_mastery()
-
-            raw_sum += raw_avg * weight
-            mastery_sum += mastery_avg * weight
-            total_weight += weight
-
-        raw_efficiency = raw_sum / total_weight if total_weight else 0.0
-        mastery_efficiency = mastery_sum / total_weight if total_weight else 0.0
 
         sp, _ = SubtopicProgress.objects.get_or_create(
             user=user,
             subtopic=subtopic
         )
-
-        # smoothing ONLY on mastery (time-based)
-        alpha = 0.3
-        sp.raw_efficiency = round(raw_efficiency, 4)
-        sp.efficiency = round(
-            sp.efficiency * (1 - alpha) + mastery_efficiency * alpha,
-            4
-        )
-
+        sp.efficiency = round(avg_readiness, 4)
         sp.last_updated = timezone.now()
         sp.save()
 

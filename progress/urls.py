@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
     ConceptProgressAPI, ConceptHistoryAPI, SubtopicProgressAPI,
-    UserGoalAPI, DailyTargetAPI, DailyStudyCheckInAPI, DailyTargetRevisionAPI,
-    DailyDiaryAPI, DailyDiaryEnergyAPI, DailyTargetShareAPI, StreakStatsAPI,
+    UserGoalAPI, DailyTargetAPI, AppPresenceAPI, RevisionTimeAPI,
+    DailyDiaryAPI, StreakStatsAPI,
     BrainEngineAPI, GalaxyAPI
 )
 
@@ -13,11 +13,9 @@ urlpatterns = [
     path("goal/", UserGoalAPI.as_view(), name="user-goal"),
     path("dashboard/", BrainEngineAPI.as_view(), name="brain-engine"),
     path("daily-target/", DailyTargetAPI.as_view(), name="daily-target"),
-    path("checkin/", DailyStudyCheckInAPI.as_view(), name="daily-checkin"),
-    path("daily-target/revision/", DailyTargetRevisionAPI.as_view(), name="daily-target-revision"),
-    path("daily-target/share/", DailyTargetShareAPI.as_view(), name="daily-target-share"),
+    path("presence/", AppPresenceAPI.as_view(), name="app-presence"),
+    path("revision/", RevisionTimeAPI.as_view(), name="revision-time"),
     path("diary/", DailyDiaryAPI.as_view(), name="daily-diary"),
-    path("diary/energy/", DailyDiaryEnergyAPI.as_view(), name="daily-diary-energy"),
     path("streak/", StreakStatsAPI.as_view(), name="streak-stats"),
     path("galaxy/", GalaxyAPI.as_view(), name="galaxy"),
 ]

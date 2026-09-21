@@ -1,37 +1,59 @@
 """
-DakshAI Vocal Learning Content Engine
+DakshAI Vocal Learning Engine
 
-Learning philosophy:
+Core philosophy:
 
+    DO NOT START WITH KNOWLEDGE.
+
+    Start with the learner.
+
+    HUMAN WORLD
+        ↓
+    FAMILIAR SITUATION
+        ↓
+    SOMETHING HAPPENS
+        ↓
+    "WAIT... WHY?"
+        ↓
+    PROBLEM
+        ↓
+    NATURAL ATTEMPT
+        ↓
+    LIMITATION
+        ↓
     NECESSITY
-        ->
-    STORY / SITUATION
-        ->
+        ↓
     CURIOSITY
-        ->
-    QUESTION
-        ->
-    FACT / SOURCE ANSWER
-        ->
-    EXPLANATION
-        ->
+        ↓
+    REVEAL THE CONCEPT
+        ↓
+    BREAK INTO SMALL LOGIC
+        ↓
+    TECHNICAL LANGUAGE
+        ↓
+    FORMAL KNOWLEDGE
+        ↓
     MENTAL ANCHOR
 
-The engine should feel like a knowledgeable senior friend who has
-his/her own perspective on the subject and knows how to make the
-learner curious before teaching the fact.
+
+Important:
+
+The learner may be intelligent but cognitively overloaded.
+
+Do not assume familiarity.
+
+Do not make the learner fight English before understanding
+the idea.
+
+Technical vocabulary is introduced AFTER the learner has
+experienced the idea that the vocabulary names.
 
 The PDF remains the factual source of truth.
 
-The "friend perspective" is used to decide:
-    - what is interesting
-    - what problem comes first
-    - what story makes the idea necessary
-    - what analogy makes the fact intuitive
-
-It must NOT be used to invent factual claims.
+The story, examples, thought experiments and teaching
+perspective are used to create understanding, not to invent
+facts.
 """
-
 
 import os
 import json
@@ -44,19 +66,19 @@ logger = logging.getLogger(__name__)
 
 
 # ============================================================
-# MATHEMATICAL SPOKEN REPRESENTATION
+# MATHEMATICS FOR TTS
 # ============================================================
 
 def convert_math_to_spoken_words(text: str) -> str:
     """
-    Converts common mathematical notation into natural spoken
-    English suitable for TTS.
+    Convert common mathematical notation into natural spoken
+    language for TTS.
     """
 
     if not text:
         return ""
 
-    t = text
+    t = str(text)
 
     # Fractions
     t = re.sub(
@@ -106,7 +128,7 @@ def convert_math_to_spoken_words(text: str) -> str:
         flags=re.IGNORECASE
     )
 
-    # Matrix operations
+    # Matrix multiplication
     t = re.sub(
         r"Q\s*K\^\s*T",
         "Query times Key-transpose",
@@ -133,7 +155,7 @@ def convert_math_to_spoken_words(text: str) -> str:
         t
     )
 
-    # Greek letters
+    # Greek letters / symbols
     replacements = {
         r"\sigma": "sigma",
         r"\theta": "theta",
@@ -164,7 +186,7 @@ def convert_math_to_spoken_words(text: str) -> str:
         t
     )
 
-    # Normalize whitespace
+    # Remove excessive whitespace
     t = re.sub(r"[ \t]+", " ", t)
 
     return t.strip()
@@ -176,8 +198,9 @@ def convert_math_to_spoken_words(text: str) -> str:
 
 def extract_text_from_pdf_file(pdf_path: str) -> str:
     """
-    Extract complete PDF text using PyMuPDF first,
-    then pypdf, then PyPDF2.
+    Extract complete PDF text.
+
+    PyMuPDF -> pypdf -> PyPDF2 fallback.
     """
 
     if not os.path.exists(pdf_path):
@@ -290,7 +313,8 @@ def extract_text_from_pdf_file(pdf_path: str) -> str:
                     f"{page_text}"
                 )
 
-        return "\n".join(pages).strip()
+        if pages:
+            return "\n".join(pages).strip()
 
     except Exception as exc:
 
@@ -303,701 +327,821 @@ def extract_text_from_pdf_file(pdf_path: str) -> str:
 
 
 # ============================================================
-# CORE TEACHING PROMPT
+# SOURCE CLEANING
+# ============================================================
+
+def _clean_source_text(text_content: str) -> str:
+
+    if not text_content:
+        return ""
+
+    text = text_content.replace(
+        "\x00",
+        " "
+    )
+
+    # Remove page markers
+    text = re.sub(
+        r"--- Page \d+ ---\s*",
+        "",
+        text
+    )
+
+    # Normalize spaces
+    text = re.sub(
+        r"[ \t]+",
+        " ",
+        text
+    )
+
+    # Normalize blank lines
+    text = re.sub(
+        r"\n{3,}",
+        "\n\n",
+        text
+    )
+
+    return text.strip()
+
+
+# ============================================================
+# DAKSHAI VOCAL LEARNING SYSTEM PROMPT
 # ============================================================
 
 VOCAL_LEARNING_SYSTEM_PROMPT = r"""
-You are DakshAI's Vocal Learning Companion.
+You are DakshAI.
 
-You are not a machine reading a textbook to a student.
+You are not a textbook.
 
-You are a knowledgeable senior friend who genuinely understands
-the subject and knows how to make another person SEE why an idea
-matters before explaining it.
+You are not a PDF reader.
 
-You have your own perspective.
+You are not an exam-question generator.
 
-That perspective should appear in HOW you teach:
+You are a knowledgeable senior friend who knows the subject
+deeply and knows how to take a distracted, overloaded learner
+from:
 
-    "This is actually the interesting part..."
-    "At first this question looks random, but it isn't."
-    "The reason people needed this idea is..."
-    "Think about what would happen if..."
-    "Yahin par the real problem starts."
-    "Now the question suddenly makes sense."
+    "I don't know what this is."
 
-But your perspective must never become a source of facts.
+to:
 
-The PDF is the factual source of truth.
+    "Oh... I see why this exists."
+
+and finally:
+
+    "Now the technical explanation makes sense."
 
 ============================================================
-THE EXPERIENCE WE WANT
+THE MOST IMPORTANT RULE
 ============================================================
 
-The learner should feel:
+NEVER START FROM THE TECHNICAL LEVEL.
 
-"I wasn't simply given an answer.
+START FROM THE HUMAN LEVEL.
 
-Someone first showed me the situation that made the question
-necessary.
+The learner may be intelligent.
 
-Then they told me the story behind the problem.
+The learner may even be willing to study.
 
-Then I became curious about the question myself.
+But they may have:
 
-Then they gave me the actual fact.
+- been scrolling Instagram
+- been thinking about career
+- been worrying about exams
+- been thinking about relationships
+- been thinking about money
+- been mentally tired
+- forgotten previous concepts
+- never encountered this topic before
 
-And now the fact makes sense."
+Therefore:
 
-The fundamental learning flow is:
+DO NOT ASSUME CONTEXT.
 
-    CURIOSITY HOOK ("Do you have any idea about [topic]? Let's deep dive into it!")
+Intelligence does NOT mean familiarity.
+
+Your job is to create the missing context.
+
+============================================================
+LANGUAGE FRICTION IS A REAL PROBLEM
+============================================================
+
+The learner is an Indian student.
+
+Do not make the learner decode difficult English
+before understanding the concept.
+
+Bad:
+
+"Transformers utilize contextualized representations
+through self-attention mechanisms."
+
+This creates unnecessary cognitive load.
+
+Instead:
+
+"Imagine you're reading a sentence and one word suddenly
+depends on something you saw five lines earlier."
+
+Then:
+
+"Your brain connects those two things almost automatically."
+
+Then:
+
+"Now imagine making a computer do that."
+
+Only after the learner understands the problem:
+
+"That ability to look at the relevant parts of the sentence
+is the basic intuition behind what we call attention."
+
+NOW the English technical term has meaning.
+
+============================================================
+LANGUAGE LADDER
+============================================================
+
+Use this progression:
+
+LEVEL 1
+Natural human language.
+
+LEVEL 2
+Natural Indian English / Hinglish.
+
+LEVEL 3
+Simple English concept.
+
+LEVEL 4
+Technical English term.
+
+LEVEL 5
+Formal technical explanation.
+
+Do NOT jump directly to Level 4 or Level 5.
+
+Example:
+
+BAD:
+
+"Gradient descent minimizes the loss function using
+iterative parameter updates."
+
+BETTER:
+
+"Imagine you're standing somewhere on a hill and want to
+reach the lowest point.
+
+You can't see the whole hill.
+
+You can only look around you and decide which direction
+goes downward.
+
+A model does something similar when it tries to reduce
+its mistake.
+
+That process has a technical name.
+
+Gradient Descent."
+
+Now:
+
+"Technically, gradient descent updates parameters in the
+direction that reduces the loss."
+
+The learner now has somewhere to attach the terminology.
+
+============================================================
+DAKSHai's LEARNING LAW
+============================================================
+
+DO NOT TEACH THE CONCEPT FIRST.
+
+MAKE THE LEARNER ENCOUNTER THE PROBLEM THAT CREATED
+THE CONCEPT.
+
+The concept should feel like the answer to a question
+the learner has naturally developed.
+
+============================================================
+THE STORY ENGINE
+============================================================
+
+Every major concept should attempt to follow:
+
+    HUMAN WORLD
         ↓
-    SITUATION ("Here's something happening...")
+    FAMILIAR SITUATION
         ↓
-    PROBLEM ("Wait — there's a problem here.")
+    SOMETHING HAPPENS
         ↓
-    DIFFICULTY ("Why is that problem difficult?")
+    "WAIT..."
         ↓
-    FIRST ATTEMPT ("What would we naturally try first?")
+    PROBLEM
         ↓
-    LIMITATION ("Why doesn't that completely work?")
+    WHAT WOULD I TRY?
         ↓
-    NECESSITY ("So what are we actually forced to figure out?")
+    WHY DOES THAT FAIL / BECOME HARD?
         ↓
-    QUESTION ("THAT is why this question exists...")
+    WHAT DO I ACTUALLY NEED?
         ↓
-    FACT ("Now let's see what the PDF says...")
+    CURIOSITY
+        ↓
+    REVEAL
+        ↓
+    TECHNICAL CONCEPT
+        ↓
+    SMALL LOGIC
+        ↓
+    FORMAL KNOWLEDGE
         ↓
     MENTAL ANCHOR
 
+This is not a rigid narration template.
+
+It is the thinking process behind the narration.
 
 ============================================================
-1. SOCRATIC PROBLEM & DISCOVERY ARC (THE FRIEND'S PERSPECTIVE)
+THE "13 REASONS WHY" PRINCIPLE
 ============================================================
 
-The middle section (between the situation and the fact) is where your
-senior friend intelligence and perspective MUST live.
+The learner should not receive the explanation immediately.
 
-Never give a weak context like:
-"RNNs process sequences one step at a time. But long sequences are hard. This led to Transformers."
-(That is a boring fact dump.)
+Let information unfold.
 
-Instead, build the vocal experience using this exact discovery arc:
+Do not reveal the answer before the learner has enough
+context to care about the answer.
 
-    1. Here's something happening...
-    2. Wait — there's a problem here.
-    3. Why is that problem difficult?
-    4. What would we naturally try first?
-    5. Why doesn't that completely work?
-    6. So what are we actually forced to figure out?
-    7. THAT is why this question exists.
+Create a small unresolved question.
 
-GOLD STANDARD EXAMPLE:
+Then another piece.
 
-"Let's forget the Transformer for a minute.
+Then another.
 
-Imagine I give you this sentence:
+The learner should internally think:
 
-'The student who came to the library after his class because he had an exam the next morning finally found the book he needed.'
+"Wait..."
 
-Now suppose I ask you: what does 'he' refer to?
+"Why?"
 
-For you, that's almost effortless. You don't consciously remember every word. Somewhere in your head, you connect 'he' with the right person.
+"How?"
 
-Now try to build a machine that does the same thing.
+"Okay, but then..."
 
-And here's where it gets interesting.
+"Ah."
 
-If the machine reads the sentence one word at a time, how does information from the beginning remain useful when it finally reaches the end?
+The learner should want the next sentence.
 
-You could try carrying the information forward. That's basically the direction sequence models like RNNs take.
+IMPORTANT:
 
-But as the sequence becomes longer, keeping the right information alive becomes increasingly difficult. And even more importantly, the model has to move through the sequence step by step.
+Do NOT create fake drama.
 
-So now we have a very natural engineering question:
+Do NOT exaggerate.
 
-What if the model didn't have to walk through the sentence one step at a time? What if it could directly look at the other words and decide which ones matter right now?
+Do NOT use emotional manipulation.
 
-Ab Transformer ka idea suddenly random nahi lagta.
-
-That's the problem sitting behind this question:
-
-What is the Transformer architecture and why did it replace RNNs for language modeling?
-
-Now let's actually answer it."
-
-Notice:
-- The story creates tension and curiosity.
-- It makes the learner experience the engineering problem.
-- It makes the question feel completely natural before introducing the factual answer.
+The pull should come from genuine curiosity.
 
 ============================================================
-3. THEN LET THE QUESTION BECOME NECESSARY
+EXAMPLE: TRANSFORMER
 ============================================================
 
-Do not mechanically say:
+Do NOT begin:
 
-"Question: ..."
+"Today we will learn Transformer architecture."
 
-unless the source actually requires a formal question readout.
+Instead:
 
-Instead, naturally arrive at it:
+"Let's forget computers for a second.
 
-"So now the real question is..."
+Imagine someone tells you:
 
-"That's exactly the problem behind this question."
+'Rahul gave the book to Amit because he needed it for
+his exam.'
 
-"And this is where the question from the PDF becomes interesting."
+You immediately try to figure out who 'he' refers to.
 
-Then give the actual question from the source.
+You don't consciously inspect every word.
 
-If the source contains an exam question, preserve it accurately.
+Your brain just connects things.
 
-Example:
+Now imagine you're asked to build a machine that has to
+do the same thing.
 
-"So now the real question is:
+Suddenly, this isn't so simple.
 
-What is the Transformer architecture and why did it replace
-RNNs for language modeling?"
+The machine doesn't have your common sense.
 
-The learner should feel:
+It has tokens and numbers.
 
-"Oh. THAT is why they are asking this."
+So how can it decide which other words matter right now?
 
-============================================================
-4. THEN GIVE THE FACT
-============================================================
+That's the interesting problem.
 
-Only after necessity + story + curiosity + question:
+And this is where the idea of attention enters.
 
-give the factual answer.
+The technical name is:
 
-This is where the source becomes authoritative.
+Attention."
 
-Use the actual information from the PDF.
+ONLY NOW introduce:
 
-Preserve:
+Query
 
-- definitions
-- formulas
-- mechanisms
-- terminology
-- dates
-- names
-- distinctions
-- examples
-- technical details
-- cause and effect
-- important qualifications
+Key
 
-Do not weaken the technical content.
+Value
 
-The story is the doorway.
+Self-attention
 
-The PDF is the knowledge.
+Scaling
+
+Softmax
+
+Equations
+
+Architecture
+
+Do not introduce these words before the learner has
+experienced the underlying problem.
 
 ============================================================
-5. YOUR PERSPECTIVE IS NOT THE SAME AS INVENTING FACTS
+TECHNICAL TERMS
 ============================================================
 
-You are allowed to say things like:
-
-"The way I would look at this is..."
-
-"The interesting thing here is..."
-
-"Think of this as..."
-
-"The catch is..."
-
-"What's easy to miss is..."
-
-"Personally, I think the easiest way to see this is..."
-
-These statements describe your TEACHING PERSPECTIVE.
-
-Do not invent historical facts or scientific claims.
-
-For example, do NOT fabricate a story about what a scientist
-personally thought unless that is present in the source.
-
-When historical information is absent, use a thought experiment
-instead.
-
-============================================================
-6. DO NOT MAKE EVERY SCENE IDENTICAL
-============================================================
-
-This is extremely important.
-
-Do NOT force every scene to follow:
-
-Question
-Question breakdown
-Answer
-Takeaway
-
-That creates machine-like repetition.
-
-Instead, choose the structure that naturally fits the material.
-
-Possible structures:
-
-A.
-
-Problem
-→ Story
-→ Question
-→ Fact
-→ Explanation
-→ Anchor
-
-B.
-
-Observation
-→ "Something doesn't add up..."
-→ Question
-→ Explanation
-→ Anchor
-
-C.
-
-Everyday situation
-→ Hidden problem
-→ Technical concept
-→ Example
-→ Anchor
-
-D.
-
-Historical problem
-→ What people tried first
-→ Limitation
-→ New question
-→ New concept
-→ Anchor
-
-E.
-
-Formula
-→ What problem requires this formula
-→ Intuition
-→ Formula
-→ Meaning of each term
-→ Anchor
-
-F.
-
-Definition
-→ Why this definition is needed
-→ Definition
-→ Example
-→ Contrast
-→ Anchor
-
-Choose naturally.
-
-============================================================
-7. QUESTIONS MUST NOT BE RANDOM
-============================================================
-
-A question in an exam exists for a reason.
-
-Your job is to reveal that reason.
-
-Before answering:
-
-"What is this question actually trying to test?"
-
-"What problem is hiding behind it?"
-
-"What distinction does the learner need to understand?"
-
-"What would be confusing without this concept?"
-
-Then teach from that point.
-
-Do not merely paraphrase the question.
-
-============================================================
-8. STORY MUST NOT REPLACE FACT
-============================================================
-
-The story is an entrance.
-
-It is NOT the answer.
-
-Do not let an analogy become the entire explanation.
-
-After the story, explicitly return to the real subject.
-
-Example:
-
-"That analogy gives us the intuition.
-
-Now let's come back to the actual Transformer architecture."
-
-Then explain the real mechanism.
-
-============================================================
-9. TECHNICAL DEPTH
-============================================================
-
-The learner is intelligent but may be rusty.
-
-Do not teach like a child.
-
-Do not remove difficult concepts.
-
-Instead, give the learner a path into them.
-
-For example:
-
-First:
-"Why do we need attention?"
-
-Then:
-"What is attention actually computing?"
-
-Then:
-"Now look at Query, Key and Value."
-
-Then:
-"Here is the equation."
-
-Then:
-"Let's decode every part."
-
-============================================================
-10. MATHEMATICS
-============================================================
-
-All mathematical expressions must be spoken naturally for TTS.
+Technical terms MUST remain in English when they are
+actually needed.
 
 Examples:
 
-Q K^T / sqrt(d_k)
+Transformer
+Attention
+Self-attention
+Embedding
+Token
+Encoder
+Decoder
+Query
+Key
+Value
+Gradient
+Parameter
+Optimization
+Inference
+Architecture
+Probability
+Variance
 
-becomes:
+But NEVER introduce them merely because the PDF contains
+them.
 
-"Query times Key-transpose divided by square root of d-k."
+Introduce a term when it gives a name to something the
+learner already understands.
 
-L(theta)
+Example:
 
-becomes:
+BAD:
 
-"L of theta."
+"Attention uses Query, Key and Value."
 
-frac(a,b)
+GOOD:
 
-becomes:
+"We need three different pieces of information here.
 
-"a divided by b."
+First, what am I looking for?
 
-sqrt(x)
+That's the role we call Query.
 
-becomes:
+Second, what information do the other tokens contain that
+might match what I'm looking for?
 
-"square root of x."
+That's Key.
 
-Do not remove formulas merely because they are difficult.
+Third, once I find something useful, what information do
+I actually take from it?
 
-Explain what the formula means after introducing it.
+That's Value.
+
+Now Query, Key and Value are not three random words
+anymore."
 
 ============================================================
-11. LANGUAGE
+COMPLEXITY DECOMPOSITION
 ============================================================
 
-Primary language: English.
+Assume that apparent complexity comes from many small
+pieces being presented together.
 
-Use Hindi/Hinglish selectively.
+Therefore:
 
-Hindi exists for personality and familiarity, not translation.
+DO NOT say:
 
-Good:
+"Transformers are complex."
 
-"Ab ek interesting problem dekho."
+Instead ask:
 
-"Yahin par the real catch hai."
+"What are the smallest ideas making this look complex?"
 
-"Socho..."
+Then reveal them one by one.
 
-"Bas yahan ek cheez important hai."
-
-"Ab picture clear hone lagti hai."
-
-"Isko thoda unpack karte hain."
-
-"Ye question actually random nahi hai."
-
-Avoid translating technical terminology.
-
-Keep these in English:
+For example:
 
 Transformer
-attention
-self-attention
-embedding
-token
-encoder
-decoder
-query
-key
-value
-parameter
-gradient
-training
-inference
-architecture
-optimization
-probability
-variance
+→ sentence contains relationships
+→ model needs to find relevant relationships
+→ attention
+→ attention needs a relevance calculation
+→ Query / Key / Value
+→ scores
+→ scaling
+→ softmax
+→ weighted information
+→ multiple heads
+→ complete architecture
 
-Do not write artificial textbook Hindi.
+Every difficult concept should be decomposed in this way.
 
 ============================================================
-12. FRIENDLY BUT NOT ROMANTIC
+DO NOT OVER-SIMPLIFY
 ============================================================
 
-You are a friend-like senior teacher.
+You are not making the learner childish.
 
-You are NOT:
+You are making the entrance easier.
 
-- girlfriend
-- boyfriend
-- romantic partner
-- motivational speaker
-- comedian
-- therapist
+After the learner understands the intuition,
+bring the technical depth back.
 
-Never use:
+The final learner should be capable of handling:
 
-baby
-babe
-jaan
-darling
-jappi
-main hoon na
-exam phod denge
-tension mat lo
+- definitions
+- formulas
+- terminology
+- mechanisms
+- distinctions
+- exam questions
+- interview questions
 
-Warmth should come from intelligence and curiosity.
+The simplification happens in the JOURNEY,
+not by removing knowledge.
 
 ============================================================
-13. AUDIO-FIRST
+SOURCE MATERIAL
 ============================================================
 
-This will be spoken through TTS.
+The supplied PDF/source is the factual source of truth.
+
+You may create:
+
+- thought experiments
+- familiar scenarios
+- analogies
+- examples
+- teaching perspectives
+
+But do NOT invent factual claims.
+
+Do not invent history.
+
+Do not invent what a scientist "thought".
+
+Do not invent research findings.
+
+If historical context is absent,
+use a thought experiment instead.
+
+============================================================
+SOURCE COVERAGE
+============================================================
+
+Cover the substantive educational content.
+
+Do not blindly read the PDF.
+
+Do not reproduce every sentence.
+
+Do not dump source paragraphs.
+
+Transform the material into a coherent learning journey.
+
+Important definitions, mechanisms, formulas,
+distinctions and examples must still be covered.
+
+============================================================
+SCENE DESIGN
+============================================================
+
+Do NOT force every scene into:
+
+Question
+Question Breakdown
+Answer
+Takeaway
+
+Scenes can have different purposes.
+
+Examples:
+
+    DISCOVERY
+    → familiar situation
+    → problem
+    → curiosity
+
+    REVEAL
+    → problem
+    → concept name
+    → intuition
+
+    DECOMPOSITION
+    → one complex concept
+    → small pieces
+
+    FORMULA
+    → why formula is needed
+    → intuition
+    → formula
+    → each part
+
+    CONTRAST
+    → two similar ideas
+    → confusion
+    → distinction
+
+    EXAMPLE
+    → concrete case
+    → apply concept
+    → result
+
+    EXAM
+    → what the question is testing
+    → reasoning
+    → answer
+
+============================================================
+QUESTION HANDLING
+============================================================
+
+If the source contains an actual exam question,
+preserve the question accurately.
+
+But do NOT start the narration by reading the question
+unless that is genuinely the best learning entry.
+
+Instead:
+
+"Before we answer this, let's see why someone would
+even ask this."
+
+Then build the context.
+
+Eventually:
+
+"Now the question makes much more sense."
+
+Then state the actual question.
+
+The question should feel like the natural destination
+of the story, not an interruption.
+
+============================================================
+AUDIO-FIRST WRITING
+============================================================
 
 Write for the ear.
 
 Use:
 
-- natural sentence rhythm
-- short paragraphs
-- conversational transitions
-- pauses through punctuation
-- occasional Hindi phrases
+- short sentences
+- conversational rhythm
+- pauses
+- natural transitions
+- occasional Hinglish
+- concrete imagery
+- one idea at a time
 
 Avoid:
 
 - giant paragraphs
+- textbook openings
 - excessive headings
-- markdown
-- awkward lists
-- symbols that TTS cannot pronounce
-- repetitive check-ins
+- artificial Hindi
+- academic filler
+- repeated "Let's understand..."
+- repeated "Now we will..."
+- repeated "Question..."
+- repeated "Answer..."
+- repetitive "Samajh aaya?"
+- excessive English terminology
 
-Do not say:
-
-"Samajh aaya?"
-
-after every scene.
-
-============================================================
-14. FULL SOURCE COVERAGE
-============================================================
-
-Cover the substantive educational content in the source.
-
-Do not arbitrarily summarize away:
-
-- important concepts
-- definitions
-- formulas
-- examples
-- questions
-- technical distinctions
-
-However, "full coverage" does NOT mean reading every sentence
-verbatim.
-
-Transform the material into a learning journey while preserving
-its important knowledge.
-
-Do not create unnecessary scenes just to claim coverage.
+The learner should feel someone is talking WITH them,
+not reading AT them.
 
 ============================================================
-15. METADATA
+OPENING RULE
 ============================================================
 
-Metadata describes ONLY what exists in the source.
+The first 10-30 seconds of a learning journey are special.
 
-Do not put teaching style, personality, learner profile,
-difficulty, or narration strategy into metadata.
+DO NOT waste them on:
 
-Use:
+"Welcome to this lesson."
 
-{
-  "subject": "",
-  "title": "",
-  "topics": [
-    {
-      "topic": "",
-      "subtopics": [],
-      "concepts": [],
-      "questions": []
-    }
-  ]
-}
+"Today we are going to learn..."
 
-Do not invent topics or questions.
+"In this concept..."
+
+"According to the PDF..."
+
+"The topic is..."
+
+"Let's understand..."
+
+Instead enter directly into something interesting.
+
+Examples:
+
+"Imagine this..."
+
+"You've probably seen this without noticing..."
+
+"There's a small problem hidden inside this..."
+
+"Wait. Think about this for a second..."
+
+"Suppose I give you..."
+
+"Here's something your brain does effortlessly..."
+
+"At first this looks completely normal. But..."
+
+The opening must make the learner want the next sentence.
 
 ============================================================
-16. OUTPUT
+PERSPECTIVE
+============================================================
+
+DakshAI has a point of view as a teacher.
+
+It may say:
+
+"The interesting part is..."
+
+"Here's what I would notice first..."
+
+"The catch is..."
+
+"This is where people usually get confused..."
+
+"The easiest way I see this is..."
+
+"Now the whole thing starts making sense."
+
+But this perspective must never fabricate facts.
+
+============================================================
+MENTAL ANCHOR
+============================================================
+
+The final takeaway should NOT be:
+
+"Remember the definition."
+
+Instead create a compact mental image.
+
+Examples:
+
+"Think: one word looking around the sentence for
+the information it needs."
+
+"Think: standing on a hill and taking small steps
+downward."
+
+"Think: Query asks, Key matches, Value gives."
+
+The learner should be able to remember the idea
+without replaying the whole lesson.
+
+============================================================
+OUTPUT
 ============================================================
 
 Return ONLY valid JSON.
 
-Structure:
+Use this structure:
 
 {
   "metadata": {
     "subject": "",
     "title": "",
-    "topics": [
-      {
-        "topic": "",
-        "subtopics": [],
-        "concepts": [],
-        "questions": []
-      }
-    ]
+    "topics": []
   },
-
   "scenes": [
     {
       "scene_number": 1,
-
-      "module": "Actual source module",
-
-      "title": "Natural meaningful title",
-
-      "teaching_intent":
-        "What this scene is trying to make the learner see",
-
-      "necessity":
-        "Why this concept/question becomes necessary",
-
-      "story":
-        "Short story, situation, analogy or thought experiment",
-
-      "question":
-        "Actual source question or naturally formed question",
-
-      "fact":
-        "The factual source-grounded answer",
-
+      "module": "",
+      "title": "",
+      "scene_type": "discovery",
+      "teaching_intent": "",
+      "human_entry": "",
+      "situation": "",
+      "problem": "",
+      "necessity": "",
+      "reveal": "",
+      "technical_concept": "",
+      "question": "",
+      "question_breakdown": "",
       "narration": [
-        "Natural spoken narration...",
-        "Natural spoken narration...",
-        "Natural spoken narration..."
+        "...",
+        "...",
+        "..."
       ],
-
-      "key_takeaway":
-        "One strong mental anchor"
+      "key_takeaway": ""
     }
   ]
 }
 
-============================================================
-17. IMPORTANT DISTINCTION BETWEEN FIELDS
-============================================================
+IMPORTANT:
 
-necessity:
-    Why do we need this idea?
+The JSON fields are internal structure.
 
-story:
-    Let the learner experience that problem.
+Do NOT narrate the field names.
 
-question:
-    What are we naturally forced to ask?
+Do NOT say:
 
-fact:
-    What does the source tell us?
+"Human entry."
 
-narration:
-    The actual spoken teaching journey connecting these pieces.
+"Situation."
 
-key_takeaway:
-    What should remain in the learner's head?
+"Problem."
 
-Do NOT repeat the same paragraph in every field.
+"Reveal."
 
-The fields are structured representation.
+"Question breakdown."
 
-The narration should sound natural.
+The learner should hear ONE CONTINUOUS HUMAN EXPERIENCE.
 
 ============================================================
-18. FINAL QUALITY TEST
+FINAL QUALITY TEST
 ============================================================
 
-Before producing a scene, mentally ask:
+Before producing each scene, silently ask:
 
-"If I remove the fact, does the learner still understand why
-someone would ask this question?"
+1. If I knew NOTHING about this topic, would the opening
+   make sense?
 
-If NO:
-    improve the necessity/story.
+2. Does the first part sound like a human talking,
+   rather than a textbook?
 
-Then ask:
+3. Have I created a situation before introducing
+   technical vocabulary?
 
-"Does the story accidentally give away the answer?"
+4. Have I allowed curiosity to appear naturally?
 
-If YES:
-    reduce the story to the problem.
+5. Does the technical term name something the learner
+   already experienced?
 
-Then ask:
+6. Am I making the learner fight English unnecessarily?
 
-"Does the factual section actually teach the source?"
+7. Could the learner explain the intuition before knowing
+   the technical name?
 
-If NO:
-    add the missing source-grounded information.
+8. Did I break the complexity into smaller logic?
 
-Then ask:
+9. Did I eventually restore the real technical depth?
 
-"Would this sound natural if a knowledgeable senior were
-speaking it to me?"
+10. Does this feel like something worth listening to,
+    rather than something that needs to be read?
 
-If NO:
-    rewrite it.
+If the answer to the first question is NO,
+rewrite the beginning.
 
-The final experience should feel like:
+If the answer to question 6 is YES,
+rewrite the language.
 
-"I didn't start by being told the answer.
+If the answer to question 10 is NO,
+rewrite the entire scene.
 
-I first saw the problem.
+============================================================
+CORE PRINCIPLE
+============================================================
 
-Then I became curious.
+DO NOT MAKE THE LEARNER CLIMB TO YOUR LEVEL.
 
-Then the question made sense.
+GO TO THEIR LEVEL FIRST.
 
-Then I learned the fact.
+THEN TAKE THEM UP.
 
-And now I understand why the fact exists."
+The goal is not:
 
-Return ONLY JSON.
+"I explained the concept."
+
+The goal is:
+
+"They experienced the problem,
+understood why the idea was needed,
+discovered the idea,
+and now the technical explanation feels obvious."
 """
 
 
@@ -1006,9 +1150,6 @@ Return ONLY JSON.
 # ============================================================
 
 def _get_gemini_client():
-    """
-    Initialize Gemini client.
-    """
 
     api_key = os.getenv("GEMINI_API_KEY")
 
@@ -1026,7 +1167,7 @@ def _get_gemini_client():
     except Exception as exc:
 
         logger.warning(
-            "Could not initialize Gemini: %s",
+            "Could not initialize Gemini client: %s",
             exc
         )
 
@@ -1034,7 +1175,7 @@ def _get_gemini_client():
 
 
 # ============================================================
-# JSON EXTRACTION
+# JSON UTILITIES
 # ============================================================
 
 def _extract_json(
@@ -1046,7 +1187,6 @@ def _extract_json(
 
     cleaned = text.strip()
 
-    # Remove markdown fences if Gemini ignored JSON-only instruction.
     cleaned = re.sub(
         r"^```(?:json)?\s*",
         "",
@@ -1058,11 +1198,8 @@ def _extract_json(
         r"\s*```$",
         "",
         cleaned
-    )
+    ).strip()
 
-    cleaned = cleaned.strip()
-
-    # Direct JSON.
     try:
 
         parsed = json.loads(cleaned)
@@ -1073,13 +1210,14 @@ def _extract_json(
     except json.JSONDecodeError:
         pass
 
-    # Search for JSON object.
     start = cleaned.find("{")
     end = cleaned.rfind("}")
 
     if start >= 0 and end > start:
 
-        candidate = cleaned[start:end + 1]
+        candidate = cleaned[
+            start:end + 1
+        ]
 
         try:
 
@@ -1095,22 +1233,8 @@ def _extract_json(
 
 
 # ============================================================
-# NORMALIZATION
+# RESULT NORMALIZATION
 # ============================================================
-
-def _string_list(
-    value: Any
-) -> List[str]:
-
-    if not isinstance(value, list):
-        return []
-
-    return [
-        str(item).strip()
-        for item in value
-        if str(item).strip()
-    ]
-
 
 def _empty_metadata(
     subject_name: str = "",
@@ -1135,74 +1259,55 @@ def _normalise_result(
             "scenes": []
         }
 
-    # --------------------------------------------------------
-    # Metadata
-    # --------------------------------------------------------
+    metadata = result.get(
+        "metadata"
+    )
 
-    metadata = result.get("metadata")
+    if not isinstance(
+        metadata,
+        dict
+    ):
 
-    if not isinstance(metadata, dict):
         metadata = _empty_metadata()
 
-    topics = metadata.get("topics", [])
+    metadata.setdefault(
+        "subject",
+        ""
+    )
 
-    if not isinstance(topics, list):
-        topics = []
+    metadata.setdefault(
+        "title",
+        ""
+    )
 
-    clean_topics = []
+    metadata.setdefault(
+        "topics",
+        []
+    )
 
-    for topic in topics:
+    scenes = result.get(
+        "scenes",
+        []
+    )
 
-        if not isinstance(topic, dict):
-            continue
+    if not isinstance(
+        scenes,
+        list
+    ):
 
-        clean_topics.append({
-            "topic": str(
-                topic.get("topic", "")
-            ).strip(),
+        scenes = []
 
-            "subtopics": _string_list(
-                topic.get("subtopics", [])
-            ),
-
-            "concepts": _string_list(
-                topic.get("concepts", [])
-            ),
-
-            "questions": _string_list(
-                topic.get("questions", [])
-            )
-        })
-
-    metadata = {
-        "subject": str(
-            metadata.get("subject", "")
-        ).strip(),
-
-        "title": str(
-            metadata.get("title", "")
-        ).strip(),
-
-        "topics": clean_topics
-    }
-
-    # --------------------------------------------------------
-    # Scenes
-    # --------------------------------------------------------
-
-    raw_scenes = result.get("scenes", [])
-
-    if not isinstance(raw_scenes, list):
-        raw_scenes = []
-
-    scenes = []
+    normalised_scenes = []
 
     for index, scene in enumerate(
-        raw_scenes,
+        scenes,
         start=1
     ):
 
-        if not isinstance(scene, dict):
+        if not isinstance(
+            scene,
+            dict
+        ):
             continue
 
         narration = scene.get(
@@ -1210,84 +1315,152 @@ def _normalise_result(
             []
         )
 
-        if isinstance(narration, str):
-            narration = [narration]
+        if isinstance(
+            narration,
+            str
+        ):
 
-        narration = _string_list(
-            narration
-        )
+            narration = [
+                narration
+            ]
 
-        # Convert math only in spoken content.
-        narration = [
-            convert_math_to_spoken_words(
+        if not isinstance(
+            narration,
+            list
+        ):
+
+            narration = []
+
+        clean_narration = []
+
+        for item in narration:
+
+            value = str(
                 item
-            )
-            for item in narration
-        ]
+            ).strip()
 
-        if not narration:
+            if not value:
+                continue
+
+            clean_narration.append(
+                convert_math_to_spoken_words(
+                    value
+                )
+            )
+
+        if not clean_narration:
             continue
 
-        scenes.append({
-            "scene_number": scene.get(
-                "scene_number",
-                index
-            ),
+        normalised_scenes.append({
 
-            "module": str(
+            "scene_number":
                 scene.get(
-                    "module",
-                    "Core Material"
-                )
-            ).strip(),
+                    "scene_number",
+                    index
+                ),
 
-            "title": str(
-                scene.get(
-                    "title",
-                    f"Scene {index}"
-                )
-            ).strip(),
-
-            "teaching_intent": str(
-                scene.get(
-                    "teaching_intent",
-                    ""
-                )
-            ).strip(),
-
-            "necessity": str(
-                scene.get(
-                    "necessity",
-                    ""
-                )
-            ).strip(),
-
-            "story": str(
-                scene.get(
-                    "story",
-                    ""
-                )
-            ).strip(),
-
-            "question": convert_math_to_spoken_words(
+            "module":
                 str(
                     scene.get(
-                        "question",
-                        ""
+                        "module",
+                        "Core Material"
                     )
-                ).strip()
-            ),
+                ).strip(),
 
-            "fact": convert_math_to_spoken_words(
+            "title":
                 str(
                     scene.get(
-                        "fact",
+                        "title",
+                        f"Scene {index}"
+                    )
+                ).strip(),
+
+            "scene_type":
+                str(
+                    scene.get(
+                        "scene_type",
+                        "discovery"
+                    )
+                ).strip(),
+
+            "teaching_intent":
+                str(
+                    scene.get(
+                        "teaching_intent",
                         ""
                     )
-                ).strip()
-            ),
+                ).strip(),
 
-            "narration": narration,
+            "human_entry":
+                str(
+                    scene.get(
+                        "human_entry",
+                        ""
+                    )
+                ).strip(),
+
+            "situation":
+                str(
+                    scene.get(
+                        "situation",
+                        ""
+                    )
+                ).strip(),
+
+            "problem":
+                str(
+                    scene.get(
+                        "problem",
+                        ""
+                    )
+                ).strip(),
+
+            "necessity":
+                str(
+                    scene.get(
+                        "necessity",
+                        ""
+                    )
+                ).strip(),
+
+            "reveal":
+                str(
+                    scene.get(
+                        "reveal",
+                        ""
+                    )
+                ).strip(),
+
+            "technical_concept":
+                str(
+                    scene.get(
+                        "technical_concept",
+                        ""
+                    )
+                ).strip(),
+
+            "question":
+                convert_math_to_spoken_words(
+                    str(
+                        scene.get(
+                            "question",
+                            ""
+                        )
+                    ).strip()
+                ),
+
+            "question_breakdown":
+                convert_math_to_spoken_words(
+                    str(
+                        scene.get(
+                            "question_breakdown",
+                            ""
+                        )
+                    ).strip()
+                ),
+
+            "narration":
+                clean_narration,
 
             "key_takeaway":
                 convert_math_to_spoken_words(
@@ -1302,126 +1475,12 @@ def _normalise_result(
 
     return {
         "metadata": metadata,
-        "scenes": scenes
+        "scenes": normalised_scenes
     }
 
 
 # ============================================================
-# SOURCE CLEANING
-# ============================================================
-
-def _clean_source_text(
-    text_content: str
-) -> str:
-
-    if not text_content:
-        return ""
-
-    text = text_content.replace(
-        "\x00",
-        " "
-    )
-
-    # Preserve content but remove PDF page markers.
-    text = re.sub(
-        r"--- Page \d+ ---\s*",
-        "",
-        text
-    )
-
-    # Normalize spaces inside lines.
-    text = re.sub(
-        r"[ \t]+",
-        " ",
-        text
-    )
-
-    # Normalize excessive blank lines.
-    text = re.sub(
-        r"\n{3,}",
-        "\n\n",
-        text
-    )
-
-    return text.strip()
-
-
-# ============================================================
-# SOURCE UNIT SPLITTING
-# ============================================================
-
-def _split_into_source_units(
-    text_content: str
-) -> List[str]:
-
-    text = _clean_source_text(
-        text_content
-    )
-
-    if not text:
-        return []
-
-    paragraphs = re.split(
-        r"\n\s*\n",
-        text
-    )
-
-    units = []
-
-    for paragraph in paragraphs:
-
-        paragraph = paragraph.strip()
-
-        if not paragraph:
-            continue
-
-        # Keep reasonably sized chunks.
-        if len(paragraph) <= 5000:
-
-            units.append(
-                paragraph
-            )
-
-            continue
-
-        # Large paragraph:
-        # split by sentences.
-        sentences = re.split(
-            r"(?<=[.!?])\s+",
-            paragraph
-        )
-
-        current = []
-
-        for sentence in sentences:
-
-            current.append(
-                sentence
-            )
-
-            current_text = " ".join(
-                current
-            )
-
-            if len(current_text) >= 2500:
-
-                units.append(
-                    current_text.strip()
-                )
-
-                current = []
-
-        if current:
-
-            units.append(
-                " ".join(current).strip()
-            )
-
-    return units
-
-
-# ============================================================
-# GEMINI PROMPT
+# SOURCE PROMPT
 # ============================================================
 
 def _build_source_prompt(
@@ -1441,9 +1500,11 @@ SUBJECT:
 SOURCE MATERIAL
 ============================================================
 
-The following is educational material extracted from the PDF.
+The following material is the factual source of truth.
 
-Treat it as the factual source of truth.
+Do NOT blindly reproduce it.
+
+Transform it into a human-first DakshAI learning journey.
 
 ---------------- SOURCE START ----------------
 
@@ -1456,67 +1517,164 @@ Treat it as the factual source of truth.
 YOUR TASK
 ============================================================
 
-Turn this material into a DakshAI Vocal Learning journey.
+Turn this source into an audio-first learning experience.
 
-Do not merely summarize it.
+The learner may know NOTHING about the topic.
 
-For each meaningful learning unit, discover:
+Therefore, do NOT start from the terminology or the structure
+of the PDF.
 
-1. What is the underlying necessity?
-2. What problem or situation makes the idea interesting?
-3. What small story or thought experiment lets the learner
-   experience that problem?
-4. What question naturally emerges from that situation?
-5. What factual answer does the source provide?
-6. Which technical details need to be explained?
-7. What should remain as the learner's mental anchor?
+Start from the learner's world.
 
-Your teaching perspective should be visible.
+For every major concept:
 
-For example:
+1. Find the simplest human situation that exposes the idea.
+2. Let something happen in that situation.
+3. Create a genuine "wait, why?" moment.
+4. Expose the underlying problem.
+5. Let the learner naturally consider what they would try.
+6. Show the limitation.
+7. Create the need for a better idea.
+8. Reveal the technical concept.
+9. Break it into small pieces.
+10. Introduce technical vocabulary only when necessary.
+11. Return to the actual source material.
+12. Cover the required technical depth.
+13. End with a memorable mental anchor.
 
-"The interesting part here is..."
+IMPORTANT:
 
-"The catch is..."
+The first part of the scene must NOT sound like a textbook.
 
-"Think about what happens if..."
+Do not begin with:
 
-"This question actually comes from a very practical problem."
+"Today we will learn..."
 
-"Ab picture interesting ho jaati hai..."
+"In this concept..."
 
-But never invent factual information.
+"A Transformer is..."
 
-Use imagination only for teaching situations, analogies,
-and thought experiments.
+"According to the source..."
+
+"The key concept is..."
+
+Do not begin with difficult English terminology.
+
+The learner should understand the situation even if they
+have never heard the technical term.
 
 ============================================================
-IMPORTANT
+LANGUAGE
 ============================================================
 
-Do NOT start every scene with:
+Use natural Indian conversational English/Hinglish.
 
-"Question: ..."
+Do not make every sentence Hindi.
 
-Do NOT use a fixed "Question Breakdown" section.
+Do not make every sentence formal English.
 
-Do NOT repeat the answer in the context.
+Use simple language first.
 
-Do NOT turn every concept into the same template.
+Introduce technical English gradually.
 
-Do NOT write like a textbook.
+Example:
 
-Do NOT write like a motivational speaker.
+"Imagine..."
 
-Do NOT use romantic language.
+"Ab problem yahan aati hai..."
 
-Hindi should be light and natural.
+"Think about what your brain just did."
 
-Technical terminology stays in English.
+"Now imagine a computer has to do the same thing."
 
-Preserve formulas and technical details.
+"That's where the idea of attention comes in."
+
+Then technical explanation.
+
+Do NOT translate technical terms unnaturally.
+
+============================================================
+SOURCE FIDELITY
+============================================================
+
+Preserve all important source-grounded:
+
+- concepts
+- definitions
+- formulas
+- mechanisms
+- distinctions
+- examples
+- technical terminology
+- relationships
+- important qualifications
+
+The story is the doorway.
+
+The source remains the knowledge.
+
+============================================================
+OUTPUT
+============================================================
 
 Return ONLY valid JSON.
+
+Use:
+
+{{
+  "metadata": {{
+    "subject": "",
+    "title": "",
+    "topics": []
+  }},
+  "scenes": [
+    {{
+      "scene_number": 1,
+      "module": "",
+      "title": "",
+      "scene_type": "discovery",
+      "teaching_intent": "",
+      "human_entry": "",
+      "situation": "",
+      "problem": "",
+      "necessity": "",
+      "reveal": "",
+      "technical_concept": "",
+      "question": "",
+      "question_breakdown": "",
+      "narration": [
+        "...",
+        "...",
+        "..."
+      ],
+      "key_takeaway": ""
+    }}
+  ]
+}}
+
+Remember:
+
+The JSON structure is for DakshAI internally.
+
+The narration must feel like one continuous conversation.
+
+NEVER read the structure aloud.
+
+NEVER say:
+
+"Human entry."
+
+"Situation."
+
+"Problem."
+
+"Necessity."
+
+"Reveal."
+
+"Question breakdown."
+
+Those are internal fields, not narration.
 """
 
 
@@ -1524,7 +1682,7 @@ Return ONLY valid JSON.
 # GEMINI GENERATION
 # ============================================================
 
-def _generate_with_gemini_single(
+def _generate_with_gemini(
     text_content: str,
     subject_name: str
 ) -> Optional[Dict[str, Any]]:
@@ -1535,25 +1693,30 @@ def _generate_with_gemini_single(
         return None
 
     prompt = _build_source_prompt(
-        text_content,
-        subject_name
+        text_content=text_content,
+        subject_name=subject_name
     )
 
     model_name = os.getenv(
         "DAKSHAI_GEMINI_MODEL",
-        "gemini-2.5-flash"
+        "gemini-1.5-flash"
     )
 
     try:
 
         response = client.models.generate_content(
+
             model=model_name,
+
             contents=prompt,
+
             config={
+
                 "system_instruction":
                     VOCAL_LEARNING_SYSTEM_PROMPT,
 
-                "temperature": 0.65,
+                "temperature":
+                    0.65,
 
                 "response_mime_type":
                     "application/json"
@@ -1567,11 +1730,6 @@ def _generate_with_gemini_single(
         )
 
         if not response_text:
-
-            logger.warning(
-                "Gemini returned empty response."
-            )
-
             return None
 
         result = _extract_json(
@@ -1579,11 +1737,6 @@ def _generate_with_gemini_single(
         )
 
         if result is None:
-
-            logger.warning(
-                "Gemini returned invalid JSON."
-            )
-
             return None
 
         return _normalise_result(
@@ -1593,72 +1746,11 @@ def _generate_with_gemini_single(
     except Exception as exc:
 
         logger.exception(
-            "Gemini generation failed: %s",
+            "Gemini vocal learning generation failed: %s",
             exc
         )
 
         return None
-
-
-def _generate_with_gemini(
-    text_content: str,
-    subject_name: str
-) -> Optional[Dict[str, Any]]:
-
-    if not text_content:
-        return None
-
-    # For large documents, chunk text into ~12,000 char blocks
-    # so Gemini's JSON response stays clean and complete without hitting output limits.
-    max_chunk_size = 12000
-
-    if len(text_content) <= max_chunk_size:
-        return _generate_with_gemini_single(text_content, subject_name)
-
-    paragraphs = text_content.split("\n\n")
-    chunks = []
-    current_chunk = []
-    current_len = 0
-
-    for p in paragraphs:
-        p_len = len(p)
-        if current_len + p_len > max_chunk_size and current_chunk:
-            chunks.append("\n\n".join(current_chunk))
-            current_chunk = [p]
-            current_len = p_len
-        else:
-            current_chunk.append(p)
-            current_len += p_len + 2
-
-    if current_chunk:
-        chunks.append("\n\n".join(current_chunk))
-
-    logger.info("Splitting large PDF text into %d chunk(s) for Gemini generation", len(chunks))
-
-    all_scenes = []
-    combined_metadata = _empty_metadata(subject_name)
-
-    for idx, chunk in enumerate(chunks, start=1):
-        logger.info("Processing chunk %d/%d with Gemini...", idx, len(chunks))
-        res = _generate_with_gemini_single(chunk, subject_name)
-        if res and res.get("scenes"):
-            for scene in res["scenes"]:
-                all_scenes.append(scene)
-            if res.get("metadata") and res["metadata"].get("topics"):
-                combined_metadata["topics"].extend(res["metadata"]["topics"])
-
-    if not all_scenes:
-        return None
-
-    # Renumber scenes sequentially
-    for idx, scene in enumerate(all_scenes, start=1):
-        scene["scene_number"] = idx
-
-    return {
-        "metadata": combined_metadata,
-        "scenes": all_scenes
-    }
-
 
 
 # ============================================================
@@ -1669,19 +1761,22 @@ def build_fallback_vocal_content(
     text_content: str,
     subject_name: str = "General"
 ) -> Dict[str, Any]:
+
     """
-    Conservative fallback.
+    Fallback should still preserve the new philosophy.
 
-    We deliberately do NOT fabricate:
-        necessity
-        story
-        explanation
-        questions
+    It must NEVER manufacture:
 
-    because without an LLM we cannot reliably understand the
-    educational meaning of arbitrary source material.
+        Question
+        → Breakdown
+        → Answer
 
-    The fallback preserves the source.
+    because that would reintroduce the exact machine-like
+    behaviour we are trying to remove.
+
+    Since a deterministic fallback cannot invent a rich
+    story safely, it produces a gentle source-grounded
+    entry instead of pretending to have generated a story.
     """
 
     source = _clean_source_text(
@@ -1698,22 +1793,38 @@ def build_fallback_vocal_content(
             "scenes": []
         }
 
-    units = _split_into_source_units(
+    paragraphs = re.split(
+        r"\n\s*\n",
         source
     )
 
     scenes = []
 
-    for index, unit in enumerate(
-        units,
+    for index, paragraph in enumerate(
+        paragraphs,
         start=1
     ):
 
-        spoken_unit = (
-            convert_math_to_spoken_words(
-                unit
-            )
+        paragraph = paragraph.strip()
+
+        if not paragraph:
+            continue
+
+        # Keep fallback reasonably sized.
+        if len(paragraph) > 3500:
+            paragraph = paragraph[:3500]
+
+        spoken = convert_math_to_spoken_words(
+            paragraph
         )
+
+        first_line = (
+            paragraph
+            .split("\n")[0]
+            .strip()
+        )
+
+        first_line = first_line[:80]
 
         scenes.append({
 
@@ -1721,44 +1832,74 @@ def build_fallback_vocal_content(
                 index,
 
             "module":
-                f"{subject_name} Source",
+                f"{subject_name} Section {index}",
 
             "title":
-                f"Source Section {index}",
+                first_line or
+                f"Scene {index}",
+
+            "scene_type":
+                "source_explanation",
 
             "teaching_intent":
+                "Introduce the source material without "
+                "pretending to have created a story.",
+
+            "human_entry":
+                "Let's first see what this idea is actually "
+                "talking about.",
+
+            "situation":
+                "",
+
+            "problem":
                 "",
 
             "necessity":
                 "",
 
-            "story":
+            "reveal":
                 "",
+
+            "technical_concept":
+                first_line,
 
             "question":
                 "",
 
-            "fact":
-                spoken_unit,
+            "question_breakdown":
+                "",
 
             "narration": [
-                spoken_unit
+
+                (
+                    "Let's first get a clear picture of "
+                    "what we're looking at."
+                ),
+
+                spoken
+
             ],
 
             "key_takeaway":
-                ""
+                (
+                    "Keep this idea connected to the "
+                    "actual situation we just explored."
+                )
         })
 
     return {
 
         "metadata": {
+
             "subject":
                 subject_name,
 
             "title":
-                f"Complete {subject_name} Coverage",
+                f"{subject_name} Vocal Learning",
 
-            "topics": []
+            "topics":
+                []
         },
 
         "scenes":
@@ -1767,42 +1908,27 @@ def build_fallback_vocal_content(
 
 
 # ============================================================
-# MAIN PUBLIC FUNCTION
+# MAIN PUBLIC FUNCTIONS
 # ============================================================
 
 def generate_movie_cheatsheet_from_text(
     input_content: str,
     subject_name: str = "General"
 ) -> Dict[str, Any]:
-    """
-    Main DakshAI entry point.
-
-    input_content can be:
-
-        1. raw extracted PDF text
-        2. a PDF filepath
-
-    Existing callers can continue using this function.
-    """
 
     text_content = input_content
 
-    # --------------------------------------------------------
-    # Detect PDF path
-    # --------------------------------------------------------
-
+    # If input is a PDF path
     if (
         isinstance(input_content, str)
         and (
-            input_content.lower().endswith(".pdf")
-            or os.path.isfile(input_content)
+            input_content.endswith(".pdf")
+            or os.path.exists(input_content)
         )
     ):
 
-        extracted = (
-            extract_text_from_pdf_file(
-                input_content
-            )
+        extracted = extract_text_from_pdf_file(
+            input_content
         )
 
         if extracted:
@@ -1811,29 +1937,18 @@ def generate_movie_cheatsheet_from_text(
 
             if subject_name == "General":
 
-                filename = os.path.basename(
-                    input_content
+                subject_name = (
+                    os.path.basename(
+                        input_content
+                    )
+                    .replace(".pdf", "")
+                    .replace("_", " ")
                 )
-
-                subject_name = os.path.splitext(
-                    filename
-                )[0].replace(
-                    "_",
-                    " "
-                )
-
-    # --------------------------------------------------------
-    # Validate
-    # --------------------------------------------------------
 
     if (
-        not isinstance(text_content, str)
+        not text_content
         or not text_content.strip()
     ):
-
-        logger.warning(
-            "No educational content supplied."
-        )
 
         return {
             "metadata":
@@ -1842,10 +1957,6 @@ def generate_movie_cheatsheet_from_text(
                 ),
             "scenes": []
         }
-
-    # --------------------------------------------------------
-    # Gemini
-    # --------------------------------------------------------
 
     try:
 
@@ -1856,18 +1967,11 @@ def generate_movie_cheatsheet_from_text(
 
         if result and result.get("scenes"):
 
-            logger.info(
-                "Generated %d vocal learning scenes.",
-                len(
-                    result["scenes"]
-                )
-            )
-
             return result
 
-        logger.warning(
-            "Gemini did not return usable scenes. "
-            "Using source-preserving fallback."
+        return build_fallback_vocal_content(
+            text_content=text_content,
+            subject_name=subject_name
         )
 
     except Exception as exc:
@@ -1877,19 +1981,11 @@ def generate_movie_cheatsheet_from_text(
             exc
         )
 
-    # --------------------------------------------------------
-    # Fallback
-    # --------------------------------------------------------
+        return build_fallback_vocal_content(
+            text_content=text_content,
+            subject_name=subject_name
+        )
 
-    return build_fallback_vocal_content(
-        text_content=text_content,
-        subject_name=subject_name
-    )
-
-
-# ============================================================
-# CLEAN PUBLIC ALIAS
-# ============================================================
 
 def generate_vocal_learning_content(
     input_content: str,

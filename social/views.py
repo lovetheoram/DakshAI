@@ -5,6 +5,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError, models
 from django.db.models import Q
+from django.contrib.auth.models import User
+from authapp.models import UserProfile
 
 from .models import Post, Comment, Like, Follow, Notification, Message, Conversation
 from .serializers import (
@@ -370,12 +372,15 @@ class InboxAPI(APIView):
 # ==========================================================
 # USER PROFILE & SUGGESTIONS
 # ==========================================================
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 class UserProfileAPI(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, user_id):
         user_obj = get_object_or_404(User, id=user_id)
-        data = UserProfileSerializer(user_obj.profile, context={"request": request}).data
+        profile_obj, _ = UserProfile.objects.get_or_create(user=user_obj)
+        data = UserProfileSerializer(profile_obj, context={"request": request}).data
         return Response(data, status=status.HTTP_200_OK)
 
 

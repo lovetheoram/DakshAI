@@ -31,22 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             user.profile.pcs_section = pcs_section
             user.profile.save()
 
-            # Auto-create default UserGoal so new users are NOT prompted for exam twice
-            try:
-                from progress.models import UserGoal
-                import datetime
-                target_date = datetime.date.today() + datetime.timedelta(days=180)
-                UserGoal.objects.get_or_create(
-                    user=user,
-                    exam=exam,
-                    defaults={
-                        "goal_name": f"Crack {exam.name}",
-                        "target_date": target_date,
-                        "available_hours_per_day": 2.0,
-                    }
-                )
-            except Exception as e:
-                print("Failed auto-creating goal on register:", e)
+            # Goal is set by the Welcomer upon first login with user's real target date and promise.
 
         return user
 

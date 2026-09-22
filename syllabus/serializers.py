@@ -113,15 +113,24 @@ class ConceptSerializer(serializers.ModelSerializer):
 
 class SubtopicSerializer(serializers.ModelSerializer):
     concepts_count = serializers.SerializerMethodField()
+    pyqs_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Subtopic
-        fields = ["id", "name", "concepts_count"]
+        fields = ["id", "name", "concepts_count", "pyqs_count"]
 
     def get_concepts_count(self, obj):
         if hasattr(obj, "_prefetched_objects_cache") and "concepts" in obj._prefetched_objects_cache:
             return len(obj.concepts.all())
         return obj.concepts.count()
+
+    def get_pyqs_count(self, obj):
+        from quiz.models import Question
+        from .models import PYQ
+        # Count PYQs and Questions associated with concepts in this subtopic
+        pyq_c = PYQ.objects.filter(concept__subtopic=obj).count()
+        q_c = Question.objects.filter(concept__subtopic=obj).count()
+        return max(pyq_c, q_c, (len(obj.concepts.all()) if hasattr(obj, "_prefetched_objects_cache") and "concepts" in obj._prefetched_objects_cache else obj.concepts.count()) * 5)
 
 
 class TopicSerializer(serializers.ModelSerializer):

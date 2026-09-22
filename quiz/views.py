@@ -25,10 +25,49 @@ class StartQuizView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        subtopic_id = request.data.get("subtopic_id")
         concept_id = request.data.get("concept_id")
         num = int(request.data.get("num_questions", 10))
         quiz_type = request.data.get("quiz_type", "PYQS").upper()  # PYQS, FULL_EXAM, or LLM
 
+        # 1. Subtopic-level PYQs quiz
+        if subtopic_id:
+            from syllabus.models import Subtopic
+            try:
+                subtopic = Subtopic.objects.get(id=subtopic_id)
+            except Subtopic.DoesNotExist:
+                return Response({"detail": "Subtopic not found"}, status=404)
+
+            session, questions = QuizService.start_subtopic_pyqs_quiz(
+                user=request.user,
+                subtopic=subtopic,
+                num=num
+            )
+            return Response({
+                "mode": "PYQS",
+                "session_id": session.id,
+                "subtopic_id": subtopic.id,
+                "subtopic_name": subtopic.name,
+                "total_questions": session.total_questions,
+                "questions": QuestionSerializer(questions, many=True).data
+            })
+
+        # 2. Full Exam Simulation (multi-concept / multi-subject)
+        if quiz_type == "FULL_EXAM":
+            concept = Concept.objects.filter(id=concept_id).first() if concept_id else None
+            session, questions = QuizService.start_full_exam_quiz(
+                user=request.user,
+                concept=concept,
+                num=num
+            )
+            return Response({
+                "mode": "FULL_EXAM",
+                "session_id": session.id,
+                "total_questions": session.total_questions,
+                "questions": QuestionSerializer(questions, many=True).data
+            })
+
+        # 3. Concept-level quiz
         try:
             concept = Concept.objects.get(id=concept_id)
         except Concept.DoesNotExist:
@@ -42,19 +81,6 @@ class StartQuizView(APIView):
             )
             return Response({
                 "mode": "PYQS",
-                "session_id": session.id,
-                "total_questions": session.total_questions,
-                "questions": QuestionSerializer(questions, many=True).data
-            })
-
-        if quiz_type == "FULL_EXAM":
-            session, questions = QuizService.start_full_exam_quiz(
-                user=request.user,
-                concept=concept,
-                num=num
-            )
-            return Response({
-                "mode": "FULL_EXAM",
                 "session_id": session.id,
                 "total_questions": session.total_questions,
                 "questions": QuestionSerializer(questions, many=True).data

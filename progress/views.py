@@ -397,6 +397,71 @@ class BrainEngineAPI(APIView):
             questions_solved__gt=0
         ).count()
 
+        # ── Subject breakdown & Bottleneck diagnostic ──
+        subject_breakdown = []
+        bottleneck = None
+        if goal and goal.exam:
+            subjects = goal.exam.subjects.prefetch_related("topics__subtopics__concepts").all()
+            lowest_subj = None
+            lowest_subj_pct = 101
+
+            for s in subjects:
+                s_concepts = list(Concept.objects.filter(subtopic__topic__subject=s))
+                total_s = len(s_concepts)
+                if total_s > 0:
+                    c_ids = [c.id for c in s_concepts]
+                    cps = list(ConceptProgress.objects.filter(user=user, concept_id__in=c_ids))
+                    mastered = sum(1 for cp in cps if cp.readiness >= 0.5)
+                    pct = round((mastered / total_s) * 100)
+                else:
+                    pct = 0
+
+                status = "READY" if pct >= 70 else ("DEVELOPING" if pct >= 40 else "UNSTABLE")
+                subject_breakdown.append({
+                    "id": s.id,
+                    "name": s.name,
+                    "readiness_pct": pct,
+                    "status": status,
+                    "total_concepts": total_s
+                })
+
+                if pct < lowest_subj_pct:
+                    lowest_subj_pct = pct
+                    lowest_subj = s
+
+            if lowest_subj:
+                subtopics = Subtopic.objects.filter(topic__subject=lowest_subj).prefetch_related("concepts")
+                lowest_st = None
+                lowest_st_low_count = -1
+                candidate_concept = None
+
+                for st in subtopics:
+                    st_concepts = list(st.concepts.all())
+                    if not st_concepts:
+                        continue
+                    st_c_ids = [c.id for c in st_concepts]
+                    st_cps = {cp.concept_id: cp for cp in ConceptProgress.objects.filter(user=user, concept_id__in=st_c_ids)}
+                    low_count = sum(1 for c in st_concepts if st_cps.get(c.id) is None or st_cps[c.id].readiness < 0.4)
+                    if low_count > lowest_st_low_count:
+                        lowest_st_low_count = low_count
+                        lowest_st = st
+                        for c in st_concepts:
+                            if st_cps.get(c.id) is None or st_cps[c.id].readiness < 0.4:
+                                candidate_concept = c
+                                break
+
+                if lowest_st:
+                    count_display = lowest_st_low_count if lowest_st_low_count > 0 else len(lowest_st.concepts.all())
+                    bottleneck = {
+                        "subject_name": lowest_subj.name,
+                        "subtopic_id": lowest_st.id,
+                        "subtopic_name": lowest_st.name,
+                        "low_readiness_count": count_display,
+                        "reason": f"{count_display} concepts have low readiness and recent practice hasn't moved them." if count_display > 0 else f"Initial practice needed in {lowest_st.name}.",
+                        "action_concept_id": candidate_concept.id if candidate_concept else (lowest_st.concepts.first().id if lowest_st.concepts.exists() else None),
+                        "action_concept_name": candidate_concept.name if candidate_concept else (lowest_st.concepts.first().name if lowest_st.concepts.exists() else lowest_st.name),
+                    }
+
         # ── Build response ──
         response_data = {
             "goal": UserGoalSerializer(goal).data,
@@ -416,6 +481,8 @@ class BrainEngineAPI(APIView):
             "daksh_score": daksh_score,
             "trajectory": trajectory,
             "prediction": trajectory,
+            "subject_breakdown": subject_breakdown,
+            "bottleneck": bottleneck,
             "decay_alerts": decay_alerts,
             "last_active_concept": last_active_concept,
             "recent_concepts": recent_concepts,

@@ -129,23 +129,34 @@ class QuizService:
 
     @staticmethod
     @transaction.atomic
-    def start_full_exam_quiz(user, concept, num):
+    def start_subtopic_pyqs_quiz(user, subtopic, num):
+        concepts = list(subtopic.concepts.all())
+        if not concepts:
+            from syllabus.models import Concept
+            c, _ = Concept.objects.get_or_create(
+                subtopic=subtopic,
+                defaults={"name": f"{subtopic.name} Core Concept", "description": subtopic.name}
+            )
+            concepts = [c]
+
+        # 1. Gather existing questions across all concepts in this subtopic
         questions = list(
             Question.objects
-            .filter(concept=concept)
+            .filter(concept__in=concepts)
             .prefetch_related("sub_questions")[:num]
         )
 
+        # 2. If fewer than num, pull from PYQ model
         if len(questions) < num:
             from syllabus.models import PYQ
-            pyqs = PYQ.objects.filter(concept=concept)[:num]
-            for p_idx, pyq in enumerate(pyqs):
+            pyqs = list(PYQ.objects.filter(concept__in=concepts)[:num])
+            for pyq in pyqs:
                 opts = pyq.options if isinstance(pyq.options, list) else []
-                q_id = f"PYQ-C{concept.id}-{pyq.id}"
+                q_id = f"PYQ-C{pyq.concept_id}-{pyq.id}"
                 q_obj, _ = Question.objects.get_or_create(
                     qid=q_id,
                     defaults={
-                        "concept": concept,
+                        "concept": pyq.concept,
                         "question_title": f"{pyq.exam_source or 'Exam'} PYQ",
                         "question": pyq.question_text,
                         "option_a": opts[0] if len(opts) > 0 else "Option A",
@@ -161,36 +172,112 @@ class QuizService:
                 if q_obj not in questions:
                     questions.append(q_obj)
 
+        # 3. Fallback if still empty
         if not questions:
-            try:
-                from admin.tasks import generate_questions_task
-                generate_questions_task(concept.id)
-                questions = list(
-                    Question.objects
-                    .filter(concept=concept)
-                    .prefetch_related("sub_questions")[:num]
+            for c in concepts[:3]:
+                fallback_q, _ = Question.objects.get_or_create(
+                    qid=f"FALLBACK-ST{subtopic.id}-C{c.id}",
+                    defaults={
+                        "concept": c,
+                        "question_title": f"{subtopic.name} Practice",
+                        "question": f"Which of the following principles is fundamentally associated with {c.name} in {subtopic.name}?",
+                        "option_a": f"It establishes the foundational rule for {c.name}.",
+                        "option_b": f"It violates the core principle of {subtopic.name}.",
+                        "option_c": "It is completely independent of the syllabus scope.",
+                        "option_d": "None of the above.",
+                        "correct_option": "A",
+                        "explanation": f"Option A accurately highlights the key concept of {c.name}.",
+                        "mode": "PYQS",
+                        "source": "FALLBACK"
+                    }
                 )
-            except Exception as e:
-                print("Auto question generation fallback error:", e)
+                if fallback_q not in questions:
+                    questions.append(fallback_q)
+
+        session = QuizSession.objects.create(
+            user=user,
+            total_questions=len(questions[:num]),
+            mode="PYQS"
+        )
+        session.questions.set(questions[:num])
+        return session, questions[:num]
+
+    @staticmethod
+    @transaction.atomic
+    def start_full_exam_quiz(user, concept=None, num=20):
+        if concept:
+            concepts = [concept]
+        else:
+            goal = ProgressService.get_active_goal(user)
+            if goal and goal.exam:
+                concept_ids = ProgressService.get_exam_concept_ids(goal.exam.id)
+                concepts = list(Concept.objects.filter(id__in=concept_ids)[:50])
+            else:
+                concepts = list(Concept.objects.all()[:50])
+
+        if not concepts:
+            from syllabus.models import Subtopic, Subject, Exam
+            exam, _ = Exam.objects.get_or_create(name="Standard Test Series", defaults={"exam_type": "jee"})
+            subject, _ = Subject.objects.get_or_create(exam=exam, name="General Science")
+            from syllabus.models import Topic
+            topic, _ = Topic.objects.get_or_create(subject=subject, name="Fundamentals")
+            subtopic, _ = Subtopic.objects.get_or_create(topic=topic, name="Foundations")
+            c, _ = Concept.objects.get_or_create(subtopic=subtopic, name="Universal Science")
+            concepts = [c]
+
+        # Gather questions across exam concepts
+        questions = list(
+            Question.objects
+            .filter(concept__in=concepts)
+            .prefetch_related("sub_questions")
+            .order_by("?")[:num]
+        )
+
+        if len(questions) < num:
+            from syllabus.models import PYQ
+            pyqs = list(PYQ.objects.filter(concept__in=concepts).order_by("?")[:num])
+            for pyq in pyqs:
+                opts = pyq.options if isinstance(pyq.options, list) else []
+                q_id = f"PYQ-C{pyq.concept_id}-{pyq.id}"
+                q_obj, _ = Question.objects.get_or_create(
+                    qid=q_id,
+                    defaults={
+                        "concept": pyq.concept,
+                        "question_title": f"{pyq.exam_source or 'Exam'} PYQ",
+                        "question": pyq.question_text,
+                        "option_a": opts[0] if len(opts) > 0 else "Option A",
+                        "option_b": opts[1] if len(opts) > 1 else "Option B",
+                        "option_c": opts[2] if len(opts) > 2 else "Option C",
+                        "option_d": opts[3] if len(opts) > 3 else "Option D",
+                        "correct_option": pyq.correct_answer or "A",
+                        "explanation": pyq.explanation or "Verified past year solution.",
+                        "mode": "FULL_EXAM",
+                        "source": "PYQS",
+                    }
+                )
+                if q_obj not in questions:
+                    questions.append(q_obj)
 
         if not questions:
-            fallback_q, _ = Question.objects.get_or_create(
-                qid=f"FALLBACK-C{concept.id}-1",
-                defaults={
-                    "concept": concept,
-                    "question_title": f"{concept.name} Exam Practice",
-                    "question": f"Which of the following statements correctly applies to {concept.name}?",
-                    "option_a": f"It represents the fundamental rule governing {concept.name}.",
-                    "option_b": f"It contradicts the principle of {concept.name}.",
-                    "option_c": "It is completely unrelated to physical law.",
-                    "option_d": "None of the above.",
-                    "correct_option": "A",
-                    "explanation": f"Option A correctly states the core concept of {concept.name}.",
-                    "mode": "CONCEPT",
-                    "source": "FALLBACK"
-                }
-            )
-            questions.append(fallback_q)
+            for idx, c in enumerate(concepts[:num]):
+                fallback_q, _ = Question.objects.get_or_create(
+                    qid=f"FALLBACK-EXAM-{c.id}-{idx}",
+                    defaults={
+                        "concept": c,
+                        "question_title": f"{c.name} Exam Practice",
+                        "question": f"Which of the following statements correctly applies to {c.name}?",
+                        "option_a": f"It represents the fundamental rule governing {c.name}.",
+                        "option_b": f"It contradicts the principle of {c.name}.",
+                        "option_c": "It is completely unrelated to physical law.",
+                        "option_d": "None of the above.",
+                        "correct_option": "A",
+                        "explanation": f"Option A correctly states the core concept of {c.name}.",
+                        "mode": "FULL_EXAM",
+                        "source": "FALLBACK"
+                    }
+                )
+                if fallback_q not in questions:
+                    questions.append(fallback_q)
 
         session = QuizSession.objects.create(
             user=user,

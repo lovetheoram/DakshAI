@@ -1,13 +1,14 @@
 from .models import Notification
 
 
-def create_notification(user, triggered_by, type, message):
+def create_notification(user, triggered_by, type, message, post=None):
     if user == triggered_by:
         return  # ignore self-notifications
 
     Notification.objects.create(
         user=user,
         triggered_by=triggered_by,
+        post=post,
         type=type,
-        message=message
+        message=message,
     )

@@ -8,6 +8,16 @@ from .views import (
     FollowAPI,
     FollowersListAPI,
     FollowingListAPI,
+    BlockUserAPI,
+    ReportAPI,
+    CommunityAPI,
+    CommunityDetailAPI,
+    CommunityMembershipAPI,
+    ActivityAPI,
+    ActivityDetailAPI,
+    ActivityParticipateAPI,
+    DiscoverAPI,
+    SearchAPI,
     NotificationAPI,
     NotificationReadAPI,
     MessageAPI,
@@ -30,13 +40,19 @@ urlpatterns = [
     path("insights/", ProgressInsightsAPI.as_view(), name="progress-insights"),
 
     # ======================================================
-    # POSTS
+    # DISCOVERY & SEARCH
+    # ======================================================
+    path("discover/", DiscoverAPI.as_view(), name="social-discover"),
+    path("search/", SearchAPI.as_view(), name="social-search"),
+
+    # ======================================================
+    # POSTS (CRUD)
     # ======================================================
     path("posts/", PostAPI.as_view(), name="post-list-create"),
     path("posts/<int:post_id>/", SinglePostAPI.as_view(), name="post-detail"),
 
     # ======================================================
-    # COMMENTS (nested under posts)
+    # COMMENTS (nested under posts, supports replies & deletion)
     # ======================================================
     path("posts/<int:post_id>/comments/", CommentAPI.as_view(), name="comment-create"),
     path("posts/<int:post_id>/comments/list/", CommentListAPI.as_view(), name="comment-list"),
@@ -49,14 +65,32 @@ urlpatterns = [
     path("posts/<int:post_id>/like/", LikeAPI.as_view(), name="post-like"),
 
     # ======================================================
-    # FOLLOW
-    # POST   → follow
-    # DELETE → unfollow
+    # COMMUNITIES (Circles / Guilds)
+    # ======================================================
+    path("communities/", CommunityAPI.as_view(), name="community-list-create"),
+    path("communities/<str:slug_or_id>/", CommunityDetailAPI.as_view(), name="community-detail"),
+    path("communities/<int:community_id>/membership/", CommunityMembershipAPI.as_view(), name="community-membership"),
+
+    # ======================================================
+    # ACTIVITIES & CHALLENGES
+    # ======================================================
+    path("activities/", ActivityAPI.as_view(), name="activity-list-create"),
+    path("activities/<str:slug_or_id>/", ActivityDetailAPI.as_view(), name="activity-detail"),
+    path("activities/<int:activity_id>/participate/", ActivityParticipateAPI.as_view(), name="activity-participate"),
+
+    # ======================================================
+    # FOLLOW, BLOCK & RELATIONSHIPS
     # ======================================================
     path("users/<int:user_id>/follow/", FollowAPI.as_view(), name="user-follow"),
-
     path("users/<int:user_id>/followers/", FollowersListAPI.as_view(), name="followers-list"),
     path("users/<int:user_id>/following/", FollowingListAPI.as_view(), name="following-list"),
+    path("users/<int:user_id>/block/", BlockUserAPI.as_view(), name="user-block"),
+    path("users/blocked/", BlockUserAPI.as_view(), name="user-blocked-list"),
+
+    # ======================================================
+    # SAFETY & REPORTING
+    # ======================================================
+    path("reports/", ReportAPI.as_view(), name="social-reports"),
 
     # ======================================================
     # NOTIFICATIONS
@@ -72,7 +106,7 @@ urlpatterns = [
     path("messages/<int:user_id>/send/", MessageAPI.as_view(), name="message-send"),
 
     # ======================================================
-    # USER
+    # USER PROFILES
     # ======================================================
     path("users/<int:user_id>/profile/", UserProfileAPI.as_view(), name="user-profile"),
     path("users/suggested/", SuggestedUsersAPI.as_view(), name="suggested-users"),

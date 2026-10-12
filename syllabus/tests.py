@@ -31,7 +31,7 @@ class SyllabusCachingTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         
         # Verify it attempted to fetch from cache and then store in cache
-        mock_get.assert_called_with("syllabus_tree_exam_all")
+        mock_get.assert_called_with("syllabus_tree_exam_all_pcs_default")
         mock_set.assert_called_once()
         
         # Mock a cache hit for the second request
@@ -82,8 +82,7 @@ class SyllabusCachingTestCase(APITestCase):
         ConceptProgress.objects.create(
             user=user,
             concept=concept,
-            exam_readiness=0.8,
-            chapter_understanding=0.9,
+            readiness=0.8,
             last_practiced=timezone.now()
         )
 
@@ -111,8 +110,8 @@ class SyllabusCachingTestCase(APITestCase):
             response = self.client.get(self.url)
             self.assertEqual(response.status_code, 200)
 
-            # Authenticated request SHOULD fetch static structure from cache
-            mock_get.assert_called_with("syllabus_tree_exam_all")
+            # Authenticated request SHOULD fetch static structure from cache with pcs section
+            mock_get.assert_called_with("syllabus_tree_exam_all_pcs_BPSC")
             # Authenticated request should NOT write back to cache if already cached
             mock_set.assert_not_called()
             
@@ -129,10 +128,8 @@ class SyllabusCachingTestCase(APITestCase):
             self.assertEqual(concepts_response.status_code, 200)
             
             concept_data = concepts_response.data[0]
-            self.assertEqual(concept_data["id"], concept.id)
-            self.assertNotEqual(concept_data["mastery"], [0.0, 0.0])
-            self.assertEqual(concept_data["raw_mastry"], [0.8, 0.9])
-            self.assertIsNotNone(concept_data["last_practiced"])
+            self.assertEqual(concept_data["name"], "Velocity")
+            self.assertEqual(concept_data["mastery"], 0.8)
 
     @override_settings(USE_CACHING=True)
     def test_authenticated_request_cache_miss_sets_static_cache(self):
@@ -146,8 +143,9 @@ class SyllabusCachingTestCase(APITestCase):
             self.assertEqual(response.status_code, 200)
             
             # It should query the cache, miss, and then set the static cache key
-            mock_get.assert_called_with("syllabus_tree_exam_all")
+            mock_get.assert_called_with("syllabus_tree_exam_all_pcs_BPSC")
             mock_set.assert_called_once()
+
 
     @override_settings(USE_CACHING=True)
     def test_cache_invalidation_on_exam_change(self):

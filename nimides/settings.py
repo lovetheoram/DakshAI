@@ -24,15 +24,18 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-odia3xy&=g)5cx_e*-q5qq9$+cycyw!ji)+*^y2ws#gp@=g7yl'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-odia3xy&=g)5cx_e*-q5qq9$+cycyw!ji)+*^y2ws#gp@=g7yl')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('true', '1')
 
 ALLOWED_HOSTS = [
-    'dakshai.onrender.com',  
-    'localhost',      
-    '127.0.0.1',      
+    h.strip()
+    for h in os.environ.get(
+        'ALLOWED_HOSTS',
+        'dakshai.onrender.com,localhost,127.0.0.1,dakshaii.netlify.app'
+    ).split(',')
+    if h.strip()
 ]
 # "https://<social_pythonanywhere_username>.pythonanywhere.com/api/"
 
@@ -100,67 +103,76 @@ import urllib.parse as urlparse
 import socket
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
-tmp_url = urlparse.urlparse(DATABASE_URL)
-query_params = urlparse.parse_qs(tmp_url.query)
 
-db_host = tmp_url.hostname
-db_options = {key: val[0] for key, val in query_params.items()}
+if DATABASE_URL:
+    tmp_url = urlparse.urlparse(DATABASE_URL)
+    query_params = urlparse.parse_qs(tmp_url.query)
 
-if db_host:
-    try:
-        socket.gethostbyname(db_host)
-    except socket.gaierror:
-        import struct
-        def dns_resolve_8888(hostname):
-            packet = struct.pack(">HHHHHH", 0x1234, 0x0100, 1, 0, 0, 0)
-            for part in hostname.split('.'):
-                part_bytes = part.encode('ascii')
-                packet += struct.pack("B", len(part_bytes)) + part_bytes
-            packet += struct.pack("B", 0)
-            packet += struct.pack(">HH", 1, 1)
-            try:
-                sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                sock.settimeout(2.0)
-                sock.sendto(packet, ("8.8.8.8", 53))
-                data, _ = sock.recvfrom(512)
-                num_answers = struct.unpack(">H", data[6:8])[0]
-                offset = 12 + (len(packet) - 12)
-                for _ in range(num_answers):
-                    if (data[offset] & 0xc0) == 0xc0:
-                        offset += 2
-                    else:
-                        while data[offset] != 0:
-                            offset += 1 + data[offset]
-                        offset += 1
-                    type_, class_, ttl, rdlen = struct.unpack(">HHIH", data[offset:offset+10])
-                    offset += 10
-                    if type_ == 1 and rdlen == 4:
-                        return socket.inet_ntoa(data[offset:offset+4])
-                    offset += rdlen
-            except Exception:
-                pass
-            return None
+    db_host = tmp_url.hostname
+    db_options = {key: val[0] for key, val in query_params.items()}
 
-        resolved_ip = dns_resolve_8888(db_host)
-        if resolved_ip:
-            db_host = resolved_ip
-            if "neon.tech" in (tmp_url.hostname or ""):
-                endpoint_id = tmp_url.hostname.split('.')[0]
-                db_options['options'] = f"endpoint={endpoint_id}"
+    if db_host:
+        try:
+            socket.gethostbyname(db_host)
+        except socket.gaierror:
+            import struct
+            def dns_resolve_8888(hostname):
+                packet = struct.pack(">HHHHHH", 0x1234, 0x0100, 1, 0, 0, 0)
+                for part in hostname.split('.'):
+                    part_bytes = part.encode('ascii')
+                    packet += struct.pack("B", len(part_bytes)) + part_bytes
+                packet += struct.pack("B", 0)
+                packet += struct.pack(">HH", 1, 1)
+                try:
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                    sock.settimeout(2.0)
+                    sock.sendto(packet, ("8.8.8.8", 53))
+                    data, _ = sock.recvfrom(512)
+                    num_answers = struct.unpack(">H", data[6:8])[0]
+                    offset = 12 + (len(packet) - 12)
+                    for _ in range(num_answers):
+                        if (data[offset] & 0xc0) == 0xc0:
+                            offset += 2
+                        else:
+                            while data[offset] != 0:
+                                offset += 1 + data[offset]
+                            offset += 1
+                        type_, class_, ttl, rdlen = struct.unpack(">HHIH", data[offset:offset+10])
+                        offset += 10
+                        if type_ == 1 and rdlen == 4:
+                            return socket.inet_ntoa(data[offset:offset+4])
+                        offset += rdlen
+                except Exception:
+                    pass
+                return None
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': tmp_url.path[1:],
-        'USER': tmp_url.username,
-        'PASSWORD': tmp_url.password,
-        'HOST': db_host,
-        'PORT': tmp_url.port or '',
-        'OPTIONS': db_options,
-        'DISABLE_SERVER_SIDE_CURSORS': True,
-        'CONN_MAX_AGE': 60,
+            resolved_ip = dns_resolve_8888(db_host)
+            if resolved_ip:
+                db_host = resolved_ip
+                if "neon.tech" in (tmp_url.hostname or ""):
+                    endpoint_id = tmp_url.hostname.split('.')[0]
+                    db_options['options'] = f"endpoint={endpoint_id}"
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': tmp_url.path[1:],
+            'USER': tmp_url.username,
+            'PASSWORD': tmp_url.password,
+            'HOST': db_host,
+            'PORT': tmp_url.port or '',
+            'OPTIONS': db_options,
+            'DISABLE_SERVER_SIDE_CURSORS': True,
+            'CONN_MAX_AGE': 60,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -260,7 +272,7 @@ else:
     }
 
 # Print current active database and cache settings on startup/reload
-print(f"--> [DATABASE] ENGINE: {DATABASES['default']['ENGINE']} | HOST: {DATABASES['default']['HOST']}")
+print(f"--> [DATABASE] ENGINE: {DATABASES['default']['ENGINE']} | HOST: {DATABASES['default'].get('HOST', 'None')}")
 print(f"--> [CACHE] BACKEND: {CACHES['default']['BACKEND']} | LOCATION: {CACHES['default'].get('LOCATION', 'None')}")
 
 

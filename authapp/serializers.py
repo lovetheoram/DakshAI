@@ -60,6 +60,17 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     selected_exam = serializers.SerializerMethodField()
     pcs_section = serializers.SerializerMethodField()
+    display_name = serializers.SerializerMethodField()
+    bio = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
+    education_stage = serializers.SerializerMethodField()
+    institution_name = serializers.SerializerMethodField()
+    grade_or_year = serializers.SerializerMethodField()
+    location_city = serializers.SerializerMethodField()
+    interests = serializers.SerializerMethodField()
+    skills = serializers.SerializerMethodField()
+    is_minor = serializers.SerializerMethodField()
+    privacy_settings = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -67,17 +78,71 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "username",
             "email",
+            "display_name",
+            "bio",
+            "avatar",
             "selected_exam",
-            "pcs_section"
+            "pcs_section",
+            "education_stage",
+            "institution_name",
+            "grade_or_year",
+            "location_city",
+            "interests",
+            "skills",
+            "is_minor",
+            "privacy_settings",
         ]
 
     def get_pcs_section(self, obj):
         profile = getattr(obj, "profile", None)
         return profile.pcs_section if profile else "BPSC"
 
+    def get_display_name(self, obj):
+        profile = getattr(obj, "profile", None)
+        return (profile.display_name if profile and profile.display_name else obj.username)
+
+    def get_bio(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.bio if profile else ""
+
+    def get_avatar(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.avatar if profile else ""
+
+    def get_education_stage(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.education_stage if profile else "class_11_12"
+
+    def get_institution_name(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.institution_name if profile else ""
+
+    def get_grade_or_year(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.grade_or_year if profile else ""
+
+    def get_location_city(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.location_city if profile else ""
+
+    def get_interests(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.interests if profile and isinstance(profile.interests, list) else []
+
+    def get_skills(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.skills if profile and isinstance(profile.skills, list) else []
+
+    def get_is_minor(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.is_minor if profile else False
+
+    def get_privacy_settings(self, obj):
+        profile = getattr(obj, "profile", None)
+        return profile.get_privacy() if profile else {}
+
     def get_selected_exam(self, obj):
         profile = getattr(obj, "profile", None)
-
         if not profile or not profile.selected_exam:
             return None
 
@@ -86,3 +151,27 @@ class UserSerializer(serializers.ModelSerializer):
             "name": profile.selected_exam.name,
             "exam_type": profile.selected_exam.exam_type
         }
+
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+    email = serializers.EmailField(source="user.email", read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            "username",
+            "email",
+            "display_name",
+            "bio",
+            "avatar",
+            "education_stage",
+            "institution_name",
+            "grade_or_year",
+            "location_city",
+            "interests",
+            "skills",
+            "is_minor",
+            "privacy_settings",
+            "pcs_section",
+        ]

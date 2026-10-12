@@ -54,8 +54,9 @@ class ProgressOverhaulTests(APITestCase):
         )
 
     def _create_quiz_session(self, concept, score=1.0, all_correct=True):
+        import uuid
         question = Question.objects.create(
-            qid=f"q_{concept.id}_{timezone.now().timestamp()}",
+            qid=f"q_{concept.id}_{uuid.uuid4().hex}",
             concept=concept,
             header="Header",
             question_title="Title",
@@ -432,7 +433,7 @@ class ProgressOverhaulTests(APITestCase):
         self.assertNotIn("mission_day", data)
         self.assertNotIn("today_growth", data)
         self.assertNotIn("weekly_data", data)
-        self.assertNotIn("streak_stats", data)
+        self.assertIn("streak_stats", data)
 
     def test_daily_target_api(self):
         """GET /api/progress/daily-target/ returns required_readiness_per_day."""
